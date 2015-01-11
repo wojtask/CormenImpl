@@ -25,27 +25,6 @@ public class Chapter2Test {
         };
     }
 
-    @DataProvider
-    public static Object[][] provideDataForSuccessfulSearch() {
-        return new Object[][]{
-                {new Array<>(34), 34, 1},
-                {new Array<>(5,7,9,2,6,1,6,6,3,1,7,8), 6, 5},
-                {new Array<>(5,7,9,2,6,1,6,6,3,1,7,8), 8, 12},
-                {new Array<>(5.0,-2.3,-1.3,-1.9,-2.3), -2.3, 2},
-                {new Array<>("aaa","bbb","aaa","ccc"), "ccc", 4}
-        };
-    }
-
-    @DataProvider
-    public static Object[][] provideDataForUnsuccessfulSearch() {
-        return new Object[][]{
-                {new Array<>(34), 35},
-                {new Array<>(5,7,9,2,6,1,6,6,3,1,7,8), 4},
-                {new Array<>(5.0,-2.3,-1.3,-1.9,-2.3), 2.3},
-                {new Array<>("aaa","bbb","aaa","ccc"), "xyz"}
-        };
-    }
-
     @Test
     @UseDataProvider("provideDataForSorting")
     public <T> void shouldSortArrayUsingInsertionSort(Array<T> array, Array<T> expected) {
@@ -56,6 +35,17 @@ public class Chapter2Test {
 
         // then
         assertArrayEquals(expected, array);
+    }
+
+    @DataProvider
+    public static Object[][] provideDataForSuccessfulSearch() {
+        return new Object[][]{
+                {new Array<>(34), 34, 1},
+                {new Array<>(5,7,9,2,6,1,6,6,3,1,7,8), 6, 5},
+                {new Array<>(5,7,9,2,6,1,6,6,3,1,7,8), 8, 12},
+                {new Array<>(5.0,-2.3,-1.3,-1.9,-2.3), -2.3, 2},
+                {new Array<>("aaa","bbb","aaa","ccc"), "ccc", 4}
+        };
     }
 
     @Test
@@ -70,6 +60,16 @@ public class Chapter2Test {
         assertEquals(expectedIndex, actualIndex);
     }
 
+    @DataProvider
+    public static Object[][] provideDataForUnsuccessfulSearch() {
+        return new Object[][]{
+                {new Array<>(34), 35},
+                {new Array<>(5,7,9,2,6,1,6,6,3,1,7,8), 4},
+                {new Array<>(5.0,-2.3,-1.3,-1.9,-2.3), 2.3},
+                {new Array<>("aaa","bbb","aaa","ccc"), "xyz"}
+        };
+    }
+
     @Test
     @UseDataProvider("provideDataForUnsuccessfulSearch")
     public <T> void shouldNotFindKeyUsingLinearSeach(Array<T> array, T key) {
@@ -80,5 +80,28 @@ public class Chapter2Test {
 
         // then
         assertNull(actualIndex);
+    }
+
+    @DataProvider
+    public static Object[][] provideDataForBinaryAdd() {
+        return new Object[][]{
+                {new Array<>(0), new Array<>(0), new Array<>(0,0)},
+                {new Array<>(1), new Array<>(0), new Array<>(1,0)},
+                {new Array<>(0), new Array<>(1), new Array<>(1,0)},
+                {new Array<>(1), new Array<>(1), new Array<>(0,1)},
+                {new Array<>(0,0,1,1,0,1,0,0,0,0,1), new Array<>(0,1,1,1,1,0,0,1,0,1,1), new Array<>(0,1,0,1,0,0,1,1,0,1,0,1)}
+        };
+    }
+
+    @Test
+    @UseDataProvider("provideDataForBinaryAdd")
+    public void shouldAddTwoNumbersInBinary(Array<Integer> A, Array<Integer> B, Array<Integer> expectedSum) {
+        // given
+
+        // when
+        Array<Integer> actualSum = Chapter2.binaryAdd(A, B);
+
+        // then
+        assertArrayEquals(expectedSum, actualSum);
     }
 }

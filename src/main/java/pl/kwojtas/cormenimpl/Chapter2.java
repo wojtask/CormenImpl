@@ -31,4 +31,19 @@ public class Chapter2 {
         return null;
     }
 
+    // solution of 2.1-4
+    public static Array<Integer> binaryAdd(Array<Integer> A, Array<Integer> B) {
+        int n = A.length;
+        Array<Integer> C = new Array<>();
+        for (int i = 1; i <= n + 1; i++) {
+            C.set(i, 0);
+        }
+        for (int i = 1; i <= n; i++) {
+            Integer sum = A.at(i) + B.at(i) + C.at(i);
+            C.set(i, sum % 2);
+            C.set(i + 1, sum / 2);
+        }
+        return C;
+    }
+
 }
