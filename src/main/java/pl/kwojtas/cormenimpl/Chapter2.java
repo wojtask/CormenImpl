@@ -201,4 +201,81 @@ public class Chapter2 {
         }
     }
 
+    // problem 2-3
+    public static double horner(Array<Double> a, double x) {
+        double y = 0.0;
+        int n = a.length - 1;
+        int i = n;
+        while (i >= 0) {
+            y = a.at(i) + x * y;
+            i--;
+        }
+        return y;
+    }
+
+    // solution of 2-3(b)
+    public static double naivePolynomialEvaluation(Array<Double> A, double x) {
+        double y = 0.0;
+        int n = A.length - 1;
+        for (int i = 0; i <= n; i++) {
+            double s = A.at(i);
+            for (int j = 1; j <= i; j++) {
+                s *= x;
+            }
+            y += s;
+        }
+        return y;
+    }
+
+    // solution of 2-4(d)
+    public static <T> int countInversions(Array<T> A, int p, int r) {
+        int inversions = 0;
+        if (p < r) {
+            int q = (p + r) / 2;
+            inversions += countInversions(A, p, q);
+            inversions += countInversions(A, q + 1, r);
+            inversions += mergeInversions(A, p, q, r);
+        }
+        return inversions;
+    }
+
+    // solution of 2-4(d)
+    private static <T> int mergeInversions(Array<T> A, int p, int q, int r) {
+        int n1 = q - p + 1;
+        int n2 = r - q;
+        Array<T> L = new Array<>();
+        Array<T> R = new Array<>();
+        for (int i = 1; i <= n1; i++) {
+            L.set(i, A.at(p + i - 1));
+        }
+        for (int j = 1; j <= n2; j++) {
+            R.set(j, A.at(q + j));
+        }
+        int i = 1, j = 1;
+        int k = p;
+        int inversions = 0;
+        while (i <= n1 && j <= n2) {
+            if (leq(L.at(i), R.at(j))) {
+                A.set(k, L.at(i));
+                i++;
+            } else {
+                A.set(k, R.at(j));
+                j++;
+                inversions += n1 - i + 1;
+            }
+            k++;
+        }
+        while (i <= n1) {
+            A.set(k, L.at(i));
+            i++;
+            k++;
+        }
+        while (j <= n2) {
+            A.set(k, R.at(j));
+            j++;
+            k++;
+        }
+        return inversions;
+    }
+
 }

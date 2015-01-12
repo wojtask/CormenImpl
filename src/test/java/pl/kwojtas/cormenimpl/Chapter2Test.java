@@ -280,4 +280,68 @@ public class Chapter2Test {
         assertArrayEquals(expectedSorted, array);
     }
 
+    private static final double DELTA = 1e-15;
+
+    @DataProvider
+    public static Object[][] provideDataForPolynomialEvaluation() {
+        return new Object[][]{
+                {new Array<>(), 4.5, 0.0},
+                {new Array<>(3.14), 4.5, 3.14},
+                {new Array<>(-1.0,2.0), 4.5, 8.0},
+                {new Array<>(-1.5,3.2,1.6,3.4,-5.0,0.0,-1.0,1.0), -2.0, -300.7}
+        };
+    }
+
+    @Test
+    @UseDataProvider("provideDataForPolynomialEvaluation")
+    public void shouldEvaluatePolynomialUsingHornersRule(Array<Double> coefficients, double x, double expectedResult) {
+        // given
+        Array<Double> a = new Array<>(coefficients).withFirstPosition(0);
+
+        // when
+        double actualResult = Chapter2.horner(a, x);
+
+        // then
+        assertEquals(expectedResult, actualResult, DELTA);
+    }
+
+    @Test
+    @UseDataProvider("provideDataForPolynomialEvaluation")
+    public void shouldEvaluatePolynomialNaively(Array<Double> coefficients, double x, double expectedResult) {
+        // given
+        Array<Double> a = new Array<>(coefficients).withFirstPosition(0);
+
+        // when
+        double actualResult = Chapter2.naivePolynomialEvaluation(a, x);
+
+        // then
+        assertEquals(expectedResult, actualResult, DELTA);
+    }
+
+    @DataProvider
+    public static Object[][] provideDataForCountingInversions() {
+        return new Object[][]{
+                {new Array<>(3), 0},
+                {new Array<>(1,2), 0},
+                {new Array<>(2,1), 1},
+                {new Array<>(2,3,8,6,1), 5},
+                {new Array<>(5,4,3,2,1), 10},
+                {new Array<>(1,2,3,5,6,7,9,13,14), 0},
+                {new Array<>(-5.6,2.3,4.0,-2.0,0.0,0.1,6.6,3.1,-3.0,-5.5), 23},
+                {new Array<>("ccc","aaa","bbb"), 2}
+        };
+    }
+
+    @Test
+    @UseDataProvider("provideDataForCountingInversions")
+    public <T> void shouldCountInversions(Array<T> A, int expectedInversions) {
+        // given
+
+        // when
+        int actualInversions = Chapter2.countInversions(A, 1, A.length);
+
+        // then
+        assertEquals(expectedInversions, actualInversions);
+    }
+
 }

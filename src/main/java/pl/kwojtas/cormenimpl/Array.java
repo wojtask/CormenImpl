@@ -25,14 +25,9 @@ public class Array<T> {
         this.length = otherArray.length;
     }
 
-    public static <T> Array<T> create(int firstPosition, int initialLength) {
-        Array<T> array = new Array<>();
-        for (int i = 1; i <= initialLength; i++) {
-            array.data.add(null);
-        }
-        array.firstPosition = firstPosition;
-        array.length = initialLength;
-        return array;
+    public Array<T> withFirstPosition(int firstPosition) {
+        this.firstPosition = firstPosition;
+        return this;
     }
 
     private int toZeroBasedPosition(int arrayPosition) {
