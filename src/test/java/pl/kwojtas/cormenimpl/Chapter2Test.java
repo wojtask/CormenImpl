@@ -139,4 +139,16 @@ public class Chapter2Test {
         // then
         assertArrayEquals(expectedSorted, array);
     }
+
+    @Test
+    @UseDataProvider("provideDataForSorting")
+    public <T> void shouldSortArrayUsingMergeSort_(Array<T> array, Array<T> expectedSorted) {
+        // given
+
+        // when
+        Chapter2.mergeSort_(array, 1, array.length);
+
+        // then
+        assertArrayEquals(expectedSorted, array);
+    }
 }

@@ -1,5 +1,7 @@
 package pl.kwojtas.cormenimpl;
 
+import static pl.kwojtas.cormenimpl.Util.greater;
+import static pl.kwojtas.cormenimpl.Util.leq;
 import static pl.kwojtas.cormenimpl.Util.less;
 
 public class Chapter2 {
@@ -11,7 +13,7 @@ public class Chapter2 {
         for (int j = 2; j <= A.length; j++) {
             T key = A.at(j);
             int i = j - 1;
-            while (i > 0 && less(key, A.at(i))) {
+            while (i > 0 && greater(A.at(i), key)) {
                 A.set(i + 1, A.at(i));
                 i--;
             }
@@ -94,6 +96,52 @@ public class Chapter2 {
             mergeSort(A, p, q);
             mergeSort(A, q + 1, r);
             merge(A, p, q, r);
+        }
+    }
+
+    // solution of 2.3-2
+    private static <T> void merge_(Array<T> A, int p, int q, int r) {
+        int n1 = q - p + 1;
+        int n2 = r - q;
+        Array<T> L = new Array<>();
+        Array<T> R = new Array<>();
+        for (int i = 1; i <= n1; i++) {
+            L.set(i, A.at(p + i - 1));
+        }
+        for (int j = 1; j <= n2; j++) {
+            R.set(j, A.at(q + j));
+        }
+        int i = 1, j = 1;
+        int k = p;
+        while (i <= n1 && j <= n2) {
+            if (leq(L.at(i), R.at(j))) {
+                A.set(k, L.at(i));
+                i++;
+            } else {
+                A.set(k, R.at(j));
+                j++;
+            }
+            k++;
+        }
+        while (i <= n1) {
+            A.set(k, L.at(i));
+            i++;
+            k++;
+        }
+        while (j <= n2) {
+            A.set(k, R.at(j));
+            j++;
+            k++;
+        }
+    }
+
+    // for testing merge_
+    public static <T> void mergeSort_(Array<T> A, int p, int r) {
+        if (p < r) {
+            int q = (p + r) / 2;
+            mergeSort_(A, p, q);
+            mergeSort_(A, q + 1, r);
+            merge_(A, p, q, r);
         }
     }
 
