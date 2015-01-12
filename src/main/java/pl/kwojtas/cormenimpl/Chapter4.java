@@ -58,4 +58,49 @@ public class Chapter4 {
         return (A.at(i) & (1 << j)) != 0;
     }
 
+    // solution of 4-7(d)
+    public static Array<Integer> mongeLeftmostMinimaIndexes(Matrix A) {
+        int m = A.rows;
+        int n = A.columns;
+        Array<Integer> leftmostMinimaIndexes = new Array<>();
+        if (m >= 2) {
+            Array<Integer> leftmostMinimaIndexesOfEvenRows = mongeLeftmostMinimaIndexesOfEvenRows(A);
+            for (int i = 2; i <= m; i += 2) {
+                leftmostMinimaIndexes.set(i, leftmostMinimaIndexesOfEvenRows.at(i / 2));
+            }
+        }
+        for (int i = 1; i <= m; i += 2) {
+            int minimumIndexAbove = i > 1 ? leftmostMinimaIndexes.at(i - 1) : 1;
+            int minimumIndexBelow = i < m ? leftmostMinimaIndexes.at(i + 1) : n;
+            leftmostMinimaIndexes.set(i, mongeLeftmostMinimumIndex(A, i, minimumIndexAbove, minimumIndexBelow));
+        }
+        return leftmostMinimaIndexes;
+    }
+
+    // solution of 4-7(d)
+    private static Array<Integer> mongeLeftmostMinimaIndexesOfEvenRows(Matrix A) {
+        int m = A.rows;
+        int n = A.columns;
+        Double[][] oddRows = new Double[m / 2][];
+        for (int i = 2; i <= m; i += 2) {
+            oddRows[i / 2 - 1] = new Double[n];
+            A.row(i).toArray(oddRows[i / 2 - 1]);
+        }
+        Matrix A_ = new Matrix(oddRows);
+        return mongeLeftmostMinimaIndexes(A_);
+    }
+
+    // solution of 4-7(d)
+    private static int mongeLeftmostMinimumIndex(Matrix A, int row, int minimumIndexAbove, int minimumIndexBelow) {
+        int leftmostMinimumIndex = minimumIndexAbove;
+        double leftmostMinimum = A.at(row, leftmostMinimumIndex);
+        for (int column = minimumIndexAbove + 1; column <= minimumIndexBelow; column++) {
+            if (A.at(row, column) < leftmostMinimum) {
+                leftmostMinimum = A.at(row, column);
+                leftmostMinimumIndex = column;
+            }
+        }
+        return leftmostMinimumIndex;
+    }
+
 }
