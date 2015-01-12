@@ -178,4 +178,16 @@ public class Chapter2 {
         return null;
     }
 
+    // solution of 2.3-7
+    public static boolean sumSearch(Array<Integer> S, Integer x) {
+        int n = S.length;
+        mergeSort(S, 1, n);
+        for (int i = 1; i <= n - 1; i++) {
+            if (recursiveBinarySearch(S, x - S.at(i), i + 1, n) != null) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }

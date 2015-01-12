@@ -94,14 +94,14 @@ public class Chapter2Test {
 
     @Test
     @UseDataProvider("provideDataForBinaryAdd")
-    public void shouldAddTwoNumbersInBinary(Array<Integer> A, Array<Integer> B, Array<Integer> expectedSum) {
+    public void shouldAddTwoNumbersInBinary(Array<Integer> firstNumberBits, Array<Integer> secondNumberBits, Array<Integer> expectedSumBits) {
         // given
 
         // when
-        Array<Integer> actualSum = Chapter2.binaryAdd(A, B);
+        Array<Integer> actualSumBits = Chapter2.binaryAdd(firstNumberBits, secondNumberBits);
 
         // then
-        assertArrayEquals(expectedSum, actualSum);
+        assertArrayEquals(expectedSumBits, actualSumBits);
     }
 
     @Test
@@ -221,5 +221,50 @@ public class Chapter2Test {
 
         // then
         assertNull(actualIndex);
+    }
+
+    @DataProvider
+    public static Object[][] provideDataForSuccessfulSumSearch() {
+        return new Object[][]{
+                {new Array<>(34,43), 77},
+                {new Array<>(5,7,9,2,6,1,6,6,3,1,7,8), 2},
+                {new Array<>(5,7,9,2,6,1,6,6,3,1,7,8), 10},
+                {new Array<>(5,7,9,2,6,1,6,6,3,1,7,8), 12},
+                {new Array<>(5,7,9,2,6,1,6,6,3,1,7,8), 17}
+        };
+    }
+
+    @Test
+    @UseDataProvider("provideDataForSuccessfulSumSearch")
+    public void shouldFindSum(Array<Integer> array, Integer sum) {
+        // given
+
+        // when
+        boolean sumFound = Chapter2.sumSearch(array, sum);
+
+        // then
+        assertTrue(sumFound);
+    }
+
+    @DataProvider
+    public static Object[][] provideDataForUnsuccessfulSumSearch() {
+        return new Object[][]{
+                {new Array<>(34), 34},
+                {new Array<>(5,7,9,2,6,1,6,6,3,1,7,8), 1},
+                {new Array<>(5,7,9,2,6,1,6,6,3,1,7,8), 18},
+                {new Array<>(5,7,9,2,6,1,6,6,3,1,7,8), 35}
+        };
+    }
+
+    @Test
+    @UseDataProvider("provideDataForUnsuccessfulSumSearch")
+    public void shouldNotFindSum(Array<Integer> array, Integer sum) {
+        // given
+
+        // when
+        boolean sumFound = Chapter2.sumSearch(array, sum);
+
+        // then
+        assertFalse(sumFound);
     }
 }
