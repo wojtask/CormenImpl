@@ -26,7 +26,7 @@ public class Chapter2Test {
 
     @Test
     @UseDataProvider("provideDataForSorting")
-    public <T> void shouldSortArrayUsingInsertionSort(Array<T> array, Array<T> expectedSorted) {
+    public <T extends Comparable> void shouldSortArrayUsingInsertionSort(Array<T> array, Array<T> expectedSorted) {
         // given
 
         // when
@@ -50,7 +50,7 @@ public class Chapter2Test {
 
     @Test
     @UseDataProvider("provideDataForNonincreasingSorting")
-    public <T> void shouldSortArrayInNonincreasingOrderUsingInsertionSort(Array<T> array, Array<T> expectedSorted) {
+    public <T extends Comparable> void shouldSortArrayInNonincreasingOrderUsingInsertionSort(Array<T> array, Array<T> expectedSorted) {
         // given
 
         // when
@@ -130,7 +130,7 @@ public class Chapter2Test {
 
     @Test
     @UseDataProvider("provideDataForSorting")
-    public <T> void shouldSortArrayUsingSelectionSort(Array<T> array, Array<T> expectedSorted) {
+    public <T extends Comparable> void shouldSortArrayUsingSelectionSort(Array<T> array, Array<T> expectedSorted) {
         // given
 
         // when
@@ -165,7 +165,7 @@ public class Chapter2Test {
 
     @Test
     @UseDataProvider("provideDataForSorting")
-    public <T> void shouldSortArrayUsingMergeSort_(Array<T> array, Array<T> expectedSorted) {
+    public <T extends Comparable> void shouldSortArrayUsingMergeSort_(Array<T> array, Array<T> expectedSorted) {
         // given
 
         // when
@@ -199,7 +199,7 @@ public class Chapter2Test {
 
     @Test
     @UseDataProvider("provideDataForSuccessfulBinarySearch")
-    public <T> void shouldFindKeyUsingRecursiveBinarySearch(Array<T> array, T key, Integer lowestExpectedIndex, Integer highestExpectedIndex) {
+    public <T extends Comparable> void shouldFindKeyUsingRecursiveBinarySearch(Array<T> array, T key, Integer lowestExpectedIndex, Integer highestExpectedIndex) {
         // given
 
         // when
@@ -212,7 +212,7 @@ public class Chapter2Test {
 
     @Test
     @UseDataProvider("provideDataForUnsuccessfulBinarySearch")
-    public <T> void shouldNotFindKeyUsingRecursiveBinarySearch(Array<T> array, T key) {
+    public <T extends Comparable> void shouldNotFindKeyUsingRecursiveBinarySearch(Array<T> array, T key) {
         // given
 
         // when
@@ -224,7 +224,7 @@ public class Chapter2Test {
 
     @Test
     @UseDataProvider("provideDataForSuccessfulBinarySearch")
-    public <T> void shouldFindKeyUsingIterativeBinarySearch(Array<T> array, T key, Integer lowestExpectedIndex, Integer highestExpectedIndex) {
+    public <T extends Comparable> void shouldFindKeyUsingIterativeBinarySearch(Array<T> array, T key, Integer lowestExpectedIndex, Integer highestExpectedIndex) {
         // given
 
         // when
@@ -237,7 +237,7 @@ public class Chapter2Test {
 
     @Test
     @UseDataProvider("provideDataForUnsuccessfulBinarySearch")
-    public <T> void shouldNotFindKeyUsingIterativeBinarySearch(Array<T> array, T key) {
+    public <T extends Comparable> void shouldNotFindKeyUsingIterativeBinarySearch(Array<T> array, T key) {
         // given
 
         // when
@@ -294,7 +294,7 @@ public class Chapter2Test {
 
     @Test
     @UseDataProvider("provideDataForSorting")
-    public <T> void shouldSortArrayUsingBubbleSort(Array<T> array, Array<T> expectedSorted) {
+    public <T extends Comparable> void shouldSortArrayUsingBubbleSort(Array<T> array, Array<T> expectedSorted) {
         // given
 
         // when
@@ -358,7 +358,7 @@ public class Chapter2Test {
 
     @Test
     @UseDataProvider("provideDataForCountingInversions")
-    public <T> void shouldCountInversions(Array<T> A, int expectedInversions) {
+    public <T extends Comparable> void shouldCountInversions(Array<T> A, int expectedInversions) {
         // given
 
         // when

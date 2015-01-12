@@ -9,7 +9,7 @@ public class Chapter2 {
     private Chapter2() { }
 
     // subchapter 2.1
-    public static <T> void insertionSort(Array<T> A) {
+    public static <T extends Comparable> void insertionSort(Array<T> A) {
         for (int j = 2; j <= A.length; j++) {
             T key = A.at(j);
             int i = j - 1;
@@ -22,7 +22,7 @@ public class Chapter2 {
     }
 
     // solution of 2.1-2
-    public static <T> void nonincreasingInsertionSort(Array<T> A) {
+    public static <T extends Comparable> void nonincreasingInsertionSort(Array<T> A) {
         for (int j = 2; j <= A.length; j++) {
             T key = A.at(j);
             int i = j - 1;
@@ -62,7 +62,7 @@ public class Chapter2 {
     }
 
     // solution of 2.2-2
-    public static <T> void selectionSort(Array<T> A) {
+    public static <T extends Comparable> void selectionSort(Array<T> A) {
         int n = A.length;
         for (int j = 1; j <= n - 1; j++) {
             int min = j;
@@ -113,7 +113,7 @@ public class Chapter2 {
     }
 
     // solution of 2.3-2
-    private static <T> void merge_(Array<T> A, int p, int q, int r) {
+    private static <T extends Comparable> void merge_(Array<T> A, int p, int q, int r) {
         int n1 = q - p + 1;
         int n2 = r - q;
         Array<T> L = new Array<>();
@@ -149,7 +149,7 @@ public class Chapter2 {
     }
 
     // for testing merge_
-    public static <T> void mergeSort_(Array<T> A, int p, int r) {
+    public static <T extends Comparable> void mergeSort_(Array<T> A, int p, int r) {
         if (p < r) {
             int q = (p + r) / 2;
             mergeSort_(A, p, q);
@@ -159,7 +159,7 @@ public class Chapter2 {
     }
 
     // solution of 2.3-5
-    public static <T> Integer recursiveBinarySearch(Array<T> A, T v, int low, int high) {
+    public static <T extends Comparable> Integer recursiveBinarySearch(Array<T> A, T v, int low, int high) {
         if (low > high) {
             return null;
         }
@@ -174,7 +174,7 @@ public class Chapter2 {
     }
 
     // solution of 2.3-5
-    public static <T> Integer iterativeBinarySearch(Array<T> A, T v) {
+    public static <T extends Comparable> Integer iterativeBinarySearch(Array<T> A, T v) {
         int low = 1;
         int high = A.length;
         while (low <= high) {
@@ -204,7 +204,7 @@ public class Chapter2 {
     }
 
     // problem 2-2
-    public static <T> void bubbleSort(Array<T> A) {
+    public static <T extends Comparable> void bubbleSort(Array<T> A) {
         for (int i = 1; i <= A.length; i++) {
             for (int j = A.length; j >= i + 1; j--) {
                 if (less(A.at(j), A.at(j-1))) {
@@ -241,7 +241,7 @@ public class Chapter2 {
     }
 
     // solution of 2-4(d)
-    public static <T> int countInversions(Array<T> A, int p, int r) {
+    public static <T extends Comparable> int countInversions(Array<T> A, int p, int r) {
         int inversions = 0;
         if (p < r) {
             int q = (p + r) / 2;
@@ -253,7 +253,7 @@ public class Chapter2 {
     }
 
     // solution of 2-4(d)
-    private static <T> int mergeInversions(Array<T> A, int p, int q, int r) {
+    private static <T extends Comparable> int mergeInversions(Array<T> A, int p, int q, int r) {
         int n1 = q - p + 1;
         int n2 = r - q;
         Array<T> L = new Array<>();
