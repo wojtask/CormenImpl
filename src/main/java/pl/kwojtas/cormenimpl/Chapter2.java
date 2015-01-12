@@ -190,4 +190,15 @@ public class Chapter2 {
         return false;
     }
 
+    // problem 2-2
+    public static <T> void bubbleSort(Array<T> A) {
+        for (int i = 1; i <= A.length; i++) {
+            for (int j = A.length; j >= i + 1; j--) {
+                if (less(A.at(j), A.at(j-1))) {
+                    A.exch(j, j - 1);
+                }
+            }
+        }
+    }
+
 }

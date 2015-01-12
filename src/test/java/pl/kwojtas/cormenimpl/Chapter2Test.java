@@ -267,4 +267,17 @@ public class Chapter2Test {
         // then
         assertFalse(sumFound);
     }
+
+    @Test
+    @UseDataProvider("provideDataForSorting")
+    public <T> void shouldSortArrayUsingBubbleSort(Array<T> array, Array<T> expectedSorted) {
+        // given
+
+        // when
+        Chapter2.bubbleSort(array);
+
+        // then
+        assertArrayEquals(expectedSorted, array);
+    }
+
 }
