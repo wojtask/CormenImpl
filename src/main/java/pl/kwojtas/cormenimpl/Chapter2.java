@@ -46,4 +46,18 @@ public class Chapter2 {
         return C;
     }
 
+    // solution of 2.2-2
+    public static <T> void selectionSort(Array<T> A) {
+        int n = A.length;
+        for (int j = 1; j <= n - 1; j++) {
+            int min = j;
+            for (int i = j + 1; i <= n; i++) {
+                if (less(A.at(i), A.at(min))) {
+                    min = i;
+                }
+            }
+            A.exch(min, j);
+        }
+    }
+
 }

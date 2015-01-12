@@ -104,4 +104,16 @@ public class Chapter2Test {
         // then
         assertArrayEquals(expectedSum, actualSum);
     }
+
+    @Test
+    @UseDataProvider("provideDataForSorting")
+    public <T> void shouldSortArrayUsingSelectionSort(Array<T> array, Array<T> expected) {
+        // given
+
+        // when
+        Chapter2.selectionSort(array);
+
+        // then
+        assertArrayEquals(expected, array);
+    }
 }

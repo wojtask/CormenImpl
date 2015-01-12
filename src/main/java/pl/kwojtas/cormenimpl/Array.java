@@ -35,11 +35,15 @@ public class Array<T> {
         return array;
     }
 
+    private int toZeroBasedPosition(int arrayPosition) {
+        return arrayPosition - firstPosition;
+    }
+
     public T at(int position) {
         if (position < firstPosition || position > length) {
             throw new RuntimeException("Array index out of bound");
         }
-        return data.get(position - firstPosition);
+        return data.get(toZeroBasedPosition(position));
     }
 
     public void set(int position, T element) {
@@ -53,7 +57,12 @@ public class Array<T> {
             }
             length = position;
         }
-        data.set(position - firstPosition, element);
+        data.set(toZeroBasedPosition(position), element);
     }
 
+    public void exch(int position1, int position2) {
+        T swap = at(position1);
+        set(position1, at(position2));
+        set(position2, swap);
+    }
 }
