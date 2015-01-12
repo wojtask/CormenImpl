@@ -145,4 +145,37 @@ public class Chapter2 {
         }
     }
 
+    // solution of 2.3-5
+    public static <T> Integer recursiveBinarySearch(Array<T> A, T v, int low, int high) {
+        if (low > high) {
+            return null;
+        }
+        int mid = (low + high) / 2;
+        if (v.equals(A.at(mid))) {
+            return mid;
+        }
+        if (less(v, A.at(mid))) {
+            return recursiveBinarySearch(A, v, low, mid - 1);
+        }
+        return recursiveBinarySearch(A, v, mid + 1, high);
+    }
+
+    // solution of 2.3-5
+    public static <T> Integer iterativeBinarySearch(Array<T> A, T v) {
+        int low = 1;
+        int high = A.length;
+        while (low <= high) {
+            int mid = (low + high) / 2;
+            if (v.equals(A.at(mid))) {
+                return mid;
+            }
+            if (less(v, A.at(mid))) {
+                high = mid - 1;
+            } else {
+                low = mid + 1;
+            }
+        }
+        return null;
+    }
+
 }

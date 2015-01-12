@@ -6,8 +6,7 @@ import com.tngtech.java.junit.dataprovider.UseDataProvider;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.*;
 import static pl.kwojtas.cormenimpl.TestUtil.assertArrayEquals;
 
 @RunWith(DataProviderRunner.class)
@@ -38,7 +37,7 @@ public class Chapter2Test {
     }
 
     @DataProvider
-    public static Object[][] provideDataForSuccessfulSearch() {
+    public static Object[][] provideDataForSuccessfulLinearSearch() {
         return new Object[][]{
                 {new Array<>(34), 34, 1},
                 {new Array<>(5,7,9,2,6,1,6,6,3,1,7,8), 6, 5},
@@ -49,7 +48,7 @@ public class Chapter2Test {
     }
 
     @Test
-    @UseDataProvider("provideDataForSuccessfulSearch")
+    @UseDataProvider("provideDataForSuccessfulLinearSearch")
     public <T> void shouldFindKeyUsingLinearSearch(Array<T> array, T key, Integer expectedIndex) {
         // given
 
@@ -61,7 +60,7 @@ public class Chapter2Test {
     }
 
     @DataProvider
-    public static Object[][] provideDataForUnsuccessfulSearch() {
+    public static Object[][] provideDataForUnsuccessfulLinearSearch() {
         return new Object[][]{
                 {new Array<>(34), 35},
                 {new Array<>(5,7,9,2,6,1,6,6,3,1,7,8), 4},
@@ -71,7 +70,7 @@ public class Chapter2Test {
     }
 
     @Test
-    @UseDataProvider("provideDataForUnsuccessfulSearch")
+    @UseDataProvider("provideDataForUnsuccessfulLinearSearch")
     public <T> void shouldNotFindKeyUsingLinearSeach(Array<T> array, T key) {
         // given
 
@@ -150,5 +149,77 @@ public class Chapter2Test {
 
         // then
         assertArrayEquals(expectedSorted, array);
+    }
+
+    @DataProvider
+    public static Object[][] provideDataForSuccessfulBinarySearch() {
+        return new Object[][]{
+                {new Array<>(34), 34, 1, 1},
+                {new Array<>(1,2,3,5,6,6,6,7,7,8,8,9), 6, 5, 7},
+                {new Array<>(1,2,3,5,6,6,6,7,7,8,8,9), 3, 3, 3},
+                {new Array<>(-4.5,-2.3,-2.2,-0.1,0.6,2.2,9.5), 2.2, 6, 6},
+                {new Array<>("aaa","aaa","bbb","ccc"), "aaa", 1, 2}
+        };
+    }
+
+    @DataProvider
+    public static Object[][] provideDataForUnsuccessfulBinarySearch() {
+        return new Object[][]{
+                {new Array<>(34), 35},
+                {new Array<>(1,2,3,5,6,6,6,7,7,8,8,9), 4},
+                {new Array<>(1,2,3,5,6,6,6,7,7,8,8,9), 0},
+                {new Array<>(-4.5,-2.3,-2.2,-0.1,0.6,2.2,9.5), 0.0},
+                {new Array<>("aaa","aaa","bbb","ccc"), "abc"}
+        };
+    }
+
+    @Test
+    @UseDataProvider("provideDataForSuccessfulBinarySearch")
+    public <T> void shouldFindKeyUsingRecursiveBinarySearch(Array<T> array, T key, Integer lowestExpectedIndex, Integer highestExpectedIndex) {
+        // given
+
+        // when
+        Integer actualIndex = Chapter2.recursiveBinarySearch(array, key, 1, array.length);
+
+        // then
+        assertNotNull(actualIndex);
+        assertTrue(lowestExpectedIndex <= actualIndex && actualIndex <= highestExpectedIndex);
+    }
+
+    @Test
+    @UseDataProvider("provideDataForUnsuccessfulBinarySearch")
+    public <T> void shouldNotFindKeyUsingRecursiveBinarySearch(Array<T> array, T key) {
+        // given
+
+        // when
+        Integer actualIndex = Chapter2.recursiveBinarySearch(array, key, 1, array.length);
+
+        // then
+        assertNull(actualIndex);
+    }
+
+    @Test
+    @UseDataProvider("provideDataForSuccessfulBinarySearch")
+    public <T> void shouldFindKeyUsingIterativeBinarySearch(Array<T> array, T key, Integer lowestExpectedIndex, Integer highestExpectedIndex) {
+        // given
+
+        // when
+        Integer actualIndex = Chapter2.iterativeBinarySearch(array, key);
+
+        // then
+        assertNotNull(actualIndex);
+        assertTrue(lowestExpectedIndex <= actualIndex && actualIndex <= highestExpectedIndex);
+    }
+
+    @Test
+    @UseDataProvider("provideDataForUnsuccessfulBinarySearch")
+    public <T> void shouldNotFindKeyUsingIterativeBinarySearch(Array<T> array, T key) {
+        // given
+
+        // when
+        Integer actualIndex = Chapter2.iterativeBinarySearch(array, key);
+
+        // then
+        assertNull(actualIndex);
     }
 }
