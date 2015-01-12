@@ -27,14 +27,14 @@ public class Chapter2Test {
 
     @Test
     @UseDataProvider("provideDataForSorting")
-    public <T> void shouldSortArrayUsingInsertionSort(Array<T> array, Array<T> expected) {
+    public <T> void shouldSortArrayUsingInsertionSort(Array<T> array, Array<T> expectedSorted) {
         // given
 
         // when
         Chapter2.insertionSort(array);
 
         // then
-        assertArrayEquals(expected, array);
+        assertArrayEquals(expectedSorted, array);
     }
 
     @DataProvider
@@ -107,13 +107,36 @@ public class Chapter2Test {
 
     @Test
     @UseDataProvider("provideDataForSorting")
-    public <T> void shouldSortArrayUsingSelectionSort(Array<T> array, Array<T> expected) {
+    public <T> void shouldSortArrayUsingSelectionSort(Array<T> array, Array<T> expectedSorted) {
         // given
 
         // when
         Chapter2.selectionSort(array);
 
         // then
-        assertArrayEquals(expected, array);
+        assertArrayEquals(expectedSorted, array);
+    }
+
+    @DataProvider
+    public static Object[][] provideDataForMergeSort() {
+        return new Object[][]{
+                {new Array<>(34), new Array<>(34)},
+                {new Array<>(3,2,1), new Array<>(1,2,3)},
+                {new Array<>(5,7,9,2,6,8,6,6,3,1,7,8), new Array<>(1,2,3,5,6,6,6,7,7,8,8,9)},
+                {new Array<>(1,2,3,5,6,6,6,7,7,8,8,9), new Array<>(1,2,3,5,6,6,6,7,7,8,8,9)},
+                {new Array<>(9,8,8,7,7,6,6,6,5,3,2,1), new Array<>(1,2,3,5,6,6,6,7,7,8,8,9)}
+        };
+    }
+
+    @Test
+    @UseDataProvider("provideDataForMergeSort")
+    public void shouldSortArrayUsingMergeSort(Array<Integer> array, Array<Integer> expectedSorted) {
+        // given
+
+        // when
+        Chapter2.mergeSort(array, 1, array.length);
+
+        // then
+        assertArrayEquals(expectedSorted, array);
     }
 }

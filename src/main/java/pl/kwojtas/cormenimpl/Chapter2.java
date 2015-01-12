@@ -60,4 +60,41 @@ public class Chapter2 {
         }
     }
 
+    // subchapter 2.3
+    private static void merge(Array<Integer> A, int p, int q, int r) {
+        int n1 = q - p + 1;
+        int n2 = r - q;
+        Array<Integer> L = new Array<>();
+        Array<Integer> R = new Array<>();
+        for (int i = 1; i <= n1; i++) {
+            L.set(i, A.at(p + i - 1));
+        }
+        for (int j = 1; j <= n2; j++) {
+            R.set(j, A.at(q + j));
+        }
+        L.set(n1 + 1, Integer.MAX_VALUE);
+        R.set(n2 + 1, Integer.MAX_VALUE);
+        int i = 1;
+        int j = 1;
+        for (int k = p; k <= r; k++) {
+            if (L.at(i) <= R.at(j)) {
+                A.set(k, L.at(i));
+                i++;
+            } else {
+                A.set(k, R.at(j));
+                j++;
+            }
+        }
+    }
+
+    // subchapter 2.3
+    public static void mergeSort(Array<Integer> A, int p, int r) {
+        if (p < r) {
+            int q = (p + r) / 2;
+            mergeSort(A, p, q);
+            mergeSort(A, q + 1, r);
+            merge(A, p, q, r);
+        }
+    }
+
 }
