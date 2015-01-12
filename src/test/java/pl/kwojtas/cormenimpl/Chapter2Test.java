@@ -37,6 +37,30 @@ public class Chapter2Test {
     }
 
     @DataProvider
+    public static Object[][] provideDataForNonincreasingSorting() {
+        return new Object[][]{
+                {new Array<>(34), new Array<>(34)},
+                {new Array<>(1,2,3), new Array<>(3,2,1)},
+                {new Array<>(5,7,9,2,6,8,6,6,3,1,7,8), new Array<>(9,8,8,7,7,6,6,6,5,3,2,1)},
+                {new Array<>(1,2,3,5,6,6,6,7,7,8,8,9), new Array<>(9,8,8,7,7,6,6,6,5,3,2,1)},
+                {new Array<>(3.14,-2.75,-0.53,2.55,2.23), new Array<>(3.14,2.55,2.23,-0.53,-2.75)},
+                {new Array<>("aaa","eee","ccc","ddd","bbb"), new Array<>("eee","ddd","ccc","bbb","aaa")}
+        };
+    }
+
+    @Test
+    @UseDataProvider("provideDataForNonincreasingSorting")
+    public <T> void shouldSortArrayInNonincreasingOrderUsingInsertionSort(Array<T> array, Array<T> expectedSorted) {
+        // given
+
+        // when
+        Chapter2.nonincreasingInsertionSort(array);
+
+        // then
+        assertArrayEquals(expectedSorted, array);
+    }
+
+    @DataProvider
     public static Object[][] provideDataForSuccessfulLinearSearch() {
         return new Object[][]{
                 {new Array<>(34), 34, 1},

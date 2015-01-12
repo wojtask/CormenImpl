@@ -21,6 +21,19 @@ public class Chapter2 {
         }
     }
 
+    // solution of 2.1-2
+    public static <T> void nonincreasingInsertionSort(Array<T> A) {
+        for (int j = 2; j <= A.length; j++) {
+            T key = A.at(j);
+            int i = j - 1;
+            while (i > 0 && less(A.at(i), key)) {
+                A.set(i + 1, A.at(i));
+                i--;
+            }
+            A.set(i + 1, key);
+        }
+    }
+
     // solution of 2.1-3
     public static <T> Integer linearSearch(Array<T> A, T v) {
         int i = 1;
