@@ -113,7 +113,7 @@ public class Chapter2 {
     }
 
     // solution of 2.3-2
-    private static <T extends Comparable> void merge_(Array<T> A, int p, int q, int r) {
+    public static <T extends Comparable> void merge_(Array<T> A, int p, int q, int r) {
         int n1 = q - p + 1;
         int n2 = r - q;
         Array<T> L = new Array<>();
@@ -145,16 +145,6 @@ public class Chapter2 {
             A.set(k, R.at(j));
             j++;
             k++;
-        }
-    }
-
-    // for testing merge_
-    public static <T extends Comparable> void mergeSort_(Array<T> A, int p, int r) {
-        if (p < r) {
-            int q = (p + r) / 2;
-            mergeSort_(A, p, q);
-            mergeSort_(A, q + 1, r);
-            merge_(A, p, q, r);
         }
     }
 

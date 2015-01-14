@@ -167,16 +167,29 @@ public class Chapter2Test {
         assertArrayEquals(expectedSorted, array);
     }
 
+    @DataProvider
+    public static Object[][] provideDataForMergingUsingMerge_() {
+        return new Object[][]{
+                {new Array<>(34), 1, 1, 1, new Array<>(34)},
+                {new Array<>(5, 1), 1, 1, 2, new Array<>(1, 5)},
+                {new Array<>(5,2,7,9,6,8,6,6,3,1,7,8), 2, 4, 5, new Array<>(5,2,6,7,9,8,6,6,3,1,7,8)},
+                {new Array<>(5,2,7,9,3,6,6,6,8,1,7,8), 2, 4, 9, new Array<>(5,2,3,6,6,6,7,8,9,1,7,8)},
+                {new Array<>(2,3,5,6,7,9,1,6,6,7,8,8), 1, 6, 12, new Array<>(1,2,3,5,6,6,6,7,7,8,8,9)},
+                {new Array<>(-2.75,2.23,3.14,-0.53,2.55), 1, 3, 5, new Array<>(-2.75,-0.53,2.23,2.55,3.14)},
+                {new Array<>("aaa","eee","bbb","ccc","ddd"), 1, 2, 5, new Array<>("aaa","bbb","ccc","ddd","eee")}
+        };
+    }
+
     @Test
-    @UseDataProvider("provideDataForSorting")
-    public <T extends Comparable> void shouldSortArrayUsingMergeSort_(Array<T> array, Array<T> expectedSorted) {
+    @UseDataProvider("provideDataForMergingUsingMerge_")
+    public <T extends Comparable> void shouldMergeArrayUsingMerge_(Array<T> array, int low, int mid, int high, Array<T> expectedMerged) {
         // given
 
         // when
-        Chapter2.mergeSort_(array, 1, array.length);
+        Chapter2.merge_(array, low, mid, high);
 
         // then
-        assertArrayEquals(expectedSorted, array);
+        assertArrayEquals(expectedMerged, array);
     }
 
     @DataProvider

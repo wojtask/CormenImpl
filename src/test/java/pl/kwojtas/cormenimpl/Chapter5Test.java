@@ -147,8 +147,8 @@ public class Chapter5Test {
     }
 
     private static <T extends Comparable> void assertShuffled(Array<T> original, Array<T> shuffled) {
-        Chapter2.mergeSort_(original, 1, original.length);
-        Chapter2.mergeSort_(shuffled, 1, shuffled.length);
+        Chapter2.insertionSort(original);
+        Chapter2.insertionSort(shuffled);
         assertArrayEquals(original, shuffled);
     }
 
