@@ -26,4 +26,8 @@ public class Util {
         return rand.nextBoolean() ? 1 : 0;
     }
 
+    public static int ceil(int a, int b) {
+        return a / b + (a % b == 0 ? 0 : 1);
+    }
+
 }

@@ -17,12 +17,7 @@ public class Array<T> {
     }
 
     public Array(Array<T> otherArray) {
-        if (this == otherArray) {
-            return;
-        }
-        this.data = new ArrayList<>(otherArray.data);
-        this.firstPosition = otherArray.firstPosition;
-        this.length = otherArray.length;
+        set(otherArray);
     }
 
     public Array<T> withFirstPosition(int firstPosition) {
@@ -55,9 +50,19 @@ public class Array<T> {
         data.set(toZeroBasedPosition(position), element);
     }
 
+    public void set(Array<T> otherArray) {
+        if (this == otherArray) {
+            return;
+        }
+        this.data = new ArrayList<>(otherArray.data);
+        this.firstPosition = otherArray.firstPosition;
+        this.length = otherArray.length;
+    }
+
     public void exch(int position1, int position2) {
         T swap = at(position1);
         set(position1, at(position2));
         set(position2, swap);
     }
+
 }

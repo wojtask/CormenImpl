@@ -59,7 +59,7 @@ public class Chapter4 {
     }
 
     // solution of 4-7(d)
-    public static Array<Integer> mongeLeftmostMinimaIndexes(Matrix A) {
+    public static Array<Integer> mongeLeftmostMinimaIndexes(Matrix<Double> A) {
         int m = A.rows;
         int n = A.columns;
         Array<Integer> leftmostMinimaIndexes = new Array<>();
@@ -78,7 +78,7 @@ public class Chapter4 {
     }
 
     // solution of 4-7(d)
-    private static Array<Integer> mongeLeftmostMinimaIndexesOfEvenRows(Matrix A) {
+    private static Array<Integer> mongeLeftmostMinimaIndexesOfEvenRows(Matrix<Double> A) {
         int m = A.rows;
         int n = A.columns;
         Double[][] oddRows = new Double[m / 2][];
@@ -86,12 +86,12 @@ public class Chapter4 {
             oddRows[i / 2 - 1] = new Double[n];
             A.row(i).toArray(oddRows[i / 2 - 1]);
         }
-        Matrix A_ = new Matrix(oddRows);
+        Matrix<Double> A_ = new Matrix<>(oddRows);
         return mongeLeftmostMinimaIndexes(A_);
     }
 
     // solution of 4-7(d)
-    private static int mongeLeftmostMinimumIndex(Matrix A, int row, int minimumIndexAbove, int minimumIndexBelow) {
+    private static int mongeLeftmostMinimumIndex(Matrix<Double> A, int row, int minimumIndexAbove, int minimumIndexBelow) {
         int leftmostMinimumIndex = minimumIndexAbove;
         double leftmostMinimum = A.at(row, leftmostMinimumIndex);
         for (int column = minimumIndexAbove + 1; column <= minimumIndexBelow; column++) {

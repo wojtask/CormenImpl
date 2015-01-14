@@ -41,12 +41,12 @@ public class Chapter4Test {
     @DataProvider
     public static Object[][] provideDataForGettingLeftmostMinimaIndexesOfMongeArray() {
         return new Object[][]{
-                {new Matrix(new Double[]{0.0}), new Array<>(1)},
-                {new Matrix(
+                {new Matrix<>(new Double[]{0.0}), new Array<>(1)},
+                {new Matrix<>(
                         new Double[]{0.7,2.5},
                         new Double[]{1.5,3.2}
                 ), new Array<>(1,1)},
-                {new Matrix(
+                {new Matrix<>(
                         new Double[]{10.0,17.0,13.0,28.0,23.0},
                         new Double[]{17.0,22.0,16.0,29.0,23.0},
                         new Double[]{24.0,28.0,22.0,34.0,24.0},
@@ -55,7 +55,7 @@ public class Chapter4Test {
                         new Double[]{36.0,33.0,19.0,21.0, 6.0},
                         new Double[]{75.0,66.0,51.0,53.0,34.0}
                 ), new Array<>(1,3,3,3,5,5,5)},
-                {new Matrix(
+                {new Matrix<>(
                         new Double[]{37.0,23.0,24.0,32.0},
                         new Double[]{21.0, 6.0, 7.0,10.0},
                         new Double[]{53.0,34.0,30.0,31.0},
