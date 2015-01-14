@@ -1,5 +1,8 @@
 package pl.kwojtas.cormenimpl;
 
+import pl.kwojtas.cormenimpl.util.Array;
+import pl.kwojtas.cormenimpl.util.Matrix;
+
 public class Chapter4 {
 
     private Chapter4() { }
@@ -78,13 +81,13 @@ public class Chapter4 {
     }
 
     // solution of 4-7(d)
+    @SuppressWarnings("unchecked")
     private static Array<Integer> mongeLeftmostMinimaIndexesOfEvenRows(Matrix<Double> A) {
         int m = A.rows;
         int n = A.columns;
-        Double[][] oddRows = new Double[m / 2][];
+        Array<Double>[] oddRows = new Array[m / 2];
         for (int i = 2; i <= m; i += 2) {
-            oddRows[i / 2 - 1] = new Double[n];
-            A.row(i).toArray(oddRows[i / 2 - 1]);
+            oddRows[i / 2 - 1] = A.row(i);
         }
         Matrix<Double> A_ = new Matrix<>(oddRows);
         return mongeLeftmostMinimaIndexes(A_);

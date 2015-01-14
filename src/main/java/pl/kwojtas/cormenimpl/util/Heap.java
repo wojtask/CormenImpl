@@ -1,4 +1,4 @@
-package pl.kwojtas.cormenimpl;
+package pl.kwojtas.cormenimpl.util;
 
 public class Heap<T> extends Array<T> {
 
@@ -8,7 +8,6 @@ public class Heap<T> extends Array<T> {
         super();
         this.heapSize = 0;
     }
-
     public Heap(Array<T> otherArray) {
         super(otherArray);
         this.heapSize = 0;

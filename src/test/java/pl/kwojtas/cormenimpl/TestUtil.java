@@ -1,5 +1,7 @@
 package pl.kwojtas.cormenimpl;
 
+import pl.kwojtas.cormenimpl.util.Array;
+
 import static org.junit.Assert.assertEquals;
 
 public class TestUtil {

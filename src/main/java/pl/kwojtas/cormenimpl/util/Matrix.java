@@ -1,4 +1,4 @@
-package pl.kwojtas.cormenimpl;
+package pl.kwojtas.cormenimpl.util;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -18,15 +18,27 @@ public class Matrix<T extends Number> {
             }
             this.data.add(new ArrayList<>(Arrays.asList(row)));
         }
-        this.rows = data.size();
+        this.rows = rows.length;
         this.columns = rows.length > 0 ? rows[0].length : 0;
     }
 
-    public ArrayList<T> row(int row) {
+    public Matrix(Array<T>[] rows) {
+        this.data = new ArrayList<>();
+        for (Array<T> row : rows) {
+            if (row.length != rows[0].length) {
+                throw new RuntimeException("Different sizes of rows");
+            }
+            this.data.add(new ArrayList<>(row.getData()));
+        }
+        this.rows = rows.length;
+        this.columns = rows.length > 0 ? rows[0].length : 0;
+    }
+
+    public Array<T> row(int row) {
         if (row < 1 || row > rows) {
             throw new RuntimeException("Matrix index out of bound");
         }
-        return data.get(row - 1);
+        return new Array<>(data.get(row - 1));
     }
 
     public T at(int row, int column) {

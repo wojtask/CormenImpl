@@ -1,10 +1,14 @@
 package pl.kwojtas.cormenimpl;
 
+import pl.kwojtas.cormenimpl.util.Array;
+import pl.kwojtas.cormenimpl.util.Heap;
+import pl.kwojtas.cormenimpl.util.Young;
+
 import static java.lang.Math.max;
 import static java.lang.Math.sqrt;
-import static pl.kwojtas.cormenimpl.Util.ceil;
-import static pl.kwojtas.cormenimpl.Util.greater;
-import static pl.kwojtas.cormenimpl.Util.less;
+import static pl.kwojtas.cormenimpl.util.Util.ceil;
+import static pl.kwojtas.cormenimpl.util.Util.greater;
+import static pl.kwojtas.cormenimpl.util.Util.less;
 
 public class Chapter6 {
 
@@ -44,25 +48,6 @@ public class Chapter6 {
         }
     }
 
-    // solution of 6.2-2
-    private static <T extends Comparable> void minHeapify(Heap<T> A, int i) {
-        int l = left(i);
-        int r = right(i);
-        int smallest;
-        if (l <= A.heapSize && less(A.at(l), A.at(i))) {
-            smallest = l;
-        } else {
-            smallest = i;
-        }
-        if (r <= A.heapSize && less(A.at(r), A.at(smallest))) {
-            smallest = r;
-        }
-        if (smallest != i) {
-            A.exch(i, smallest);
-            minHeapify(A, smallest);
-        }
-    }
-
     // subchapter 6.3
     private static <T extends Comparable> Heap<T> buildMaxHeap(Array<T> A) {
         Heap<T> H = new Heap<>(A);
@@ -84,29 +69,27 @@ public class Chapter6 {
         A.set(H);
     }
 
-    // for testing minHeapify
-    private static <T extends Comparable> Heap<T> buildMinHeap(Array<T> A) {
-        Heap<T> H = new Heap<>(A);
-        H.heapSize = H.length;
-        for (int i = H.length / 2; i >= 1; i--) {
-            minHeapify(H, i);
+    // solution of 6.2-2
+    public static <T extends Comparable> void minHeapify(Heap<T> A, int i) {
+        int l = left(i);
+        int r = right(i);
+        int smallest;
+        if (l <= A.heapSize && less(A.at(l), A.at(i))) {
+            smallest = l;
+        } else {
+            smallest = i;
         }
-        return H;
-    }
-
-    // for testing minHeapify
-    public static <T extends Comparable> void nonincreasingHeapsort(Array<T> A) {
-        Heap<T> H = buildMinHeap(A);
-        for (int i = H.length; i >= 2; i--) {
-            H.exch(1, i);
-            H.heapSize--;
-            minHeapify(H, 1);
+        if (r <= A.heapSize && less(A.at(r), A.at(smallest))) {
+            smallest = r;
         }
-        A.set(H);
+        if (smallest != i) {
+            A.exch(i, smallest);
+            minHeapify(A, smallest);
+        }
     }
 
     // solution of 6.2-5
-    private static <T extends Comparable> void iterativeMaxHeapify(Heap<T> A, int i) {
+    public static <T extends Comparable> void iterativeMaxHeapify(Heap<T> A, int i) {
         while (true) {
             int l = left(i);
             int r = right(i);
@@ -127,27 +110,6 @@ public class Chapter6 {
         }
     }
 
-    // for testing iterativeMaxHeapify
-    private static <T extends Comparable> Heap<T> buildMaxHeapUsingIterativeMaxHeapify(Array<T> A) {
-        Heap<T> H = new Heap<>(A);
-        H.heapSize = H.length;
-        for (int i = H.length / 2; i >= 1; i--) {
-            iterativeMaxHeapify(H, i);
-        }
-        return H;
-    }
-
-    // for testing iterativeMaxHeapify
-    public static <T extends Comparable> void heapsortUsingIterativeMaxHeapify(Array<T> A) {
-        Heap<T> H = buildMaxHeapUsingIterativeMaxHeapify(A);
-        for (int i = H.length; i >= 2; i--) {
-            H.exch(1, i);
-            H.heapSize--;
-            iterativeMaxHeapify(H, 1);
-        }
-        A.set(H);
-    }
-
     // subchapter 6.5
     public static int heapMaximum(Heap<Integer> A) {
         return A.at(1);
@@ -166,7 +128,7 @@ public class Chapter6 {
     }
 
     // subchapter 6.5
-    private static void heapIncreaseKey(Heap<Integer> A, int i, int key) {
+    public static void heapIncreaseKey(Heap<Integer> A, int i, int key) {
         if (key < A.at(i)) {
             throw new RuntimeException("new key is smaller than current key");
         }
@@ -202,7 +164,7 @@ public class Chapter6 {
     }
 
     // solution of 6.5-3
-    private static void heapDecreaseKey(Heap<Integer> A, int i, int key) {
+    public static void heapDecreaseKey(Heap<Integer> A, int i, int key) {
         if (key > A.at(i)) {
             throw new RuntimeException("new key is larger than current key");
         }
@@ -218,6 +180,140 @@ public class Chapter6 {
         A.heapSize++;
         A.set(A.heapSize, Integer.MAX_VALUE);
         heapDecreaseKey(A, A.heapSize, key);
+    }
+
+    private static class KeyWithRank<T> {
+        private T key;
+        private int rank;
+
+        public KeyWithRank(T key, int rank) {
+            this.key = key;
+            this.rank = rank;
+        }
+    }
+
+    // solution of 6.5-6
+    public static <T> void enqueueUsingPriorityQueue(Heap<KeyWithRank<T>> priorityQueue, T key) {
+        int rank = priorityQueue.heapSize + 1;
+        KeyWithRank<T> keyWithRank = new KeyWithRank<>(key, rank);
+        minHeapInsertWithRanks(priorityQueue, keyWithRank);
+    }
+
+    // solution of 6.5-6
+    private static <T> void minHeapInsertWithRanks(Heap<KeyWithRank<T>> A, KeyWithRank<T> keyWithRank) {
+        A.heapSize++;
+        A.set(A.heapSize, new KeyWithRank<>(keyWithRank.key, Integer.MAX_VALUE));
+        heapDecreaseRank(A, A.heapSize, keyWithRank.rank);
+    }
+
+    // solution of 6.5-6
+    private static <T> void heapDecreaseRank(Heap<KeyWithRank<T>> A, int i, int rank) {
+        if (rank > A.at(i).rank) {
+            throw new RuntimeException("new rank is larger than current rank");
+        }
+        A.at(i).rank = rank;
+        while (i > 1 && A.at(parent(i)).rank > A.at(i).rank) {
+            A.exch(i, parent(i));
+            i = parent(i);
+        }
+    }
+
+    // solution of 6.5-6
+    public static <T> T dequeueUsingPriorityQueue(Heap<KeyWithRank<T>> priorityQueue) {
+        return heapExtractMinWithRanks(priorityQueue).key;
+    }
+
+    // solution of 6.5-6
+    private static <T> KeyWithRank<T> heapExtractMinWithRanks(Heap<KeyWithRank<T>> A) {
+        if (A.heapSize < 1) {
+            throw new RuntimeException("heap underflow");
+        }
+        KeyWithRank<T> min = A.at(1);
+        A.set(1, A.at(A.heapSize));
+        A.heapSize--;
+        minHeapifyWithRanks(A, 1);
+        return min;
+    }
+
+    // solution of 6.5-6
+    private static <T> void minHeapifyWithRanks(Heap<KeyWithRank<T>> A, int i) {
+        int l = left(i);
+        int r = right(i);
+        int smallest;
+        if (l <= A.heapSize && A.at(l).rank < A.at(i).rank) {
+            smallest = l;
+        } else {
+            smallest = i;
+        }
+        if (r <= A.heapSize && A.at(r).rank < A.at(smallest).rank) {
+            smallest = r;
+        }
+        if (smallest != i) {
+            A.exch(i, smallest);
+            minHeapifyWithRanks(A, smallest);
+        }
+    }
+
+    // solution of 6.5-6
+    public static <T> void pushUsingPriorityQueue(Heap<KeyWithRank<T>> priorityQueue, T key) {
+        int rank = priorityQueue.heapSize + 1;
+        KeyWithRank<T> keyWithRank = new KeyWithRank<>(key, rank);
+        maxHeapInsertWithRanks(priorityQueue, keyWithRank);
+    }
+
+    // solution of 6.5-6
+    private static <T> void maxHeapInsertWithRanks(Heap<KeyWithRank<T>> A, KeyWithRank<T> keyWithRank) {
+        A.heapSize++;
+        A.set(A.heapSize, new KeyWithRank<>(keyWithRank.key, Integer.MIN_VALUE));
+        heapIncreaseRank(A, A.heapSize, keyWithRank.rank);
+    }
+
+    // solution of 6.5-6
+    private static <T> void heapIncreaseRank(Heap<KeyWithRank<T>> A, int i, int rank) {
+        if (rank < A.at(i).rank) {
+            throw new RuntimeException("new rank is smaller than current rank");
+        }
+        A.at(i).rank = rank;
+        while (i > 1 && A.at(parent(i)).rank < A.at(i).rank) {
+            A.exch(i, parent(i));
+            i = parent(i);
+        }
+    }
+
+    // solution of 6.5-6
+    public static <T> T popUsingPriorityQueue(Heap<KeyWithRank<T>> priorityQueue) {
+        return heapExtractMaxWithRanks(priorityQueue).key;
+    }
+
+    // solution of 6.5-6
+    private static <T> KeyWithRank<T> heapExtractMaxWithRanks(Heap<KeyWithRank<T>> A) {
+        if (A.heapSize < 1) {
+            throw new RuntimeException("heap underflow");
+        }
+        KeyWithRank<T> max = A.at(1);
+        A.set(1, A.at(A.heapSize));
+        A.heapSize--;
+        maxHeapifyWithRanks(A, 1);
+        return max;
+    }
+
+    // solution of 6.5-6
+    private static <T> void maxHeapifyWithRanks(Heap<KeyWithRank<T>> A, int i) {
+        int l = left(i);
+        int r = right(i);
+        int largest;
+        if (l <= A.heapSize && A.at(l).rank > A.at(i).rank) {
+            largest = l;
+        } else {
+            largest = i;
+        }
+        if (r <= A.heapSize && A.at(r).rank > A.at(largest).rank) {
+            largest = r;
+        }
+        if (largest != i) {
+            A.exch(i, largest);
+            maxHeapifyWithRanks(A, largest);
+        }
     }
 
     // solution of 6.5-7
@@ -242,17 +338,6 @@ public class Chapter6 {
         return H;
     }
 
-    // for testing buildMaxHeap_
-    public static void heapsort_(Array<Integer> A) {
-        Heap<Integer> H = buildMaxHeap_(A);
-        for (int i = H.length; i >= 2; i--) {
-            H.exch(1, i);
-            H.heapSize--;
-            maxHeapify(H, 1);
-        }
-        A.set(H);
-    }
-
     // solution of 6-2(a)
     private static int dAryParent(int d, int i) {
         return ceil(i - 1, d);
@@ -264,7 +349,7 @@ public class Chapter6 {
     }
 
     // solution of 6-2(c)
-    private static void dAryMaxHeapify(Heap<Integer> A, int d, int i) {
+    public static void dAryMaxHeapify(Heap<Integer> A, int d, int i) {
         int largest = i;
         int k = 1;
         int child = dAryChild(d, 1, i);
@@ -282,14 +367,14 @@ public class Chapter6 {
     }
 
     // solution of 6-2(d)
-    private static void dAryMaxHeapInsert(Heap<Integer> A, int d, int key) {
+    public static void dAryMaxHeapInsert(Heap<Integer> A, int d, int key) {
         A.heapSize++;
         A.set(A.heapSize, Integer.MIN_VALUE);
         dAryHeapIncreaseKey(A, d, A.heapSize, key);
     }
 
     // solution of 6-2(e)
-    private static void dAryHeapIncreaseKey(Heap<Integer> A, int d, int i, int k) {
+    public static void dAryHeapIncreaseKey(Heap<Integer> A, int d, int i, int k) {
         A.set(i, max(A.at(i), k));
         while (i > 1 && A.at(dAryParent(d, i)) < A.at(i)) {
             A.exch(i, dAryParent(d, i));
@@ -298,7 +383,7 @@ public class Chapter6 {
     }
 
     // solution of 6-3(c)
-    private static int youngExractMin(Young Y, int m, int n, int i, int j) {
+    private static int youngExtractMin(Young Y, int m, int n, int i, int j) {
         if (i == m && j == n) {
             int min = Y.at(i, j);
             Y.set(i, j, Integer.MAX_VALUE);
@@ -312,7 +397,7 @@ public class Chapter6 {
             }
         }
         Y.exch(i, j, i_, j_);
-        return youngExractMin(Y, m, n, i_, j_);
+        return youngExtractMin(Y, m, n, i_, j_);
     }
 
     // solution of 6-3(d)
@@ -339,19 +424,19 @@ public class Chapter6 {
     }
 
     // solution of 6-3(e)
-    private static void youngSort(Array<Integer> A) {
+    public static void youngSort(Array<Integer> A) {
         int n = (int) sqrt(A.length);
         Young Y = new Young(n, n);
         for (int i = 1; i <= n * n; i++) {
             youngInsert(Y, n, n, A.at(i));
         }
         for (int i = 1; i <= n * n; i++) {
-            A.set(i, youngExractMin(Y, n, n, 1, 1));
+            A.set(i, youngExtractMin(Y, n, n, 1, 1));
         }
     }
 
     // solution of 6-3(f)
-    private static boolean youngSearch(Matrix<Integer> Y, int m, int n, double v) {
+    public static boolean youngSearch(Young Y, int m, int n, double v) {
         int i = 1;
         int j = n;
         while (i <= m && j >= 1) {

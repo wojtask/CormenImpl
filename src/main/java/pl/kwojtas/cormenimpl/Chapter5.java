@@ -1,5 +1,8 @@
 package pl.kwojtas.cormenimpl;
 
+import pl.kwojtas.cormenimpl.util.Array;
+import pl.kwojtas.cormenimpl.util.Util;
+
 import java.util.Random;
 
 public class Chapter5 {

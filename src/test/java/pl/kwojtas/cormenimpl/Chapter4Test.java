@@ -5,6 +5,8 @@ import com.tngtech.java.junit.dataprovider.DataProviderRunner;
 import com.tngtech.java.junit.dataprovider.UseDataProvider;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import pl.kwojtas.cormenimpl.util.Array;
+import pl.kwojtas.cormenimpl.util.Matrix;
 
 import static org.junit.Assert.assertEquals;
 import static pl.kwojtas.cormenimpl.TestUtil.assertArrayEquals;

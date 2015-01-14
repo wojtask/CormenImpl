@@ -1,4 +1,4 @@
-package pl.kwojtas.cormenimpl;
+package pl.kwojtas.cormenimpl.util;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -13,11 +13,21 @@ public class Array<T> {
     public Array(T... elements) {
         this.data = new ArrayList<>(Arrays.asList(elements));
         this.firstPosition = 1;
-        this.length = data.size();
+        this.length = elements.length;
     }
 
     public Array(Array<T> otherArray) {
         set(otherArray);
+    }
+
+    Array(ArrayList<T> otherArrayList) {
+        this.data = new ArrayList<>(otherArrayList);
+        this.firstPosition = 1;
+        this.length = otherArrayList.size();
+    }
+
+    ArrayList<T> getData() {
+        return data;
     }
 
     public Array<T> withFirstPosition(int firstPosition) {

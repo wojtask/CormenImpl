@@ -5,6 +5,7 @@ import com.tngtech.java.junit.dataprovider.DataProviderRunner;
 import com.tngtech.java.junit.dataprovider.UseDataProvider;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import pl.kwojtas.cormenimpl.util.Array;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -99,7 +100,7 @@ public class Chapter2Test {
 
     @Test
     @UseDataProvider("provideDataForUnsuccessfulLinearSearch")
-    public <T> void shouldNotFindKeyUsingLinearSeach(Array<T> array, T key) {
+    public <T> void shouldNotFindKeyUsingLinearSearch(Array<T> array, T key) {
         // given
 
         // when

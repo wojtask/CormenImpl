@@ -5,6 +5,7 @@ import com.tngtech.java.junit.dataprovider.DataProviderRunner;
 import com.tngtech.java.junit.dataprovider.UseDataProvider;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import pl.kwojtas.cormenimpl.util.Array;
 
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;

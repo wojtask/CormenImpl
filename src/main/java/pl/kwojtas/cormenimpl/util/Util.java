@@ -1,4 +1,4 @@
-package pl.kwojtas.cormenimpl;
+package pl.kwojtas.cormenimpl.util;
 
 import java.util.Random;
 

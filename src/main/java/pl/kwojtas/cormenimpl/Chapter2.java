@@ -1,8 +1,10 @@
 package pl.kwojtas.cormenimpl;
 
-import static pl.kwojtas.cormenimpl.Util.greater;
-import static pl.kwojtas.cormenimpl.Util.leq;
-import static pl.kwojtas.cormenimpl.Util.less;
+import pl.kwojtas.cormenimpl.util.Array;
+
+import static pl.kwojtas.cormenimpl.util.Util.greater;
+import static pl.kwojtas.cormenimpl.util.Util.leq;
+import static pl.kwojtas.cormenimpl.util.Util.less;
 
 public class Chapter2 {
 
