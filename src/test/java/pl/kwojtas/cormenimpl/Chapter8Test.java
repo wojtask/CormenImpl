@@ -36,6 +36,19 @@ public class Chapter8Test {
         assertArrayEquals(expectedSorted, actualSorted);
     }
 
+    @Test
+    @UseDataProvider("provideDataForCountingSort")
+    public void shouldSortArrayUsingNonStableCountingSort(Array<Integer> array, Array<Integer> expectedSorted, int boundary) {
+        // given
+        Array<Integer> actualSorted = new Array<>();
+
+        // when
+        Chapter8.nonStableCountingSort(array, actualSorted, boundary);
+
+        // then
+        assertArrayEquals(expectedSorted, actualSorted);
+    }
+
     @DataProvider
     public static Object[][] provideDataForCountingNumbersInRange() {
         return new Object[][]{
@@ -62,6 +75,28 @@ public class Chapter8Test {
 
         // then
         assertEquals(expectedInRange, actualInRange);
+    }
+
+    @DataProvider
+    public static Object[][] provideDataForRadixSort() {
+        return new Object[][]{
+                {new Array<>(34), 2, new Array<>(34)},
+                {new Array<>(3,2,1,0), 1, new Array<>(0,1,2,3)},
+                {new Array<>(345,765,439,89,123,417,688), 3, new Array<>(89,123,345,417,439,688,765)},
+                {new Array<>(24015,44036,14014,62027,55033,19012,63032), 5, new Array<>(14014,19012,24015,44036,55033,62027,63032)}
+        };
+    }
+
+    @Test
+    @UseDataProvider("provideDataForRadixSort")
+    public void shouldSortArrayUsingRadixSort(Array<Integer> array, int digits, Array<Integer> expectedSorted) {
+        // given
+
+        // when
+        Chapter8.radixSort(array, digits);
+
+        // then
+        assertArrayEquals(expectedSorted, array);
     }
 
 }
