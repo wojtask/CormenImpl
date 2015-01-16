@@ -72,26 +72,26 @@ public class Chapter8 {
     // subchapter 8.3
     public static void radixSort(Array<Integer> A, int d) {
         for (int i = 1; i <= d; i++) {
-            stableSortOnDigit(A, i);
+            stableSortOnDigit(A, i, 10);
         }
     }
 
     // subchapter 8.3
-    private static void stableSortOnDigit(Array<Integer> A, int digit) {
+    private static void stableSortOnDigit(Array<Integer> A, int digit, int k) {
         Array<Integer> C = new Array<Integer>().withFirstPosition(0);
-        for (int i = 0; i <= 9; i++) {
+        for (int i = 0; i <= k - 1; i++) {
             C.set(i, 0);
         }
         for (int j = 1; j <= A.length; j++) {
-            C.set(getDigit(A.at(j), digit), C.at(getDigit(A.at(j), digit)) + 1);
+            C.set(getDigit(A.at(j), digit, k), C.at(getDigit(A.at(j), digit, k)) + 1);
         }
-        for (int i = 1; i <= 9; i++) {
+        for (int i = 1; i <= k - 1; i++) {
             C.set(i, C.at(i) + C.at(i - 1));
         }
         Array<Integer> B = new Array<>(A);
         for (int j = A.length; j >= 1; j--) {
-            B.set(C.at(getDigit(A.at(j), digit)), A.at(j));
-            C.set(getDigit(A.at(j), digit), C.at(getDigit(A.at(j), digit)) - 1);
+            B.set(C.at(getDigit(A.at(j), digit, k)), A.at(j));
+            C.set(getDigit(A.at(j), digit, k), C.at(getDigit(A.at(j), digit, k)) - 1);
         }
         for (int j = 1; j <= A.length; j++) {
             A.set(j, B.at(j));
@@ -99,13 +99,19 @@ public class Chapter8 {
     }
 
     // subchapter 8.3
-    private static int getDigit(int number, int digit) {
+    private static int getDigit(int number, int digit, int k) {
         while (digit > 1) {
-            number /= 10;
+            number /= k;
             digit--;
         }
-        return number % 10;
+        return number % k;
     }
 
+    // solution of 8.3-4
+    public static void sortNSquaredNumbers(Array<Integer> A) {
+        int n = A.length;
+        stableSortOnDigit(A, 1, n);
+        stableSortOnDigit(A, 2, n);
+    }
 
 }

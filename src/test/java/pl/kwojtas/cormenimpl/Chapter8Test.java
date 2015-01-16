@@ -99,4 +99,26 @@ public class Chapter8Test {
         assertArrayEquals(expectedSorted, array);
     }
 
+    @DataProvider
+    public static Object[][] provideDataForSortingNSquaredNumbers() {
+        return new Object[][]{
+                {new Array<>(0), new Array<>(0)},
+                {new Array<>(3,2,1,0), new Array<>(0,1,2,3)},
+                {new Array<>(22,48,1,0,45,26,15), new Array<>(0,1,15,22,26,45,48)},
+                {new Array<>(15,56,25,66,23,92,2,45,7,39), new Array<>(2,7,15,23,25,39,45,56,66,92)}
+        };
+    }
+
+    @Test
+    @UseDataProvider("provideDataForSortingNSquaredNumbers")
+    public void shouldSortNSquaredNumbers(Array<Integer> array, Array<Integer> expectedSorted) {
+        // given
+
+        // when
+        Chapter8.sortNSquaredNumbers(array);
+
+        // then
+        assertArrayEquals(expectedSorted, array);
+    }
+
 }
