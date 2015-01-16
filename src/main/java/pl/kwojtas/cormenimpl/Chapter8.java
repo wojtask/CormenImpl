@@ -25,7 +25,7 @@ public class Chapter8 {
     }
 
     // solution of 8.2-4
-    public static int inRangeCount(Array<Integer> A, int k, int a, int b) {
+    public static int countNumbersInRange(Array<Integer> A, int k, int a, int b) {
         Array<Integer> C = new Array<Integer>().withFirstPosition(0);
         for (int i = 0; i <= k; i++) {
             C.set(i, 0);

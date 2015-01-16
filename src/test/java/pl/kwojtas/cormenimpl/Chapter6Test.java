@@ -477,6 +477,70 @@ public class Chapter6Test {
     }
 
     @DataProvider
+    public static Object[][] provideDataForFifoQueueOperationsUsingPriorityQueue() {
+        return new Object[][]{
+                {new Array<>(34,null), new Array<>()},
+                {new Array<>(4,1,3,null,8,null), new Array<>(3,8)},
+                {new Array<>(3.14,-0.53,null,-1.54,null,2.23), new Array<>(-1.54,2.23)},
+                {new Array<>("eee",null,"ccc","aaa",null), new Array<>("aaa")}
+        };
+    }
+
+    @Test
+    @UseDataProvider("provideDataForFifoQueueOperationsUsingPriorityQueue")
+    public <T extends Comparable> void shouldPerformFifoQueueOperationsUsingPriorityQueue(Array<T> contents, Array<T> expectedContents) {
+        // given
+        Chapter6.PriorityQueueWithRanks<T> priorityQueue = new Chapter6.PriorityQueueWithRanks<>();
+
+        // when
+        for (int i = 1; i <= contents.length; i++) {
+            if (contents.at(i) != null) {
+                Chapter6.enqueueUsingPriorityQueue(priorityQueue, contents.at(i));
+            } else {
+                Chapter6.dequeueUsingPriorityQueue(priorityQueue);
+            }
+        }
+
+        // then
+        for (int i = 1; i <= expectedContents.length; i++) {
+            assertEquals(expectedContents.at(i), Chapter6.dequeueUsingPriorityQueue(priorityQueue));
+        }
+        assertEquals(0, priorityQueue.heapSize);
+    }
+
+    @DataProvider
+    public static Object[][] provideDataForStackOperationsUsingPriorityQueue() {
+        return new Object[][]{
+                {new Array<>(34,null), new Array<>()},
+                {new Array<>(4,1,3,null,8,null), new Array<>(1,4)},
+                {new Array<>(3.14,-0.53,null,-1.54,null,2.23), new Array<>(2.23,3.14)},
+                {new Array<>("eee",null,"ccc","aaa",null), new Array<>("ccc")}
+        };
+    }
+
+    @Test
+    @UseDataProvider("provideDataForStackOperationsUsingPriorityQueue")
+    public <T extends Comparable> void shouldPerformStackOperationsUsingPriorityQueue(Array<T> contents, Array<T> expectedContents) {
+        // given
+        Chapter6.PriorityQueueWithRanks<T> priorityQueue = new Chapter6.PriorityQueueWithRanks<>();
+
+        // when
+        for (int i = 1; i <= contents.length; i++) {
+            if (contents.at(i) != null) {
+                Chapter6.pushUsingPriorityQueue(priorityQueue, contents.at(i));
+            } else {
+                Chapter6.popUsingPriorityQueue(priorityQueue);
+            }
+        }
+
+        // then
+        for (int i = 1; i <= expectedContents.length; i++) {
+            assertEquals(expectedContents.at(i), Chapter6.popUsingPriorityQueue(priorityQueue));
+        }
+        assertEquals(0, priorityQueue.heapSize);
+    }
+
+    @DataProvider
     public static Object[][] provideDataForYoungSort() {
         return new Object[][]{
                 {new Array<>(34), new Array<>(34)},

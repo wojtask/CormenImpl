@@ -192,127 +192,140 @@ public class Chapter6 {
         }
     }
 
+    public static class PriorityQueueWithRanks<T> extends Heap<KeyWithRank<T>> {
+        private int currentRank;
+
+        public PriorityQueueWithRanks() {
+            currentRank = 0;
+        }
+
+        public int getCurrentRank() {
+            currentRank++;
+            return currentRank;
+        }
+    }
+
     // solution of 6.5-6
-    public static <T> void enqueueUsingPriorityQueue(Heap<KeyWithRank<T>> priorityQueue, T key) {
-        int rank = priorityQueue.heapSize + 1;
+    public static <T> void enqueueUsingPriorityQueue(PriorityQueueWithRanks<T> priorityQueue, T key) {
+        int rank = priorityQueue.getCurrentRank();
         KeyWithRank<T> keyWithRank = new KeyWithRank<>(key, rank);
         minHeapInsertWithRanks(priorityQueue, keyWithRank);
     }
 
     // solution of 6.5-6
-    private static <T> void minHeapInsertWithRanks(Heap<KeyWithRank<T>> A, KeyWithRank<T> keyWithRank) {
-        A.heapSize++;
-        A.set(A.heapSize, new KeyWithRank<>(keyWithRank.key, Integer.MAX_VALUE));
-        heapDecreaseRank(A, A.heapSize, keyWithRank.rank);
+    private static <T> void minHeapInsertWithRanks(PriorityQueueWithRanks<T> priorityQueue, KeyWithRank<T> keyWithRank) {
+        priorityQueue.heapSize++;
+        priorityQueue.set(priorityQueue.heapSize, new KeyWithRank<>(keyWithRank.key, Integer.MAX_VALUE));
+        heapDecreaseRank(priorityQueue, priorityQueue.heapSize, keyWithRank.rank);
     }
 
     // solution of 6.5-6
-    private static <T> void heapDecreaseRank(Heap<KeyWithRank<T>> A, int i, int rank) {
-        if (rank > A.at(i).rank) {
+    private static <T> void heapDecreaseRank(PriorityQueueWithRanks<T> priorityQueue, int i, int rank) {
+        if (rank > priorityQueue.at(i).rank) {
             throw new RuntimeException("new rank is larger than current rank");
         }
-        A.at(i).rank = rank;
-        while (i > 1 && A.at(parent(i)).rank > A.at(i).rank) {
-            A.exch(i, parent(i));
+        priorityQueue.at(i).rank = rank;
+        while (i > 1 && priorityQueue.at(parent(i)).rank > priorityQueue.at(i).rank) {
+            priorityQueue.exch(i, parent(i));
             i = parent(i);
         }
     }
 
     // solution of 6.5-6
-    public static <T> T dequeueUsingPriorityQueue(Heap<KeyWithRank<T>> priorityQueue) {
+    public static <T> T dequeueUsingPriorityQueue(PriorityQueueWithRanks<T> priorityQueue) {
         return heapExtractMinWithRanks(priorityQueue).key;
     }
 
     // solution of 6.5-6
-    private static <T> KeyWithRank<T> heapExtractMinWithRanks(Heap<KeyWithRank<T>> A) {
-        if (A.heapSize < 1) {
-            throw new RuntimeException("heap underflow");
+    private static <T> KeyWithRank<T> heapExtractMinWithRanks(PriorityQueueWithRanks<T> priorityQueue) {
+        if (priorityQueue.heapSize < 1) {
+            throw new RuntimeException("queue underflow");
         }
-        KeyWithRank<T> min = A.at(1);
-        A.set(1, A.at(A.heapSize));
-        A.heapSize--;
-        minHeapifyWithRanks(A, 1);
+        KeyWithRank<T> min = priorityQueue.at(1);
+        priorityQueue.set(1, priorityQueue.at(priorityQueue.heapSize));
+        priorityQueue.heapSize--;
+        minHeapifyWithRanks(priorityQueue, 1);
         return min;
     }
 
     // solution of 6.5-6
-    private static <T> void minHeapifyWithRanks(Heap<KeyWithRank<T>> A, int i) {
+    private static <T> void minHeapifyWithRanks(PriorityQueueWithRanks<T> priorityQueue, int i) {
         int l = left(i);
         int r = right(i);
         int smallest;
-        if (l <= A.heapSize && A.at(l).rank < A.at(i).rank) {
+        if (l <= priorityQueue.heapSize && priorityQueue.at(l).rank < priorityQueue.at(i).rank) {
             smallest = l;
         } else {
             smallest = i;
         }
-        if (r <= A.heapSize && A.at(r).rank < A.at(smallest).rank) {
+        if (r <= priorityQueue.heapSize && priorityQueue.at(r).rank < priorityQueue.at(smallest).rank) {
             smallest = r;
         }
         if (smallest != i) {
-            A.exch(i, smallest);
-            minHeapifyWithRanks(A, smallest);
+            priorityQueue.exch(i, smallest);
+            minHeapifyWithRanks(priorityQueue, smallest);
         }
     }
 
     // solution of 6.5-6
-    public static <T> void pushUsingPriorityQueue(Heap<KeyWithRank<T>> priorityQueue, T key) {
-        int rank = priorityQueue.heapSize + 1;
+    public static <T> void pushUsingPriorityQueue(PriorityQueueWithRanks<T> priorityQueue, T key) {
+        int rank = priorityQueue.getCurrentRank();
         KeyWithRank<T> keyWithRank = new KeyWithRank<>(key, rank);
         maxHeapInsertWithRanks(priorityQueue, keyWithRank);
     }
 
     // solution of 6.5-6
-    private static <T> void maxHeapInsertWithRanks(Heap<KeyWithRank<T>> A, KeyWithRank<T> keyWithRank) {
-        A.heapSize++;
-        A.set(A.heapSize, new KeyWithRank<>(keyWithRank.key, Integer.MIN_VALUE));
-        heapIncreaseRank(A, A.heapSize, keyWithRank.rank);
+    private static <T> void maxHeapInsertWithRanks(PriorityQueueWithRanks<T> priorityQueue, KeyWithRank<T> keyWithRank) {
+        priorityQueue.heapSize++;
+        priorityQueue.set(priorityQueue.heapSize, new KeyWithRank<>(keyWithRank.key, Integer.MIN_VALUE));
+        heapIncreaseRank(priorityQueue, priorityQueue.heapSize, keyWithRank.rank);
     }
 
     // solution of 6.5-6
-    private static <T> void heapIncreaseRank(Heap<KeyWithRank<T>> A, int i, int rank) {
-        if (rank < A.at(i).rank) {
+    private static <T> void heapIncreaseRank(PriorityQueueWithRanks<T> priorityQueue, int i, int rank) {
+        if (rank < priorityQueue.at(i).rank) {
             throw new RuntimeException("new rank is smaller than current rank");
         }
-        A.at(i).rank = rank;
-        while (i > 1 && A.at(parent(i)).rank < A.at(i).rank) {
-            A.exch(i, parent(i));
+        priorityQueue.at(i).rank = rank;
+        while (i > 1 && priorityQueue.at(parent(i)).rank < priorityQueue.at(i).rank) {
+            priorityQueue.exch(i, parent(i));
             i = parent(i);
         }
     }
 
     // solution of 6.5-6
-    public static <T> T popUsingPriorityQueue(Heap<KeyWithRank<T>> priorityQueue) {
+    public static <T> T popUsingPriorityQueue(PriorityQueueWithRanks<T> priorityQueue) {
         return heapExtractMaxWithRanks(priorityQueue).key;
     }
 
     // solution of 6.5-6
-    private static <T> KeyWithRank<T> heapExtractMaxWithRanks(Heap<KeyWithRank<T>> A) {
-        if (A.heapSize < 1) {
-            throw new RuntimeException("heap underflow");
+    private static <T> KeyWithRank<T> heapExtractMaxWithRanks(PriorityQueueWithRanks<T> priorityQueue) {
+        if (priorityQueue.heapSize < 1) {
+            throw new RuntimeException("stack underflow");
         }
-        KeyWithRank<T> max = A.at(1);
-        A.set(1, A.at(A.heapSize));
-        A.heapSize--;
-        maxHeapifyWithRanks(A, 1);
+        KeyWithRank<T> max = priorityQueue.at(1);
+        priorityQueue.set(1, priorityQueue.at(priorityQueue.heapSize));
+        priorityQueue.heapSize--;
+        maxHeapifyWithRanks(priorityQueue, 1);
         return max;
     }
 
     // solution of 6.5-6
-    private static <T> void maxHeapifyWithRanks(Heap<KeyWithRank<T>> A, int i) {
+    private static <T> void maxHeapifyWithRanks(PriorityQueueWithRanks<T> priorityQueue, int i) {
         int l = left(i);
         int r = right(i);
         int largest;
-        if (l <= A.heapSize && A.at(l).rank > A.at(i).rank) {
+        if (l <= priorityQueue.heapSize && priorityQueue.at(l).rank > priorityQueue.at(i).rank) {
             largest = l;
         } else {
             largest = i;
         }
-        if (r <= A.heapSize && A.at(r).rank > A.at(largest).rank) {
+        if (r <= priorityQueue.heapSize && priorityQueue.at(r).rank > priorityQueue.at(largest).rank) {
             largest = r;
         }
         if (largest != i) {
-            A.exch(i, largest);
-            maxHeapifyWithRanks(A, largest);
+            priorityQueue.exch(i, largest);
+            maxHeapifyWithRanks(priorityQueue, largest);
         }
     }
 
