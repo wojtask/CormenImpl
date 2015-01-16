@@ -23,7 +23,7 @@ public class Chapter7 {
     }
 
     // subchapter 7.1
-    private static <T extends Comparable> int partition(Array<T> A, int p, int r) {
+    public static <T extends Comparable> int partition(Array<T> A, int p, int r) {
         T x = A.at(r);
         int i = p - 1;
         for (int j = p; j <= r - 1; j++) {

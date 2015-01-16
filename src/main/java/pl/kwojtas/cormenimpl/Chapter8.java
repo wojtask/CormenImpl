@@ -2,6 +2,8 @@ package pl.kwojtas.cormenimpl;
 
 import pl.kwojtas.cormenimpl.util.Array;
 
+import static pl.kwojtas.cormenimpl.Chapter5.random;
+
 public class Chapter8 {
 
     private Chapter8() { }
@@ -155,5 +157,63 @@ public class Chapter8 {
         }
     }
 
+    // solution of 8-4(a)
+    public static void naiveJugsSort(Array<Double> R, Array<Double> B) {
+        int n = R.length;
+        for (int i = 1; i <= n - 1; i++) {
+            int j = i + 1;
+            while (!R.at(i).equals(B.at(j))) {
+                j++;
+            }
+            B.exch(i, j);
+        }
+    }
+
+    // solution of 8-4(c)
+    public static void jugsSort(Array<Double> R, Array<Double> B, int p, int r) {
+        if (p < r) {
+            int q = jugsPartition(R, B, p, r);
+            jugsSort(R, B, p, q - 1);
+            jugsSort(R, B, q + 1, r);
+        }
+    }
+
+    // solution of 8-4(c)
+    private static int jugsPartition(Array<Double> R, Array<Double> B, int p, int r) {
+        R.exch(r, random(p, r));
+        double x = R.at(r);
+        int i = p;
+        while (!B.at(i).equals(x)) {
+            i++;
+        }
+        B.exch(i, r);
+        i = p - 1;
+        for (int j = p; j <= r - 1; j++) {
+            if (B.at(j) < x) {
+                i++;
+                B.exch(i, j);
+            }
+        }
+        B.exch(i + 1, r);
+        x = B.at(i + 1);
+        i = p - 1;
+        for (int j = p; j <= r - 1; j++) {
+            if (R.at(j) < x) {
+                i++;
+                R.exch(i, j);
+            }
+        }
+        R.exch(i + 1, r);
+        return i + 1;
+    }
+
+    // solution of 8-5(d)
+    public static void kSort(Array<Integer> A, int k, int p, int r) {
+        if (p + k - 1 < r) {
+            int q = Chapter7.partition(A, p, r);
+            kSort(A, k, p, q - 1);
+            kSort(A, k, q + 1, r);
+        }
+    }
 
 }
