@@ -121,4 +121,26 @@ public class Chapter8Test {
         assertArrayEquals(expectedSorted, array);
     }
 
+    @DataProvider
+    public static Object[][] provideDataForSortingUsingBitwiseSort() {
+        return new Object[][]{
+                {new Array<>(0), new Array<>(0)},
+                {new Array<>(0,1), new Array<>(0,1)},
+                {new Array<>(1,1,0,1), new Array<>(0,1,1,1)},
+                {new Array<>(1,1,1,0,1,1,1,1,1,0,0), new Array<>(0,0,0,1,1,1,1,1,1,1,1)}
+        };
+    }
+
+    @Test
+    @UseDataProvider("provideDataForSortingUsingBitwiseSort")
+    public void shouldSortArrayUsingBitwiseSort(Array<Integer> array, Array<Integer> expectedSorted) {
+        // given
+
+        // when
+        Chapter8.bitwiseSort(array);
+
+        // then
+        assertArrayEquals(expectedSorted, array);
+    }
+
 }

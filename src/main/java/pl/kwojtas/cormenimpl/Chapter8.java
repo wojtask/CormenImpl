@@ -114,4 +114,21 @@ public class Chapter8 {
         stableSortOnDigit(A, 2, n);
     }
 
+    // solution of 8-2(b)
+    public static void bitwiseSort(Array<Integer> A) {
+        int n = A.length;
+        int i = 1;
+        int j = n;
+        while (i < j) {
+            A.exch(i, j);
+            while (i <= n && A.at(i).equals(0)) {
+                i++;
+            }
+            while (j >= 1 && A.at(j).equals(1)) {
+                j--;
+            }
+        }
+
+    }
+
 }
