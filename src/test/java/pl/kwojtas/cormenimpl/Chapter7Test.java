@@ -6,10 +6,12 @@ import com.tngtech.java.junit.dataprovider.UseDataProvider;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import pl.kwojtas.cormenimpl.util.Array;
-import pl.kwojtas.cormenimpl.util.Pair;
+import pl.kwojtas.cormenimpl.util.Interval;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static pl.kwojtas.cormenimpl.Chapter5.random;
+import static pl.kwojtas.cormenimpl.TestUtil.assertArrayContains;
 import static pl.kwojtas.cormenimpl.TestUtil.assertArrayEquals;
 import static pl.kwojtas.cormenimpl.util.Util.geq;
 import static pl.kwojtas.cormenimpl.util.Util.leq;
@@ -142,35 +144,35 @@ public class Chapter7Test {
     public static Object[][] provideDataForFuzzySorting() {
         return new Object[][]{
                 {new Array<>(
-                        new Pair<>(34.0, 34.0)
+                        new Interval(34.0, 34.0)
                 )},
                 {new Array<>(
-                        new Pair<>(3.0, 5.0),
-                        new Pair<>(2.0, 2.5),
-                        new Pair<>(1.9, 5.1)
+                        new Interval(3.0, 5.0),
+                        new Interval(2.0, 2.5),
+                        new Interval(1.9, 5.1)
                 )},
                 {new Array<>(
-                        new Pair<>(5.0, 7.0),
-                        new Pair<>(2.0, 9.0),
-                        new Pair<>(6.0, 8.0),
-                        new Pair<>(6.0, 6.0),
-                        new Pair<>(1.0, 3.0),
-                        new Pair<>(7.0, 8.0)
+                        new Interval(5.0, 7.0),
+                        new Interval(2.0, 9.0),
+                        new Interval(6.0, 8.0),
+                        new Interval(6.0, 6.0),
+                        new Interval(1.0, 3.0),
+                        new Interval(7.0, 8.0)
                 )},
                 {new Array<>(
-                        new Pair<>(1.0, 2.0),
-                        new Pair<>(3.0, 5.0),
-                        new Pair<>(6.0, 6.0),
-                        new Pair<>(6.0, 7.0),
-                        new Pair<>(7.0, 8.0),
-                        new Pair<>(8.0, 9.0)
+                        new Interval(1.0, 2.0),
+                        new Interval(3.0, 5.0),
+                        new Interval(6.0, 6.0),
+                        new Interval(6.0, 7.0),
+                        new Interval(7.0, 8.0),
+                        new Interval(8.0, 9.0)
                 )}
         };
     }
 
     @Test
     @UseDataProvider("provideDataForFuzzySorting")
-    public void shouldSortUsingFuzzySort(Array<Pair<Double, Double>> intervals) {
+    public void shouldSortUsingFuzzySort(Array<Interval> intervals) {
         // given
 
         // when
@@ -180,22 +182,23 @@ public class Chapter7Test {
         assertArrayFuzzySorted(intervals);
     }
 
-    private <T extends Comparable> void assertArrayPartitioned(Array<T> expectedPartitioned, int pivotIndex, Array<T> originalArray) {
+    private static <T extends Comparable> void assertArrayPartitioned(Array<T> expectedPartitioned, int pivotIndex, Array<T> originalArray) {
+        assertEquals(expectedPartitioned.length, originalArray.length);
+        for (int i = 1; i <= originalArray.length; i++) {
+            assertArrayContains(expectedPartitioned, originalArray.at(i));
+        }
         for (int i = 1; i < pivotIndex; i++) {
             assertTrue(leq(expectedPartitioned.at(i), expectedPartitioned.at(pivotIndex)));
         }
         for (int i = pivotIndex + 1; i <= expectedPartitioned.length; i++) {
             assertTrue(geq(expectedPartitioned.at(i), expectedPartitioned.at(pivotIndex)));
         }
-        Chapter2.insertionSort(expectedPartitioned);
-        Chapter2.insertionSort(originalArray);
-        assertArrayEquals(expectedPartitioned, originalArray);
     }
 
-    private void assertArrayFuzzySorted(Array<Pair<Double, Double>> array) {
+    private static void assertArrayFuzzySorted(Array<Interval> array) {
         for (int i = 2; i <= array.length; i++) {
-            if (array.at(i).first < array.at(i - 1).first) {
-                assertTrue(array.at(i).second >= array.at(i - 1).first);
+            if (array.at(i).a < array.at(i - 1).a) {
+                assertTrue(array.at(i).b >= array.at(i - 1).a);
             }
         }
     }

@@ -7,9 +7,10 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import pl.kwojtas.cormenimpl.util.Array;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
-import static pl.kwojtas.cormenimpl.TestUtil.assertArrayEquals;
+import static pl.kwojtas.cormenimpl.TestUtil.assertArrayContains;
 
 @RunWith(DataProviderRunner.class)
 public class Chapter5Test {
@@ -148,17 +149,10 @@ public class Chapter5Test {
     }
 
     private static <T extends Comparable> void assertShuffled(Array<T> original, Array<T> shuffled) {
-        Chapter2.insertionSort(original);
-        Chapter2.insertionSort(shuffled);
-        assertArrayEquals(original, shuffled);
-    }
-
-    private static <T> void assertArrayContains(Array<T> array, T element) {
-        boolean contains = false;
-        for (int i = 1; i <= array.length; i++) {
-            contains = contains || array.at(i).equals(element);
+        assertEquals(original.length, shuffled.length);
+        for (int i = 1; i <= original.length; i++) {
+            assertArrayContains(shuffled, original.at(i));
         }
-        assertTrue(contains);
     }
 
 }

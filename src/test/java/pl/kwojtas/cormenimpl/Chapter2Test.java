@@ -172,7 +172,7 @@ public class Chapter2Test {
     public static Object[][] provideDataForMergingUsingMerge_() {
         return new Object[][]{
                 {new Array<>(34), 1, 1, 1, new Array<>(34)},
-                {new Array<>(5, 1), 1, 1, 2, new Array<>(1, 5)},
+                {new Array<>(5,1), 1, 1, 2, new Array<>(1,5)},
                 {new Array<>(5,2,7,9,6,8,6,6,3,1,7,8), 2, 4, 5, new Array<>(5,2,6,7,9,8,6,6,3,1,7,8)},
                 {new Array<>(5,2,7,9,3,6,6,6,8,1,7,8), 2, 4, 9, new Array<>(5,2,3,6,6,6,7,8,9,1,7,8)},
                 {new Array<>(2,3,5,6,7,9,1,6,6,7,8,8), 1, 6, 12, new Array<>(1,2,3,5,6,6,6,7,7,8,8,9)},

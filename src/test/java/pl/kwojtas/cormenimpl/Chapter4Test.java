@@ -69,7 +69,7 @@ public class Chapter4Test {
 
     @Test
     @UseDataProvider("provideDataForGettingLeftmostMinimaIndexesOfMongeArray")
-    public void shouldGetLeftmostMinimaIndexesOfMongeArray(Matrix matrix, Array<Integer> expectedLeftmostMinimaIndexes) {
+    public void shouldGetLeftmostMinimaIndexesOfMongeArray(Matrix<Double> matrix, Array<Integer> expectedLeftmostMinimaIndexes) {
         // given
 
         // when

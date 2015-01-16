@@ -329,7 +329,7 @@ public class Chapter6 {
     }
 
     // problem 6-1
-    private static Heap<Integer> buildMaxHeap_(Array<Integer> A) {
+    public static Heap<Integer> buildMaxHeap_(Array<Integer> A) {
         Heap<Integer> H = new Heap<>(A);
         H.heapSize = 1;
         for (int i = 2; i <= H.length; i++) {

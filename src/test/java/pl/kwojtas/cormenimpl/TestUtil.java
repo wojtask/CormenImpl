@@ -3,6 +3,7 @@ package pl.kwojtas.cormenimpl;
 import pl.kwojtas.cormenimpl.util.Array;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class TestUtil {
 
@@ -11,6 +12,14 @@ public class TestUtil {
         for (int i = 1; i <= expected.length; i++) {
             assertEquals(expected.at(i), actual.at(i));
         }
+    }
+
+    public static <T> void assertArrayContains(Array<T> array, T element) {
+        boolean contains = false;
+        for (int i = 1; i <= array.length; i++) {
+            contains = contains || array.at(i).equals(element);
+        }
+        assertTrue(contains);
     }
 
 }

@@ -1,6 +1,7 @@
 package pl.kwojtas.cormenimpl;
 
 import pl.kwojtas.cormenimpl.util.Array;
+import pl.kwojtas.cormenimpl.util.Interval;
 import pl.kwojtas.cormenimpl.util.Pair;
 
 import static pl.kwojtas.cormenimpl.Chapter5.random;
@@ -158,7 +159,7 @@ public class Chapter7 {
     }
 
     // solution of 7-6(a)
-    public static void fuzzySort(Array<Pair<Double, Double>> A, int p, int r) {
+    public static void fuzzySort(Array<Interval> A, int p, int r) {
         if (p < r) {
             Pair<Integer, Integer> q = fuzzyPartition(A, p, r);
             fuzzySort(A, p, q.first - 1);
@@ -167,12 +168,12 @@ public class Chapter7 {
     }
 
     // solution of 7-6(a)
-    public static Pair<Integer, Integer> fuzzyPartition(Array<Pair<Double, Double>> A, int p, int r) {
+    public static Pair<Integer, Integer> fuzzyPartition(Array<Interval> A, int p, int r) {
         A.exch(r, random(p, r));
-        double x = A.at(r).first;
+        double x = A.at(r).a;
         int i = p - 1;
         for (int j = p; j <= r - 1; j++) {
-            if (A.at(j).first <= x) {
+            if (A.at(j).a <= x) {
                 i++;
                 A.exch(i, j);
             }
@@ -180,7 +181,7 @@ public class Chapter7 {
         A.exch(i + 1, r);
         int q = i + 1;
         for (int k = i; k >= p; k--) {
-            if (A.at(k).second >= x) {
+            if (A.at(k).b >= x) {
                 q--;
                 A.exch(q, k);
             }
