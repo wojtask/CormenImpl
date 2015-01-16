@@ -143,4 +143,16 @@ public class Chapter8Test {
         assertArrayEquals(expectedSorted, array);
     }
 
+    @Test
+    @UseDataProvider("provideDataForCountingSort")
+    public void shouldSortArrayUsingCountingSortInPlace(Array<Integer> array, Array<Integer> expectedSorted, int boundary) {
+        // given
+
+        // when
+        Chapter8.countingSortInPlace(array, boundary);
+
+        // then
+        assertArrayEquals(expectedSorted, array);
+    }
+
 }

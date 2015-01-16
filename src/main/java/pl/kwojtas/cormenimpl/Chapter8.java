@@ -131,4 +131,29 @@ public class Chapter8 {
 
     }
 
+    // solution of 8-2(e)
+    public static void countingSortInPlace(Array<Integer> A, int k) {
+        Array<Integer> C = new Array<Integer>().withFirstPosition(0);
+        for (int i = 0; i <= k; i++) {
+            C.set(i, 0);
+        }
+        for (int j = 1; j <= A.length; j++) {
+            C.set(A.at(j), C.at(A.at(j)) + 1);
+        }
+        for (int i = 1; i <= k; i++) {
+            C.set(i, C.at(i) + C.at(i - 1));
+        }
+        for (int i = 0; i <= k - 1; i++) {
+            int j = C.at(i);
+            while (j > 0 && A.at(j) >= i) {
+                while (A.at(j) > i) {
+                    C.set(A.at(j), C.at(A.at(j)) - 1);
+                    A.exch(j, C.at(A.at(j)) + 1);
+                }
+                j--;
+            }
+        }
+    }
+
+
 }
