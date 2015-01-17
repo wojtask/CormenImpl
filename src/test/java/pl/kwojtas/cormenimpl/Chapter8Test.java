@@ -8,7 +8,9 @@ import org.junit.runner.RunWith;
 import pl.kwojtas.cormenimpl.util.Array;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static pl.kwojtas.cormenimpl.TestUtil.assertArrayEquals;
+import static pl.kwojtas.cormenimpl.TestUtil.assertShuffled;
 
 @RunWith(DataProviderRunner.class)
 public class Chapter8Test {
@@ -153,6 +155,78 @@ public class Chapter8Test {
 
         // then
         assertArrayEquals(expectedSorted, array);
+    }
+
+    @DataProvider
+    public static Object[][] provideDataForGroupingJugs() {
+        return new Object[][]{
+                {new Array<>(34.0), new Array<>(34.0)},
+                {new Array<>(1.0,2.0,3.0), new Array<>(3.0,2.0,1.0)},
+                {new Array<>(1.0,2.0,3.0), new Array<>(1.0,2.0,3.0)},
+                {new Array<>(3.14,-2.75,-0.53,2.55,2.23), new Array<>(-0.53,-2.75,2.23,2.55,3.14)},
+                {new Array<>(5.0,7.0,9.0,2.0,6.0,8.0,6.0,6.0,3.0,1.0,7.0,8.0), new Array<>(6.0,5.0,9.0,7.0,3.0,8.0,2.0,6.0,8.0,6.0,7.0,1.0)}
+        };
+    }
+
+    @Test
+    @UseDataProvider("provideDataForGroupingJugs")
+    public void shouldGroupJugsUsingJugsGroup(Array<Double> jugs1, Array<Double> jugs2) {
+        // given
+        Array<Double> originalJugs1 = new Array<>(jugs1);
+
+        // when
+        Chapter8.jugsGroup(jugs1, jugs2);
+
+        // then
+        assertShuffled(originalJugs1, jugs1);
+        for (int i = 1; i <= jugs1.length; i++) {
+            assertEquals(jugs1.at(i), jugs2.at(i));
+        }
+    }
+
+    @Test
+    @UseDataProvider("provideDataForGroupingJugs")
+    public void shouldGroupJugsUsingJugsSort(Array<Double> jugs1, Array<Double> jugs2) {
+        // given
+        Array<Double> originalJugs1 = new Array<>(jugs1);
+
+        // when
+        Chapter8.jugsMatch(jugs1, jugs2, 1, jugs1.length);
+
+        // then
+        assertShuffled(originalJugs1, jugs1);
+        for (int i = 1; i <= jugs1.length; i++) {
+            assertEquals(jugs1.at(i), jugs2.at(i));
+        }
+    }
+
+    @DataProvider
+    public static Object[][] provideDataForKSorting() {
+        return new Object[][]{
+                {new Array<>(34), 1},
+                {new Array<>(34), 3},
+                {new Array<>(3,2,1), 2},
+                {new Array<>(5,7,9,2,6,8,6,6,3,1,7,8), 8},
+                {new Array<>(5,7,9,2,6,8,6,6,3,1,7,8), 6},
+                {new Array<>(5,7,9,2,6,8,6,6,3,1,7,8), 4},
+                {new Array<>(5,7,9,2,6,8,6,6,3,1,7,8), 1}
+        };
+    }
+
+    @Test
+    @UseDataProvider("provideDataForKSorting")
+    public void shouldKSortArray(Array<Integer> array, int k) {
+        // given
+        Array<Integer> original = new Array<>(array);
+
+        // when
+        Chapter8.kSort(array, k, 1, array.length);
+
+        // then
+        assertShuffled(original, array);
+        for (int i = 1; i <= array.length - k; i++) {
+            assertTrue(array.at(i) <= array.at(i + k));
+        }
     }
 
 }

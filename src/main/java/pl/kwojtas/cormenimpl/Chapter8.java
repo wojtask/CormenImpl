@@ -158,10 +158,10 @@ public class Chapter8 {
     }
 
     // solution of 8-4(a)
-    public static void naiveJugsSort(Array<Double> R, Array<Double> B) {
+    public static void jugsGroup(Array<Double> R, Array<Double> B) {
         int n = R.length;
         for (int i = 1; i <= n - 1; i++) {
-            int j = i + 1;
+            int j = i;
             while (!R.at(i).equals(B.at(j))) {
                 j++;
             }
@@ -170,11 +170,11 @@ public class Chapter8 {
     }
 
     // solution of 8-4(c)
-    public static void jugsSort(Array<Double> R, Array<Double> B, int p, int r) {
+    public static void jugsMatch(Array<Double> R, Array<Double> B, int p, int r) {
         if (p < r) {
             int q = jugsPartition(R, B, p, r);
-            jugsSort(R, B, p, q - 1);
-            jugsSort(R, B, q + 1, r);
+            jugsMatch(R, B, p, q - 1);
+            jugsMatch(R, B, q + 1, r);
         }
     }
 

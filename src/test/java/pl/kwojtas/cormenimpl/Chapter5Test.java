@@ -7,7 +7,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import pl.kwojtas.cormenimpl.util.Array;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static pl.kwojtas.cormenimpl.TestUtil.assertArrayContains;
@@ -61,7 +60,7 @@ public class Chapter5Test {
         Chapter5.permuteBySorting(array);
 
         // then
-        assertShuffled(original, array);
+        TestUtil.assertShuffled(original, array);
     }
 
     @Test
@@ -74,7 +73,7 @@ public class Chapter5Test {
         Chapter5.randomizeInPlace(array);
 
         // then
-        assertShuffled(original, array);
+        TestUtil.assertShuffled(original, array);
     }
 
     @Test
@@ -87,7 +86,7 @@ public class Chapter5Test {
         Chapter5.randomizeInPlace_(array);
 
         // then
-        assertShuffled(original, array);
+        TestUtil.assertShuffled(original, array);
     }
 
     @Test
@@ -100,7 +99,7 @@ public class Chapter5Test {
         Chapter5.permuteUniformlyBySorting(array);
 
         // then
-        assertShuffled(original, array);
+        TestUtil.assertShuffled(original, array);
     }
 
     @DataProvider
@@ -146,13 +145,6 @@ public class Chapter5Test {
 
         // then
         assertNull(actualIndex);
-    }
-
-    private static <T extends Comparable> void assertShuffled(Array<T> original, Array<T> shuffled) {
-        assertEquals(original.length, shuffled.length);
-        for (int i = 1; i <= original.length; i++) {
-            assertArrayContains(shuffled, original.at(i));
-        }
     }
 
 }

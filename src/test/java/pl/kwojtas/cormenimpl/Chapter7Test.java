@@ -8,11 +8,10 @@ import org.junit.runner.RunWith;
 import pl.kwojtas.cormenimpl.util.Array;
 import pl.kwojtas.cormenimpl.util.Interval;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static pl.kwojtas.cormenimpl.Chapter5.random;
-import static pl.kwojtas.cormenimpl.TestUtil.assertArrayContains;
 import static pl.kwojtas.cormenimpl.TestUtil.assertArrayEquals;
+import static pl.kwojtas.cormenimpl.TestUtil.assertShuffled;
 import static pl.kwojtas.cormenimpl.util.Util.geq;
 import static pl.kwojtas.cormenimpl.util.Util.leq;
 
@@ -183,10 +182,7 @@ public class Chapter7Test {
     }
 
     private static <T extends Comparable> void assertArrayPartitioned(Array<T> expectedPartitioned, int pivotIndex, Array<T> originalArray) {
-        assertEquals(expectedPartitioned.length, originalArray.length);
-        for (int i = 1; i <= originalArray.length; i++) {
-            assertArrayContains(expectedPartitioned, originalArray.at(i));
-        }
+        assertShuffled(originalArray, expectedPartitioned);
         for (int i = 1; i < pivotIndex; i++) {
             assertTrue(leq(expectedPartitioned.at(i), expectedPartitioned.at(pivotIndex)));
         }
