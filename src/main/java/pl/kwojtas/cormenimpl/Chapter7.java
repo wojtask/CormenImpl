@@ -37,7 +37,7 @@ public class Chapter7 {
     }
 
     // subchapter 7.3
-    private static <T extends Comparable> int randomizedPartition(Array<T> A, int p, int r) {
+    public static <T extends Comparable> int randomizedPartition(Array<T> A, int p, int r) {
         int i = random(p, r);
         A.exch(r, i);
         return partition(A, p, r);
