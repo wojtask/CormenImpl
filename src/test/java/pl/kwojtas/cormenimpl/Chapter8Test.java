@@ -11,6 +11,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static pl.kwojtas.cormenimpl.TestUtil.assertArrayEquals;
 import static pl.kwojtas.cormenimpl.TestUtil.assertShuffled;
+import static pl.kwojtas.cormenimpl.TestUtil.assertSorted;
 
 @RunWith(DataProviderRunner.class)
 public class Chapter8Test {
@@ -155,6 +156,59 @@ public class Chapter8Test {
 
         // then
         assertArrayEquals(expectedSorted, array);
+    }
+
+    @DataProvider
+    public static Object[][] provideDataForVariousLengthNumbersSort() {
+        return new Object[][]{
+                {new Array<>(34)},
+                {new Array<>(3,2,1,0)},
+                {new Array<>(601346132)},
+                {new Array<>(235,510,207,455,317,635,344,102,301)},
+                {new Array<>(235,510207,455,317,63534,102,301,42342352,100234,231,331,66,1)},
+                {new Array<>(235,510207,455,0,90199239,317,63534,102,301,42342352,100234,231,331,66,1,3002,1123581321)},
+                {new Array<>(235,-510207,455,0,90199239,317,63534,-102,301,42342352,-100234,-231,-331,-66,1,3002,-1123581321)}
+        };
+    }
+
+    @Test
+    @UseDataProvider("provideDataForVariousLengthNumbersSort")
+    public void shouldSortArrayUsingVariousLengthNumbersSort(Array<Integer> array) {
+        // given
+        Array<Integer> original = new Array<>(array);
+
+        // when
+        Chapter8.variousLengthNumbersSort(array);
+
+        // then
+        assertShuffled(original, array);
+        assertSorted(array);
+    }
+
+    @DataProvider
+    public static Object[][] provideDataForVariousLengthStringsSort() {
+        return new Object[][]{
+                {new Array<>("aaa")},
+                {new Array<>("d","c","b","a")},
+                {new Array<>("cormenimpl")},
+                {new Array<>("aaa","fff","eee","ccc","ddd","bbb","ccc")},
+                {new Array<>("lorem","ipsum","dolor","sit","amet","consectetur","adipiscing","elit","sed","do","eiusmod","tempor",
+                        "incididunt","ut","labore","et","dolore","magna","aliqua")}
+        };
+    }
+
+    @Test
+    @UseDataProvider("provideDataForVariousLengthStringsSort")
+    public void shouldSortArrayUsingVariousLengthStringsSort(Array<String> array) {
+        // given
+        Array<String> original = new Array<>(array);
+
+        // when
+        Chapter8.variousLengthStringsSort(array, 1);
+
+        // then
+        assertShuffled(original, array);
+        assertSorted(array);
     }
 
     @DataProvider

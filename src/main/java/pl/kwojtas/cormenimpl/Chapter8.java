@@ -2,6 +2,7 @@ package pl.kwojtas.cormenimpl;
 
 import pl.kwojtas.cormenimpl.util.Array;
 
+import static java.lang.Math.max;
 import static pl.kwojtas.cormenimpl.Chapter5.random;
 
 public class Chapter8 {
@@ -155,6 +156,156 @@ public class Chapter8 {
                 j--;
             }
         }
+    }
+
+    // solution of 8-3(a)
+    public static void variousLengthNumbersSort(Array<Integer> A) {
+        Array<Integer> negative = new Array<>();
+        Array<Integer> nonNegative = new Array<>();
+        int j = 1, j_ = 1;
+        for (int i = 1; i <= A.length; i++) {
+            if (A.at(i) < 0) {
+                negative.set(j, -A.at(i));
+                j++;
+            } else {
+                nonNegative.set(j_, A.at(i));
+                j_++;
+            }
+        }
+        variousLengthNonNegativeNumbersSort(negative);
+        variousLengthNonNegativeNumbersSort(nonNegative);
+        j = 1;
+        for (int i = negative.length; i >= 1; i--) {
+            A.set(j, -negative.at(i));
+            j++;
+        }
+        for (int i = 1; i <= nonNegative.length; i++) {
+            A.set(j, nonNegative.at(i));
+            j++;
+        }
+    }
+
+    // solution of 8-3(a)
+    private static void variousLengthNonNegativeNumbersSort(Array<Integer> A) {
+        if (A.length == 0) {
+            return;
+        }
+        int maxLength = 0;
+        for (int i = 1; i <= A.length; i++) {
+            maxLength = max(maxLength, getNumberLength(A.at(i)));
+        }
+        variousLengthSortByLength(A, maxLength);
+        Array<Integer> sameLengthNumbers = new Array<>();
+        sameLengthNumbers.set(1, A.at(1));
+        int j = 1;
+        for (int i = 2; i <= A.length; i++) {
+            int previousLength = getNumberLength(A.at(i - 1));
+            int currentLength = getNumberLength(A.at(i));
+            if (previousLength == currentLength) {
+                j++;
+                sameLengthNumbers.set(j, A.at(i));
+            } else {
+                radixSort(sameLengthNumbers, previousLength);
+                int k = i - 1;
+                while (j >= 1) {
+                    A.set(k, sameLengthNumbers.at(j));
+                    j--;
+                    k--;
+                }
+                sameLengthNumbers = new Array<>();
+                sameLengthNumbers.set(1, A.at(i));
+                j = 1;
+            }
+        }
+        radixSort(sameLengthNumbers, getNumberLength(A.at(A.length)));
+        int k = A.length;
+        while (j >= 1) {
+            A.set(k, sameLengthNumbers.at(j));
+            j--;
+            k--;
+        }
+    }
+
+    // solution of 8-3(a)
+    private static void variousLengthSortByLength(Array<Integer> A, int k) {
+        Array<Integer> C = new Array<Integer>().withFirstPosition(0);
+        for (int i = 0; i <= k; i++) {
+            C.set(i, 0);
+        }
+        for (int j = 1; j <= A.length; j++) {
+            C.set(getNumberLength(A.at(j)), C.at(getNumberLength(A.at(j))) + 1);
+        }
+        for (int i = 1; i <= k; i++) {
+            C.set(i, C.at(i) + C.at(i - 1));
+        }
+        Array<Integer> B = new Array<>();
+        for (int j = A.length; j >= 1; j--) {
+            B.set(C.at(getNumberLength(A.at(j))), A.at(j));
+            C.set(getNumberLength(A.at(j)), C.at(getNumberLength(A.at(j))) - 1);
+        }
+        A.set(B);
+    }
+
+    // solution of 8-3(a)
+    private static int getNumberLength(int number) {
+        if (number == 0) {
+            return 1;
+        }
+        int length = 0;
+        while (number > 0) {
+            length++;
+            number /= 10;
+        }
+        return length;
+    }
+
+    // solution of 8-3(b)
+    public static void variousLengthStringsSort(Array<String> A, int position) {
+        int n = A.length;
+        countingSortByCharacter(A, position);
+        int i = 1;
+        while (i <= n) {
+            int j = i;
+            while (j <= n && A.at(j).charAt(position - 1) == A.at(i).charAt(position - 1)) {
+                if (A.at(j).length() == position) {
+                    A.exch(i, j);
+                    i++;
+                }
+                j++;
+            }
+            Array<String> C = new Array<>();
+            for (int k = 1; k <= j - i; k++) {
+                C.set(k, A.at(i + k - 1));
+            }
+            variousLengthStringsSort(C, position + 1);
+            for (int k = 1; k <= j - i; k++) {
+                A.set(i + k - 1, C.at(k));
+            }
+            i = j;
+        }
+    }
+
+    // solution of 8-3(b)
+    private static void countingSortByCharacter(Array<String> A, int position) {
+        Array<Integer> C = new Array<Integer>().withFirstPosition(0);
+        for (int i = 0; i <= 127; i++) { // 127 = max ASCII numeric value
+            C.set(i, 0);
+        }
+        position--; // move to 0-based positions
+        for (int j = 1; j <= A.length; j++) {
+            C.set(Character.getNumericValue(A.at(j).charAt(position)),
+                    C.at(Character.getNumericValue(A.at(j).charAt(position))) + 1);
+        }
+        for (int i = 1; i <= 127; i++) {
+            C.set(i, C.at(i) + C.at(i - 1));
+        }
+        Array<String> B = new Array<>();
+        for (int j = A.length; j >= 1; j--) {
+            B.set(C.at(Character.getNumericValue(A.at(j).charAt(position))), A.at(j));
+            C.set(Character.getNumericValue(A.at(j).charAt(position)),
+                    C.at(Character.getNumericValue(A.at(j).charAt(position))) - 1);
+        }
+        A.set(B);
     }
 
     // solution of 8-4(a)

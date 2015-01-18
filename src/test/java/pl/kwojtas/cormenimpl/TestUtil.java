@@ -23,7 +23,7 @@ public class TestUtil {
         assertTrue(contains);
     }
 
-    public static <T extends Comparable> void assertShuffled(Array<T> original, Array<T> shuffled) {
+    public static <T> void assertShuffled(Array<T> original, Array<T> shuffled) {
         assertEquals(original.length, shuffled.length);
         for (int i = 1; i <= original.length; i++) {
             assertArrayContains(shuffled, original.at(i));
