@@ -75,7 +75,8 @@ public class Chapter9Test {
                 {new Array<>(3,2,1), 1},
                 {new Array<>(5,7,9,2,6,8,6,6,3,1,7,8), 3},
                 {new Array<>(5,7,9,2,6,8,6,6,3,1,7,8), 8},
-                {new Array<>(5,7,9,2,6,8,6,6,3,1,7,8), 12}
+                {new Array<>(5,7,9,2,6,8,6,6,3,1,7,8), 12},
+                {new Array<>(5,7,5,9,4,2,9,6,1,6,8,6,6,2,8,3,1,7,3,7,8), 15}
         };
     }
 
@@ -340,15 +341,17 @@ public class Chapter9Test {
     }
 
     private void assertWeightedMedian(Array<Double> array, Array<Double> weights, double actualWeightedMedian) {
-        array.getData().sort(Comparator.<Double>naturalOrder());
-        double weightSum = 0.0;
-        int i = 1;
-        while (array.at(i) < actualWeightedMedian) {
-            weightSum += weights.at(i);
-            i++;
+        double weightLeftSum = 0.0;
+        double weightRightSum = 0.0;
+        for (int i = 1; i <= array.length; i++) {
+            if (array.at(i) < actualWeightedMedian) {
+                weightLeftSum += weights.at(i);
+            } else if (array.at(i) > actualWeightedMedian) {
+                weightRightSum += weights.at(i);
+            }
         }
-        assertTrue(weightSum < 0.5);
-        assertTrue(1.0 - weightSum - weights.at(i) <= 0.5);
+        assertTrue(weightLeftSum < 0.5);
+        assertTrue(weightRightSum <= 0.5);
     }
 
     @Test
@@ -356,13 +359,14 @@ public class Chapter9Test {
     public void shouldFindWeightedMedian(Array<Double> array, Array<Double> weights) {
         // given
         Array<Double> originalArray = new Array<>(array);
+        Array<Double> originalWeights = new Array<>(weights);
 
         // when
         double actualWeightedMedian = Chapter9.weightedMedian(array, weights, 1, array.length);
 
         // then
         assertShuffled(originalArray, array);
-        assertWeightedMedian(array, weights, actualWeightedMedian);
+        assertWeightedMedian(originalArray, originalWeights, actualWeightedMedian);
     }
 
     @DataProvider
@@ -373,8 +377,36 @@ public class Chapter9Test {
                 {new Array<>(new Pair<>(3.0,2.0),new Pair<>(1.0,1.0),new Pair<>(4.0,2.0)), new Array<>(0.05,0.9,0.05)},
                 {new Array<>(new Pair<>(1.0,1.0),new Pair<>(1.0,3.0),new Pair<>(1.0,5.0),new Pair<>(3.0,1.0),
                         new Pair<>(3.0,5.0),new Pair<>(5.0,1.0),new Pair<>(5.0,3.0),new Pair<>(5.0,5.0)),
-                        new Array<>(0.1,0.1,0.2,0.02,0.2,0.03,0.05,0.3)}
+                        new Array<>(0.1,0.1,0.2,0.02,0.2,0.3,0.05,0.03)}
         };
+    }
+
+    @Test
+    @UseDataProvider("provideDataForFindingPostOfficeLocation")
+    public void shouldFindPostOfficeLocation(Array<Pair<Double, Double>> points, Array<Double> weights) {
+        // given
+        Array<Pair<Double, Double>> originalPoints = new Array<>(points);
+        Array<Double> originalWeights = new Array<>(weights);
+
+        // when
+        Pair<Double, Double> actualLocation = Chapter9.postOfficeLocation2D(points, weights);
+
+        // then
+        assertArrayEquals(originalPoints, points);
+        assertArrayEquals(originalWeights, weights);
+        double postOfficeTotalWeighedDistance = getTotalWeighedDistance(actualLocation, points, weights);
+        for (int i = 1; i <= points.length; i++) {
+            double pointTotalWeighedDistance = getTotalWeighedDistance(points.at(i), points, weights);
+            assertTrue(postOfficeTotalWeighedDistance <= pointTotalWeighedDistance);
+        }
+    }
+
+    private double getTotalWeighedDistance(Pair<Double, Double> origin, Array<Pair<Double, Double>> locations, Array<Double> weights) {
+        double totalWeighedDistance = 0.0;
+        for (int i = 1; i <= locations.length; i++) {
+            totalWeighedDistance += weights.at(i) * (abs(origin.first - locations.at(i).first) + abs(origin.second - locations.at(i).second));
+        }
+        return totalWeighedDistance;
     }
 
 }

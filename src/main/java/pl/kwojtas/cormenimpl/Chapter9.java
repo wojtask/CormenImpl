@@ -148,8 +148,8 @@ public class Chapter9 {
     // solution of 9.3-3
     public static <T extends Comparable> void bestCaseQuicksort(Array<T> A, int p, int r) {
         if (p < r) {
-            select(A, p, r, (p + r) / 2);
             int q = (p + r) / 2;
+            select(A, p, r, q);
             bestCaseQuicksort(A, p, q - 1);
             bestCaseQuicksort(A, q + 1, r);
         }
@@ -160,8 +160,9 @@ public class Chapter9 {
         if (p == r) {
             return A.at(p);
         }
-        int x = select(A, p, r, (p + r) / 2); // black-box median subroutine
-        int q = partitionAround(A, p, r, x);
+        int q = (p + r) / 2;
+        int x = select(A, p, r, q); // black-box median subroutine
+        partitionAround(A, p, r, x); // we need to partition around the median because we could have used other black-box than select
         int k = q - p + 1;
         if (i == k) {
             return A.at(q);
@@ -278,7 +279,7 @@ public class Chapter9 {
                 return A.at(r);
             }
         }
-        partitionByWeightsAroundMedian(A, w, p, r);
+        partitionAroundMedianWithWeights(A, w, p, r);
         int q = (p + r) / 2;
         double WL = 0.0;
         for (int i = p; i <= q - 1; i++) {
@@ -298,13 +299,14 @@ public class Chapter9 {
     }
 
     // solution of 9-2(c)
-    private static <T extends Comparable> void partitionByWeightsAroundMedian(Array<T> A, Array<Double> w, int p, int r) {
+    private static <T extends Comparable> void partitionAroundMedianWithWeights(Array<T> A, Array<Double> w, int p, int r) {
         T x = select(new Array<>(A), p, r, (p + r) / 2);
         int q = p;
         while (!A.at(q).equals(x)) {
             q++;
         }
         A.exch(q, r);
+        w.exch(q, r);
         partitionWithWeights(A, w, p, r);
     }
 
