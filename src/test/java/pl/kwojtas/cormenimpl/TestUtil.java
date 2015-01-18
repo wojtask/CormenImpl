@@ -4,6 +4,7 @@ import pl.kwojtas.cormenimpl.util.Array;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static pl.kwojtas.cormenimpl.util.Util.leq;
 
 public class TestUtil {
 
@@ -26,6 +27,12 @@ public class TestUtil {
         assertEquals(original.length, shuffled.length);
         for (int i = 1; i <= original.length; i++) {
             assertArrayContains(shuffled, original.at(i));
+        }
+    }
+
+    public static <T extends Comparable> void assertSorted(Array<T> array) {
+        for (int i = 2; i <= array.length; i++) {
+            assertTrue(leq(array.at(i - 1), array.at(i)));
         }
     }
 }

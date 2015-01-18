@@ -26,7 +26,7 @@ public class Array<T> {
         this.length = otherArrayList.size();
     }
 
-    ArrayList<T> getData() {
+    public ArrayList<T> getData() {
         return data;
     }
 

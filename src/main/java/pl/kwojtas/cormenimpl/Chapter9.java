@@ -102,7 +102,7 @@ public class Chapter9 {
     public static <T extends Comparable> T select(Array<T> A, int p, int r, int i) {
         int n = r - p + 1;
         if (n == 1) {
-            return A.at(1);
+            return A.at(p);
         }
         Array<T>[] groups = new Array[ceil(n, 5)];
         for (int j = 0; j < groups.length; j++) {
@@ -145,12 +145,22 @@ public class Chapter9 {
         return i + 1;
     }
 
+    // solution of 9.3-3
+    public static <T extends Comparable> void bestCaseQuicksort(Array<T> A, int p, int r) {
+        if (p < r) {
+            select(A, p, r, (p + r) / 2);
+            int q = (p + r) / 2;
+            bestCaseQuicksort(A, p, q - 1);
+            bestCaseQuicksort(A, q + 1, r);
+        }
+    }
+
     // solution of 9.3-5
     public static int selectUsingMedianSubroutine(Array<Integer> A, int p, int r, int i) {
         if (p == r) {
             return A.at(p);
         }
-        int x = select(A, p, r, (p + r) / 2);
+        int x = select(A, p, r, (p + r) / 2); // black-box median subroutine
         int q = partitionAround(A, p, r, x);
         int k = q - p + 1;
         if (i == k) {
@@ -164,12 +174,12 @@ public class Chapter9 {
 
     // solution of 9.3-6
     public static Set<Integer> quantiles(Array<Integer> A, int p, int r, int k) {
+        int n = r - p + 1;
         if (k == 1) {
             return new HashSet<>();
         }
-        int n = r - p + 1;
-        int q1 = p + (k / 2) * (n / k);
-        int q2 = p + ceil(k, 2) * (n / k);
+        int q1 = (int)(p + (k / 2) * (1.0 * n / k));
+        int q2 = (int)(p + ceil(k, 2) * (1.0 * n / k));
         select(A, p, r, q1 - p + 1);
         if (q1 != q2) {
             select(A, q1 + 1, r, q2 - q1);
@@ -223,8 +233,8 @@ public class Chapter9 {
     }
 
     // solution of 9-2(b)
-    public static int weightedMedianUsingSorting(Array<Integer> A, Array<Double> w) {
-        sortByWeights(A, w, 1, A.length);
+    public static double weightedMedianUsingSorting(Array<Double> A, Array<Double> w) {
+        sortWithWeights(A, w, 1, A.length);
         double weightSum = 0.0;
         int i = 1;
         while (i <= A.length && weightSum < 0.5) {
@@ -235,27 +245,27 @@ public class Chapter9 {
     }
 
     // solution of 9-2(b)
-    private static void sortByWeights(Array<Integer> A, Array<Double> w, int p, int r) {
+    private static void sortWithWeights(Array<Double> A, Array<Double> w, int p, int r) {
         if (p < r) {
-            int q = partitionByWeights(A, w, p, r);
-            sortByWeights(A, w, p, q - 1);
-            sortByWeights(A, w, q + 1, r);
+            int q = partitionWithWeights(A, w, p, r);
+            sortWithWeights(A, w, p, q - 1);
+            sortWithWeights(A, w, q + 1, r);
         }
     }
 
     // solution of 9-2(b)
-    private static <T extends Comparable> int partitionByWeights(Array<T> A, Array<Double> w, int p, int r) {
-        double x = w.at(r);
+    private static <T extends Comparable> int partitionWithWeights(Array<T> A, Array<Double> w, int p, int r) {
+        T x = A.at(r);
         int i = p - 1;
         for (int j = p; j <= r - 1; j++) {
-            if (w.at(j) < x) {
+            if (less(A.at(j), x)) {
                 i++;
-                w.exch(i, j);
                 A.exch(i, j);
+                w.exch(i, j);
             }
         }
-        w.exch(i + 1, r);
         A.exch(i + 1, r);
+        w.exch(i + 1, r);
         return i + 1;
     }
 
@@ -295,7 +305,7 @@ public class Chapter9 {
             q++;
         }
         A.exch(q, r);
-        partitionByWeights(A, w, p, r);
+        partitionWithWeights(A, w, p, r);
     }
 
     // solution of 9-2(e)
@@ -307,8 +317,8 @@ public class Chapter9 {
             X.set(i, A.at(i).first);
             Y.set(i, A.at(i).second);
         }
-        double xp = weightedMedian(X, w, 1, n);
-        double yp = weightedMedian(Y, w, 1, n);
+        double xp = weightedMedian(X, new Array<>(w), 1, n);
+        double yp = weightedMedian(Y, new Array<>(w), 1, n);
         return new Pair<>(xp, yp);
     }
 
