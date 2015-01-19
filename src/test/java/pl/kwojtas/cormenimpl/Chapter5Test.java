@@ -7,9 +7,11 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import pl.kwojtas.cormenimpl.util.Array;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
-import static pl.kwojtas.cormenimpl.TestUtil.assertArrayContains;
+import static pl.kwojtas.cormenimpl.TestUtil.assertShuffled;
 
 @RunWith(DataProviderRunner.class)
 public class Chapter5Test {
@@ -60,7 +62,7 @@ public class Chapter5Test {
         Chapter5.permuteBySorting(array);
 
         // then
-        TestUtil.assertShuffled(original, array);
+        assertShuffled(original, array);
     }
 
     @Test
@@ -73,7 +75,7 @@ public class Chapter5Test {
         Chapter5.randomizeInPlace(array);
 
         // then
-        TestUtil.assertShuffled(original, array);
+        assertShuffled(original, array);
     }
 
     @Test
@@ -86,7 +88,7 @@ public class Chapter5Test {
         Chapter5.randomizeInPlace_(array);
 
         // then
-        TestUtil.assertShuffled(original, array);
+        assertShuffled(original, array);
     }
 
     @Test
@@ -99,18 +101,33 @@ public class Chapter5Test {
         Chapter5.permuteUniformlyBySorting(array);
 
         // then
-        TestUtil.assertShuffled(original, array);
+        assertShuffled(original, array);
     }
 
     @DataProvider
     public static Object[][] provideDataForSuccessfulRandomSearch() {
         return new Object[][]{
-                {new Array<>(34), 34, new Array<>(1)},
-                {new Array<>(5,7,9,2,6,1,6,6,3,1,7,8), 6, new Array<>(5,7,8)},
-                {new Array<>(5,7,9,2,6,1,6,6,3,1,7,8), 8, new Array<>(12)},
-                {new Array<>(5.0,-2.3,-1.3,-1.9,-2.3), -2.3, new Array<>(2,5)},
-                {new Array<>("aaa","bbb","aaa","ccc"), "ccc", new Array<>(4)}
+                {new Array<>(34), 34},
+                {new Array<>(5,7,9,2,6,1,6,6,3,1,7,8), 6},
+                {new Array<>(5,7,9,2,6,1,6,6,3,1,7,8), 8},
+                {new Array<>(5.0,-2.3,-1.3,-1.9,-2.3), -2.3},
+                {new Array<>("aaa","bbb","aaa","ccc"), "ccc"}
         };
+    }
+
+    @Test
+    @UseDataProvider("provideDataForSuccessfulRandomSearch")
+    public <T> void shouldFindObject(Array<T> array, T key) {
+        // given
+        Array<T> original = new Array<>(array);
+
+        // when
+        Integer actualIndex = Chapter5.randomSearch(array, key);
+
+        // then
+        assertNotNull(actualIndex);
+        assertTrue(1 <= actualIndex && actualIndex <= original.length);
+        assertEquals(key, original.at(actualIndex));
     }
 
     @DataProvider
@@ -121,18 +138,6 @@ public class Chapter5Test {
                 {new Array<>(5.0,-2.3,-1.3,-1.9,-2.3), 2.3},
                 {new Array<>("aaa","bbb","aaa","ccc"), "xyz"}
         };
-    }
-
-    @Test
-    @UseDataProvider("provideDataForSuccessfulRandomSearch")
-    public <T> void shouldFindObject(Array<T> array, T key, Array<Integer> expectedIndexes) {
-        // given
-
-        // when
-        Integer actualIndex = Chapter5.randomSearch(array, key);
-
-        // then
-        assertArrayContains(expectedIndexes, actualIndex);
     }
 
     @Test

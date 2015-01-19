@@ -15,17 +15,17 @@ public class Chapter6 {
     private Chapter6() { }
 
     // subchapter 6.1
-    private static int parent(int i) {
+    static int parent(int i) {
         return i / 2;
     }
 
     // subchapter 6.1
-    private static int left(int i) {
+    static int left(int i) {
         return 2 * i;
     }
 
     // subchapter 6.1
-    private static int right(int i) {
+    static int right(int i) {
         return 2 * i + 1;
     }
 
@@ -352,12 +352,12 @@ public class Chapter6 {
     }
 
     // solution of 6-2(a)
-    private static int dAryParent(int d, int i) {
+    static int dAryParent(int d, int i) {
         return ceil(i - 1, d);
     }
 
     // solution of 6-2(a)
-    private static int dAryChild(int d, int k, int i) {
+    static int dAryChild(int d, int k, int i) {
         return d * (i - 1) + k + 1;
     }
 

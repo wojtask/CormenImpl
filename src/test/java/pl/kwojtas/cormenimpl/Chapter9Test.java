@@ -17,8 +17,8 @@ import static java.lang.Math.abs;
 import static java.lang.Math.max;
 import static java.lang.Math.min;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-import static pl.kwojtas.cormenimpl.TestUtil.assertArrayEquals;
 import static pl.kwojtas.cormenimpl.TestUtil.assertShuffled;
 import static pl.kwojtas.cormenimpl.TestUtil.assertSorted;
 
@@ -45,9 +45,8 @@ public class Chapter9Test {
         int actualMinimum = Chapter9.minimum(array);
 
         // then
-        assertArrayEquals(original, array);
-        for (int i = 1; i <= array.length; i++) {
-            assertTrue(actualMinimum <= array.at(i));
+        for (int i = 1; i <= original.length; i++) {
+            assertTrue(actualMinimum <= original.at(i));
         }
     }
 
@@ -61,10 +60,10 @@ public class Chapter9Test {
         Pair<Integer, Integer> actualMinimumMaximum = Chapter9.minimumMaximum(array);
 
         // then
-        assertArrayEquals(original, array);
-        for (int i = 1; i <= array.length; i++) {
-            assertTrue(actualMinimumMaximum.first <= array.at(i));
-            assertTrue(actualMinimumMaximum.second >= array.at(i));
+        assertNotNull(actualMinimumMaximum);
+        for (int i = 1; i <= original.length; i++) {
+            assertTrue(actualMinimumMaximum.first <= original.at(i));
+            assertTrue(actualMinimumMaximum.second >= original.at(i));
         }
     }
 
@@ -90,7 +89,10 @@ public class Chapter9Test {
         int actualOrderStatistic = Chapter9.randomizedSelect(array, 1, array.length, order);
 
         // then
-        assertShuffled(original, array);
+        assertOrderStatistic(original, order, actualOrderStatistic);
+    }
+
+    private void assertOrderStatistic(Array<Integer> array, int order, int actualOrderStatistic) {
         int lessThanOrderStatistic = 0;
         for (int i = 1; i <= array.length; i++) {
             if (array.at(i) < actualOrderStatistic) {
@@ -110,14 +112,7 @@ public class Chapter9Test {
         int actualOrderStatistic = Chapter9.iterativeRandomizedSelect(array, 1, array.length, order);
 
         // then
-        assertShuffled(original, array);
-        int lessThanOrderStatistic = 0;
-        for (int i = 1; i <= array.length; i++) {
-            if (array.at(i) < actualOrderStatistic) {
-                lessThanOrderStatistic++;
-            }
-        }
-        assertTrue(lessThanOrderStatistic < order);
+        assertOrderStatistic(original, order, actualOrderStatistic);
     }
 
     @Test
@@ -130,14 +125,7 @@ public class Chapter9Test {
         int actualOrderStatistic = Chapter9.select(array, 1, array.length, order);
 
         // then
-        assertShuffled(original, array);
-        int lessThanOrderStatistic = 0;
-        for (int i = 1; i <= array.length; i++) {
-            if (array.at(i) < actualOrderStatistic) {
-                lessThanOrderStatistic++;
-            }
-        }
-        assertTrue(lessThanOrderStatistic < order);
+        assertOrderStatistic(array, order, actualOrderStatistic);
     }
 
     @DataProvider
@@ -176,14 +164,7 @@ public class Chapter9Test {
         int actualOrderStatistic = Chapter9.selectUsingMedianSubroutine(array, 1, array.length, order);
 
         // then
-        assertShuffled(original, array);
-        int lessThanOrderStatistic = 0;
-        for (int i = 1; i <= array.length; i++) {
-            if (array.at(i) < actualOrderStatistic) {
-                lessThanOrderStatistic++;
-            }
-        }
-        assertTrue(lessThanOrderStatistic < order);
+        assertOrderStatistic(array, order, actualOrderStatistic);
     }
 
     @DataProvider
@@ -214,9 +195,9 @@ public class Chapter9Test {
         Set<Integer> actualQuantiles = Chapter9.quantiles(array, 1, array.length, order);
 
         // then
-        assertShuffled(original, array);
+        assertNotNull(actualQuantiles);
         assertEquals(order - 1, actualQuantiles.size());
-        assertQuantiles(array, actualQuantiles);
+        assertQuantiles(original, actualQuantiles);
     }
 
     private void assertQuantiles(Array<Integer> array, Set<Integer> quantiles) {
@@ -269,8 +250,12 @@ public class Chapter9Test {
         Set<Integer> actualMedianProximity = Chapter9.medianProximity(array, proximitySize);
 
         // then
-        assertShuffled(original, array);
+        assertNotNull(actualMedianProximity);
         assertEquals(proximitySize, actualMedianProximity.size());
+        assertMedianProximity(array, proximitySize, actualMedianProximity);
+    }
+
+    private void assertMedianProximity(Array<Integer> array, int proximitySize, Set<Integer> actualMedianProximity) {
         array.getData().sort(Comparator.<Integer>naturalOrder());
         int median = array.at((array.length + 1) / 2);
         array.getData().sort(new Comparator<Integer>() {
@@ -305,10 +290,8 @@ public class Chapter9Test {
         int actualMedian = Chapter9.twoArraysMedian(array1, 1, array1.length, array2, 1, array2.length);
 
         // then
-        assertArrayEquals(original1, array1);
-        assertArrayEquals(original2, array2);
-        List<Integer> combinedArrays = new ArrayList<>(array1.getData());
-        combinedArrays.addAll(array2.getData());
+        List<Integer> combinedArrays = new ArrayList<>(original1.getData());
+        combinedArrays.addAll(original2.getData());
         combinedArrays.sort(Comparator.<Integer>naturalOrder());
         int expectedMedian = combinedArrays.get((combinedArrays.size() - 1) / 2);
         assertEquals(expectedMedian, actualMedian);
@@ -335,8 +318,6 @@ public class Chapter9Test {
         double actualWeightedMedian = Chapter9.weightedMedianUsingSorting(array, weights);
 
         // then
-        assertShuffled(originalArray, array);
-        assertShuffled(originalWeights, weights);
         assertWeightedMedian(array, weights, actualWeightedMedian);
     }
 
@@ -365,7 +346,6 @@ public class Chapter9Test {
         double actualWeightedMedian = Chapter9.weightedMedian(array, weights, 1, array.length);
 
         // then
-        assertShuffled(originalArray, array);
         assertWeightedMedian(originalArray, originalWeights, actualWeightedMedian);
     }
 
@@ -392,11 +372,10 @@ public class Chapter9Test {
         Pair<Double, Double> actualLocation = Chapter9.postOfficeLocation2D(points, weights);
 
         // then
-        assertArrayEquals(originalPoints, points);
-        assertArrayEquals(originalWeights, weights);
+        assertNotNull(actualLocation);
         double postOfficeTotalWeighedDistance = getTotalWeighedDistance(actualLocation, points, weights);
-        for (int i = 1; i <= points.length; i++) {
-            double pointTotalWeighedDistance = getTotalWeighedDistance(points.at(i), points, weights);
+        for (int i = 1; i <= originalPoints.length; i++) {
+            double pointTotalWeighedDistance = getTotalWeighedDistance(originalPoints.at(i), originalPoints, originalWeights);
             assertTrue(postOfficeTotalWeighedDistance <= pointTotalWeighedDistance);
         }
     }
@@ -404,7 +383,8 @@ public class Chapter9Test {
     private double getTotalWeighedDistance(Pair<Double, Double> origin, Array<Pair<Double, Double>> locations, Array<Double> weights) {
         double totalWeighedDistance = 0.0;
         for (int i = 1; i <= locations.length; i++) {
-            totalWeighedDistance += weights.at(i) * (abs(origin.first - locations.at(i).first) + abs(origin.second - locations.at(i).second));
+            totalWeighedDistance +=
+                    weights.at(i) * (abs(origin.first - locations.at(i).first) + abs(origin.second - locations.at(i).second));
         }
         return totalWeighedDistance;
     }

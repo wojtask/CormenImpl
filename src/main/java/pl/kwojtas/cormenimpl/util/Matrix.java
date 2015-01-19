@@ -34,6 +34,15 @@ public class Matrix<T extends Number> {
         this.columns = rows.length > 0 ? rows[0].length : 0;
     }
 
+    public Matrix(Matrix<T> otherMatrix) {
+        if (this == otherMatrix) {
+            return;
+        }
+        data = new ArrayList<>(otherMatrix.data);
+        rows = otherMatrix.rows;
+        columns = otherMatrix.columns;
+    }
+
     public Array<T> row(int row) {
         if (row < 1 || row > rows) {
             throw new RuntimeException("Matrix index out of bound");
