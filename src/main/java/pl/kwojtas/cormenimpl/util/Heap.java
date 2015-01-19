@@ -9,9 +9,9 @@ public class Heap<T> extends Array<T> {
         this.heapSize = 0;
     }
 
-    public Heap(Array<T> otherArray) {
-        super(otherArray);
-        this.heapSize = otherArray.length;
+    public Heap(Array<T> array) {
+        super(array);
+        this.heapSize = array.length;
     }
 
 }

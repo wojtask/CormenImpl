@@ -273,11 +273,7 @@ public class Chapter9 {
     // solution of 9-2(c)
     public static <T extends Comparable> T weightedMedian(Array<T> A, Array<Double> w, int p, int r) {
         if (r - p + 1 <= 2) {
-            if (w.at(p) >= w.at(r)) {
-                return A.at(p);
-            } else {
-                return A.at(r);
-            }
+            return w.at(p) >= w.at(r) ? A.at(p) : A.at(r);
         }
         partitionAroundMedianWithWeights(A, w, p, r);
         int q = (p + r) / 2;

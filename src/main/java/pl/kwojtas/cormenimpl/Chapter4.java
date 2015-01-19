@@ -84,7 +84,6 @@ public class Chapter4 {
     @SuppressWarnings("unchecked")
     private static Array<Integer> mongeLeftmostMinimaIndexesOfEvenRows(Matrix<Double> A) {
         int m = A.rows;
-        int n = A.columns;
         Array<Double>[] oddRows = new Array[m / 2];
         for (int i = 2; i <= m; i += 2) {
             oddRows[i / 2 - 1] = A.row(i);

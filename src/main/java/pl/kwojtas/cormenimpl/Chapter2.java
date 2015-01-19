@@ -209,8 +209,7 @@ public class Chapter2 {
     // problem 2-3
     public static double horner(Array<Double> a, double x) {
         double y = 0.0;
-        int n = a.length - 1;
-        int i = n;
+        int i = a.length - 1;
         while (i >= 0) {
             y = a.at(i) + x * y;
             i--;
