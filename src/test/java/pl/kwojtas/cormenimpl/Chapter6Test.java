@@ -12,7 +12,7 @@ import pl.kwojtas.cormenimpl.util.Young;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static pl.kwojtas.cormenimpl.Chapter6.dAryParent;
+import static pl.kwojtas.cormenimpl.Chapter6.multiaryParent;
 import static pl.kwojtas.cormenimpl.Chapter6.parent;
 import static pl.kwojtas.cormenimpl.TestUtil.assertArrayEquals;
 import static pl.kwojtas.cormenimpl.TestUtil.assertShuffled;
@@ -536,7 +536,7 @@ public class Chapter6Test {
     }
 
     @DataProvider
-    public static Object[][] provideDataForDAryMaxHeapify() {
+    public static Object[][] provideDataForMultiaryMaxHeapify() {
         return new Object[][]{
                 {new Array<>(34), 3, 1},
                 {new Array<>(2,1,3,4), 3, 1},
@@ -547,29 +547,59 @@ public class Chapter6Test {
     }
 
     @Test
-    @UseDataProvider("provideDataForDAryMaxHeapify")
-    public void shouldRestoreMaxDAryHeapProperty(Array<Integer> array, int d, int position) {
+    @UseDataProvider("provideDataForMultiaryMaxHeapify")
+    public void shouldRestoreMaxMultiaryHeapProperty(Array<Integer> array, int d, int position) {
         // given
         Heap<Integer> heap = new Heap<>(array);
         Heap<Integer> original = new Heap<>(array);
 
         // when
-        Chapter6.dAryMaxHeapify(heap, d, position);
+        Chapter6.multiaryMaxHeapify(heap, d, position);
 
         // then
         assertShuffled(original, heap);
         assertEquals(original.length, heap.length);
-        assertDAryMaxHeap(heap, d);
+        assertMultiaryMaxHeap(heap, d);
     }
 
-    private void assertDAryMaxHeap(Heap<Integer> heap, int d) {
+    private void assertMultiaryMaxHeap(Heap<Integer> heap, int d) {
         for (int i = 2; i <= heap.heapSize; i++) {
-            assertTrue(geq(heap.at(dAryParent(d, i)), heap.at(i)));
+            assertTrue(geq(heap.at(multiaryParent(d, i)), heap.at(i)));
         }
     }
 
     @DataProvider
-    public static Object[][] provideDataForInsertingToDAryMaxHeap() {
+    public static Object[][] provideDataForMultiaryExtractMax() {
+        return new Object[][]{
+                {new Array<>(34), 3},
+                {new Array<>(2,3,1), 3},
+                {new Array<>(3,2,1), 3},
+                {new Array<>(17,16,10,9,7,14,3,2,8,1), 3},
+                {new Array<>(32,17,27,13,20,16,8,9,13,18,23,24,5,3,12,7), 4}
+        };
+    }
+
+    @Test
+    @UseDataProvider("provideDataForMultiaryExtractMax")
+    public void shouldExtractMaximumFromMultiaryMaxHeap(Array<Integer> array, int d) {
+        // given
+        Heap<Integer> heap = new Heap<>(array);
+        Heap<Integer> original = new Heap<>(array);
+
+        // when
+        int actualMaximum = Chapter6.multiaryHeapExtractMax(heap, d);
+
+        // then
+        assertEquals(original.heapSize - 1, heap.heapSize);
+        assertMultiaryMaxHeap(heap, d);
+        assertEquals(original.at(1), new Integer(actualMaximum));
+        for (int i = 2; i <= original.heapSize; i++) {
+            assertHeapContains(heap, original.at(i));
+        }
+    }
+
+    @DataProvider
+    public static Object[][] provideDataForInsertingToMultiaryMaxHeap() {
         return new Object[][]{
                 {new Array<>(), 3, 34},
                 {new Array<>(34), 3, 43},
@@ -580,18 +610,18 @@ public class Chapter6Test {
     }
 
     @Test
-    @UseDataProvider("provideDataForInsertingToDAryMaxHeap")
-    public void shouldInsertToDAryMaxHeap(Array<Integer> array, int d, int newKey) {
+    @UseDataProvider("provideDataForInsertingToMultiaryMaxHeap")
+    public void shouldInsertToMultiaryMaxHeap(Array<Integer> array, int d, int newKey) {
         // given
         Heap<Integer> heap = new Heap<>(array);
         Heap<Integer> original = new Heap<>(array);
 
         // when
-        Chapter6.dAryMaxHeapInsert(heap, d, newKey);
+        Chapter6.multiaryMaxHeapInsert(heap, d, newKey);
 
         // then
         assertEquals(original.heapSize + 1, heap.heapSize);
-        assertDAryMaxHeap(heap, d);
+        assertMultiaryMaxHeap(heap, d);
         assertHeapContains(heap, newKey);
         for (int i = 1; i <= original.heapSize; i++) {
             assertHeapContains(heap, original.at(i));
@@ -599,7 +629,7 @@ public class Chapter6Test {
     }
 
     @DataProvider
-    public static Object[][] provideDataForIncreasingKeyInDAryMapHeap() {
+    public static Object[][] provideDataForIncreasingKeyInMultiaryMapHeap() {
         return new Object[][]{
                 {new Array<>(34), 3, 1, 43},
                 {new Array<>(2,3,1), 3, 3, 4},
@@ -610,18 +640,18 @@ public class Chapter6Test {
     }
 
     @Test
-    @UseDataProvider("provideDataForIncreasingKeyInDAryMapHeap")
-    public void shouldIncreaseKeyInDAryMaxHeap(Array<Integer> array, int d, int position, int newKey) {
+    @UseDataProvider("provideDataForIncreasingKeyInMultiaryMapHeap")
+    public void shouldIncreaseKeyInMultiaryMaxHeap(Array<Integer> array, int d, int position, int newKey) {
         // given
         Heap<Integer> heap = new Heap<>(array);
         Heap<Integer> original = new Heap<>(array);
 
         // when
-        Chapter6.dAryHeapIncreaseKey(heap, d, position, newKey);
+        Chapter6.multiaryHeapIncreaseKey(heap, d, position, newKey);
 
         // then
         assertEquals(original.heapSize, heap.heapSize);
-        assertDAryMaxHeap(heap, d);
+        assertMultiaryMaxHeap(heap, d);
         assertHeapContains(heap, newKey);
         for (int i = 1; i <= original.heapSize; i++) {
             if (i != position) {

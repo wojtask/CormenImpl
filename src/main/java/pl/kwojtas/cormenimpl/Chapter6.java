@@ -352,46 +352,58 @@ public class Chapter6 {
     }
 
     // solution of 6-2(a)
-    static int dAryParent(int d, int i) {
+    static int multiaryParent(int d, int i) {
         return ceil(i - 1, d);
     }
 
     // solution of 6-2(a)
-    static int dAryChild(int d, int k, int i) {
+    static int multiaryChild(int d, int k, int i) {
         return d * (i - 1) + k + 1;
     }
 
     // solution of 6-2(c)
-    public static void dAryMaxHeapify(Heap<Integer> A, int d, int i) {
+    public static void multiaryMaxHeapify(Heap<Integer> A, int d, int i) {
         int largest = i;
         int k = 1;
-        int child = dAryChild(d, 1, i);
+        int child = multiaryChild(d, 1, i);
         while (k <= d && child <= A.heapSize) {
             if (A.at(child) > A.at(largest)) {
                 largest = child;
             }
             k++;
-            child = dAryChild(d, k, i);
+            child = multiaryChild(d, k, i);
         }
         if (largest != i) {
             A.exch(i, largest);
-            dAryMaxHeapify(A, d, largest);
+            multiaryMaxHeapify(A, d, largest);
         }
     }
 
+    // solution of 6-2(c)
+    public static int multiaryHeapExtractMax(Heap<Integer> A, int d) {
+        if (A.heapSize < 1) {
+            throw new RuntimeException("heap underflow");
+        }
+        int max = A.at(1);
+        A.set(1, A.at(A.heapSize));
+        A.heapSize--;
+        multiaryMaxHeapify(A, d, 1);
+        return max;
+    }
+
     // solution of 6-2(d)
-    public static void dAryMaxHeapInsert(Heap<Integer> A, int d, int key) {
+    public static void multiaryMaxHeapInsert(Heap<Integer> A, int d, int key) {
         A.heapSize++;
         A.set(A.heapSize, Integer.MIN_VALUE);
-        dAryHeapIncreaseKey(A, d, A.heapSize, key);
+        multiaryHeapIncreaseKey(A, d, A.heapSize, key);
     }
 
     // solution of 6-2(e)
-    public static void dAryHeapIncreaseKey(Heap<Integer> A, int d, int i, int k) {
+    public static void multiaryHeapIncreaseKey(Heap<Integer> A, int d, int i, int k) {
         A.set(i, max(A.at(i), k));
-        while (i > 1 && A.at(dAryParent(d, i)) < A.at(i)) {
-            A.exch(i, dAryParent(d, i));
-            i = dAryParent(d, i);
+        while (i > 1 && A.at(multiaryParent(d, i)) < A.at(i)) {
+            A.exch(i, multiaryParent(d, i));
+            i = multiaryParent(d, i);
         }
     }
 
