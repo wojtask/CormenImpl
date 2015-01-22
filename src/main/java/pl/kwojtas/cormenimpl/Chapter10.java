@@ -1,15 +1,18 @@
 package pl.kwojtas.cormenimpl;
 
+import pl.kwojtas.cormenimpl.util.BinaryTree;
 import pl.kwojtas.cormenimpl.util.CircularList;
 import pl.kwojtas.cormenimpl.util.Deque;
 import pl.kwojtas.cormenimpl.util.DoubleStack;
 import pl.kwojtas.cormenimpl.util.List;
 import pl.kwojtas.cormenimpl.util.ListWithSentinel;
+import pl.kwojtas.cormenimpl.util.MultiaryTree;
+import pl.kwojtas.cormenimpl.util.MultipleArrayList;
 import pl.kwojtas.cormenimpl.util.Queue;
+import pl.kwojtas.cormenimpl.util.SingleArrayList;
 import pl.kwojtas.cormenimpl.util.SinglyLinkedList;
 import pl.kwojtas.cormenimpl.util.SinglyLinkedListWithTail;
 import pl.kwojtas.cormenimpl.util.Stack;
-import pl.kwojtas.cormenimpl.util.XorList;
 
 public class Chapter10 {
 
@@ -401,6 +404,97 @@ public class Chapter10 {
             singlyLinkedListInsert(L_, x);
         }
         L.head = L_.head;
+    }
+
+    // subchapter 10.3
+    public <T> int allocateObject(MultipleArrayList<T> L) {
+        if (L.free == null) {
+            throw new RuntimeException("out of space");
+        }
+        Integer x = L.free;
+        L.free = L.next.at(x);
+        return x;
+    }
+
+    // subchapter 10.3
+    public <T> void freeObject(MultipleArrayList<T> L, int x) {
+        L.next.set(x, L.free);
+        L.free = x;
+    }
+
+    // solution of 10.3-2
+    public <T> int singleArrayAllocateObject(SingleArrayList<T> L) {
+        if (L.free == null) {
+            throw new RuntimeException("out of space");
+        }
+        int i = L.free;
+        L.free = L.A.at(i + 1);
+        return i;
+    }
+
+    // solution of 10.3-2
+    public <T> void singleArrayFreeObject(SingleArrayList<T> L, int i) {
+        L.A.set(i + 1, L.free);
+        L.free = i;
+    }
+
+    // solution of 10.4-3
+    public <T> void iterativeInorderTreeWalk(BinaryTree<T> T) {
+        if (T.root == null) {
+            return;
+        }
+        Stack<BinaryTree<T>.Node> S = new Stack<>();
+        push(S, T.root);
+        while (!stackEmpty(S)) {
+            BinaryTree<T>.Node x = pop(S);
+            if (x.right != null) {
+                push(S, x.right);
+            }
+            System.out.println(x.key);
+            if (x.left != null) {
+                push(S, x.left);
+            }
+        }
+    }
+
+    // solution of 10.4-4
+    public <T> void treeWalk(MultiaryTree<T>.Node x) {
+        if (x != null) {
+            System.out.println(x.key);
+            treeWalk(x.leftChild);
+            treeWalk(x.rightSibling);
+        }
+    }
+
+    // solution of 10.4-5
+    private <T> BinaryTree<T>.Node stacklessInorderVisit(BinaryTree<T>.Node x) {
+        System.out.println(x.key);
+        if (x.right != null) {
+            return x.right;
+        }
+        return x.p;
+    }
+
+    // solution of 10.4-5
+    public <T> void stacklessInorderTreeWalk(BinaryTree<T> T) {
+        BinaryTree<T>.Node prev = null;
+        BinaryTree<T>.Node curr = T.root;
+        BinaryTree<T>.Node next = null;
+        while (curr != null) {
+            if (prev == curr.p) {
+                if (curr.left != null) {
+                    next = curr.left;
+                } else {
+                    next = stacklessInorderVisit(curr);
+                }
+            } else if (prev == curr.left) {
+                next = stacklessInorderVisit(curr);
+            } else {
+                next = curr.p;
+            }
+            prev = curr;
+            curr = next;
+        }
     }
 
 }
