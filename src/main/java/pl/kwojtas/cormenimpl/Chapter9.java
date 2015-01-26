@@ -2,6 +2,7 @@ package pl.kwojtas.cormenimpl;
 
 import pl.kwojtas.cormenimpl.util.Array;
 import pl.kwojtas.cormenimpl.util.Pair;
+import pl.kwojtas.cormenimpl.util.Point2D;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -307,17 +308,17 @@ public class Chapter9 {
     }
 
     // solution of 9-2(e)
-    public static Pair<Double, Double> postOfficeLocation2D(Array<Pair<Double, Double>> A, Array<Double> w) {
+    public static Point2D postOfficeLocation2D(Array<Point2D> A, Array<Double> w) {
         int n = A.length;
         Array<Double> X = new Array<>();
         Array<Double> Y = new Array<>();
         for (int i = 1; i <= n; i++) {
-            X.set(i, A.at(i).first);
-            Y.set(i, A.at(i).second);
+            X.set(i, A.at(i).x);
+            Y.set(i, A.at(i).y);
         }
         double xp = weightedMedian(X, new Array<>(w), 1, n);
         double yp = weightedMedian(Y, new Array<>(w), 1, n);
-        return new Pair<>(xp, yp);
+        return new Point2D(xp, yp);
     }
 
 }

@@ -19,18 +19,18 @@ public class Chapter10 {
     private Chapter10() { }
 
     // subchapter 10.1
-    public <T> boolean stackEmpty(Stack<T> S) {
+    public static <T> boolean stackEmpty(Stack<T> S) {
         return S.top == 0;
     }
 
     // subchapter 10.1
-    public <T> void push(Stack<T> S, T x) {
+    public static <T> void push(Stack<T> S, T x) {
         S.top++;
         S.set(S.top, x);
     }
 
     // subchapter 10.1
-    public <T> T pop(Stack<T> S) {
+    public static <T> T pop(Stack<T> S) {
         if (stackEmpty(S)) {
             throw new RuntimeException("underflow");
         }
@@ -39,7 +39,7 @@ public class Chapter10 {
     }
 
     // subchapter 10.1
-    public <T> void enqueue(Queue<T> Q, T x) {
+    public static <T> void enqueue(Queue<T> Q, T x) {
         Q.set(Q.tail, x);
         if (Q.tail == Q.length) {
             Q.tail = 1;
@@ -49,7 +49,7 @@ public class Chapter10 {
     }
 
     // subchapter 10.1
-    public <T> T dequeue(Queue<T> Q) {
+    public static <T> T dequeue(Queue<T> Q) {
         T x = Q.at(Q.head);
         if (Q.head == Q.length) {
             Q.head = 1;
@@ -60,18 +60,18 @@ public class Chapter10 {
     }
 
     // solution of 10.1-2
-    public <T> boolean firstStackEmpty(DoubleStack<T> A) {
+    public static <T> boolean firstStackEmpty(DoubleStack<T> A) {
         return A.top1 == 0;
     }
 
     // solution of 10.1-2
-    public <T> void firstStackPush(DoubleStack<T> A, T x) {
+    public static <T> void firstStackPush(DoubleStack<T> A, T x) {
         A.top1++;
         A.set(A.top1, x);
     }
 
     // solution of 10.1-2
-    public <T> T firstStackPop(DoubleStack<T> A) {
+    public static <T> T firstStackPop(DoubleStack<T> A) {
         if (firstStackEmpty(A)) {
             throw new RuntimeException("underflow");
         }
@@ -80,18 +80,18 @@ public class Chapter10 {
     }
 
     // solution of 10.1-2
-    public <T> boolean secondStackEmpty(DoubleStack<T> A) {
+    public static <T> boolean secondStackEmpty(DoubleStack<T> A) {
         return A.top1 == A.length + 1;
     }
 
     // solution of 10.1-2
-    public <T> void secondStackPush(DoubleStack<T> A, T x) {
+    public static <T> void secondStackPush(DoubleStack<T> A, T x) {
         A.top2--;
         A.set(A.top2, x);
     }
 
     // solution of 10.1-2
-    public <T> T secondStackPop(DoubleStack<T> A) {
+    public static <T> T secondStackPop(DoubleStack<T> A) {
         if (secondStackEmpty(A)) {
             throw new RuntimeException("underflow");
         }
@@ -100,12 +100,12 @@ public class Chapter10 {
     }
 
     // solution of 10.1-4
-    public <T> boolean queueEmpty(Queue<T> Q) {
+    public static <T> boolean queueEmpty(Queue<T> Q) {
         return Q.head == Q.tail;
     }
 
     // solution of 10.1-4
-    public <T> void enqueue_(Queue<T> Q, T x) {
+    public static <T> void enqueue_(Queue<T> Q, T x) {
         if (Q.head == Q.tail + 1) {
             throw new RuntimeException("overflow");
         }
@@ -121,7 +121,7 @@ public class Chapter10 {
     }
 
     // solution of 10.1-4
-    public <T> T dequeue_(Queue<T> Q) {
+    public static <T> T dequeue_(Queue<T> Q) {
         if (queueEmpty(Q)) {
             throw new RuntimeException("underflow");
         }
@@ -135,7 +135,7 @@ public class Chapter10 {
     }
 
     // solution of 10.1-5
-    public <T> void headEnqueue(Deque<T> D, T x) {
+    public static <T> void headEnqueue(Deque<T> D, T x) {
         if (D.head == 1) {
             D.head = D.length;
         } else {
@@ -145,7 +145,7 @@ public class Chapter10 {
     }
 
     // solution of 10.1-5
-    public <T> T headDequeue(Deque<T> D) {
+    public static <T> T headDequeue(Deque<T> D) {
         T x = D.at(D.head);
         if (D.head == D.length) {
             D.head = 1;
@@ -156,7 +156,7 @@ public class Chapter10 {
     }
 
     // solution of 10.1-5
-    public <T> void tailEnqueue(Deque<T> D, T x) {
+    public static <T> void tailEnqueue(Deque<T> D, T x) {
         D.set(D.tail, x);
         if (D.tail == D.length) {
             D.tail = 1;
@@ -166,7 +166,7 @@ public class Chapter10 {
     }
 
     // solution of 10.1-5
-    public <T> T tailDequeue(Deque<T> D) {
+    public static <T> T tailDequeue(Deque<T> D) {
         if (D.tail == 1) {
             D.tail = D.length;
         } else {
@@ -176,12 +176,12 @@ public class Chapter10 {
     }
 
     // solution of 10.1-6
-    public <T> void enqueueOnStacks(Stack<T> S1, Stack<T> S2, T x) {
+    public static <T> void enqueueOnStacks(Stack<T> S1, Stack<T> S2, T x) {
         push(S1, x);
     }
 
     // solution of 10.1-6
-    public <T> T dequeueOnStacks(Stack<T> S1, Stack<T> S2) {
+    public static <T> T dequeueOnStacks(Stack<T> S1, Stack<T> S2) {
         if (stackEmpty(S1)) {
             throw new RuntimeException("underflow");
         }
@@ -196,12 +196,12 @@ public class Chapter10 {
     }
 
     // solution of 10.1-7
-    public <T> void pushOnQueues(Queue<T> Q1, Queue<T> Q2, T x) {
+    public static <T> void pushOnQueues(Queue<T> Q1, Queue<T> Q2, T x) {
         enqueue(Q1, x);
     }
 
     // solution of 10.1-7
-    public <T> T popOnQueues(Queue<T> Q1, Queue<T> Q2) {
+    public static <T> T popOnQueues(Queue<T> Q1, Queue<T> Q2) {
         if (queueEmpty(Q1)) {
             throw new RuntimeException("underflow");
         }
@@ -219,7 +219,7 @@ public class Chapter10 {
     }
 
     // subchapter 10.2
-    public <T> List<T>.Node listSearch(List<T> L, T k) {
+    public static <T> List<T>.Node listSearch(List<T> L, T k) {
         List<T>.Node x = L.head;
         while (x != null && !x.key.equals(k)) {
             x = x.next;
@@ -228,7 +228,7 @@ public class Chapter10 {
     }
 
     // subchapter 10.2
-    public <T> void listInsert(List<T> L, List<T>.Node x) {
+    public static <T> void listInsert(List<T> L, List<T>.Node x) {
         x.next = L.head;
         if (L.head != null) {
             L.head.prev = x;
@@ -238,7 +238,7 @@ public class Chapter10 {
     }
 
     // subchapter 10.2
-    public <T> void listDelete(List<T> L, List<T>.Node x) {
+    public static <T> void listDelete(List<T> L, List<T>.Node x) {
         if (x.prev != null) {
             x.prev.next = x.next;
         } else {
@@ -250,13 +250,13 @@ public class Chapter10 {
     }
 
     // subchapter 10.2
-    public <T> void listDelete_(ListWithSentinel<T> L, ListWithSentinel<T>.Node x) {
+    public static <T> void listDelete_(ListWithSentinel<T> L, ListWithSentinel<T>.Node x) {
         x.prev.next = x.next;
         x.next.prev = x.prev;
     }
 
     // subchapter 10.2
-    public <T> ListWithSentinel<T>.Node listSearch_(ListWithSentinel<T> L, T k) {
+    public static <T> ListWithSentinel<T>.Node listSearch_(ListWithSentinel<T> L, T k) {
         ListWithSentinel<T>.Node x = L.nil.next;
         while (x != L.nil && !x.key.equals(k)) {
             x = x.next;
@@ -265,7 +265,7 @@ public class Chapter10 {
     }
 
     // subchapter 10.2
-    public <T> void ListInsert_(ListWithSentinel<T> L, ListWithSentinel<T>.Node x) {
+    public static <T> void ListInsert_(ListWithSentinel<T> L, ListWithSentinel<T>.Node x) {
         x.next = L.nil.next;
         L.nil.next.prev = x;
         L.nil.next = x;
@@ -273,13 +273,13 @@ public class Chapter10 {
     }
 
     // solution of 10.2-1
-    public <T> void singlyLinkedListInsert(SinglyLinkedList<T> L, SinglyLinkedList<T>.Node x) {
+    public static <T> void singlyLinkedListInsert(SinglyLinkedList<T> L, SinglyLinkedList<T>.Node x) {
         x.next = L.head;
         L.head = x;
     }
 
     // solution of 10.2-1
-    public <T> void singlyLinkedListDelete(SinglyLinkedList<T> L, SinglyLinkedList<T>.Node x) {
+    public static <T> void singlyLinkedListDelete(SinglyLinkedList<T> L, SinglyLinkedList<T>.Node x) {
         if (x == L.head) {
             L.head = L.head.next;
         } else {
@@ -292,14 +292,14 @@ public class Chapter10 {
     }
 
     // solution of 10.2-2
-    public <T> void singlyLinkedListPush(SinglyLinkedList<T> L, T k) {
+    public static <T> void singlyLinkedListPush(SinglyLinkedList<T> L, T k) {
         SinglyLinkedList<T>.Node x = L.new Node();
         x.key = k;
         singlyLinkedListInsert(L, x);
     }
 
     // solution of 10.2-2
-    public <T> T singlyLinkedListPop(SinglyLinkedList<T> L) {
+    public static <T> T singlyLinkedListPop(SinglyLinkedList<T> L) {
         if (L.head == null) {
             throw new RuntimeException("underflow");
         }
@@ -309,7 +309,7 @@ public class Chapter10 {
     }
 
     // solution of 10.2-3
-    public <T> void singlyLinkedListEnqueue(SinglyLinkedListWithTail<T> L, T k) {
+    public static <T> void singlyLinkedListEnqueue(SinglyLinkedListWithTail<T> L, T k) {
         SinglyLinkedListWithTail<T>.Node x = L.new Node();
         x.key = k;
         if (L.tail != null) {
@@ -321,7 +321,7 @@ public class Chapter10 {
     }
 
     // solution of 10.2-3
-    public <T> T singlyLinkedListDequeue(SinglyLinkedListWithTail<T> L) {
+    public static <T> T singlyLinkedListDequeue(SinglyLinkedListWithTail<T> L) {
         if (L.head == null) {
             throw new RuntimeException("underflow");
         }
@@ -334,7 +334,7 @@ public class Chapter10 {
     }
 
     // solution of 10.2-5
-    public <T> void circularListInsert(CircularList<T> L, CircularList<T>.Node x) {
+    public static <T> void circularListInsert(CircularList<T> L, CircularList<T>.Node x) {
         if (L.head == null) {
             L.head = x.next = x;
         } else {
@@ -344,7 +344,7 @@ public class Chapter10 {
     }
 
     // solution of 10.2-5
-    public <T> void circularListDelete(CircularList<T> L, CircularList<T>.Node x) {
+    public static <T> void circularListDelete(CircularList<T> L, CircularList<T>.Node x) {
         CircularList<T>.Node y = L.head;
         while (y.next != x) {
             y = y.next;
@@ -360,7 +360,7 @@ public class Chapter10 {
     }
 
     // solution of 10.2-5
-    public <T> CircularList<T>.Node circularListSearch(CircularList<T> L, T k) {
+    public static <T> CircularList<T>.Node circularListSearch(CircularList<T> L, T k) {
         if (L.head == null) {
             return null;
         }
@@ -378,7 +378,7 @@ public class Chapter10 {
     }
 
     // solution of 10.2-6
-    public <T> CircularList<T> circularListUnion(CircularList<T> S1, CircularList<T> S2) {
+    public static <T> CircularList<T> circularListUnion(CircularList<T> S1, CircularList<T> S2) {
         CircularList<T> S = new CircularList<>();
         if (S1.head != null && S2.head != null) {
             CircularList<T>.Node x = S1.head.next;
@@ -395,7 +395,7 @@ public class Chapter10 {
     }
 
     // solution of 10.2-7
-    public <T> void singlyLinkedListReverse(SinglyLinkedList<T> L) {
+    public static <T> void singlyLinkedListReverse(SinglyLinkedList<T> L) {
         SinglyLinkedList<T> L_ = new SinglyLinkedList<>();
         L_.head = null;
         while (L.head != null) {
@@ -407,7 +407,7 @@ public class Chapter10 {
     }
 
     // subchapter 10.3
-    public <T> int allocateObject(MultipleArrayList<T> L) {
+    public static <T> int allocateObject(MultipleArrayList<T> L) {
         if (L.free == null) {
             throw new RuntimeException("out of space");
         }
@@ -417,13 +417,13 @@ public class Chapter10 {
     }
 
     // subchapter 10.3
-    public <T> void freeObject(MultipleArrayList<T> L, int x) {
+    public static <T> void freeObject(MultipleArrayList<T> L, int x) {
         L.next.set(x, L.free);
         L.free = x;
     }
 
     // solution of 10.3-2
-    public <T> int singleArrayAllocateObject(SingleArrayList<T> L) {
+    public static <T> int singleArrayAllocateObject(SingleArrayList<T> L) {
         if (L.free == null) {
             throw new RuntimeException("out of space");
         }
@@ -433,13 +433,13 @@ public class Chapter10 {
     }
 
     // solution of 10.3-2
-    public <T> void singleArrayFreeObject(SingleArrayList<T> L, int i) {
+    public static <T> void singleArrayFreeObject(SingleArrayList<T> L, int i) {
         L.A.set(i + 1, L.free);
         L.free = i;
     }
 
     // solution of 10.4-3
-    public <T> void iterativeInorderTreeWalk(BinaryTree<T> T) {
+    public static <T> void iterativeInorderTreeWalk(BinaryTree<T> T) {
         if (T.root == null) {
             return;
         }
@@ -458,7 +458,7 @@ public class Chapter10 {
     }
 
     // solution of 10.4-4
-    public <T> void treeWalk(MultiaryTree<T>.Node x) {
+    public static <T> void treeWalk(MultiaryTree<T>.Node x) {
         if (x != null) {
             System.out.println(x.key);
             treeWalk(x.leftChild);
@@ -467,7 +467,7 @@ public class Chapter10 {
     }
 
     // solution of 10.4-5
-    private <T> BinaryTree<T>.Node stacklessInorderVisit(BinaryTree<T>.Node x) {
+    private static <T> BinaryTree<T>.Node stacklessInorderVisit(BinaryTree<T>.Node x) {
         System.out.println(x.key);
         if (x.right != null) {
             return x.right;
@@ -476,7 +476,7 @@ public class Chapter10 {
     }
 
     // solution of 10.4-5
-    public <T> void stacklessInorderTreeWalk(BinaryTree<T> T) {
+    public static <T> void stacklessInorderTreeWalk(BinaryTree<T> T) {
         BinaryTree<T>.Node prev = null;
         BinaryTree<T>.Node curr = T.root;
         BinaryTree<T>.Node next = null;

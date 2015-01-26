@@ -6,6 +6,7 @@ import com.tngtech.java.junit.dataprovider.UseDataProvider;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import pl.kwojtas.cormenimpl.util.Array;
+import pl.kwojtas.cormenimpl.util.ZeroBasedIndexedArray;
 
 import java.util.Comparator;
 
@@ -352,16 +353,16 @@ public class Chapter2Test {
     @DataProvider
     public static Object[][] provideDataForPolynomialEvaluation() {
         return new Object[][]{
-                {new Array<>().withFirstPosition(0), 4.5, 0.0},
-                {new Array<>(3.14).withFirstPosition(0), 4.5, 3.14},
-                {new Array<>(-1.0,2.0).withFirstPosition(0), 4.5, 8.0},
-                {new Array<>(-1.5,3.2,1.6,3.4,-5.0,0.0,-1.0,1.0).withFirstPosition(0), -2.0, -300.7}
+                {new ZeroBasedIndexedArray<>(), 4.5, 0.0},
+                {new ZeroBasedIndexedArray<>(3.14), 4.5, 3.14},
+                {new ZeroBasedIndexedArray<>(-1.0,2.0), 4.5, 8.0},
+                {new ZeroBasedIndexedArray<>(-1.5,3.2,1.6,3.4,-5.0,0.0,-1.0,1.0), -2.0, -300.7}
         };
     }
 
     @Test
     @UseDataProvider("provideDataForPolynomialEvaluation")
-    public void shouldEvaluatePolynomialUsingHornersRule(Array<Double> coefficients, double x, double expectedResult) {
+    public void shouldEvaluatePolynomialUsingHornersRule(ZeroBasedIndexedArray<Double> coefficients, double x, double expectedResult) {
         // given
 
         // when
@@ -373,7 +374,7 @@ public class Chapter2Test {
 
     @Test
     @UseDataProvider("provideDataForPolynomialEvaluation")
-    public void shouldEvaluatePolynomialNaively(Array<Double> coefficients, double x, double expectedResult) {
+    public void shouldEvaluatePolynomialNaively(ZeroBasedIndexedArray<Double> coefficients, double x, double expectedResult) {
         // given
 
         // when

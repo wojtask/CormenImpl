@@ -1,8 +1,13 @@
 package pl.kwojtas.cormenimpl;
 
 import pl.kwojtas.cormenimpl.util.Array;
+import pl.kwojtas.cormenimpl.util.List;
+import pl.kwojtas.cormenimpl.util.Pair;
+import pl.kwojtas.cormenimpl.util.Point2D;
+import pl.kwojtas.cormenimpl.util.ZeroBasedIndexedArray;
 
 import static java.lang.Math.max;
+import static java.lang.Math.sqrt;
 import static pl.kwojtas.cormenimpl.Chapter5.random;
 
 public class Chapter8 {
@@ -11,7 +16,7 @@ public class Chapter8 {
 
     // subchapter 8.2
     public static void countingSort(Array<Integer> A, Array<Integer> B, int k) {
-        Array<Integer> C = new Array<Integer>().withFirstPosition(0);
+        ZeroBasedIndexedArray<Integer> C = new ZeroBasedIndexedArray<>();
         for (int i = 0; i <= k; i++) {
             C.set(i, 0);
         }
@@ -29,7 +34,7 @@ public class Chapter8 {
 
     // exercise 8.2-3
     public static void nonStableCountingSort(Array<Integer> A, Array<Integer> B, int k) {
-        Array<Integer> C = new Array<Integer>().withFirstPosition(0);
+        ZeroBasedIndexedArray<Integer> C = new ZeroBasedIndexedArray<>();
         for (int i = 0; i <= k; i++) {
             C.set(i, 0);
         }
@@ -47,7 +52,7 @@ public class Chapter8 {
 
     // solution of 8.2-4
     public static int countNumbersInRange(Array<Integer> A, int k, int a, int b) {
-        Array<Integer> C = new Array<Integer>().withFirstPosition(0);
+        ZeroBasedIndexedArray<Integer> C = new ZeroBasedIndexedArray<>();
         for (int i = 0; i <= k; i++) {
             C.set(i, 0);
         }
@@ -81,7 +86,7 @@ public class Chapter8 {
 
     // subchapter 8.3
     private static void stableSortOnDigit(Array<Integer> A, int digit, int k) {
-        Array<Integer> C = new Array<Integer>().withFirstPosition(0);
+        ZeroBasedIndexedArray<Integer> C = new ZeroBasedIndexedArray<>();
         for (int i = 0; i <= k - 1; i++) {
             C.set(i, 0);
         }
@@ -117,6 +122,131 @@ public class Chapter8 {
         stableSortOnDigit(A, 2, n);
     }
 
+    // subchapter 8.4
+    public static void bucketSort(Array<Double> A) {
+        int n = A.length;
+        ZeroBasedIndexedArray<List<Double>> B = new ZeroBasedIndexedArray<>();
+        for (int i = 0; i <= n - 1; i++) {
+            B.set(i, new List<>());
+        }
+        for (int i = 1; i <= n; i++) {
+            List<Double>.Node x = B.at((int) (n * A.at(i))).new Node(A.at(i));
+            Chapter10.listInsert(B.at((int) (n * A.at(i))), x);
+        }
+        for (int i = 0; i <= n - 1; i++) {
+            listInsertionSort(B.at(i));
+        }
+        concatenateListsToArray(B, A);
+    }
+
+    // subchapter 8.4
+    private static void listInsertionSort(List<Double> L) {
+        if (L.head == null) {
+            return;
+        }
+        List<Double>.Node x = L.head.next;
+        while (x != null) {
+            List<Double>.Node y = x.prev;
+            while (y != null && y.key > x.key) {
+                y = y.prev;
+            }
+            List<Double>.Node z = x.next;
+            if (y != x.prev) {
+                x.prev.next = z;
+                if (z != null) {
+                    z.prev = x.prev;
+                }
+                x.prev = y;
+                if (y == null) {
+                    x.next = L.head;
+                    L.head.prev = x;
+                    L.head = x;
+                } else {
+                    x.next = y.next;
+                    y.next = x;
+                }
+            }
+            x = z;
+        }
+    }
+
+    // subchapter 8.4
+    private static void concatenateListsToArray(ZeroBasedIndexedArray<List<Double>> B, Array<Double> A) {
+        int k = 1;
+        for (int i = 0; i <= B.length - 1; i++) {
+            List<Double>.Node x = B.at(i).head;
+            while (x != null) {
+                A.set(k, x.key);
+                k++;
+                x = x.next;
+            }
+        }
+    }
+
+    // solution of 8.4-4
+    public static void sortUnitCirclePoints(Array<Point2D> points) {
+        int n = points.length;
+        ZeroBasedIndexedArray<List<Pair<Point2D, Double>>> B = new ZeroBasedIndexedArray<>();
+        for (int i = 0; i <= n - 1; i++) {
+            B.set(i, new List<>());
+        }
+        for (int i = 1; i <= n; i++) {
+            double distance = sqrt(points.at(i).x * points.at(i).x + points.at(i).y * points.at(i).y);
+            int bucket = (int) (distance * distance * n);
+            List<Pair<Point2D, Double>>.Node x = B.at(bucket).new Node(new Pair<>(points.at(i), distance));
+            Chapter10.listInsert(B.at(bucket), x);
+        }
+        for (int i = 0; i <= n - 1; i++) {
+            listInsertionSortUnitCirclePoints(B.at(i));
+        }
+        concatenateListsOfUnitCirclePoints(B, points);
+    }
+
+    // solution of 8.4-4
+    private static void listInsertionSortUnitCirclePoints(List<Pair<Point2D, Double>> L) {
+        if (L.head == null) {
+            return;
+        }
+        List<Pair<Point2D, Double>>.Node x = L.head.next;
+        while (x != null) {
+            List<Pair<Point2D, Double>>.Node y = x.prev;
+            while (y != null && y.key.second > x.key.second) {
+                y = y.prev;
+            }
+            List<Pair<Point2D, Double>>.Node z = x.next;
+            if (y != x.prev) {
+                x.prev.next = z;
+                if (z != null) {
+                    z.prev = x.prev;
+                }
+                x.prev = y;
+                if (y == null) {
+                    x.next = L.head;
+                    L.head.prev = x;
+                    L.head = x;
+                } else {
+                    x.next = y.next;
+                    y.next = x;
+                }
+            }
+            x = z;
+        }
+    }
+
+    // solution of 8.4-4
+    private static void concatenateListsOfUnitCirclePoints(ZeroBasedIndexedArray<List<Pair<Point2D, Double>>> B,
+                                                        Array<Point2D> points) {
+        int k = 1;
+        for (int i = 0; i <= B.length - 1; i++) {
+            List<Pair<Point2D, Double>>.Node x = B.at(i).head;
+            while (x != null) {
+                points.set(k, x.key.first);
+                k++;
+                x = x.next;
+            }
+        }
+    }
+
     // solution of 8-2(b)
     public static void bitwiseSort(Array<Integer> A) {
         int n = A.length;
@@ -136,7 +266,7 @@ public class Chapter8 {
 
     // solution of 8-2(e)
     public static void countingSortInPlace(Array<Integer> A, int k) {
-        Array<Integer> C = new Array<Integer>().withFirstPosition(0);
+        ZeroBasedIndexedArray<Integer> C = new ZeroBasedIndexedArray<>();
         for (int i = 0; i <= k; i++) {
             C.set(i, 0);
         }
@@ -228,7 +358,7 @@ public class Chapter8 {
 
     // solution of 8-3(a)
     private static void variousLengthSortByLength(Array<Integer> A, int k) {
-        Array<Integer> C = new Array<Integer>().withFirstPosition(0);
+        ZeroBasedIndexedArray<Integer> C = new ZeroBasedIndexedArray<>();
         for (int i = 0; i <= k; i++) {
             C.set(i, 0);
         }
@@ -287,11 +417,11 @@ public class Chapter8 {
 
     // solution of 8-3(b)
     private static void countingSortByCharacter(Array<String> A, int position) {
-        Array<Integer> C = new Array<Integer>().withFirstPosition(0);
+        ZeroBasedIndexedArray<Integer> C = new ZeroBasedIndexedArray<>();
         for (int i = 0; i <= 127; i++) { // 127 = max ASCII numeric value
             C.set(i, 0);
         }
-        position--; // move to 0-based positions
+        position--; // move to 0-based indexes
         for (int j = 1; j <= A.length; j++) {
             C.set(Character.getNumericValue(A.at(j).charAt(position)),
                     C.at(Character.getNumericValue(A.at(j).charAt(position))) + 1);

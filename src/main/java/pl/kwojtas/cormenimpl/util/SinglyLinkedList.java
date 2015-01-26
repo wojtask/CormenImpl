@@ -5,6 +5,8 @@ public class SinglyLinkedList<T> {
     public class Node {
         public T key;
         public Node next;
+
+        public Node() { }
     }
 
     public Node head;

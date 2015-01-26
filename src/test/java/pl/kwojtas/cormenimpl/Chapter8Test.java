@@ -6,6 +6,7 @@ import com.tngtech.java.junit.dataprovider.UseDataProvider;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import pl.kwojtas.cormenimpl.util.Array;
+import pl.kwojtas.cormenimpl.util.Point2D;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -136,6 +137,62 @@ public class Chapter8Test {
         // then
         assertShuffled(original, array);
         assertSorted(array);
+    }
+
+    @DataProvider
+    public static Object[][] provideDataForSortingUsingBucketSort() {
+        return new Object[][]{
+                {new Array<>(.0)},
+                {new Array<>(.3,.2,.1,.0)},
+                {new Array<>(.22,.48,.1,.0,.45,.26,.15)},
+                {new Array<>(.15,.92,.56,.25,.66,.23,.9,.2,.45,.7,.39,.99,.3,.01,.33,.91)}
+        };
+    }
+
+    @Test
+    @UseDataProvider("provideDataForSortingUsingBucketSort")
+    public void shouldSortArrayUsingBucketSort(Array<Double> array) {
+        // given
+        Array<Double> original = new Array<>(array);
+
+        // when
+        Chapter8.bucketSort(array);
+
+        // then
+        assertShuffled(original, array);
+        assertSorted(array);
+    }
+
+    @DataProvider
+    public static Object[][] provideDataForSortingUnitCirclePoints() {
+        return new Object[][]{
+                {new Array<>(new Point2D(.0,.0))},
+                {new Array<>(new Point2D(.3,.3),new Point2D(.2,.2),new Point2D(.1,.1),new Point2D(.0,.0))},
+                {new Array<>(new Point2D(.22,.15),new Point2D(.48,.63),new Point2D(.1,.8),new Point2D(.0,.44),
+                        new Point2D(.45,.09),new Point2D(.26,.28),new Point2D(.15,.02))},
+                {new Array<>(new Point2D(.15,.79),new Point2D(.92,.16),new Point2D(.56,.06),new Point2D(.25,.33),
+                        new Point2D(.66,.15),new Point2D(.23,.81),new Point2D(.69,.72),new Point2D(.2,.37),new Point2D(.45,.88),
+                        new Point2D(.7,.07),new Point2D(.39,.55),new Point2D(.99,.04),new Point2D(.3,.49),new Point2D(.01,.68),
+                        new Point2D(.33,.08),new Point2D(.91,.4))}
+        };
+    }
+
+    @Test
+    @UseDataProvider("provideDataForSortingUnitCirclePoints")
+    public void shouldSortUnitCirclePoints(Array<Point2D> array) {
+        // given
+        Array<Point2D> original = new Array<>(array);
+
+        // when
+        Chapter8.sortUnitCirclePoints(array);
+
+        // then
+        assertShuffled(original, array);
+        assertSorted(array, (p1, p2) -> {
+            double dist1 = p1.x * p1.x + p1.y * p1.y;
+            double dist2 = p2.x * p2.x + p2.y * p2.y;
+            return dist1 < dist2 ? -1 : dist1 > dist2 ? 1 : 0;
+        });
     }
 
     @DataProvider

@@ -38,7 +38,7 @@ public class TestUtil {
         }
     }
 
-    public static <T extends Comparable> void assertSorted(Array<T> array, Comparator<T> comparator) {
+    public static <T> void assertSorted(Array<T> array, Comparator<T> comparator) {
         for (int i = 2; i <= array.length; i++) {
             assertTrue(comparator.compare(array.at(i - 1), array.at(i)) <= 0);
         }

@@ -9,4 +9,5 @@ public class Interval {
         this.a = a;
         this.b = b;
     }
+
 }

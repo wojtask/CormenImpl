@@ -6,13 +6,11 @@ import java.util.Arrays;
 public class Array<T> {
 
     private ArrayList<T> data;
-    private int firstPosition;
     public int length;
 
     @SafeVarargs
     public Array(T... elements) {
         this.data = new ArrayList<>(Arrays.asList(elements));
-        this.firstPosition = 1;
         this.length = elements.length;
     }
 
@@ -22,7 +20,6 @@ public class Array<T> {
 
     Array(ArrayList<T> otherArrayList) {
         this.data = new ArrayList<>(otherArrayList);
-        this.firstPosition = 1;
         this.length = otherArrayList.size();
     }
 
@@ -30,34 +27,24 @@ public class Array<T> {
         return data;
     }
 
-    public Array<T> withFirstPosition(int firstPosition) {
-        this.firstPosition = firstPosition;
-        return this;
-    }
-
-    private int toZeroBasedPosition(int arrayPosition) {
-        return arrayPosition - firstPosition;
-    }
-
     public T at(int position) {
-        if (position < firstPosition || position > length) {
+        if (position < 1 || position > length) {
             throw new RuntimeException("Array index out of bound");
         }
-        return data.get(toZeroBasedPosition(position));
+        return data.get(position - 1);
     }
 
     public void set(int position, T element) {
-        if (position < firstPosition) {
+        if (position < 1) {
             throw new RuntimeException("Array index out of bound");
         }
-        int lastPosition = firstPosition + length - 1;
-        if (position > lastPosition) {
-            for (int i = lastPosition + 1; i <= position; i++) {
+        if (position > length) {
+            for (int i = length + 1; i <= position; i++) {
                 data.add(null);
             }
             length = position;
         }
-        data.set(toZeroBasedPosition(position), element);
+        data.set(position - 1, element);
     }
 
     public void set(Array<T> otherArray) {
@@ -65,7 +52,6 @@ public class Array<T> {
             return;
         }
         this.data = new ArrayList<>(otherArray.data);
-        this.firstPosition = otherArray.firstPosition;
         this.length = otherArray.length;
     }
 

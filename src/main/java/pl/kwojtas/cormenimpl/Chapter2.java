@@ -1,6 +1,7 @@
 package pl.kwojtas.cormenimpl;
 
 import pl.kwojtas.cormenimpl.util.Array;
+import pl.kwojtas.cormenimpl.util.ZeroBasedIndexedArray;
 
 import static pl.kwojtas.cormenimpl.util.Util.greater;
 import static pl.kwojtas.cormenimpl.util.Util.leq;
@@ -207,7 +208,7 @@ public class Chapter2 {
     }
 
     // problem 2-3
-    public static double horner(Array<Double> a, double x) {
+    public static double horner(ZeroBasedIndexedArray<Double> a, double x) {
         double y = 0.0;
         int i = a.length - 1;
         while (i >= 0) {
@@ -218,7 +219,7 @@ public class Chapter2 {
     }
 
     // solution of 2-3(b)
-    public static double naivePolynomialEvaluation(Array<Double> A, double x) {
+    public static double naivePolynomialEvaluation(ZeroBasedIndexedArray<Double> A, double x) {
         double y = 0.0;
         int n = A.length - 1;
         for (int i = 0; i <= n; i++) {

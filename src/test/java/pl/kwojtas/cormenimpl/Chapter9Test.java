@@ -7,6 +7,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import pl.kwojtas.cormenimpl.util.Array;
 import pl.kwojtas.cormenimpl.util.Pair;
+import pl.kwojtas.cormenimpl.util.Point2D;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -352,24 +353,24 @@ public class Chapter9Test {
     @DataProvider
     public static Object[][] provideDataForFindingPostOfficeLocation() {
         return new Object[][]{
-                {new Array<>(new Pair<>(34.0,0.0)), new Array<>(1.0)},
-                {new Array<>(new Pair<>(3.0,2.0),new Pair<>(1.0,1.0),new Pair<>(4.0,2.0)), new Array<>(0.3,0.3,0.4)},
-                {new Array<>(new Pair<>(3.0,2.0),new Pair<>(1.0,1.0),new Pair<>(4.0,2.0)), new Array<>(0.05,0.9,0.05)},
-                {new Array<>(new Pair<>(1.0,1.0),new Pair<>(1.0,3.0),new Pair<>(1.0,5.0),new Pair<>(3.0,1.0),
-                        new Pair<>(3.0,5.0),new Pair<>(5.0,1.0),new Pair<>(5.0,3.0),new Pair<>(5.0,5.0)),
+                {new Array<>(new Point2D(34.0,0.0)), new Array<>(1.0)},
+                {new Array<>(new Point2D(3.0,2.0),new Point2D(1.0,1.0),new Point2D(4.0,2.0)), new Array<>(0.3,0.3,0.4)},
+                {new Array<>(new Point2D(3.0,2.0),new Point2D(1.0,1.0),new Point2D(4.0,2.0)), new Array<>(0.05,0.9,0.05)},
+                {new Array<>(new Point2D(1.0,1.0),new Point2D(1.0,3.0),new Point2D(1.0,5.0),new Point2D(3.0,1.0),
+                        new Point2D(3.0,5.0),new Point2D(5.0,1.0),new Point2D(5.0,3.0),new Point2D(5.0,5.0)),
                         new Array<>(0.1,0.1,0.2,0.02,0.2,0.3,0.05,0.03)}
         };
     }
 
     @Test
     @UseDataProvider("provideDataForFindingPostOfficeLocation")
-    public void shouldFindPostOfficeLocation(Array<Pair<Double, Double>> points, Array<Double> weights) {
+    public void shouldFindPostOfficeLocation(Array<Point2D> points, Array<Double> weights) {
         // given
-        Array<Pair<Double, Double>> originalPoints = new Array<>(points);
+        Array<Point2D> originalPoints = new Array<>(points);
         Array<Double> originalWeights = new Array<>(weights);
 
         // when
-        Pair<Double, Double> actualLocation = Chapter9.postOfficeLocation2D(points, weights);
+        Point2D actualLocation = Chapter9.postOfficeLocation2D(points, weights);
 
         // then
         assertNotNull(actualLocation);
@@ -380,11 +381,10 @@ public class Chapter9Test {
         }
     }
 
-    private double getTotalWeighedDistance(Pair<Double, Double> origin, Array<Pair<Double, Double>> locations, Array<Double> weights) {
+    private double getTotalWeighedDistance(Point2D origin, Array<Point2D> locations, Array<Double> weights) {
         double totalWeighedDistance = 0.0;
         for (int i = 1; i <= locations.length; i++) {
-            totalWeighedDistance +=
-                    weights.at(i) * (abs(origin.first - locations.at(i).first) + abs(origin.second - locations.at(i).second));
+            totalWeighedDistance += weights.at(i) * (abs(origin.x - locations.at(i).x) + abs(origin.y - locations.at(i).y));
         }
         return totalWeighedDistance;
     }
