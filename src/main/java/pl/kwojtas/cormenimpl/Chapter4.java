@@ -3,7 +3,7 @@ package pl.kwojtas.cormenimpl;
 import pl.kwojtas.cormenimpl.util.Array;
 import pl.kwojtas.cormenimpl.util.Matrix;
 
-public class Chapter4 {
+public final class Chapter4 {
 
     private Chapter4() { }
 

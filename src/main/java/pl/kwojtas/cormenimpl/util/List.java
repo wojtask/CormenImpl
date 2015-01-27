@@ -14,4 +14,35 @@ public class List<T> {
 
     public Node head;
 
+    @SafeVarargs
+    public List(T... elements) {
+        if (elements.length == 0) {
+            return;
+        }
+        head = new Node(elements[0]);
+        Node x = head;
+        for (int i = 1; i < elements.length; i++) {
+            Node y = new Node(elements[i]);
+            y.prev = x;
+            x.next = y;
+            x = y;
+        }
+    }
+
+    public List(List<T> otherList) {
+        if (otherList.head == null) {
+            return;
+        }
+        head = new Node(otherList.head.key);
+        Node x = head;
+        Node z = otherList.head.next;
+        while (z != null) {
+            Node y = new Node(z.key);
+            y.prev = x;
+            x.next = y;
+            x = y;
+            z = z.next;
+        }
+    }
+
 }

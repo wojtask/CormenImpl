@@ -4,16 +4,6 @@ public class Heap<T> extends Array<T> {
 
     public int heapSize;
 
-    public Heap(int initialLength) {
-        super(Array.withLength(initialLength));
-        this.heapSize = 0;
-    }
-
-    public Heap(Array<T> array) {
-        super(array);
-        this.heapSize = array.length;
-    }
-
     public Heap(Array<T> array, int initialLength) {
         super(Array.withLength(initialLength));
         if (array.length > initialLength) {
@@ -23,6 +13,14 @@ public class Heap<T> extends Array<T> {
             set(i, array.at(i));
         }
         this.heapSize = array.length;
+    }
+
+    public Heap(Array<T> array) {
+        this(array, array.length);
+    }
+
+    public static <T> Heap<T> withLength(int length) {
+        return new Heap<>(new Array<>(), length);
     }
 
 }

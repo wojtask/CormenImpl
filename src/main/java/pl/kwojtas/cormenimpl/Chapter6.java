@@ -2,15 +2,19 @@ package pl.kwojtas.cormenimpl;
 
 import pl.kwojtas.cormenimpl.util.Array;
 import pl.kwojtas.cormenimpl.util.Heap;
+import pl.kwojtas.cormenimpl.util.List;
+import pl.kwojtas.cormenimpl.util.Pair;
 import pl.kwojtas.cormenimpl.util.Young;
 
 import static java.lang.Math.max;
 import static java.lang.Math.sqrt;
+import static pl.kwojtas.cormenimpl.Chapter10.listDelete;
+import static pl.kwojtas.cormenimpl.Chapter10.listInsert;
 import static pl.kwojtas.cormenimpl.util.Util.ceil;
 import static pl.kwojtas.cormenimpl.util.Util.greater;
 import static pl.kwojtas.cormenimpl.util.Util.less;
 
-public class Chapter6 {
+public final class Chapter6 {
 
     private Chapter6() { }
 
@@ -195,9 +199,8 @@ public class Chapter6 {
     public static class PriorityQueueWithRanks<T> extends Heap<KeyWithRank<T>> {
         private int currentRank;
 
-        public PriorityQueueWithRanks(int n) {
-            super(n);
-            currentRank = 0;
+        public PriorityQueueWithRanks(int initialLength) {
+            super(new Array<>(), initialLength);
         }
 
         public int getCurrentRank() {
@@ -340,6 +343,84 @@ public class Chapter6 {
             i = parent(i);
         }
         return A.at(A.heapSize + 1);
+    }
+
+    // solution of 6.5-8
+    public static List<Integer> mergeSortedLists(Array<List<Integer>> sortedLists) {
+        List<Integer> reversedMergedList = new List<>();
+        Heap<Pair<Integer, List<Integer>>> minPriorityQueue = Heap.withLength(sortedLists.length);
+        for (int i = 1; i <= sortedLists.length; i++) {
+            if (sortedLists.at(i).head != null) {
+                minHeapInsertForMergingLists(minPriorityQueue, new Pair<>(sortedLists.at(i).head.key, sortedLists.at(i)));
+                sortedLists.at(i).head = sortedLists.at(i).head.next;
+            }
+        }
+        while (minPriorityQueue.heapSize > 0) {
+            Pair<Integer, List<Integer>> min = heapExtractMinForMergingLists(minPriorityQueue);
+            listInsert(reversedMergedList, reversedMergedList.new Node(min.first));
+            if (min.second.head != null) {
+                minHeapInsertForMergingLists(minPriorityQueue, new Pair<>(min.second.head.key, min.second));
+                min.second.head = min.second.head.next;
+            }
+        }
+        List<Integer> mergedList = new List<>();
+        while (reversedMergedList.head != null) {
+            List<Integer>.Node x = reversedMergedList.head;
+            listDelete(reversedMergedList, reversedMergedList.head);
+            listInsert(mergedList, x);
+        }
+        return mergedList;
+    }
+
+    // solution of 6.5-8
+    private static void minHeapInsertForMergingLists(Heap<Pair<Integer, List<Integer>>> A, Pair<Integer, List<Integer>> key) {
+        A.heapSize++;
+        A.set(A.heapSize, new Pair<>(Integer.MAX_VALUE, key.second));
+        heapDecreaseKeyForMergingLists(A, A.heapSize, key);
+    }
+
+    // solution of 6.5-8
+    private static void heapDecreaseKeyForMergingLists(
+            Heap<Pair<Integer, List<Integer>>> A, int i, Pair<Integer, List<Integer>> key) {
+        if (key.first > A.at(i).first) {
+            throw new RuntimeException("new key is larger than current key");
+        }
+        A.set(i, key);
+        while (i > 1 && A.at(parent(i)).first > A.at(i).first) {
+            A.exch(i, parent(i));
+            i = parent(i);
+        }
+    }
+
+    // solution of 6.5-8
+    private static Pair<Integer, List<Integer>> heapExtractMinForMergingLists(Heap<Pair<Integer, List<Integer>>> A) {
+        if (A.heapSize < 1) {
+            throw new RuntimeException("heap underflow");
+        }
+        Pair<Integer, List<Integer>> min = A.at(1);
+        A.set(1, A.at(A.heapSize));
+        A.heapSize--;
+        minHeapifyForMergingLists(A, 1);
+        return min;
+    }
+
+    // solution of 6.5-8
+    private static void minHeapifyForMergingLists(Heap<Pair<Integer, List<Integer>>> A, int i) {
+        int l = left(i);
+        int r = right(i);
+        int smallest;
+        if (l <= A.heapSize && A.at(l).first < A.at(i).first) {
+            smallest = l;
+        } else {
+            smallest = i;
+        }
+        if (r <= A.heapSize && A.at(r).first < A.at(smallest).first) {
+            smallest = r;
+        }
+        if (smallest != i) {
+            A.exch(i, smallest);
+            minHeapifyForMergingLists(A, smallest);
+        }
     }
 
     // problem 6-1

@@ -5,7 +5,7 @@ import pl.kwojtas.cormenimpl.util.Util;
 
 import java.util.Random;
 
-public class Chapter5 {
+public final class Chapter5 {
 
     private static Random rand = new Random(System.currentTimeMillis());
     private static double probabilityForBiasedRandom = rand.nextDouble();

@@ -14,7 +14,7 @@ import static pl.kwojtas.cormenimpl.Chapter7.randomizedPartition;
 import static pl.kwojtas.cormenimpl.util.Util.ceil;
 import static pl.kwojtas.cormenimpl.util.Util.less;
 
-public class Chapter9 {
+public final class Chapter9 {
 
     private Chapter9() { }
 

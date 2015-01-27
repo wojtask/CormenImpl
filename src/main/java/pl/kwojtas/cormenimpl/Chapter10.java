@@ -14,7 +14,11 @@ import pl.kwojtas.cormenimpl.util.SinglyLinkedList;
 import pl.kwojtas.cormenimpl.util.SinglyLinkedListWithTail;
 import pl.kwojtas.cormenimpl.util.Stack;
 
-public class Chapter10 {
+import static pl.kwojtas.cormenimpl.util.Util.greater;
+import static pl.kwojtas.cormenimpl.util.Util.leq;
+import static pl.kwojtas.cormenimpl.util.Util.less;
+
+public final class Chapter10 {
 
     private Chapter10() { }
 
@@ -69,11 +73,6 @@ public class Chapter10 {
     }
 
     // solution of 10.1-2
-    public static <T> boolean firstStackEmpty(DoubleStack<T> A) {
-        return A.top1 == 0;
-    }
-
-    // solution of 10.1-2
     public static <T> void firstStackPush(DoubleStack<T> A, T x) {
         A.top1++;
         A.set(A.top1, x);
@@ -89,8 +88,8 @@ public class Chapter10 {
     }
 
     // solution of 10.1-2
-    public static <T> boolean secondStackEmpty(DoubleStack<T> A) {
-        return A.top1 == A.length + 1;
+    private static <T> boolean firstStackEmpty(DoubleStack<T> A) {
+        return A.top1 == 0;
     }
 
     // solution of 10.1-2
@@ -106,6 +105,11 @@ public class Chapter10 {
         }
         A.top2++;
         return A.at(A.top2 - 1);
+    }
+
+    // solution of 10.1-2
+    private static <T> boolean secondStackEmpty(DoubleStack<T> A) {
+        return A.top1 == A.length + 1;
     }
 
     // solution of 10.1-4
@@ -422,7 +426,7 @@ public class Chapter10 {
         if (T.root == null) {
             return;
         }
-        Stack<BinaryTree<T>.Node> S = new Stack<>();
+        Stack<BinaryTree<T>.Node> S = Stack.withLength(getTreeSize(T.root));
         push(S, T.root);
         while (!stackEmpty(S)) {
             BinaryTree<T>.Node x = pop(S);
@@ -434,6 +438,18 @@ public class Chapter10 {
                 push(S, x.left);
             }
         }
+    }
+
+    // solution of 10.4-3
+    private static <T> int getTreeSize(BinaryTree<T>.Node x) {
+        int treeSize = 1;
+        if (x.left != null) {
+            treeSize += getTreeSize(x.left);
+        }
+        if (x.right != null) {
+            treeSize += getTreeSize(x.right);
+        }
+        return treeSize;
     }
 
     // solution of 10.4-4
@@ -474,6 +490,25 @@ public class Chapter10 {
             prev = curr;
             curr = next;
         }
+    }
+
+    // problem 10-3
+    public static <T extends Comparable> Integer compactListSearch(MultipleArrayList<T> L, int n, T k) {
+        Integer i = L.L;
+        while (i != null && less(L.key.at(i), k)) {
+            int j = Chapter5.random(1, n);
+            if (less(L.key.at(i), L.key.at(j)) && leq(L.key.at(j), k)) {
+                i = j;
+                if (L.key.at(i).equals(k)) {
+                    return i;
+                }
+            }
+            i = L.next.at(i);
+        }
+        if (i == null || greater(L.key.at(i), k)) {
+            return null;
+        }
+        return i;
     }
 
 }

@@ -7,6 +7,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import pl.kwojtas.cormenimpl.util.Array;
 import pl.kwojtas.cormenimpl.util.Heap;
+import pl.kwojtas.cormenimpl.util.List;
 import pl.kwojtas.cormenimpl.util.Young;
 
 import static org.junit.Assert.assertEquals;
@@ -193,7 +194,7 @@ public class Chapter6Test {
         // given
 
         // when
-        Chapter6.heapExtractMax(new Heap<>(3));
+        Chapter6.heapExtractMax(Heap.withLength(3));
 
         // then
     }
@@ -331,7 +332,7 @@ public class Chapter6Test {
         // given
 
         // when
-        Chapter6.heapExtractMin(new Heap<>(3));
+        Chapter6.heapExtractMin(Heap.withLength(3));
 
         // then
     }
@@ -505,6 +506,54 @@ public class Chapter6Test {
             assertEquals(expectedContents.at(i), Chapter6.popUsingPriorityQueue(priorityQueue));
         }
         assertEquals(0, priorityQueue.heapSize);
+    }
+
+    @DataProvider
+    public static Object[][] provideDataForMergingSortedLists() {
+        return new Object[][]{
+                {new Array<>(new List<>())},
+                {new Array<>(new List<>(1))},
+                {new Array<>(new List<>(1,2,3),new List<>(4,5,6))},
+                {new Array<>(new List<>(1,5),new List<>(2,3,4,6))},
+                {new Array<>(new List<>(14,20,22,45,46),new List<>(4,4,23),new List<>(1),new List<>(5,6,12,16,18,22,24,56,67),
+                        new List<>(1),new List<>(4,6,20,30),new List<>(),new List<>(68,68,68,69),new List<>(45),new List<>(2,34))}
+        };
+    }
+
+    @Test
+    @UseDataProvider("provideDataForMergingSortedLists")
+    public void shouldMergeSortedLists(Array<List<Integer>> sortedLists) {
+        // given
+        Array<List<Integer>> original = Array.withLength(sortedLists.length);
+        for (int i = 1; i <= sortedLists.length; i++) {
+            original.set(i, new List<>(sortedLists.at(i)));
+        }
+
+        // when
+        List<Integer> actualMergedList = Chapter6.mergeSortedLists(sortedLists);
+
+        // then
+        assertSorted(actualMergedList);
+        assertMerged(original, actualMergedList);
+    }
+
+    private void assertMerged(Array<List<Integer>> sortedLists, List<Integer> actualMergedList) {
+        List<Integer>.Node x = actualMergedList.head;
+        while (x != null) {
+            boolean found = false;
+            for (int i = 1; i <= sortedLists.length && !found; i++) {
+                List<Integer>.Node y = sortedLists.at(i).head;
+                while (y != null && !found) {
+                    if (y.key.equals(x.key)) {
+                        y.key = Integer.MAX_VALUE;
+                        found = true;
+                    }
+                    y = y.next;
+                }
+            }
+            assertTrue(found);
+            x = x.next;
+        }
     }
 
     @DataProvider

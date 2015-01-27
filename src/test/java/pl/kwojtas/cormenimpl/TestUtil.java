@@ -1,6 +1,7 @@
 package pl.kwojtas.cormenimpl;
 
 import pl.kwojtas.cormenimpl.util.Array;
+import pl.kwojtas.cormenimpl.util.List;
 
 import java.util.Comparator;
 
@@ -41,6 +42,19 @@ public class TestUtil {
     public static <T> void assertSorted(Array<T> array, Comparator<T> comparator) {
         for (int i = 2; i <= array.length; i++) {
             assertTrue(comparator.compare(array.at(i - 1), array.at(i)) <= 0);
+        }
+    }
+
+    public static <T extends Comparable> void assertSorted(List<T> list) {
+        if (list.head == null) {
+            return;
+        }
+        List<T>.Node x = list.head;
+        List<T>.Node y = x.next;
+        while (y != null) {
+            assertTrue(leq(x.key, y.key));
+            x = y;
+            y = y.next;
         }
     }
 }

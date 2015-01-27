@@ -7,7 +7,7 @@ import static pl.kwojtas.cormenimpl.util.Util.greater;
 import static pl.kwojtas.cormenimpl.util.Util.leq;
 import static pl.kwojtas.cormenimpl.util.Util.less;
 
-public class Chapter2 {
+public final class Chapter2 {
 
     private Chapter2() { }
 

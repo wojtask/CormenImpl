@@ -10,7 +10,7 @@ import static java.lang.Math.max;
 import static java.lang.Math.sqrt;
 import static pl.kwojtas.cormenimpl.Chapter5.random;
 
-public class Chapter8 {
+public final class Chapter8 {
 
     private Chapter8() { }
 
