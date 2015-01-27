@@ -106,13 +106,14 @@ public class Chapter9 {
             return A.at(p);
         }
         Array<T>[] groups = new Array[ceil(n, 5)];
-        for (int j = 0; j < groups.length; j++) {
-            groups[j] = new Array<>();
+        for (int j = 0; j < groups.length - 1; j++) {
+            groups[j] = Array.withLength(5);
         }
+        groups[groups.length - 1] = Array.withLength(n % 5 > 0 ? n % 5 : 5);
         for (int j = p; j <= r; j++) {
             groups[(j - p) / 5].set((j - p) % 5 + 1, A.at(j));
         }
-        Array<T> medians = new Array<>();
+        Array<T> medians = Array.withLength(groups.length);
         for (int j = 0; j < groups.length; j++) {
             Chapter2.insertionSort(groups[j]);
             medians.set(j + 1, groups[j].at((groups[j].length + 1) / 2));
@@ -198,7 +199,7 @@ public class Chapter9 {
     public static Set<Integer> medianProximity(Array<Integer> S, int k) {
         int n = S.length;
         int x = select(S, 1, n, (n + 1) / 2);
-        Array<Integer> dist = new Array<>();
+        Array<Integer> dist = Array.withLength(n);
         for (int i = 1; i <= n; i++) {
             dist.set(i, abs(S.at(i) - x));
         }
@@ -310,8 +311,8 @@ public class Chapter9 {
     // solution of 9-2(e)
     public static Point2D postOfficeLocation2D(Array<Point2D> A, Array<Double> w) {
         int n = A.length;
-        Array<Double> X = new Array<>();
-        Array<Double> Y = new Array<>();
+        Array<Double> X = Array.withLength(n);
+        Array<Double> Y = Array.withLength(n);
         for (int i = 1; i <= n; i++) {
             X.set(i, A.at(i).x);
             Y.set(i, A.at(i).y);

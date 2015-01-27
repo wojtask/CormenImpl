@@ -193,7 +193,7 @@ public class Chapter6Test {
         // given
 
         // when
-        Chapter6.heapExtractMax(new Heap<>());
+        Chapter6.heapExtractMax(new Heap<>(3));
 
         // then
     }
@@ -255,8 +255,8 @@ public class Chapter6Test {
     @UseDataProvider("provideDataForInsertingIntoMaxHeap")
     public void shouldInsertIntoMaxHeap(Array<Integer> array, int newKey) {
         // given
-        Heap<Integer> heap = new Heap<>(array);
-        Heap<Integer> original = new Heap<>(array);
+        Heap<Integer> heap = new Heap<>(array, array.length + 3);
+        Heap<Integer> original = new Heap<>(array, array.length + 3);
 
         // when
         Chapter6.maxHeapInsert(heap, newKey);
@@ -331,7 +331,7 @@ public class Chapter6Test {
         // given
 
         // when
-        Chapter6.heapExtractMin(new Heap<>());
+        Chapter6.heapExtractMin(new Heap<>(3));
 
         // then
     }
@@ -393,8 +393,8 @@ public class Chapter6Test {
     @UseDataProvider("provideDataForInsertingIntoMinHeap")
     public void shouldInsertIntoMinHeap(Array<Integer> array, int newKey) {
         // given
-        Heap<Integer> heap = new Heap<>(array);
-        Heap<Integer> original = new Heap<>(array);
+        Heap<Integer> heap = new Heap<>(array, array.length + 3);
+        Heap<Integer> original = new Heap<>(array, array.length + 3);
 
         // when
         Chapter6.minHeapInsert(heap, newKey);
@@ -457,7 +457,7 @@ public class Chapter6Test {
     @UseDataProvider("provideDataForFifoQueueOperationsUsingPriorityQueue")
     public <T extends Comparable> void shouldPerformFifoQueueOperationsUsingPriorityQueue(Array<T> contents, Array<T> expectedContents) {
         // given
-        Chapter6.PriorityQueueWithRanks<T> priorityQueue = new Chapter6.PriorityQueueWithRanks<>();
+        Chapter6.PriorityQueueWithRanks<T> priorityQueue = new Chapter6.PriorityQueueWithRanks<>(contents.length);
 
         // when
         for (int i = 1; i <= contents.length; i++) {
@@ -489,7 +489,7 @@ public class Chapter6Test {
     @UseDataProvider("provideDataForStackOperationsUsingPriorityQueue")
     public <T extends Comparable> void shouldPerformStackOperationsUsingPriorityQueue(Array<T> contents, Array<T> expectedContents) {
         // given
-        Chapter6.PriorityQueueWithRanks<T> priorityQueue = new Chapter6.PriorityQueueWithRanks<>();
+        Chapter6.PriorityQueueWithRanks<T> priorityQueue = new Chapter6.PriorityQueueWithRanks<>(contents.length);
 
         // when
         for (int i = 1; i <= contents.length; i++) {
@@ -613,8 +613,8 @@ public class Chapter6Test {
     @UseDataProvider("provideDataForInsertingToMultiaryMaxHeap")
     public void shouldInsertToMultiaryMaxHeap(Array<Integer> array, int d, int newKey) {
         // given
-        Heap<Integer> heap = new Heap<>(array);
-        Heap<Integer> original = new Heap<>(array);
+        Heap<Integer> heap = new Heap<>(array, array.length + 3);
+        Heap<Integer> original = new Heap<>(array, array.length + 3);
 
         // when
         Chapter6.multiaryMaxHeapInsert(heap, d, newKey);
@@ -688,35 +688,35 @@ public class Chapter6Test {
     @DataProvider
     public static Object[][] provideDataForSuccessfulYoungSearch() {
         return new Object[][]{
-                {new Array[] {
-                        new Array<>(34)
+                {new Integer[][] {
+                        new Integer[]{34}
                 }, 34},
-                {new Array[] {
-                        new Array<>(2,5),
-                        new Array<>(4,Integer.MAX_VALUE)
+                {new Integer[][] {
+                        new Integer[]{2,5},
+                        new Integer[]{4,Integer.MAX_VALUE}
                 }, 4},
-                {new Array[] {
-                        new Array<>(2,Integer.MAX_VALUE),
-                        new Array<>(Integer.MAX_VALUE,Integer.MAX_VALUE)
+                {new Integer[][] {
+                        new Integer[]{2,Integer.MAX_VALUE},
+                        new Integer[]{Integer.MAX_VALUE,Integer.MAX_VALUE}
                 }, 2},
-                {new Array[] {
-                        new Array<>(2,3,14,16),
-                        new Array<>(4,8,Integer.MAX_VALUE,Integer.MAX_VALUE),
-                        new Array<>(5,12,Integer.MAX_VALUE,Integer.MAX_VALUE),
-                        new Array<>(9,Integer.MAX_VALUE,Integer.MAX_VALUE,Integer.MAX_VALUE)
+                {new Integer[][] {
+                        new Integer[]{2,3,14,16},
+                        new Integer[]{4,8,Integer.MAX_VALUE,Integer.MAX_VALUE},
+                        new Integer[]{5,12,Integer.MAX_VALUE,Integer.MAX_VALUE},
+                        new Integer[]{9,Integer.MAX_VALUE,Integer.MAX_VALUE,Integer.MAX_VALUE}
                 }, 5},
-                {new Array[] {
-                        new Array<>(2,3,14,16),
-                        new Array<>(4,8,Integer.MAX_VALUE,Integer.MAX_VALUE),
-                        new Array<>(5,12,Integer.MAX_VALUE,Integer.MAX_VALUE),
-                        new Array<>(9,Integer.MAX_VALUE,Integer.MAX_VALUE,Integer.MAX_VALUE)
+                {new Integer[][] {
+                        new Integer[]{2,3,14,16},
+                        new Integer[]{4,8,Integer.MAX_VALUE,Integer.MAX_VALUE},
+                        new Integer[]{5,12,Integer.MAX_VALUE,Integer.MAX_VALUE},
+                        new Integer[]{9,Integer.MAX_VALUE,Integer.MAX_VALUE,Integer.MAX_VALUE}
                 }, 16}
         };
     }
 
     @Test
     @UseDataProvider("provideDataForSuccessfulYoungSearch")
-    public void shouldFindKeyUsingYoungSearch(Array<Integer>[] rows, int key) {
+    public void shouldFindKeyUsingYoungSearch(Integer[][] rows, int key) {
         // given
         Young Y = new Young(rows);
 
@@ -730,38 +730,38 @@ public class Chapter6Test {
     @DataProvider
     public static Object[][] provideDataForUnsuccessfulYoungSearch() {
         return new Object[][]{
-                {new Array[] {
-                        new Array<>(34)
+                {new Integer[][] {
+                        new Integer[]{34}
                 }, 35},
-                {new Array[] {
-                        new Array<>(Integer.MAX_VALUE)
+                {new Integer[][] {
+                        new Integer[]{Integer.MAX_VALUE}
                 }, 35},
-                {new Array[] {
-                        new Array<>(2,5),
-                        new Array<>(4,Integer.MAX_VALUE)
+                {new Integer[][] {
+                        new Integer[]{2,5},
+                        new Integer[]{4,Integer.MAX_VALUE}
                 }, 3},
-                {new Array[] {
-                        new Array<>(2,Integer.MAX_VALUE),
-                        new Array<>(Integer.MAX_VALUE,Integer.MAX_VALUE)
+                {new Integer[][] {
+                        new Integer[]{2,Integer.MAX_VALUE},
+                        new Integer[]{Integer.MAX_VALUE,Integer.MAX_VALUE}
                 }, 1},
-                {new Array[] {
-                        new Array<>(2,3,14,16),
-                        new Array<>(4,8,Integer.MAX_VALUE,Integer.MAX_VALUE),
-                        new Array<>(5,12,Integer.MAX_VALUE,Integer.MAX_VALUE),
-                        new Array<>(9,Integer.MAX_VALUE,Integer.MAX_VALUE,Integer.MAX_VALUE)
+                {new Integer[][] {
+                        new Integer[]{2,3,14,16},
+                        new Integer[]{4,8,Integer.MAX_VALUE,Integer.MAX_VALUE},
+                        new Integer[]{5,12,Integer.MAX_VALUE,Integer.MAX_VALUE},
+                        new Integer[]{9,Integer.MAX_VALUE,Integer.MAX_VALUE,Integer.MAX_VALUE}
                 }, 10},
-                {new Array[] {
-                        new Array<>(2,3,14,16),
-                        new Array<>(4,8,Integer.MAX_VALUE,Integer.MAX_VALUE),
-                        new Array<>(5,12,Integer.MAX_VALUE,Integer.MAX_VALUE),
-                        new Array<>(9,Integer.MAX_VALUE,Integer.MAX_VALUE,Integer.MAX_VALUE)
+                {new Integer[][] {
+                        new Integer[]{2,3,14,16},
+                        new Integer[]{4,8,Integer.MAX_VALUE,Integer.MAX_VALUE},
+                        new Integer[]{5,12,Integer.MAX_VALUE,Integer.MAX_VALUE},
+                        new Integer[]{9,Integer.MAX_VALUE,Integer.MAX_VALUE,Integer.MAX_VALUE}
                 }, 17}
         };
     }
 
     @Test
     @UseDataProvider("provideDataForUnsuccessfulYoungSearch")
-    public void shouldNotFindKeyUsingYoungSearch(Array<Integer>[] rows, int key) {
+    public void shouldNotFindKeyUsingYoungSearch(Integer[][] rows, int key) {
         // given
         Young Y = new Young(rows);
 

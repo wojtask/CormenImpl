@@ -195,7 +195,8 @@ public class Chapter6 {
     public static class PriorityQueueWithRanks<T> extends Heap<KeyWithRank<T>> {
         private int currentRank;
 
-        public PriorityQueueWithRanks() {
+        public PriorityQueueWithRanks(int n) {
+            super(n);
             currentRank = 0;
         }
 

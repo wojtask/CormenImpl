@@ -38,8 +38,14 @@ public class Chapter10 {
         return S.at(S.top + 1);
     }
 
-    // subchapter 10.1
+    // subchapter 10.1, solution of 10.1-4
     public static <T> void enqueue(Queue<T> Q, T x) {
+        if (Q.head == Q.tail + 1) {
+            throw new RuntimeException("overflow");
+        }
+        if (Q.head == 1 && Q.tail == Q.length) {
+            throw new RuntimeException("overflow");
+        }
         Q.set(Q.tail, x);
         if (Q.tail == Q.length) {
             Q.tail = 1;
@@ -48,8 +54,11 @@ public class Chapter10 {
         }
     }
 
-    // subchapter 10.1
+    // subchapter 10.1, solution of 10.1-4
     public static <T> T dequeue(Queue<T> Q) {
+        if (queueEmpty(Q)) {
+            throw new RuntimeException("underflow");
+        }
         T x = Q.at(Q.head);
         if (Q.head == Q.length) {
             Q.head = 1;
@@ -102,36 +111,6 @@ public class Chapter10 {
     // solution of 10.1-4
     public static <T> boolean queueEmpty(Queue<T> Q) {
         return Q.head == Q.tail;
-    }
-
-    // solution of 10.1-4
-    public static <T> void enqueue_(Queue<T> Q, T x) {
-        if (Q.head == Q.tail + 1) {
-            throw new RuntimeException("overflow");
-        }
-        if (Q.head == 1 && Q.tail == Q.length) {
-            throw new RuntimeException("overflow");
-        }
-        Q.set(Q.tail, x);
-        if (Q.tail == Q.length) {
-            Q.tail = 1;
-        } else {
-            Q.tail++;
-        }
-    }
-
-    // solution of 10.1-4
-    public static <T> T dequeue_(Queue<T> Q) {
-        if (queueEmpty(Q)) {
-            throw new RuntimeException("underflow");
-        }
-        T x = Q.at(Q.head);
-        if (Q.head == Q.length) {
-            Q.head = 1;
-        } else {
-            Q.head++;
-        }
-        return x;
     }
 
     // solution of 10.1-5

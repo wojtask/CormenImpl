@@ -120,7 +120,6 @@ public class Chapter9Test {
     @UseDataProvider("provideDataForFindingOrderStatistic")
     public void shouldFindOrderStatisticUsingSelect(Array<Integer> array, int order) {
         // given
-        Array<Integer> original = new Array<>(array);
 
         // when
         int actualOrderStatistic = Chapter9.select(array, 1, array.length, order);
@@ -165,7 +164,7 @@ public class Chapter9Test {
         int actualOrderStatistic = Chapter9.selectUsingMedianSubroutine(array, 1, array.length, order);
 
         // then
-        assertOrderStatistic(array, order, actualOrderStatistic);
+        assertOrderStatistic(original, order, actualOrderStatistic);
     }
 
     @DataProvider
@@ -202,7 +201,7 @@ public class Chapter9Test {
     }
 
     private void assertQuantiles(Array<Integer> array, Set<Integer> quantiles) {
-        array.getData().sort(Comparator.<Integer>naturalOrder());
+        Chapter2.insertionSort(array);
         int i = 1;
         while (i <= array.length && !quantiles.contains(array.at(i))) {
             i++;
@@ -253,20 +252,24 @@ public class Chapter9Test {
         // then
         assertNotNull(actualMedianProximity);
         assertEquals(proximitySize, actualMedianProximity.size());
-        assertMedianProximity(array, proximitySize, actualMedianProximity);
+        assertMedianProximity(original, proximitySize, actualMedianProximity);
     }
 
     private void assertMedianProximity(Array<Integer> array, int proximitySize, Set<Integer> actualMedianProximity) {
-        array.getData().sort(Comparator.<Integer>naturalOrder());
+        Chapter2.insertionSort(array);
         int median = array.at((array.length + 1) / 2);
-        array.getData().sort(new Comparator<Integer>() {
+        List<Integer> expectedMedianProximity = new ArrayList<>();
+        for (int i = 1; i <= array.length; i++) {
+            expectedMedianProximity.add(array.at(i));
+        }
+        expectedMedianProximity.sort(new Comparator<Integer>() {
             @Override
             public int compare(Integer o1, Integer o2) {
                 return abs(o1 - median) - abs(o2 - median);
             }
         });
-        for (int i = 1; i <= proximitySize; i++) {
-            assertTrue(actualMedianProximity.contains(array.at(i)));
+        for (int i = 0; i < proximitySize; i++) {
+            assertTrue(actualMedianProximity.contains(expectedMedianProximity.get(i)));
         }
     }
 
@@ -291,8 +294,13 @@ public class Chapter9Test {
         int actualMedian = Chapter9.twoArraysMedian(array1, 1, array1.length, array2, 1, array2.length);
 
         // then
-        List<Integer> combinedArrays = new ArrayList<>(original1.getData());
-        combinedArrays.addAll(original2.getData());
+        List<Integer> combinedArrays = new ArrayList<>();
+        for (int i = 1; i <= original1.length; i++) {
+            combinedArrays.add(original1.at(i));
+        }
+        for (int i = 1; i <= original2.length; i++) {
+            combinedArrays.add(original2.at(i));
+        }
         combinedArrays.sort(Comparator.<Integer>naturalOrder());
         int expectedMedian = combinedArrays.get((combinedArrays.size() - 1) / 2);
         assertEquals(expectedMedian, actualMedian);
@@ -319,7 +327,7 @@ public class Chapter9Test {
         double actualWeightedMedian = Chapter9.weightedMedianUsingSorting(array, weights);
 
         // then
-        assertWeightedMedian(array, weights, actualWeightedMedian);
+        assertWeightedMedian(originalArray, originalWeights, actualWeightedMedian);
     }
 
     private void assertWeightedMedian(Array<Double> array, Array<Double> weights, double actualWeightedMedian) {

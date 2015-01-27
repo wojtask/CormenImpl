@@ -43,7 +43,7 @@ public class Chapter5 {
     // subchapter 5.3
     public static <T> Array<T> permuteBySorting(Array<T> A) {
         int n = A.length;
-        Array<Integer> P = new Array<>();
+        Array<Integer> P = Array.withLength(n);
         for (int i = 1; i <= n; i++) {
             P.set(i, random(1, n * n * n));
         }
@@ -65,10 +65,10 @@ public class Chapter5 {
     private static <T> void mergeUsingExternalKeys(Array<T> A, Array<Integer> keys, int p, int q, int r) {
         int n1 = q - p + 1;
         int n2 = r - q;
-        Array<T> L = new Array<>();
-        Array<T> R = new Array<>();
-        Array<Integer> keysL = new Array<>();
-        Array<Integer> keysR = new Array<>();
+        Array<T> L = Array.withLength(n1 + 1);
+        Array<T> R = Array.withLength(n2 + 1);
+        Array<Integer> keysL = Array.withLength(n1 + 1);
+        Array<Integer> keysR = Array.withLength(n2 + 1);
         for (int i = 1; i <= n1; i++) {
             L.set(i, A.at(p + i - 1));
             keysL.set(i, keys.at(p + i - 1));
@@ -114,7 +114,7 @@ public class Chapter5 {
     // solution of 5.3-6
     public static <T> Array<T> permuteUniformlyBySorting(Array<T> A) {
         int n = A.length;
-        Array<Integer> P = new Array<>();
+        Array<Integer> P = Array.withLength(n);
         for (int i = 1; i <= n; i++) {
             P.set(i, random(1, n * n * n));
         }
@@ -136,10 +136,10 @@ public class Chapter5 {
     private static <T> void mergeUniformlyUsingExternalKeys(Array<T> A, Array<Integer> keys, int p, int q, int r) {
         int n1 = q - p + 1;
         int n2 = r - q;
-        Array<T> L = new Array<>();
-        Array<T> R = new Array<>();
-        Array<Integer> keysL = new Array<>();
-        Array<Integer> keysR = new Array<>();
+        Array<T> L = Array.withLength(n1 + 1);
+        Array<T> R = Array.withLength(n2 + 1);
+        Array<Integer> keysL = Array.withLength(n1 + 1);
+        Array<Integer> keysR = Array.withLength(n2 + 1);
         for (int i = 1; i <= n1; i++) {
             L.set(i, A.at(p + i - 1));
             keysL.set(i, keys.at(p + i - 1));
@@ -168,7 +168,7 @@ public class Chapter5 {
     // solution of 5-2(a)
     public static <T> Integer randomSearch(Array<T> A, T x) {
         int n = A.length;
-        Array<Boolean> B = new Array<>();
+        Array<Boolean> B = Array.withLength(n);
         for (int k = 1; k <= n; k++) {
             B.set(k, false);
         }

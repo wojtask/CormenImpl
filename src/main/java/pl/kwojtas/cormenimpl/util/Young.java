@@ -8,8 +8,7 @@ public class Young extends Matrix<Integer> {
         super(matrixOfInfinities(rows, columns));
     }
 
-    @SafeVarargs
-    public Young(Array<Integer>... rows) {
+    public Young(Integer[]... rows) {
         super(rows);
     }
 

@@ -55,7 +55,7 @@ public class Chapter7 {
     // exercise 7.4-5
     public static <T extends Comparable> void sortNearlySorted(Array<T> A, int p, int r, int k) {
         quicksortNearlySorted(A, p, r, k);
-        Array<T> nearlySorted = new Array<>();
+        Array<T> nearlySorted = Array.withLength(r - p + 1);
         for (int i = p; i <= r; i++) {
             nearlySorted.set(i - p + 1, A.at(i));
         }

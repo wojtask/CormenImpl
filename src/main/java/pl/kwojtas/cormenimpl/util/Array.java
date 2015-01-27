@@ -1,57 +1,44 @@
 package pl.kwojtas.cormenimpl.util;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
 public class Array<T> {
 
-    private ArrayList<T> data;
+    private T[] data;
     public int length;
 
     @SafeVarargs
     public Array(T... elements) {
-        this.data = new ArrayList<>(Arrays.asList(elements));
+        this.data = elements;
         this.length = elements.length;
+    }
+
+    public static <T> Array<T> withLength(int length) {
+        return new Array<>((T[]) new Object[length]);
     }
 
     public Array(Array<T> otherArray) {
         set(otherArray);
     }
 
-    Array(ArrayList<T> otherArrayList) {
-        this.data = new ArrayList<>(otherArrayList);
-        this.length = otherArrayList.size();
-    }
-
-    public ArrayList<T> getData() {
-        return data;
-    }
-
     public T at(int position) {
         if (position < 1 || position > length) {
             throw new RuntimeException("Array index out of bound");
         }
-        return data.get(position - 1);
+        return data[position - 1];
     }
 
     public void set(int position, T element) {
-        if (position < 1) {
+        if (position < 1 || position > length) {
             throw new RuntimeException("Array index out of bound");
         }
-        if (position > length) {
-            for (int i = length + 1; i <= position; i++) {
-                data.add(null);
-            }
-            length = position;
-        }
-        data.set(position - 1, element);
+        data[position - 1] = element;
     }
 
     public void set(Array<T> otherArray) {
         if (this == otherArray) {
             return;
         }
-        this.data = new ArrayList<>(otherArray.data);
+        this.data = (T[]) new Object[otherArray.length];
+        System.arraycopy(otherArray.data, 0, data, 0, otherArray.length);
         this.length = otherArray.length;
     }
 

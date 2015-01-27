@@ -8,8 +8,6 @@ import org.junit.runner.RunWith;
 import pl.kwojtas.cormenimpl.util.Array;
 import pl.kwojtas.cormenimpl.util.Matrix;
 
-import java.util.Comparator;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
@@ -42,7 +40,7 @@ public class Chapter4Test {
 
         // then
         assertNotNull(actualMissingInteger);
-        original.getData().sort(Comparator.<Integer>naturalOrder());
+        Chapter2.insertionSort(original);
         int i = 1;
         while (i <= original.length && original.at(i) == i - 1) {
             i++;

@@ -31,7 +31,7 @@ public class Chapter8Test {
     public void shouldSortArrayUsingCountingSort(Array<Integer> array, int boundary) {
         // given
         Array<Integer> original = new Array<>(array);
-        Array<Integer> actualSorted = new Array<>();
+        Array<Integer> actualSorted = Array.withLength(array.length);
 
         // when
         Chapter8.countingSort(array, actualSorted, boundary);
@@ -46,7 +46,7 @@ public class Chapter8Test {
     public void shouldSortArrayUsingNonStableCountingSort(Array<Integer> array, int boundary) {
         // given
         Array<Integer> original = new Array<>(array);
-        Array<Integer> actualSorted = new Array<>();
+        Array<Integer> actualSorted = Array.withLength(array.length);
 
         // when
         Chapter8.nonStableCountingSort(array, actualSorted, boundary);

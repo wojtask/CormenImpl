@@ -52,7 +52,7 @@ public class Chapter2 {
     // solution of 2.1-4
     public static Array<Integer> binaryAdd(Array<Integer> A, Array<Integer> B) {
         int n = A.length;
-        Array<Integer> C = new Array<>();
+        Array<Integer> C = Array.withLength(n + 1);
         for (int i = 1; i <= n + 1; i++) {
             C.set(i, 0);
         }
@@ -82,8 +82,8 @@ public class Chapter2 {
     private static void merge(Array<Integer> A, int p, int q, int r) {
         int n1 = q - p + 1;
         int n2 = r - q;
-        Array<Integer> L = new Array<>();
-        Array<Integer> R = new Array<>();
+        Array<Integer> L = Array.withLength(n1 + 1);
+        Array<Integer> R = Array.withLength(n2 + 1);
         for (int i = 1; i <= n1; i++) {
             L.set(i, A.at(p + i - 1));
         }
@@ -119,8 +119,8 @@ public class Chapter2 {
     public static <T extends Comparable> void merge_(Array<T> A, int p, int q, int r) {
         int n1 = q - p + 1;
         int n2 = r - q;
-        Array<T> L = new Array<>();
-        Array<T> R = new Array<>();
+        Array<T> L = Array.withLength(n1);
+        Array<T> R = Array.withLength(n2);
         for (int i = 1; i <= n1; i++) {
             L.set(i, A.at(p + i - 1));
         }
@@ -248,8 +248,8 @@ public class Chapter2 {
     private static <T extends Comparable> int mergeInversions(Array<T> A, int p, int q, int r) {
         int n1 = q - p + 1;
         int n2 = r - q;
-        Array<T> L = new Array<>();
-        Array<T> R = new Array<>();
+        Array<T> L = Array.withLength(n1);
+        Array<T> R = Array.withLength(n2);
         for (int i = 1; i <= n1; i++) {
             L.set(i, A.at(p + i - 1));
         }

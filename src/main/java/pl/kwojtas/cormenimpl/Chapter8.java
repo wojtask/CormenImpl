@@ -16,7 +16,7 @@ public class Chapter8 {
 
     // subchapter 8.2
     public static void countingSort(Array<Integer> A, Array<Integer> B, int k) {
-        ZeroBasedIndexedArray<Integer> C = new ZeroBasedIndexedArray<>();
+        ZeroBasedIndexedArray<Integer> C = ZeroBasedIndexedArray.withLength(k + 1);
         for (int i = 0; i <= k; i++) {
             C.set(i, 0);
         }
@@ -34,7 +34,7 @@ public class Chapter8 {
 
     // exercise 8.2-3
     public static void nonStableCountingSort(Array<Integer> A, Array<Integer> B, int k) {
-        ZeroBasedIndexedArray<Integer> C = new ZeroBasedIndexedArray<>();
+        ZeroBasedIndexedArray<Integer> C = ZeroBasedIndexedArray.withLength(k + 1);
         for (int i = 0; i <= k; i++) {
             C.set(i, 0);
         }
@@ -52,7 +52,7 @@ public class Chapter8 {
 
     // solution of 8.2-4
     public static int countNumbersInRange(Array<Integer> A, int k, int a, int b) {
-        ZeroBasedIndexedArray<Integer> C = new ZeroBasedIndexedArray<>();
+        ZeroBasedIndexedArray<Integer> C = ZeroBasedIndexedArray.withLength(k + 1);
         for (int i = 0; i <= k; i++) {
             C.set(i, 0);
         }
@@ -86,7 +86,7 @@ public class Chapter8 {
 
     // subchapter 8.3
     private static void stableSortOnDigit(Array<Integer> A, int digit, int k) {
-        ZeroBasedIndexedArray<Integer> C = new ZeroBasedIndexedArray<>();
+        ZeroBasedIndexedArray<Integer> C = ZeroBasedIndexedArray.withLength(k);
         for (int i = 0; i <= k - 1; i++) {
             C.set(i, 0);
         }
@@ -96,7 +96,7 @@ public class Chapter8 {
         for (int i = 1; i <= k - 1; i++) {
             C.set(i, C.at(i) + C.at(i - 1));
         }
-        Array<Integer> B = new Array<>(A);
+        Array<Integer> B = Array.withLength(A.length);
         for (int j = A.length; j >= 1; j--) {
             B.set(C.at(getDigit(A.at(j), digit, k)), A.at(j));
             C.set(getDigit(A.at(j), digit, k), C.at(getDigit(A.at(j), digit, k)) - 1);
@@ -125,7 +125,7 @@ public class Chapter8 {
     // subchapter 8.4
     public static void bucketSort(Array<Double> A) {
         int n = A.length;
-        ZeroBasedIndexedArray<List<Double>> B = new ZeroBasedIndexedArray<>();
+        ZeroBasedIndexedArray<List<Double>> B = ZeroBasedIndexedArray.withLength(n);
         for (int i = 0; i <= n - 1; i++) {
             B.set(i, new List<>());
         }
@@ -186,7 +186,7 @@ public class Chapter8 {
     // solution of 8.4-4
     public static void sortUnitCirclePoints(Array<Point2D> points) {
         int n = points.length;
-        ZeroBasedIndexedArray<List<Pair<Point2D, Double>>> B = new ZeroBasedIndexedArray<>();
+        ZeroBasedIndexedArray<List<Pair<Point2D, Double>>> B = ZeroBasedIndexedArray.withLength(n);
         for (int i = 0; i <= n - 1; i++) {
             B.set(i, new List<>());
         }
@@ -266,7 +266,7 @@ public class Chapter8 {
 
     // solution of 8-2(e)
     public static void countingSortInPlace(Array<Integer> A, int k) {
-        ZeroBasedIndexedArray<Integer> C = new ZeroBasedIndexedArray<>();
+        ZeroBasedIndexedArray<Integer> C = ZeroBasedIndexedArray.withLength(k + 1);
         for (int i = 0; i <= k; i++) {
             C.set(i, 0);
         }
@@ -290,9 +290,18 @@ public class Chapter8 {
 
     // solution of 8-3(a)
     public static void variousLengthNumbersSort(Array<Integer> A) {
-        Array<Integer> negative = new Array<>();
-        Array<Integer> nonNegative = new Array<>();
-        int j = 1, j_ = 1;
+        int j = 0, j_ = 0;
+        for (int i = 1; i <= A.length; i++) {
+            if (A.at(i) < 0) {
+                j++;
+            } else {
+                j_++;
+            }
+        }
+        Array<Integer> negative = Array.withLength(j);
+        Array<Integer> nonNegative = Array.withLength(j_);
+        j = 1;
+        j_ = 1;
         for (int i = 1; i <= A.length; i++) {
             if (A.at(i) < 0) {
                 negative.set(j, -A.at(i));
@@ -325,16 +334,20 @@ public class Chapter8 {
             maxLength = max(maxLength, getNumberLength(A.at(i)));
         }
         variousLengthSortByLength(A, maxLength);
-        Array<Integer> sameLengthNumbers = new Array<>();
-        sameLengthNumbers.set(1, A.at(1));
+        Array<Integer> B = Array.withLength(A.length);
+        B.set(1, A.at(1));
         int j = 1;
         for (int i = 2; i <= A.length; i++) {
             int previousLength = getNumberLength(A.at(i - 1));
             int currentLength = getNumberLength(A.at(i));
             if (previousLength == currentLength) {
                 j++;
-                sameLengthNumbers.set(j, A.at(i));
+                B.set(j, A.at(i));
             } else {
+                Array<Integer> sameLengthNumbers = Array.withLength(j);
+                for (int l = 1; l <= j; l++) {
+                    sameLengthNumbers.set(l, B.at(l));
+                }
                 radixSort(sameLengthNumbers, previousLength);
                 int k = i - 1;
                 while (j >= 1) {
@@ -342,10 +355,13 @@ public class Chapter8 {
                     j--;
                     k--;
                 }
-                sameLengthNumbers = new Array<>();
-                sameLengthNumbers.set(1, A.at(i));
+                B.set(1, A.at(i));
                 j = 1;
             }
+        }
+        Array<Integer> sameLengthNumbers = Array.withLength(j);
+        for (int l = 1; l <= j; l++) {
+            sameLengthNumbers.set(l, B.at(l));
         }
         radixSort(sameLengthNumbers, getNumberLength(A.at(A.length)));
         int k = A.length;
@@ -358,7 +374,7 @@ public class Chapter8 {
 
     // solution of 8-3(a)
     private static void variousLengthSortByLength(Array<Integer> A, int k) {
-        ZeroBasedIndexedArray<Integer> C = new ZeroBasedIndexedArray<>();
+        ZeroBasedIndexedArray<Integer> C = ZeroBasedIndexedArray.withLength(k + 1);
         for (int i = 0; i <= k; i++) {
             C.set(i, 0);
         }
@@ -368,7 +384,7 @@ public class Chapter8 {
         for (int i = 1; i <= k; i++) {
             C.set(i, C.at(i) + C.at(i - 1));
         }
-        Array<Integer> B = new Array<>();
+        Array<Integer> B = Array.withLength(A.length);
         for (int j = A.length; j >= 1; j--) {
             B.set(C.at(getNumberLength(A.at(j))), A.at(j));
             C.set(getNumberLength(A.at(j)), C.at(getNumberLength(A.at(j))) - 1);
@@ -403,7 +419,7 @@ public class Chapter8 {
                 }
                 j++;
             }
-            Array<String> C = new Array<>();
+            Array<String> C = Array.withLength(j - i);
             for (int k = 1; k <= j - i; k++) {
                 C.set(k, A.at(i + k - 1));
             }
@@ -417,8 +433,8 @@ public class Chapter8 {
 
     // solution of 8-3(b)
     private static void countingSortByCharacter(Array<String> A, int position) {
-        ZeroBasedIndexedArray<Integer> C = new ZeroBasedIndexedArray<>();
-        for (int i = 0; i <= 127; i++) { // 127 = max ASCII numeric value
+        ZeroBasedIndexedArray<Integer> C = ZeroBasedIndexedArray.withLength(128); // 128 = capacity for ASCII characters
+        for (int i = 0; i <= 127; i++) {
             C.set(i, 0);
         }
         position--; // move to 0-based indexes
@@ -429,7 +445,7 @@ public class Chapter8 {
         for (int i = 1; i <= 127; i++) {
             C.set(i, C.at(i) + C.at(i - 1));
         }
-        Array<String> B = new Array<>();
+        Array<String> B = Array.withLength(A.length);
         for (int j = A.length; j >= 1; j--) {
             B.set(C.at(Character.getNumericValue(A.at(j).charAt(position))), A.at(j));
             C.set(Character.getNumericValue(A.at(j).charAt(position)),

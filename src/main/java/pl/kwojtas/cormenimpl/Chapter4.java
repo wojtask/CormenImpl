@@ -9,7 +9,7 @@ public class Chapter4 {
 
     // solution of 4-2
     public static Integer findMissingInteger(Array<Integer> A) {
-        extendArrayWithExtraIntegers(A);
+        A = extendArrayWithExtraIntegers(A);
         int n = A.length;
         Integer missingInteger = 0;
         for (int j = 0; j <= getBitLength(n) - 1; j++) {
@@ -27,12 +27,19 @@ public class Chapter4 {
     }
 
     // solution of 4-2
-    private static void extendArrayWithExtraIntegers(Array<Integer> A) {
+    private static Array<Integer> extendArrayWithExtraIntegers(Array<Integer> A) {
         int n = A.length;
         while (!isPowerOf2Minus1(n)) {
             n++;
-            A.set(n, n);
         }
+        Array<Integer> extended = Array.withLength(n);
+        for (int i = 1; i <= A.length; i++) {
+            extended.set(i, A.at(i));
+        }
+        for (int i = A.length + 1; i <= n; i++) {
+            extended.set(i, i);
+        }
+        return extended;
     }
 
     // solution of 4-2
@@ -65,7 +72,7 @@ public class Chapter4 {
     public static Array<Integer> mongeLeftmostMinimaIndexes(Matrix<Double> A) {
         int m = A.rows;
         int n = A.columns;
-        Array<Integer> leftmostMinimaIndexes = new Array<>();
+        Array<Integer> leftmostMinimaIndexes = Array.withLength(m);
         if (m >= 2) {
             Array<Integer> leftmostMinimaIndexesOfEvenRows = mongeLeftmostMinimaIndexesOfEvenRows(A);
             for (int i = 2; i <= m; i += 2) {
@@ -81,12 +88,15 @@ public class Chapter4 {
     }
 
     // solution of 4-7(d)
-    @SuppressWarnings("unchecked")
     private static Array<Integer> mongeLeftmostMinimaIndexesOfEvenRows(Matrix<Double> A) {
         int m = A.rows;
-        Array<Double>[] oddRows = new Array[m / 2];
+        Double[][] oddRows = new Double[m / 2][];
         for (int i = 2; i <= m; i += 2) {
-            oddRows[i / 2 - 1] = A.row(i);
+            int n = A.row(i).length;
+            oddRows[i / 2 - 1] = new Double[n];
+            for (int j = 1; j <= n; j++) {
+                oddRows[i / 2 - 1][j - 1] = A.row(i).at(j);
+            }
         }
         Matrix<Double> A_ = new Matrix<>(oddRows);
         return mongeLeftmostMinimaIndexes(A_);
