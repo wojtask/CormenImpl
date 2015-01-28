@@ -6,14 +6,21 @@ import com.tngtech.java.junit.dataprovider.UseDataProvider;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import pl.kwojtas.cormenimpl.util.Array;
+import pl.kwojtas.cormenimpl.util.CircularList;
 import pl.kwojtas.cormenimpl.util.Deque;
 import pl.kwojtas.cormenimpl.util.DoubleStack;
+import pl.kwojtas.cormenimpl.util.List;
+import pl.kwojtas.cormenimpl.util.ListWithSentinel;
 import pl.kwojtas.cormenimpl.util.Pair;
 import pl.kwojtas.cormenimpl.util.Queue;
+import pl.kwojtas.cormenimpl.util.SinglyLinkedList;
 import pl.kwojtas.cormenimpl.util.Stack;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(DataProviderRunner.class)
@@ -306,6 +313,298 @@ public class Chapter10Test {
         Chapter10.dequeueOnStacks(Stack.withLength(5), Stack.withLength(5));
 
         // then
+    }
+
+    @DataProvider
+    public static Object[][] provideDataForSuccessfulListSearch() {
+        return new Object[][]{
+                {new List<>(34), 34},
+                {new List<>(5,7,9,2,6,1,6,6,3,1,7,8), 6},
+                {new List<>(5,7,9,2,6,1,6,6,3,1,7,8), 8},
+                {new List<>(5.0,-2.3,-1.3,-1.9,-2.3), -2.3},
+                {new List<>("aaa","bbb","aaa","ccc"), "ccc"}
+        };
+    }
+
+    @Test
+    @UseDataProvider("provideDataForSuccessfulListSearch")
+    public <T> void shouldFindKeyUsingListSearch(List<T> list, T key) {
+        // given
+
+        // when
+        List<T>.Node actualNode = Chapter10.listSearch(list, key);
+
+        // then
+        assertNotNull(actualNode);
+        assertEquals(key, actualNode.key);
+        List<T>.Node x = list.head;
+        boolean found = false;
+        while (x != null && !found) {
+            found = x.key.equals(actualNode.key);
+            x = x.next;
+        }
+        assertTrue(found);
+    }
+
+    @DataProvider
+    public static Object[][] provideDataForUnsuccessfulListSearch() {
+        return new Object[][]{
+                {new List<>(34), 35},
+                {new List<>(5,7,9,2,6,1,6,6,3,1,7,8), 4},
+                {new List<>(5.0,-2.3,-1.3,-1.9,-2.3), 2.3},
+                {new List<>("aaa","bbb","aaa","ccc"), "xyz"}
+        };
+    }
+
+    @Test
+    @UseDataProvider("provideDataForUnsuccessfulListSearch")
+    public <T> void shouldNotFindKeyUsingListSearch(List<T> list, T key) {
+        // given
+
+        // when
+        List<T>.Node actualNode = Chapter10.listSearch(list, key);
+
+        // then
+        assertNull(actualNode);
+    }
+
+    @DataProvider
+    public static Object[][] provideDataForInsertingElementOnList() {
+        return new Object[][]{
+                {new List<>(), 35},
+                {new List<>(34), 35},
+                {new List<>(5,7,9,2,6,1,6,6,3,1,7,8), 3},
+                {new List<>(5.0,-2.3,-1.3,-1.9,-2.3), 2.3},
+                {new List<>("aaa","bbb","aaa","ccc"), "xyz"}
+        };
+    }
+
+    @Test
+    @UseDataProvider("provideDataForInsertingElementOnList")
+    public <T> void shouldInsertElementOnList(List<T> list, T key) {
+        // given
+        List<T> original = new List<>(list);
+
+        // when
+        Chapter10.listInsert(list, list.new Node(key));
+
+        // then
+        assertNotNull(list.head);
+        assertEquals(key, list.head.key);
+        List<T>.Node x = original.head;
+        List<T>.Node y = list.head.next;
+        while (x != null) {
+            assertEquals(x.key, y.key);
+            x = x.next;
+            y = y.next;
+        }
+    }
+
+    @DataProvider
+    public static Object[][] provideDataForInsertingElementOnSinglyLinkedList() {
+        return new Object[][]{
+                {new SinglyLinkedList<>(), 35},
+                {new SinglyLinkedList<>(34), 35},
+                {new SinglyLinkedList<>(5,7,9,2,6,1,6,6,3,1,7,8), 3},
+                {new SinglyLinkedList<>(5.0,-2.3,-1.3,-1.9,-2.3), 2.3},
+                {new SinglyLinkedList<>("aaa","bbb","aaa","ccc"), "xyz"}
+        };
+    }
+
+    @Test
+    @UseDataProvider("provideDataForInsertingElementOnSinglyLinkedList")
+    public <T> void shouldInsertElementOnSinglyLinkedList(SinglyLinkedList<T> list, T key) {
+        // given
+        SinglyLinkedList<T> original = new SinglyLinkedList<>(list);
+
+        // when
+        Chapter10.singlyLinkedListInsert(list, list.new Node(key));
+
+        // then
+        assertNotNull(list.head);
+        assertEquals(key, list.head.key);
+        SinglyLinkedList<T>.Node x = original.head;
+        SinglyLinkedList<T>.Node y = list.head.next;
+        while (x != null) {
+            assertEquals(x.key, y.key);
+            x = x.next;
+            y = y.next;
+        }
+    }
+
+    @DataProvider
+    public static Object[][] provideDataForSuccessfulListWithSentinelSearch() {
+        return new Object[][]{
+                {new ListWithSentinel<>(34), 34},
+                {new ListWithSentinel<>(5,7,9,2,6,1,6,6,3,1,7,8), 6},
+                {new ListWithSentinel<>(5,7,9,2,6,1,6,6,3,1,7,8), 8},
+                {new ListWithSentinel<>(5.0,-2.3,-1.3,-1.9,-2.3), -2.3},
+                {new ListWithSentinel<>("aaa","bbb","aaa","ccc"), "ccc"}
+        };
+    }
+
+    @Test
+    @UseDataProvider("provideDataForSuccessfulListWithSentinelSearch")
+    public <T> void shouldFindKeyUsingListSearch_(ListWithSentinel<T> list, T key) {
+        // given
+
+        // when
+        ListWithSentinel<T>.Node actualNode = Chapter10.listSearch_(list, key);
+
+        // then
+        assertNotNull(actualNode);
+        assertEquals(key, actualNode.key);
+        ListWithSentinel<T>.Node x = list.nil.next;
+        boolean found = false;
+        while (x != list.nil && !found) {
+            found = x.key.equals(actualNode.key);
+            x = x.next;
+        }
+        assertTrue(found);
+    }
+
+    @DataProvider
+    public static Object[][] provideDataForUnsuccessfulListWithSentinelSearch() {
+        return new Object[][]{
+                {new ListWithSentinel<>(34), 35},
+                {new ListWithSentinel<>(5,7,9,2,6,1,6,6,3,1,7,8), 4},
+                {new ListWithSentinel<>(5.0,-2.3,-1.3,-1.9,-2.3), 2.3},
+                {new ListWithSentinel<>("aaa","bbb","aaa","ccc"), "xyz"}
+        };
+    }
+
+    @Test
+    @UseDataProvider("provideDataForUnsuccessfulListWithSentinelSearch")
+    public <T> void shouldNotFindKeyUsingListSearchUsingListSearch_(ListWithSentinel<T> list, T key) {
+        // given
+
+        // when
+        ListWithSentinel<T>.Node actualNode = Chapter10.listSearch_(list, key);
+
+        // then
+        assertNotNull(actualNode);
+        assertEquals(list.nil, actualNode);
+    }
+
+    @DataProvider
+    public static Object[][] provideDataForInsertingElementOnListWithSentinel() {
+        return new Object[][]{
+                {new ListWithSentinel<>(), 35},
+                {new ListWithSentinel<>(34), 35},
+                {new ListWithSentinel<>(5,7,9,2,6,1,6,6,3,1,7,8), 3},
+                {new ListWithSentinel<>(5.0,-2.3,-1.3,-1.9,-2.3), 2.3},
+                {new ListWithSentinel<>("aaa","bbb","aaa","ccc"), "xyz"}
+        };
+    }
+
+    @Test
+    @UseDataProvider("provideDataForInsertingElementOnListWithSentinel")
+    public <T> void shouldInsertElementOnListWithSentinel(ListWithSentinel<T> list, T key) {
+        // given
+        ListWithSentinel<T> original = new ListWithSentinel<>(list);
+
+        // when
+        Chapter10.listInsert_(list, list.new Node(key));
+
+        // then
+        assertNotEquals(list.nil.next, list.nil);
+        assertEquals(key, list.nil.next.key);
+        ListWithSentinel<T>.Node x = original.nil.next;
+        ListWithSentinel<T>.Node y = list.nil.next.next;
+        while (x != original.nil) {
+            assertEquals(x.key, y.key);
+            x = x.next;
+            y = y.next;
+        }
+    }
+
+    @DataProvider
+    public static Object[][] provideDataForInsertingElementOnCircularList() {
+        return new Object[][]{
+                {new CircularList<>(), 35},
+                {new CircularList<>(34), 35},
+                {new CircularList<>(5,7,9,2,6,1,6,6,3,1,7,8), 3},
+                {new CircularList<>(5.0,-2.3,-1.3,-1.9,-2.3), 2.3},
+                {new CircularList<>("aaa","bbb","aaa","ccc"), "xyz"}
+        };
+    }
+
+    @Test
+    @UseDataProvider("provideDataForInsertingElementOnCircularList")
+    public <T> void shouldInsertElementOnCircularList(CircularList<T> list, T key) {
+        // given
+        CircularList<T> original = new CircularList<>(list);
+
+        // when
+        Chapter10.circularListInsert(list, list.new Node(key));
+
+        // then
+        assertNotNull(list.head);
+        assertEquals(key, list.head.next.key);
+        if (original.head == null) {
+            return;
+        }
+        CircularList<T>.Node x = original.head.next;
+        CircularList<T>.Node y = list.head.next.next;
+        while (x != original.head) {
+            assertEquals(x.key, y.key);
+            x = x.next;
+            y = y.next;
+        }
+    }
+
+    @DataProvider
+    public static Object[][] provideDataForSuccessfulListSearchUsingCircularListSearch() {
+        return new Object[][]{
+                {new CircularList<>(34), 34},
+                {new CircularList<>(5,7,9,2,6,1,6,6,3,1,7,8), 6},
+                {new CircularList<>(5,7,9,2,6,1,6,6,3,1,7,8), 8},
+                {new CircularList<>(5.0,-2.3,-1.3,-1.9,-2.3), -2.3},
+                {new CircularList<>("aaa","bbb","aaa","ccc"), "ccc"}
+        };
+    }
+
+    @Test
+    @UseDataProvider("provideDataForSuccessfulListSearchUsingCircularListSearch")
+    public <T> void shouldFindKeyUsingCircularListSearch(CircularList<T> list, T key) {
+        // given
+
+        // when
+        CircularList<T>.Node actualNode = Chapter10.circularListSearch(list, key);
+
+        // then
+        assertNotNull(actualNode);
+        assertEquals(key, actualNode.key);
+        assertNotNull(list.head);
+        boolean found = list.head.key.equals(actualNode.key);
+        CircularList<T>.Node x = list.head.next;
+        while (x != list.head && !found) {
+            found = x.key.equals(actualNode.key);
+            x = x.next;
+        }
+        assertTrue(found);
+    }
+
+    @DataProvider
+    public static Object[][] provideDataForUnsuccessfulListSearchUsingCircularListSearch() {
+        return new Object[][]{
+                {new CircularList<>(34), 35},
+                {new CircularList<>(5,7,9,2,6,1,6,6,3,1,7,8), 4},
+                {new CircularList<>(5.0,-2.3,-1.3,-1.9,-2.3), 2.3},
+                {new CircularList<>("aaa","bbb","aaa","ccc"), "xyz"}
+        };
+    }
+
+    @Test
+    @UseDataProvider("provideDataForUnsuccessfulListSearchUsingCircularListSearch")
+    public <T> void shouldNotFindKeyUsingListSearchUsingCircularListSearch(CircularList<T> list, T key) {
+        // given
+
+        // when
+        CircularList<T>.Node actualNode = Chapter10.circularListSearch(list, key);
+
+        // then
+        assertNull(actualNode);
     }
 
 }

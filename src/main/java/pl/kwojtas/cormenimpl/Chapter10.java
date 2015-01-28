@@ -248,7 +248,7 @@ public final class Chapter10 {
     }
 
     // subchapter 10.2
-    public static <T> void ListInsert_(ListWithSentinel<T> L, ListWithSentinel<T>.Node x) {
+    public static <T> void listInsert_(ListWithSentinel<T> L, ListWithSentinel<T>.Node x) {
         x.next = L.nil.next;
         L.nil.next.prev = x;
         L.nil.next = x;
@@ -276,8 +276,7 @@ public final class Chapter10 {
 
     // solution of 10.2-2
     public static <T> void singlyLinkedListPush(SinglyLinkedList<T> L, T k) {
-        SinglyLinkedList<T>.Node x = L.new Node();
-        x.key = k;
+        SinglyLinkedList<T>.Node x = L.new Node(k);
         singlyLinkedListInsert(L, x);
     }
 
@@ -293,8 +292,7 @@ public final class Chapter10 {
 
     // solution of 10.2-3
     public static <T> void singlyLinkedListEnqueue(SinglyLinkedListWithTail<T> L, T k) {
-        SinglyLinkedListWithTail<T>.Node x = L.new Node();
-        x.key = k;
+        SinglyLinkedListWithTail<T>.Node x = L.new Node(k);
         if (L.tail != null) {
             L.tail.next = x;
         } else {
