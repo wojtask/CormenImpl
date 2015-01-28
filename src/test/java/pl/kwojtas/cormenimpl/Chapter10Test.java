@@ -14,6 +14,7 @@ import pl.kwojtas.cormenimpl.util.ListWithSentinel;
 import pl.kwojtas.cormenimpl.util.Pair;
 import pl.kwojtas.cormenimpl.util.Queue;
 import pl.kwojtas.cormenimpl.util.SinglyLinkedList;
+import pl.kwojtas.cormenimpl.util.SinglyLinkedListWithTail;
 import pl.kwojtas.cormenimpl.util.Stack;
 
 import static org.junit.Assert.assertEquals;
@@ -22,6 +23,7 @@ import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+import static pl.kwojtas.cormenimpl.TestUtil.assertShuffled;
 
 @RunWith(DataProviderRunner.class)
 public class Chapter10Test {
@@ -401,34 +403,76 @@ public class Chapter10Test {
     }
 
     @DataProvider
-    public static Object[][] provideDataForInsertingElementOnSinglyLinkedList() {
+    public static Object[][] provideDataForDeletingElementFromList() {
         return new Object[][]{
-                {new SinglyLinkedList<>(), 35},
-                {new SinglyLinkedList<>(34), 35},
-                {new SinglyLinkedList<>(5,7,9,2,6,1,6,6,3,1,7,8), 3},
-                {new SinglyLinkedList<>(5.0,-2.3,-1.3,-1.9,-2.3), 2.3},
-                {new SinglyLinkedList<>("aaa","bbb","aaa","ccc"), "xyz"}
+                {new List<>(34), 1},
+                {new List<>(5,7,9,2,6,1,6,6,3,1,7,8), 4},
+                {new List<>(5.0,-2.3,-1.3,-1.9,-2.3), 4},
+                {new List<>("aaa","bbb","aaa","ccc"), 4}
         };
     }
 
     @Test
-    @UseDataProvider("provideDataForInsertingElementOnSinglyLinkedList")
-    public <T> void shouldInsertElementOnSinglyLinkedList(SinglyLinkedList<T> list, T key) {
+    @UseDataProvider("provideDataForDeletingElementFromList")
+    public <T> void shouldDeleteElementFromList(List<T> list, int elementPosition) {
         // given
-        SinglyLinkedList<T> original = new SinglyLinkedList<>(list);
+        List<T>.Node nodeToDelete = list.head;
+        for (int i = 2; i <= elementPosition; i++) {
+            nodeToDelete = nodeToDelete.next;
+        }
+        List<T> original = new List<>(list);
 
         // when
-        Chapter10.singlyLinkedListInsert(list, list.new Node(key));
+        Chapter10.listDelete(list, nodeToDelete);
 
         // then
-        assertNotNull(list.head);
-        assertEquals(key, list.head.key);
-        SinglyLinkedList<T>.Node x = original.head;
-        SinglyLinkedList<T>.Node y = list.head.next;
+        List<T>.Node x = original.head;
+        List<T>.Node y = list.head;
         while (x != null) {
-            assertEquals(x.key, y.key);
-            x = x.next;
-            y = y.next;
+            if (y != null && x.key.equals(y.key)) {
+                x = x.next;
+                y = y.next;
+            } else {
+                assertEquals(x.key, nodeToDelete.key);
+                x = x.next;
+            }
+        }
+    }
+
+    @DataProvider
+    public static Object[][] provideDataForDeletingElementFromListWithSentinel() {
+        return new Object[][]{
+                {new ListWithSentinel<>(34), 1},
+                {new ListWithSentinel<>(5,7,9,2,6,1,6,6,3,1,7,8), 4},
+                {new ListWithSentinel<>(5.0,-2.3,-1.3,-1.9,-2.3), 4},
+                {new ListWithSentinel<>("aaa","bbb","aaa","ccc"), 4}
+        };
+    }
+
+    @Test
+    @UseDataProvider("provideDataForDeletingElementFromListWithSentinel")
+    public <T> void shouldDeleteElementFromListWithSentinel(ListWithSentinel<T> list, int elementPosition) {
+        // given
+        ListWithSentinel<T>.Node nodeToDelete = list.nil;
+        for (int i = 1; i <= elementPosition; i++) {
+            nodeToDelete = nodeToDelete.next;
+        }
+        ListWithSentinel<T> original = new ListWithSentinel<>(list);
+
+        // when
+        Chapter10.listDelete_(list, nodeToDelete);
+
+        // then
+        ListWithSentinel<T>.Node x = original.nil.next;
+        ListWithSentinel<T>.Node y = list.nil.next;
+        while (x != original.nil) {
+            if (y != list.nil && x.key.equals(y.key)) {
+                x = x.next;
+                y = y.next;
+            } else {
+                assertEquals(x.key, nodeToDelete.key);
+                x = x.next;
+            }
         }
     }
 
@@ -445,7 +489,7 @@ public class Chapter10Test {
 
     @Test
     @UseDataProvider("provideDataForSuccessfulListWithSentinelSearch")
-    public <T> void shouldFindKeyUsingListSearch_(ListWithSentinel<T> list, T key) {
+    public <T> void shouldFindKeyOnListWithSentinel(ListWithSentinel<T> list, T key) {
         // given
 
         // when
@@ -475,7 +519,7 @@ public class Chapter10Test {
 
     @Test
     @UseDataProvider("provideDataForUnsuccessfulListWithSentinelSearch")
-    public <T> void shouldNotFindKeyUsingListSearchUsingListSearch_(ListWithSentinel<T> list, T key) {
+    public <T> void shouldNotFindKeyOnListWithSentinel(ListWithSentinel<T> list, T key) {
         // given
 
         // when
@@ -519,6 +563,186 @@ public class Chapter10Test {
     }
 
     @DataProvider
+    public static Object[][] provideDataForInsertingElementOnSinglyLinkedList() {
+        return new Object[][]{
+                {new SinglyLinkedList<>(), 35},
+                {new SinglyLinkedList<>(34), 35},
+                {new SinglyLinkedList<>(5,7,9,2,6,1,6,6,3,1,7,8), 3},
+                {new SinglyLinkedList<>(5.0,-2.3,-1.3,-1.9,-2.3), 2.3},
+                {new SinglyLinkedList<>("aaa","bbb","aaa","ccc"), "xyz"}
+        };
+    }
+
+    @Test
+    @UseDataProvider("provideDataForInsertingElementOnSinglyLinkedList")
+    public <T> void shouldInsertElementOnSinglyLinkedList(SinglyLinkedList<T> list, T key) {
+        // given
+        SinglyLinkedList<T> original = new SinglyLinkedList<>(list);
+
+        // when
+        Chapter10.singlyLinkedListInsert(list, list.new Node(key));
+
+        // then
+        assertNotNull(list.head);
+        assertEquals(key, list.head.key);
+        SinglyLinkedList<T>.Node x = original.head;
+        SinglyLinkedList<T>.Node y = list.head.next;
+        while (x != null) {
+            assertEquals(x.key, y.key);
+            x = x.next;
+            y = y.next;
+        }
+    }
+
+    @DataProvider
+    public static Object[][] provideDataForDeletingElementFromSinglyLinkedList() {
+        return new Object[][]{
+                {new SinglyLinkedList<>(34), 1},
+                {new SinglyLinkedList<>(5,7,9,2,6,1,6,6,3,1,7,8), 4},
+                {new SinglyLinkedList<>(5.0,-2.3,-1.3,-1.9,-2.3), 4},
+                {new SinglyLinkedList<>("aaa","bbb","aaa","ccc"), 4}
+        };
+    }
+
+    @Test
+    @UseDataProvider("provideDataForDeletingElementFromSinglyLinkedList")
+    public <T> void shouldDeleteElementFromSinglyLinkedList(SinglyLinkedList<T> list, int elementPosition) {
+        // given
+        SinglyLinkedList<T>.Node nodeToDelete = list.head;
+        for (int i = 2; i <= elementPosition; i++) {
+            nodeToDelete = nodeToDelete.next;
+        }
+        SinglyLinkedList<T> original = new SinglyLinkedList<>(list);
+
+        // when
+        Chapter10.singlyLinkedListDelete(list, nodeToDelete);
+
+        // then
+        SinglyLinkedList<T>.Node x = original.head;
+        SinglyLinkedList<T>.Node y = list.head;
+        while (x != null) {
+            if (y != null && x.key.equals(y.key)) {
+                x = x.next;
+                y = y.next;
+            } else {
+                assertEquals(x.key, nodeToDelete.key);
+                x = x.next;
+            }
+        }
+    }
+
+    @Test
+    @UseDataProvider("provideDataForInsertingElementOnSinglyLinkedList")
+    public <T> void shouldPushElementOnSinglyLinkedList(SinglyLinkedList<T> list, T key) {
+        // given
+        SinglyLinkedList<T> original = new SinglyLinkedList<>(list);
+
+        // when
+        Chapter10.singlyLinkedListPush(list, key);
+
+        // then
+        assertNotNull(list.head);
+        assertEquals(key, list.head.key);
+        SinglyLinkedList<T>.Node x = original.head;
+        SinglyLinkedList<T>.Node y = list.head.next;
+        while (x != null) {
+            assertEquals(x.key, y.key);
+            x = x.next;
+            y = y.next;
+        }
+    }
+
+    @DataProvider
+    public static Object[][] provideDataForPerformingPopOnSinglyLinkedList() {
+        return new Object[][]{
+                {new SinglyLinkedList<>(34)},
+                {new SinglyLinkedList<>(5,7,9,2,6,1,6,6,3,1,7,8)},
+                {new SinglyLinkedList<>(5.0,-2.3,-1.3,-1.9,-2.3)},
+                {new SinglyLinkedList<>("aaa","bbb","aaa","ccc")}
+        };
+    }
+
+    @Test
+    @UseDataProvider("provideDataForPerformingPopOnSinglyLinkedList")
+    public <T> void shouldPopElementFromSinglyLinkedList(SinglyLinkedList<T> list) {
+        // given
+        SinglyLinkedList<T> original = new SinglyLinkedList<>(list);
+
+        // when
+        Chapter10.singlyLinkedListPop(list);
+
+        // then
+        SinglyLinkedList<T>.Node x = original.head.next;
+        SinglyLinkedList<T>.Node y = list.head;
+        while (x != null) {
+            assertEquals(x.key, y.key);
+            x = x.next;
+            y = y.next;
+        }
+    }
+
+    @DataProvider
+    public static Object[][] provideDataForPerformingEnqueueOnSinglyLinkedListWithTail() {
+        return new Object[][]{
+                {new SinglyLinkedListWithTail<>(), 35},
+                {new SinglyLinkedListWithTail<>(34), 35},
+                {new SinglyLinkedListWithTail<>(5,7,9,2,6,1,6,6,3,1,7,8), 3},
+                {new SinglyLinkedListWithTail<>(5.0,-2.3,-1.3,-1.9,-2.3), 2.3},
+                {new SinglyLinkedListWithTail<>("aaa","bbb","aaa","ccc"), "xyz"}
+        };
+    }
+
+    @Test
+    @UseDataProvider("provideDataForPerformingEnqueueOnSinglyLinkedListWithTail")
+    public <T> void shouldEnqueueElementOnSinglyLinkedList(SinglyLinkedListWithTail<T> list, T key) {
+        // given
+        SinglyLinkedListWithTail<T> original = new SinglyLinkedListWithTail<>(list);
+
+        // when
+        Chapter10.singlyLinkedListEnqueue(list, key);
+
+        // then
+        assertNotNull(list.head);
+        SinglyLinkedListWithTail<T>.Node x = original.head;
+        SinglyLinkedListWithTail<T>.Node y = list.head;
+        while (x != original.tail) {
+            assertEquals(x.key, y.key);
+            x = x.next;
+            y = y.next;
+        }
+        assertEquals(key, list.tail.key);
+    }
+
+    @DataProvider
+    public static Object[][] provideDataForPerformingDequeueOnSinglyLinkedListWithTail() {
+        return new Object[][]{
+                {new SinglyLinkedListWithTail<>(34)},
+                {new SinglyLinkedListWithTail<>(5,7,9,2,6,1,6,6,3,1,7,8)},
+                {new SinglyLinkedListWithTail<>(5.0,-2.3,-1.3,-1.9,-2.3)},
+                {new SinglyLinkedListWithTail<>("aaa","bbb","aaa","ccc")}
+        };
+    }
+
+    @Test
+    @UseDataProvider("provideDataForPerformingDequeueOnSinglyLinkedListWithTail")
+    public <T> void shouldDequeueElementFromSinglyLinkedListWithTail(SinglyLinkedListWithTail<T> list) {
+        // given
+        SinglyLinkedListWithTail<T> original = new SinglyLinkedListWithTail<>(list);
+
+        // when
+        Chapter10.singlyLinkedListDequeue(list);
+
+        // then
+        SinglyLinkedList<T>.Node x = original.head.next;
+        SinglyLinkedList<T>.Node y = list.head;
+        while (x != null) {
+            assertEquals(x.key, y.key);
+            x = x.next;
+            y = y.next;
+        }
+    }
+
+    @DataProvider
     public static Object[][] provideDataForInsertingElementOnCircularList() {
         return new Object[][]{
                 {new CircularList<>(), 35},
@@ -554,6 +778,49 @@ public class Chapter10Test {
     }
 
     @DataProvider
+    public static Object[][] provideDataForDeletingElementFromCircularList() {
+        return new Object[][]{
+                {new CircularList<>(34), 1},
+                {new CircularList<>(5,7,9,2,6,1,6,6,3,1,7,8), 4},
+                {new CircularList<>(5.0,-2.3,-1.3,-1.9,-2.3), 4},
+                {new CircularList<>("aaa","bbb","aaa","ccc"), 4}
+        };
+    }
+
+    @Test
+    @UseDataProvider("provideDataForDeletingElementFromCircularList")
+    public <T> void shouldDeleteElementFromCircularList(CircularList<T> list, int elementPosition) {
+        // given
+        CircularList<T>.Node nodeToDelete = list.head;
+        for (int i = 2; i <= elementPosition; i++) {
+            nodeToDelete = nodeToDelete.next;
+        }
+        CircularList<T> original = new CircularList<>(list);
+
+        // when
+        Chapter10.circularListDelete(list, nodeToDelete);
+
+        // then
+        if (list.head == null) {
+            return;
+        }
+        if (!original.head.key.equals(list.head.key)) {
+            assertEquals(original.head.key, nodeToDelete.key);
+        }
+        CircularList<T>.Node x = original.head.next;
+        CircularList<T>.Node y = list.head.next;
+        while (x != original.head) {
+            if (y != original.head && x.key.equals(y.key)) {
+                x = x.next;
+                y = y.next;
+            } else {
+                assertEquals(x.key, nodeToDelete.key);
+                x = x.next;
+            }
+        }
+    }
+
+    @DataProvider
     public static Object[][] provideDataForSuccessfulListSearchUsingCircularListSearch() {
         return new Object[][]{
                 {new CircularList<>(34), 34},
@@ -566,7 +833,7 @@ public class Chapter10Test {
 
     @Test
     @UseDataProvider("provideDataForSuccessfulListSearchUsingCircularListSearch")
-    public <T> void shouldFindKeyUsingCircularListSearch(CircularList<T> list, T key) {
+    public <T> void shouldFindKeyOnCircularList(CircularList<T> list, T key) {
         // given
 
         // when
@@ -597,7 +864,7 @@ public class Chapter10Test {
 
     @Test
     @UseDataProvider("provideDataForUnsuccessfulListSearchUsingCircularListSearch")
-    public <T> void shouldNotFindKeyUsingListSearchUsingCircularListSearch(CircularList<T> list, T key) {
+    public <T> void shouldNotFindKeyOnCircularList(CircularList<T> list, T key) {
         // given
 
         // when
@@ -605,6 +872,76 @@ public class Chapter10Test {
 
         // then
         assertNull(actualNode);
+    }
+
+    @DataProvider
+    public static Object[][] provideDataForCircularListsUnion() {
+        return new Object[][]{
+                {new CircularList<>(),new CircularList<>()},
+                {new CircularList<>(1),new CircularList<>()},
+                {new CircularList<>(12,44,26,20,67,4,21,66,35,51,13),new CircularList<>(55,23,2,74,30,47)}
+        };
+    }
+
+    @Test
+    @UseDataProvider("provideDataForCircularListsUnion")
+    public <T> void shouldUnionCircularLists(CircularList<T> list1, CircularList<T> list2) {
+        // given
+        Array<T> originalArray1 = list1.toArray();
+        Array<T> originalArray2 = list2.toArray();
+
+        // when
+        CircularList<T> actualMergedLists = Chapter10.circularListsUnion(list1, list2);
+
+        // then
+        Array<T> actualMergedArray = actualMergedLists.toArray();
+        Array<T> expectedMergedArray = Array.withLength(originalArray1.length + originalArray2.length);
+        for (int i = 1; i <= originalArray1.length; i++) {
+            expectedMergedArray.set(i, originalArray1.at(i));
+        }
+        for (int i = 1; i <= originalArray2.length; i++) {
+            expectedMergedArray.set(originalArray1.length + i, originalArray2.at(i));
+        }
+        assertShuffled(expectedMergedArray, actualMergedArray);
+    }
+
+    @DataProvider
+    public static Object[][] provideDataForReversingSinglyLinkedList() {
+        return new Object[][]{
+                {new SinglyLinkedList<>()},
+                {new SinglyLinkedList<>(34)},
+                {new SinglyLinkedList<>(5,7,9,2,6,1,6,6,3,1,7,8)},
+                {new SinglyLinkedList<>(5.0,-2.3,-1.3,-1.9,-2.3)},
+                {new SinglyLinkedList<>("aaa","bbb","aaa","ccc")}
+        };
+    }
+
+    @Test
+    @UseDataProvider("provideDataForReversingSinglyLinkedList")
+    public <T> void shouldReverseSinglyLinkedList(SinglyLinkedList<T> list) {
+        // given
+        SinglyLinkedList<T> original = new SinglyLinkedList<>(list);
+
+        // when
+        Chapter10.singlyLinkedListReverse(list);
+
+        // then
+        SinglyLinkedList<T> expectedReversed = new SinglyLinkedList<>();
+        SinglyLinkedList<T>.Node x = original.head;
+        SinglyLinkedList<T>.Node y;
+        while (x != null) {
+            y = expectedReversed.new Node(x.key);
+            y.next = expectedReversed.head;
+            expectedReversed.head = y;
+            x = x.next;
+        }
+        x = list.head;
+        y = expectedReversed.head;
+        while (x != null) {
+            assertEquals(y.key, x.key);
+            x = x.next;
+            y = y.next;
+        }
     }
 
 }

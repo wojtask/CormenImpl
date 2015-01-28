@@ -45,4 +45,26 @@ public class List<T> {
         }
     }
 
+    public int getLength() {
+        int size = 0;
+        Node x = head;
+        while (x != null) {
+            size++;
+            x = x.next;
+        }
+        return size;
+    }
+
+    public Array<T> toArray() {
+        Array<T> array = Array.withLength(getLength());
+        Node x = head;
+        int i = 1;
+        while (x != null) {
+            array.set(i, x.key);
+            i++;
+            x = x.next;
+        }
+        return array;
+    }
+
 }

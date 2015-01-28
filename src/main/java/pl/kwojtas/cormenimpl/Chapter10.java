@@ -359,7 +359,7 @@ public final class Chapter10 {
     }
 
     // solution of 10.2-6
-    public static <T> CircularList<T> circularListUnion(CircularList<T> S1, CircularList<T> S2) {
+    public static <T> CircularList<T> circularListsUnion(CircularList<T> S1, CircularList<T> S2) {
         CircularList<T> S = new CircularList<>();
         if (S1.head != null && S2.head != null) {
             CircularList<T>.Node x = S1.head.next;
@@ -424,7 +424,7 @@ public final class Chapter10 {
         if (T.root == null) {
             return;
         }
-        Stack<BinaryTree<T>.Node> S = Stack.withLength(getTreeSize(T.root));
+        Stack<BinaryTree<T>.Node> S = Stack.withLength(T.getSize());
         push(S, T.root);
         while (!stackEmpty(S)) {
             BinaryTree<T>.Node x = pop(S);
@@ -436,18 +436,6 @@ public final class Chapter10 {
                 push(S, x.left);
             }
         }
-    }
-
-    // solution of 10.4-3
-    private static <T> int getTreeSize(BinaryTree<T>.Node x) {
-        int treeSize = 1;
-        if (x.left != null) {
-            treeSize += getTreeSize(x.left);
-        }
-        if (x.right != null) {
-            treeSize += getTreeSize(x.right);
-        }
-        return treeSize;
     }
 
     // solution of 10.4-4

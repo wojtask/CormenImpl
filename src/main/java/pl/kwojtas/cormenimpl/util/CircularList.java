@@ -35,4 +35,33 @@ public class CircularList<T> extends SinglyLinkedList<T> {
         }
     }
 
+    public int getLength() {
+        if (head == null) {
+            return 0;
+        }
+        int size = 1;
+        Node x = head.next;
+        while (x != head) {
+            size++;
+            x = x.next;
+        }
+        return size;
+    }
+
+    public Array<T> toArray() {
+        if (head == null) {
+            return new Array<>();
+        }
+        Array<T> array = Array.withLength(getLength());
+        array.set(1, head.key);
+        Node x = head.next;
+        int i = 2;
+        while (x != head) {
+            array.set(i, x.key);
+            i++;
+            x = x.next;
+        }
+        return array;
+    }
+
 }

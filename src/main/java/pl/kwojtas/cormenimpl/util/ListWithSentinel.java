@@ -22,8 +22,8 @@ public class ListWithSentinel<T> {
             return;
         }
         Node x = nil;
-        for (int i = 0; i < elements.length; i++) {
-            Node y = new Node(elements[i]);
+        for (T element : elements) {
+            Node y = new Node(element);
             y.prev = x;
             x.next = y;
             y.next = nil;
@@ -46,6 +46,28 @@ public class ListWithSentinel<T> {
             x = y;
             z = z.next;
         }
+    }
+
+    public int getLength() {
+        int size = 0;
+        Node x = nil.next;
+        while (x != nil) {
+            size++;
+            x = x.next;
+        }
+        return size;
+    }
+
+    public Array<T> toArray() {
+        Array<T> array = Array.withLength(getLength());
+        Node x = nil.next;
+        int i = 1;
+        while (x != nil) {
+            array.set(i, x.key);
+            i++;
+            x = x.next;
+        }
+        return array;
     }
 
 }

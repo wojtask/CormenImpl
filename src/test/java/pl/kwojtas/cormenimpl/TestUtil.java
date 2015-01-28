@@ -19,17 +19,20 @@ public class TestUtil {
     }
 
     private static <T> void assertArrayContains(Array<T> array, T element) {
-        boolean contains = false;
-        for (int i = 1; i <= array.length; i++) {
-            contains = contains || array.at(i).equals(element);
+        boolean found = false;
+        for (int i = 1; i <= array.length && !found; i++) {
+            found = array.at(i).equals(element);
         }
-        assertTrue(contains);
+        assertTrue(found);
     }
 
     public static <T> void assertShuffled(Array<T> original, Array<T> shuffled) {
         assertEquals(original.length, shuffled.length);
         for (int i = 1; i <= original.length; i++) {
             assertArrayContains(shuffled, original.at(i));
+        }
+        for (int i = 1; i <= shuffled.length; i++) {
+            assertArrayContains(original, shuffled.at(i));
         }
     }
 

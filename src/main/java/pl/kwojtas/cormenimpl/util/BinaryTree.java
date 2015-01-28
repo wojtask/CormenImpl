@@ -11,4 +11,19 @@ public class BinaryTree<T> {
 
     public Node root;
 
+    public int getSize() {
+        return getSize(root);
+    }
+
+    private int getSize(Node x) {
+        int treeSize = 1;
+        if (x.left != null) {
+            treeSize += getSize(x.left);
+        }
+        if (x.right != null) {
+            treeSize += getSize(x.right);
+        }
+        return treeSize;
+    }
+
 }
