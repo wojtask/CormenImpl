@@ -3,20 +3,28 @@ package pl.kwojtas.cormenimpl;
 import com.tngtech.java.junit.dataprovider.DataProvider;
 import com.tngtech.java.junit.dataprovider.DataProviderRunner;
 import com.tngtech.java.junit.dataprovider.UseDataProvider;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import pl.kwojtas.cormenimpl.util.Array;
+import pl.kwojtas.cormenimpl.util.BinaryTree;
 import pl.kwojtas.cormenimpl.util.CircularList;
 import pl.kwojtas.cormenimpl.util.Deque;
 import pl.kwojtas.cormenimpl.util.DoubleStack;
 import pl.kwojtas.cormenimpl.util.List;
 import pl.kwojtas.cormenimpl.util.ListWithSentinel;
+import pl.kwojtas.cormenimpl.util.MultiaryTree;
 import pl.kwojtas.cormenimpl.util.Pair;
 import pl.kwojtas.cormenimpl.util.Queue;
 import pl.kwojtas.cormenimpl.util.SinglyLinkedList;
 import pl.kwojtas.cormenimpl.util.SinglyLinkedListWithTail;
 import pl.kwojtas.cormenimpl.util.Stack;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
@@ -27,6 +35,22 @@ import static pl.kwojtas.cormenimpl.TestUtil.assertShuffled;
 
 @RunWith(DataProviderRunner.class)
 public class Chapter10Test {
+
+    private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+
+    @Before
+    public void setUpOutStream() {
+        System.setOut(new PrintStream(outContent));
+    }
+
+    @After
+    public void cleanupOutStream() {
+        System.setOut(null);
+    }
+
+    private String[] splitOutContent() {
+        return outContent.toString().split(System.getProperty("line.separator"));
+    }
 
     @DataProvider
     public static Object[][] provideDataForStackOperations() {
@@ -942,6 +966,123 @@ public class Chapter10Test {
             x = x.next;
             y = y.next;
         }
+    }
+
+    @Test
+    public void shouldPrintOutEmptyTreeInPreorder() {
+        // given
+
+        // when
+        Chapter10.iterativePreorderTreeWalk(null);
+
+        // then
+        assertEquals(0, outContent.size());
+    }
+
+    @Test
+    public void shouldPrintOutNonEmptyTreeInPreorder() {
+        // given
+        BinaryTree<Integer> tree = new BinaryTree<>();
+        BinaryTree<Integer>.Node x1 = tree.new Node(10);
+        BinaryTree<Integer>.Node x2 = tree.new Node(4);
+        BinaryTree<Integer>.Node x3 = tree.new Node(14);
+        BinaryTree<Integer>.Node x4 = tree.new Node(1);
+        BinaryTree<Integer>.Node x5 = tree.new Node(11);
+        BinaryTree<Integer>.Node x6 = tree.new Node(19);
+        BinaryTree<Integer>.Node x7 = tree.new Node(20);
+        tree.root = x1;
+        x1.left = x2; x2.p = x1; x1.right = x3; x3.p = x1;
+        x2.left = x4; x4.p = x2;
+        x3.left = x5; x5.p = x3; x3.right = x6; x6.p = x3;
+        x6.right = x7; x7.p = x6;
+
+        // when
+        Chapter10.iterativePreorderTreeWalk(tree);
+
+        // then
+        String[] actualOutput = splitOutContent();
+        String[] expectedOutput = new String[]{"10","4","1","14","11","19","20"};
+        assertArrayEquals(expectedOutput, actualOutput);
+    }
+
+    @Test
+    public void shouldPrintOutEmptyMultiaryTree() {
+        // given
+
+        // when
+        Chapter10.treeWalk(null);
+
+        // then
+        assertEquals(0, outContent.size());
+    }
+
+    @Test
+    public void shouldPrintOutNonEmptyMultiaryTree() {
+        // given
+        MultiaryTree<Integer> tree = new MultiaryTree<>();
+        MultiaryTree<Integer>.Node x1 = tree.new Node(1);
+        MultiaryTree<Integer>.Node x2 = tree.new Node(2);
+        MultiaryTree<Integer>.Node x3 = tree.new Node(3);
+        MultiaryTree<Integer>.Node x4 = tree.new Node(4);
+        MultiaryTree<Integer>.Node x5 = tree.new Node(5);
+        MultiaryTree<Integer>.Node x6 = tree.new Node(6);
+        MultiaryTree<Integer>.Node x7 = tree.new Node(7);
+        MultiaryTree<Integer>.Node x8 = tree.new Node(8);
+        MultiaryTree<Integer>.Node x9 = tree.new Node(9);
+        MultiaryTree<Integer>.Node x10 = tree.new Node(10);
+        tree.root = x1;
+        x1.leftChild = x2; x2.p = x1;
+        x2.leftChild = x5; x5.p = x2; x2.rightSibling = x3; x3.p = x1;
+        x3.rightSibling = x4; x4.p = x1;
+        x4.leftChild = x8; x8.p = x4;
+        x5.rightSibling = x6; x6.p = x2;
+        x6.leftChild = x10; x10.p = x6; x6.rightSibling = x7; x7.p = x2;
+        x8.rightSibling = x9; x9.p = x4;
+
+        // when
+        Chapter10.treeWalk(tree.root);
+
+        // then
+        String[] actualOutput = splitOutContent();
+        String[] expectedOutput = new String[]{"1","2","5","6","10","7","3","4","8","9"};
+        assertArrayEquals(expectedOutput, actualOutput);
+    }
+
+    @Test
+    public void shouldPrintOutEmptyTreeInInorder() {
+        // given
+
+        // when
+        Chapter10.stacklessInorderTreeWalk(null);
+
+        // then
+        assertEquals(0, outContent.size());
+    }
+
+    @Test
+    public void shouldPrintOutNonEmptyTreeInInorder() {
+        // given
+        BinaryTree<Integer> tree = new BinaryTree<>();
+        BinaryTree<Integer>.Node x1 = tree.new Node(10);
+        BinaryTree<Integer>.Node x2 = tree.new Node(4);
+        BinaryTree<Integer>.Node x3 = tree.new Node(14);
+        BinaryTree<Integer>.Node x4 = tree.new Node(1);
+        BinaryTree<Integer>.Node x5 = tree.new Node(11);
+        BinaryTree<Integer>.Node x6 = tree.new Node(19);
+        BinaryTree<Integer>.Node x7 = tree.new Node(20);
+        tree.root = x1;
+        x1.left = x2; x2.p = x1; x1.right = x3; x3.p = x1;
+        x2.left = x4; x4.p = x2;
+        x3.left = x5; x5.p = x3; x3.right = x6; x6.p = x3;
+        x6.right = x7; x7.p = x6;
+
+        // when
+        Chapter10.stacklessInorderTreeWalk(tree);
+
+        // then
+        String[] actualOutput = splitOutContent();
+        String[] expectedOutput = new String[]{"1","4","10","11","14","19","20"};
+        assertArrayEquals(expectedOutput, actualOutput);
     }
 
 }

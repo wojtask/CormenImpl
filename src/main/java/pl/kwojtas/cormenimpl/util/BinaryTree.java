@@ -7,6 +7,10 @@ public class BinaryTree<T> {
         public Node p;
         public Node left;
         public Node right;
+
+        public Node(T key) {
+            this.key = key;
+        }
     }
 
     public Node root;
@@ -16,14 +20,10 @@ public class BinaryTree<T> {
     }
 
     private int getSize(Node x) {
-        int treeSize = 1;
-        if (x.left != null) {
-            treeSize += getSize(x.left);
+        if (x == null) {
+            return 0;
         }
-        if (x.right != null) {
-            treeSize += getSize(x.right);
-        }
-        return treeSize;
+        return 1 + getSize(x.left) + getSize(x.right);
     }
 
 }

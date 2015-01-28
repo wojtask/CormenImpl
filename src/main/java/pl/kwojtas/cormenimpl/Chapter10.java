@@ -420,7 +420,7 @@ public final class Chapter10 {
     }
 
     // solution of 10.4-3
-    public static <T> void iterativeInorderTreeWalk(BinaryTree<T> T) {
+    public static <T> void iterativePreorderTreeWalk(BinaryTree<T> T) {
         if (T.root == null) {
             return;
         }
@@ -428,10 +428,10 @@ public final class Chapter10 {
         push(S, T.root);
         while (!stackEmpty(S)) {
             BinaryTree<T>.Node x = pop(S);
+            System.out.println(x.key);
             if (x.right != null) {
                 push(S, x.right);
             }
-            System.out.println(x.key);
             if (x.left != null) {
                 push(S, x.left);
             }
