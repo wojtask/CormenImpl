@@ -34,13 +34,13 @@ public class SinglyLinkedListWithTail<T> extends SinglyLinkedList<T> {
     }
 
     public int getLength() {
-        int size = 0;
+        int length = 0;
         Node x = head;
         while (x != null) {
-            size++;
+            length++;
             x = x.next;
         }
-        return size;
+        return length;
     }
 
     public Array<T> toArray() {

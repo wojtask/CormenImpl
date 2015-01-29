@@ -49,13 +49,13 @@ public class ListWithSentinel<T> {
     }
 
     public int getLength() {
-        int size = 0;
+        int length = 0;
         Node x = nil.next;
         while (x != nil) {
-            size++;
+            length++;
             x = x.next;
         }
-        return size;
+        return length;
     }
 
     public Array<T> toArray() {

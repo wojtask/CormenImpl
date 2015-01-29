@@ -39,13 +39,13 @@ public class CircularList<T> extends SinglyLinkedList<T> {
         if (head == null) {
             return 0;
         }
-        int size = 1;
+        int length = 1;
         Node x = head.next;
         while (x != head) {
-            size++;
+            length++;
             x = x.next;
         }
-        return size;
+        return length;
     }
 
     public Array<T> toArray() {

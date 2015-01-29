@@ -973,7 +973,7 @@ public class Chapter10Test {
         // given
 
         // when
-        Chapter10.iterativePreorderTreeWalk(null);
+        Chapter10.iterativePreorderTreeWalk(new BinaryTree<>());
 
         // then
         assertEquals(0, outContent.size());
@@ -1053,7 +1053,7 @@ public class Chapter10Test {
         // given
 
         // when
-        Chapter10.stacklessInorderTreeWalk(null);
+        Chapter10.stacklessInorderTreeWalk(new BinaryTree<>());
 
         // then
         assertEquals(0, outContent.size());
