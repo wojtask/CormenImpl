@@ -216,4 +216,25 @@ public final class Chapter11 {
         throw new RuntimeException("overflow");
     }
 
+    // problem 11-3
+    public static Integer quadraticProbingSearch(ZeroBasedIndexedArray<Integer> T, int k, HashFunction h) {
+        int m = T.length;
+        int i = h.compute(k);
+        int j = 0;
+        while (true) {
+            if (T.at(i) == null) {
+                return null;
+            }
+            if (T.at(i) == k) {
+                return i;
+            }
+            j++;
+            if (j == m) {
+                return null;
+            } else {
+                i = (i + j) % m;
+            }
+        }
+    }
+
 }

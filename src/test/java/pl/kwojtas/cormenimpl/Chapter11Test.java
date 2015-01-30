@@ -499,4 +499,40 @@ public class Chapter11Test {
         // then
     }
 
+    @Test
+    public void shouldFindElementUsingQuadraticProbing() {
+        // given
+        ZeroBasedIndexedArray<Integer> hashTable = new ZeroBasedIndexedArray<>(24,null,34,35,51,null,27,null);
+        HashFunction h = new HashFunction() {
+            @Override
+            public int compute(int key) {
+                return key % hashTable.length;
+            }
+        };
+
+        // when
+        Integer actualPosition = Chapter11.quadraticProbingSearch(hashTable, 27, h);
+
+        // then
+        assertEquals(new Integer(6), actualPosition);
+    }
+
+    @Test
+    public void shouldNotFindNonexistentElementUsingQuadraticProbing() {
+        // given
+        ZeroBasedIndexedArray<Integer> hashTable = new ZeroBasedIndexedArray<>(24,null,34,35,51,null,27,null);
+        HashFunction h = new HashFunction() {
+            @Override
+            public int compute(int key) {
+                return key % hashTable.length;
+            }
+        };
+
+        // when
+        Integer actualPosition = Chapter11.quadraticProbingSearch(hashTable, 43, h);
+
+        // then
+        assertNull(actualPosition);
+    }
+
 }
