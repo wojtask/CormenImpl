@@ -13,21 +13,21 @@ import static pl.kwojtas.cormenimpl.Chapter11.DELETED;
 
 public class Chapter11Test {
 
-    private ZeroBasedIndexedArray<Chapter11.ElementWithKey<String>> getExampleDirectAccessTable() {
-        ZeroBasedIndexedArray<Chapter11.ElementWithKey<String>> directAccessTable = ZeroBasedIndexedArray.withLength(5);
-        directAccessTable.set(0, new Chapter11.ElementWithKey<>(0, "zero"));
-        directAccessTable.set(1, new Chapter11.ElementWithKey<>(1, "one"));
-        directAccessTable.set(3, new Chapter11.ElementWithKey<>(3, "three"));
-        return directAccessTable;
+    private ZeroBasedIndexedArray<Chapter11.ElementWithKey<String>> getExampleDirectAddressTable() {
+        ZeroBasedIndexedArray<Chapter11.ElementWithKey<String>> directAddressTable = ZeroBasedIndexedArray.withLength(5);
+        directAddressTable.set(0, new Chapter11.ElementWithKey<>(0, "zero"));
+        directAddressTable.set(1, new Chapter11.ElementWithKey<>(1, "one"));
+        directAddressTable.set(3, new Chapter11.ElementWithKey<>(3, "three"));
+        return directAddressTable;
     }
 
     @Test
-    public void shouldFindElementInDirectAccessTable() {
+    public void shouldFindElementInDirectAddressTable() {
         // given
-        ZeroBasedIndexedArray<Chapter11.ElementWithKey<String>> directAccessTable = getExampleDirectAccessTable();
+        ZeroBasedIndexedArray<Chapter11.ElementWithKey<String>> directAddressTable = getExampleDirectAddressTable();
 
         // when
-        Chapter11.ElementWithKey<String> actualFoundElement = Chapter11.directAccessSearch(directAccessTable, 3);
+        Chapter11.ElementWithKey<String> actualFoundElement = Chapter11.directAddressSearch(directAddressTable, 3);
 
         // then
         assertNotNull(actualFoundElement);
@@ -36,50 +36,50 @@ public class Chapter11Test {
     }
 
     @Test
-    public void shouldNotFindNonexistentElementInDirectAccessTable() {
+    public void shouldNotFindNonexistentElementInDirectAddressTable() {
         // given
-        ZeroBasedIndexedArray<Chapter11.ElementWithKey<String>> directAccessTable = getExampleDirectAccessTable();
+        ZeroBasedIndexedArray<Chapter11.ElementWithKey<String>> directAddressTable = getExampleDirectAddressTable();
 
         // when
-        Chapter11.ElementWithKey<String> actualFoundElement = Chapter11.directAccessSearch(directAccessTable, 2);
+        Chapter11.ElementWithKey<String> actualFoundElement = Chapter11.directAddressSearch(directAddressTable, 2);
 
         // then
         assertNull(actualFoundElement);
     }
 
     @Test
-    public void shouldInsertIntoDirectAccessTable() {
+    public void shouldInsertIntoDirectAddressTable() {
         // given
-        ZeroBasedIndexedArray<Chapter11.ElementWithKey<String>> directAccessTable = getExampleDirectAccessTable();
+        ZeroBasedIndexedArray<Chapter11.ElementWithKey<String>> directAddressTable = getExampleDirectAddressTable();
 
         // when
-        Chapter11.directAccessInsert(directAccessTable, new Chapter11.ElementWithKey<>(4, "four"));
+        Chapter11.directAddressInsert(directAddressTable, new Chapter11.ElementWithKey<>(4, "four"));
 
         // then
-        assertNotNull(directAccessTable.at(4));
-        assertEquals(4, directAccessTable.at(4).key);
-        assertEquals("four", directAccessTable.at(4).data);
+        assertNotNull(directAddressTable.at(4));
+        assertEquals(4, directAddressTable.at(4).key);
+        assertEquals("four", directAddressTable.at(4).data);
     }
 
     @Test
-    public void shouldDeleteFromDirectAccessTable() {
+    public void shouldDeleteFromDirectAddressTable() {
         // given
-        ZeroBasedIndexedArray<Chapter11.ElementWithKey<String>> directAccessTable = getExampleDirectAccessTable();
+        ZeroBasedIndexedArray<Chapter11.ElementWithKey<String>> directAddressTable = getExampleDirectAddressTable();
 
         // when
-        Chapter11.directAccessDelete(directAccessTable, directAccessTable.at(1));
+        Chapter11.directAddressDelete(directAddressTable, directAddressTable.at(1));
 
         // then
-        assertNull(directAccessTable.at(1));
+        assertNull(directAddressTable.at(1));
     }
 
     @Test
-    public void shouldFindMaximumInDirectAccessTable() {
+    public void shouldFindMaximumInDirectAddressTable() {
         // given
-        ZeroBasedIndexedArray<Chapter11.ElementWithKey<String>> directAccessTable = getExampleDirectAccessTable();
+        ZeroBasedIndexedArray<Chapter11.ElementWithKey<String>> directAddressTable = getExampleDirectAddressTable();
 
         // when
-        Chapter11.ElementWithKey<String> actualMaximum = Chapter11.directAccessMaximum(directAccessTable);
+        Chapter11.ElementWithKey<String> actualMaximum = Chapter11.directAddressMaximum(directAddressTable);
 
         // then
         assertNotNull(actualMaximum);
@@ -135,26 +135,26 @@ public class Chapter11Test {
         assertEquals(new Integer(0), bitVector.at(1));
     }
 
-    private ZeroBasedIndexedArray<List<Chapter11.ElementWithKey<String>>> getExampleDirectAccessTableWithNonDistinctKeys() {
-        ZeroBasedIndexedArray<List<Chapter11.ElementWithKey<String>>> directAccessTable = ZeroBasedIndexedArray.withLength(5);
-        directAccessTable.set(0, new List<>(new Chapter11.ElementWithKey<>(0, "zero")));
-        directAccessTable.set(1, new List<>(new Chapter11.ElementWithKey<>(1, "oneA"),
+    private ZeroBasedIndexedArray<List<Chapter11.ElementWithKey<String>>> getExampleDirectAddressTableWithNonDistinctKeys() {
+        ZeroBasedIndexedArray<List<Chapter11.ElementWithKey<String>>> directAddressTable = ZeroBasedIndexedArray.withLength(5);
+        directAddressTable.set(0, new List<>(new Chapter11.ElementWithKey<>(0, "zero")));
+        directAddressTable.set(1, new List<>(new Chapter11.ElementWithKey<>(1, "oneA"),
                 new Chapter11.ElementWithKey<>(1, "oneB"), new Chapter11.ElementWithKey<>(1, "oneC")));
-        directAccessTable.set(2, new List<>());
-        directAccessTable.set(3, new List<>(new Chapter11.ElementWithKey<>(3, "threeA"),
+        directAddressTable.set(2, new List<>());
+        directAddressTable.set(3, new List<>(new Chapter11.ElementWithKey<>(3, "threeA"),
                 new Chapter11.ElementWithKey<>(3, "threeB")));
-        directAccessTable.set(4, new List<>());
-        return directAccessTable;
+        directAddressTable.set(4, new List<>());
+        return directAddressTable;
     }
 
     @Test
-    public void shouldFindElementInDirectAccessTableWithNonDistinctKeys() {
+    public void shouldFindElementInDirectAddressTableWithNonDistinctKeys() {
         // given
-        ZeroBasedIndexedArray<List<Chapter11.ElementWithKey<String>>> directAccessTable
-                = getExampleDirectAccessTableWithNonDistinctKeys();
+        ZeroBasedIndexedArray<List<Chapter11.ElementWithKey<String>>> directAddressTable
+                = getExampleDirectAddressTableWithNonDistinctKeys();
 
         // when
-        Chapter11.ElementWithKey<String> actualFoundElement = Chapter11.directAccessSearch_(directAccessTable, 3);
+        Chapter11.ElementWithKey<String> actualFoundElement = Chapter11.directAddressSearch_(directAddressTable, 3);
 
         // then
         assertNotNull(actualFoundElement);
@@ -163,44 +163,112 @@ public class Chapter11Test {
     }
 
     @Test
-    public void shouldNotFindNonexistentElementInDirectAccessTableWithNonDistinctKeys() {
+    public void shouldNotFindNonexistentElementInDirectAddressTableWithNonDistinctKeys() {
         // given
-        ZeroBasedIndexedArray<List<Chapter11.ElementWithKey<String>>> directAccessTable
-                = getExampleDirectAccessTableWithNonDistinctKeys();
+        ZeroBasedIndexedArray<List<Chapter11.ElementWithKey<String>>> directAddressTable
+                = getExampleDirectAddressTableWithNonDistinctKeys();
 
         // when
-        Chapter11.ElementWithKey<String> actualFoundElement = Chapter11.directAccessSearch_(directAccessTable, 2);
+        Chapter11.ElementWithKey<String> actualFoundElement = Chapter11.directAddressSearch_(directAddressTable, 2);
 
         // then
         assertNull(actualFoundElement);
     }
 
     @Test
-    public void shouldInsertIntoDirectAccessTableWithNonDistinctKeys() {
+    public void shouldInsertIntoDirectAddressTableWithNonDistinctKeys() {
         // given
-        ZeroBasedIndexedArray<List<Chapter11.ElementWithKey<String>>> directAccessTable
-                = getExampleDirectAccessTableWithNonDistinctKeys();
+        ZeroBasedIndexedArray<List<Chapter11.ElementWithKey<String>>> directAddressTable
+                = getExampleDirectAddressTableWithNonDistinctKeys();
 
         // when
-        Chapter11.directAccessInsert_(directAccessTable, new Chapter11.ElementWithKey<>(4, "four"));
+        Chapter11.directAddressInsert_(directAddressTable, new Chapter11.ElementWithKey<>(4, "four"));
 
         // then
-        assertNotNull(directAccessTable.at(4).head);
-        assertEquals(4, directAccessTable.at(4).head.key.key);
-        assertEquals("four", directAccessTable.at(4).head.key.data);
+        assertNotNull(directAddressTable.at(4).head);
+        assertEquals(4, directAddressTable.at(4).head.key.key);
+        assertEquals("four", directAddressTable.at(4).head.key.data);
     }
 
     @Test
-    public void shouldDeleteFromDirectAccessTableWithNonDistinctKeys() {
+    public void shouldDeleteFromDirectAddressTableWithNonDistinctKeys() {
         // given
-        ZeroBasedIndexedArray<List<Chapter11.ElementWithKey<String>>> directAccessTable
-                = getExampleDirectAccessTableWithNonDistinctKeys();
+        ZeroBasedIndexedArray<List<Chapter11.ElementWithKey<String>>> directAddressTable
+                = getExampleDirectAddressTableWithNonDistinctKeys();
 
         // when
-        Chapter11.directAccessDelete_(directAccessTable, directAccessTable.at(1).head.next.key);
+        Chapter11.directAddressDelete_(directAddressTable, directAddressTable.at(1).head.next.key);
 
         // then
-        assertEquals(2, directAccessTable.at(1).getLength());
+        assertEquals(2, directAddressTable.at(1).getLength());
+    }
+
+    private Chapter11.HugeArray<String> getExampleHugeArray() {
+        Chapter11.HugeArray<String> hugeArray = new Chapter11.HugeArray<>(100, 5);
+        hugeArray.T.set(56, 1);
+        hugeArray.T.set(23, 2);
+        hugeArray.T.set(10, 3);
+        hugeArray.S.set(1, new Chapter11.ElementWithKey<>(56, "fiftySix"));
+        hugeArray.S.set(2, new Chapter11.ElementWithKey<>(23, "twentyThree"));
+        hugeArray.S.set(3, new Chapter11.ElementWithKey<>(10, "ten"));
+        hugeArray.S.top = 3;
+        return hugeArray;
+    }
+
+    @Test
+    public void shouldFindElementInHugeArray() {
+        // given
+        Chapter11.HugeArray<String> hugeArray = getExampleHugeArray();
+
+        // when
+        Chapter11.ElementWithKey<String> actualFoundElement = Chapter11.hugeArraySearch(hugeArray, 23);
+
+        // then
+        assertNotNull(actualFoundElement);
+        assertEquals(23, actualFoundElement.key);
+        assertEquals("twentyThree", actualFoundElement.data);
+    }
+
+    @Test
+    public void shouldNotFindNonexistentElementInHugeArray() {
+        // given
+        Chapter11.HugeArray<String> hugeArray = getExampleHugeArray();
+
+        // when
+        Chapter11.ElementWithKey<String> actualFoundElement = Chapter11.hugeArraySearch(hugeArray, 66);
+
+        // then
+        assertNull(actualFoundElement);
+    }
+
+    @Test
+    public void shouldInsertIntoHugeArray() {
+        // given
+        Chapter11.HugeArray<String> hugeArray = getExampleHugeArray();
+
+        // when
+        Chapter11.hugeArrayInsert(hugeArray, new Chapter11.ElementWithKey<>(66, "sixtySix"));
+
+        // then
+        assertEquals(4, hugeArray.S.top);
+        assertEquals(66, hugeArray.S.at(4).key);
+        assertEquals("sixtySix", hugeArray.S.at(4).data);
+        assertEquals(new Integer(4), hugeArray.T.at(66));
+    }
+
+    @Test
+    public void shouldDeleteFromHugeArray() {
+        // given
+        Chapter11.HugeArray<String> hugeArray = getExampleHugeArray();
+
+        // when
+        Chapter11.hugeArrayDelete(hugeArray, new Chapter11.ElementWithKey<>(56, "fiftySix"));
+
+        // then
+        assertEquals(2, hugeArray.S.top);
+        assertEquals(10, hugeArray.S.at(1).key);
+        assertEquals("ten", hugeArray.S.at(1).data);
+        assertEquals(new Integer(1), hugeArray.T.at(10));
     }
 
     private ZeroBasedIndexedArray<List<Chapter11.ElementWithKey<String>>> getExampleChainedHashTable() {

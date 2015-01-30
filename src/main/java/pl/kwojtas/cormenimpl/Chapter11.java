@@ -3,6 +3,7 @@ package pl.kwojtas.cormenimpl;
 import pl.kwojtas.cormenimpl.util.HashFunction;
 import pl.kwojtas.cormenimpl.util.HashProbingFunction;
 import pl.kwojtas.cormenimpl.util.List;
+import pl.kwojtas.cormenimpl.util.Stack;
 import pl.kwojtas.cormenimpl.util.ZeroBasedIndexedArray;
 
 public final class Chapter11 {
@@ -17,25 +18,30 @@ public final class Chapter11 {
             this.key = key;
             this.data = data;
         }
+
+        public ElementWithKey(ElementWithKey<T> otherElementWithKey) {
+            this.key = otherElementWithKey.key;
+            this.data = otherElementWithKey.data;
+        }
     }
 
     // subchapter 11.1
-    public static <T> ElementWithKey<T> directAccessSearch(ZeroBasedIndexedArray<ElementWithKey<T>> T, int k) {
+    public static <T> ElementWithKey<T> directAddressSearch(ZeroBasedIndexedArray<ElementWithKey<T>> T, int k) {
         return T.at(k);
     }
 
     // subchapter 11.1
-    public static <T> void directAccessInsert(ZeroBasedIndexedArray<ElementWithKey<T>> T, ElementWithKey<T> x) {
+    public static <T> void directAddressInsert(ZeroBasedIndexedArray<ElementWithKey<T>> T, ElementWithKey<T> x) {
         T.set(x.key, x);
     }
 
     // subchapter 11.1
-    public static <T> void directAccessDelete(ZeroBasedIndexedArray<ElementWithKey<T>> T, ElementWithKey<T> x) {
+    public static <T> void directAddressDelete(ZeroBasedIndexedArray<ElementWithKey<T>> T, ElementWithKey<T> x) {
         T.set(x.key, null);
     }
 
     // solution of 11.1-1
-    public static <T> ElementWithKey<T> directAccessMaximum(ZeroBasedIndexedArray<ElementWithKey<T>> T) {
+    public static <T> ElementWithKey<T> directAddressMaximum(ZeroBasedIndexedArray<ElementWithKey<T>> T) {
         int m = T.length;
         for (int i = m - 1; i >= 0; i--) {
             if (T.at(i) != null) {
@@ -61,7 +67,7 @@ public final class Chapter11 {
     }
 
     // solution of 11.1-3
-    public static <T> ElementWithKey<T> directAccessSearch_(ZeroBasedIndexedArray<List<ElementWithKey<T>>> T, int k) {
+    public static <T> ElementWithKey<T> directAddressSearch_(ZeroBasedIndexedArray<List<ElementWithKey<T>>> T, int k) {
         List<ElementWithKey<T>> list = T.at(k);
         if (list.head != null) {
             return list.head.key;
@@ -70,16 +76,51 @@ public final class Chapter11 {
     }
 
     // solution of 11.1-3
-    public static <T> void directAccessInsert_(ZeroBasedIndexedArray<List<ElementWithKey<T>>> T, ElementWithKey<T> x) {
+    public static <T> void directAddressInsert_(ZeroBasedIndexedArray<List<ElementWithKey<T>>> T, ElementWithKey<T> x) {
         List<ElementWithKey<T>> list = T.at(x.key);
         Chapter10.listInsert(list, list.new Node(x));
     }
 
     // solution of 11.1-3
-    public static <T> void directAccessDelete_(ZeroBasedIndexedArray<List<ElementWithKey<T>>> T, ElementWithKey<T> x) {
+    public static <T> void directAddressDelete_(ZeroBasedIndexedArray<List<ElementWithKey<T>>> T, ElementWithKey<T> x) {
         List<ElementWithKey<T>> list = T.at(x.key);
         List<ElementWithKey<T>>.Node node = Chapter10.listSearch(list, x);
         Chapter10.listDelete(list, node);
+    }
+
+    static class HugeArray<T> {
+        public ZeroBasedIndexedArray<Integer> T;
+        public Stack<ElementWithKey<T>> S;
+
+        public HugeArray(int size, int capacity) {
+            T = ZeroBasedIndexedArray.withLength(size);
+            for (int i = 0; i <= size - 1; i++) {
+                T.set(i, 0); // initializing T as it contains nulls, initialized could be anything nonnull
+            }
+            S = Stack.withLength(capacity);
+        }
+    }
+
+    // solution of 11.1-4
+    public static <T> ElementWithKey<T> hugeArraySearch(HugeArray<T> H, int k) {
+        if (1 <= H.T.at(k) && H.T.at(k) <= H.S.top && H.S.at(H.T.at(k)).key == k) {
+            return new ElementWithKey<>(H.S.at(H.T.at(k)));
+        }
+        return null;
+    }
+
+    // solution of 11.1-4
+    public static <T> void hugeArrayInsert(HugeArray<T> H, ElementWithKey<T> x) {
+        Chapter10.push(H.S, x);
+        H.T.set(x.key, H.S.top);
+    }
+
+    // solution of 11.1-4
+    public static <T> void hugeArrayDelete(HugeArray<T> H, ElementWithKey<T> x) {
+        int k = x.key;
+        ElementWithKey<T> y = Chapter10.pop(H.S);
+        H.S.set(H.T.at(k), y);
+        H.T.set(y.key, H.T.at(k));
     }
 
     // subchapter 11.2
