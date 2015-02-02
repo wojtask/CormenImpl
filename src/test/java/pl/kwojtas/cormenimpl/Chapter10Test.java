@@ -5,6 +5,7 @@ import com.tngtech.java.junit.dataprovider.DataProviderRunner;
 import com.tngtech.java.junit.dataprovider.UseDataProvider;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import pl.kwojtas.cormenimpl.util.Array;
@@ -15,8 +16,10 @@ import pl.kwojtas.cormenimpl.util.DoubleStack;
 import pl.kwojtas.cormenimpl.util.List;
 import pl.kwojtas.cormenimpl.util.ListWithSentinel;
 import pl.kwojtas.cormenimpl.util.MultiaryTree;
+import pl.kwojtas.cormenimpl.util.MultipleArrayList;
 import pl.kwojtas.cormenimpl.util.Pair;
 import pl.kwojtas.cormenimpl.util.Queue;
+import pl.kwojtas.cormenimpl.util.SingleArrayList;
 import pl.kwojtas.cormenimpl.util.SinglyLinkedList;
 import pl.kwojtas.cormenimpl.util.SinglyLinkedListWithTail;
 import pl.kwojtas.cormenimpl.util.Stack;
@@ -969,6 +972,194 @@ public class Chapter10Test {
     }
 
     @Test
+    public void shouldAllocateObjectOnMultipleArrayList() {
+        // given
+        MultipleArrayList<String> multipleArrayList = new MultipleArrayList<>();
+        multipleArrayList.next = new Array<>(4,1,null,null,3);
+        multipleArrayList.prev = new Array<>(2,null,5,1,null);
+        multipleArrayList.L = 2;
+        multipleArrayList.free = 5;
+
+        // when
+        int actualNewPosition = Chapter10.allocateObject(multipleArrayList);
+
+        // then
+        assertEquals(5, actualNewPosition);
+        assertEquals(new Integer(3), multipleArrayList.free);
+    }
+
+    @Test(expected = RuntimeException.class)
+    public void shouldNotAllocateObjectOnFullMultipleArrayList() {
+        // given
+        MultipleArrayList<String> multipleArrayList = new MultipleArrayList<>();
+        multipleArrayList.next = new Array<>(4,1,null,5,3);
+        multipleArrayList.prev = new Array<>(2,null,5,1,4);
+        multipleArrayList.L = 2;
+        multipleArrayList.free = null;
+
+        try {
+            // when
+            Chapter10.allocateObject(multipleArrayList);
+        } catch (RuntimeException e) {
+            // then
+            assertEquals("out of space", e.getMessage());
+            throw e;
+        }
+    }
+
+    @Test
+    public void shouldFreeObjectOnMultipleArrayList() {
+        // given
+        MultipleArrayList<String> multipleArrayList = new MultipleArrayList<>();
+        multipleArrayList.next = new Array<>(4,1,null,null,3);
+        multipleArrayList.prev = new Array<>(2,null,5,1,null);
+        multipleArrayList.L = 2;
+        multipleArrayList.free = 5;
+
+        // when
+        Chapter10.freeObject(multipleArrayList, 1);
+
+        // then
+        assertEquals(new Integer(1), multipleArrayList.free);
+        assertEquals(new Integer(5), multipleArrayList.next.at(1));
+    }
+
+    @Test
+    public void shouldAllocateObjectOnSingleArrayList() {
+        // given
+        SingleArrayList singleArrayList = new SingleArrayList();
+        singleArrayList.A = new Array<>(100,10,4,200,1,null,300,null,13,400,null,1,500,7,null);
+        singleArrayList.L = 4;
+        singleArrayList.free = 13;
+
+        // when
+        int actualNewPosition = Chapter10.singleArrayAllocateObject(singleArrayList);
+
+        // then
+        assertEquals(13, actualNewPosition);
+        assertEquals(new Integer(7), singleArrayList.free);
+    }
+
+    @Test(expected = RuntimeException.class)
+    public void shouldNotAllocateObjectOnFullSingleArrayList() {
+        // given
+        SingleArrayList singleArrayList = new SingleArrayList();
+        singleArrayList.A = new Array<>(100,10,4,200,1,null,300,null,13,400,13,1,500,7,10);
+        singleArrayList.L = 4;
+        singleArrayList.free = null;
+
+        try {
+            // when
+            Chapter10.singleArrayAllocateObject(singleArrayList);
+        } catch (RuntimeException e) {
+            // then
+            assertEquals("out of space", e.getMessage());
+            throw e;
+        }
+    }
+
+    @Test
+    public void shouldFreeObjectOnSingleArrayList() {
+        // given
+        SingleArrayList singleArrayList = new SingleArrayList();
+        singleArrayList.A = new Array<>(100,10,4,200,1,null,300,null,13,400,null,1,500,7,null);
+        singleArrayList.L = 4;
+        singleArrayList.free = 13;
+
+        // when
+        Chapter10.singleArrayFreeObject(singleArrayList, 1);
+
+        // then
+        assertEquals(new Integer(1), singleArrayList.free);
+        assertEquals(new Integer(13), singleArrayList.A.at(2));
+    }
+
+    @Test
+    public void shouldAllocateObjectOnCompactList() {
+        // given
+        MultipleArrayList<String> multipleArrayList = new MultipleArrayList<>();
+        multipleArrayList.next = new Array<>(3,1,null,5,null);
+        multipleArrayList.prev = new Array<>(2,null,1,null,null);
+        multipleArrayList.L = 2;
+        multipleArrayList.free = 4;
+
+        // when
+        int actualNewPosition = Chapter10.compactListAllocateObject(multipleArrayList);
+
+        // then
+        assertEquals(4, actualNewPosition);
+        assertEquals(new Integer(5), multipleArrayList.free);
+    }
+
+    @Test(expected = RuntimeException.class)
+    public void shouldNotAllocateObjectOnFullCompactList() {
+        // given
+        MultipleArrayList<String> multipleArrayList = new MultipleArrayList<>();
+        multipleArrayList.next = new Array<>(3,1,5,null,4);
+        multipleArrayList.prev = new Array<>(2,null,1,null,null);
+        multipleArrayList.L = 2;
+        multipleArrayList.free = null;
+
+        try {
+            // when
+            Chapter10.compactListAllocateObject(multipleArrayList);
+        } catch (RuntimeException e) {
+            // then
+            assertEquals("out of space", e.getMessage());
+            throw e;
+        }
+    }
+
+    @Ignore
+    @Test
+    public void shouldFreeObjectOnCompactList() {
+        // given
+        MultipleArrayList<String> multipleArrayList = new MultipleArrayList<>();
+        multipleArrayList.key  = new Array<>("aaa","bbb","ccc","ddd","eee");
+        multipleArrayList.next = new Array<>(3,1,null,5,null);
+        multipleArrayList.prev = new Array<>(2,null,1,null,null);
+        multipleArrayList.L = 2;
+        multipleArrayList.free = 4;
+
+        // when
+        Chapter10.compactListFreeObject(multipleArrayList, 1);
+
+        // then
+        assertEquals(new Integer(3), multipleArrayList.free);
+        assertEquals(new Integer(4), multipleArrayList.next.at(3));
+        assertEquals("ccc", multipleArrayList.key.at(1));
+        assertNull(multipleArrayList.next.at(1));
+    }
+
+    @Ignore
+    @Test
+    public void shouldCompactifyList() {
+        // given
+        MultipleArrayList<String> multipleArrayList = new MultipleArrayList<>();
+        multipleArrayList.next = new Array<>(9,8,null,1,2,5,null,10,7,3);
+        multipleArrayList.prev = new Array<>(null,5,10,null,6,null,null,2,null,8);
+        multipleArrayList.key = Array.withLength(10);
+        multipleArrayList.L = 6;
+        multipleArrayList.free = 4;
+
+        // when
+        Chapter10.compactifyList(multipleArrayList);
+
+        // then
+        int m = multipleArrayList.getLength();
+        Integer x = multipleArrayList.L;
+        while (x != null) {
+            assertTrue(x <= m);
+            x = multipleArrayList.next.at(x);
+        }
+        x = multipleArrayList.free;
+        while (x != null) {
+            assertTrue(x > m);
+            x = multipleArrayList.next.at(x);
+        }
+    }
+
+    @Test
     public void shouldPrintOutEmptyTreeInPreorder() {
         // given
 
@@ -1083,6 +1274,40 @@ public class Chapter10Test {
         String[] actualOutput = splitOutContent();
         String[] expectedOutput = new String[]{"1","4","10","11","14","19","20"};
         assertArrayEquals(expectedOutput, actualOutput);
+    }
+
+    @Test
+    public void shouldFindElementInCompactList() {
+        // given
+        MultipleArrayList<String> multipleArrayList = new MultipleArrayList<>();
+        multipleArrayList.next = new Array<>(6,4,null,5,1,3,8,9,10,11);
+        multipleArrayList.prev = new Array<>(5,null,6,2,4,1,null,null,null,null);
+        multipleArrayList.key  = new Array<>("ddd","aaa","fff","bbb","ccc","eee",null,null,null,null);
+        multipleArrayList.L = 2;
+        multipleArrayList.free = 7;
+
+        // when
+        Integer actualFoundPosition = Chapter10.compactListSearch(multipleArrayList, 6, "eee");
+
+        // then
+        assertEquals(new Integer(6), actualFoundPosition);
+    }
+
+    @Test
+    public void shouldNotFindNonexistentElementInCompactList() {
+        // given
+        MultipleArrayList<String> multipleArrayList = new MultipleArrayList<>();
+        multipleArrayList.next = new Array<>(6,4,null,5,1,3,8,9,10,11);
+        multipleArrayList.prev = new Array<>(5,null,6,2,4,1,null,null,null,null);
+        multipleArrayList.key  = new Array<>("ddd","aaa","fff","bbb","ccc","eee",null,null,null,null);
+        multipleArrayList.L = 2;
+        multipleArrayList.free = 7;
+
+        // when
+        Integer actualFoundPosition = Chapter10.compactListSearch(multipleArrayList, 6, "xxx");
+
+        // then
+        assertNull(actualFoundPosition);
     }
 
 }

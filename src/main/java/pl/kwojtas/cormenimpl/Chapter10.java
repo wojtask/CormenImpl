@@ -392,7 +392,7 @@ public final class Chapter10 {
         if (L.free == null) {
             throw new RuntimeException("out of space");
         }
-        Integer x = L.free;
+        int x = L.free;
         L.free = L.next.at(x);
         return x;
     }
@@ -404,7 +404,7 @@ public final class Chapter10 {
     }
 
     // solution of 10.3-2
-    public static <T> int singleArrayAllocateObject(SingleArrayList<T> L) {
+    public static <T> int singleArrayAllocateObject(SingleArrayList L) {
         if (L.free == null) {
             throw new RuntimeException("out of space");
         }
@@ -414,9 +414,102 @@ public final class Chapter10 {
     }
 
     // solution of 10.3-2
-    public static <T> void singleArrayFreeObject(SingleArrayList<T> L, int i) {
+    public static <T> void singleArrayFreeObject(SingleArrayList L, int i) {
         L.A.set(i + 1, L.free);
         L.free = i;
+    }
+
+    // solution of 10.3-4
+    public static <T> int compactListAllocateObject(MultipleArrayList<T> L) {
+        return allocateObject(L);
+    }
+
+    // solution of 10.3-4
+    public static <T> void compactListFreeObject(MultipleArrayList<T> L, int x) {
+        int n = L.getLength();
+        Integer y;
+        if (L.free == null) {
+            y = n;
+        } else {
+            y = L.free - 1;
+        }
+        L.key.set(x, L.key.at(y));
+        L.next.set(x, L.next.at(y));
+        L.prev.set(x, L.prev.at(y));
+        if (L.next.at(y) != null) {
+            L.prev.set(L.next.at(y), x);
+        }
+        if (L.prev.at(y) != null) {
+            L.next.set(L.prev.at(y), x);
+        }
+        if (L.L.equals(y)) {
+            L.L = x;
+        }
+        freeObject(L, y);
+    }
+
+    // solution of 10.3-5
+    public static <T> void compactifyList(MultipleArrayList<T> L) {
+        int m = L.getLength();
+        setPrevFields(L, Integer.MAX_VALUE);
+        Integer x = L.L;
+        Integer x_ = null;
+        Integer y = 1;
+        while (x != null) {
+            if (x <= m) {
+                x_ = x;
+                x = L.next.at(x);
+            } else {
+                while (L.prev.at(y) != null && L.prev.at(y) == Integer.MAX_VALUE) {
+                    y++;
+                }
+                L.key.exch(x, y);
+                L.next.exch(x, y);
+                L.prev.exch(x, y);
+                if (L.next.at(x) != null) {
+                    L.prev.set(L.next.at(x), x);
+                }
+                if (L.prev.at(x) != null) {
+                    L.next.set(L.prev.at(x), x);
+                }
+                if (x_ != null) {
+                    L.next.set(x_, y);
+                }
+                if (L.L.equals(x)) {
+                    L.L = y;
+                }
+                if (L.free.equals(y)) {
+                    L.free = x;
+                }
+                x_ = y;
+                x = L.next.at(y);
+            }
+        }
+        fixPrevFields(L);
+    }
+
+    // solution of 10.3-5
+    private static <T> void setPrevFields(MultipleArrayList<T> L, int value) {
+        Integer x = L.L;
+        while (x != null) {
+            L.prev.set(x, value);
+            x = L.next.at(x);
+        }
+    }
+
+    // solution of 10.3-5
+    private static <T> void fixPrevFields(MultipleArrayList<T> L) {
+        if (L.L == null) {
+            return;
+        }
+        L.prev.set(L.L, null);
+        Integer x = L.L;
+        Integer y = L.next.at(L.L);
+        while (y != null) {
+            L.prev.set(y, x);
+            x = y;
+            y = L.next.at(y);
+        }
     }
 
     // solution of 10.4-3
