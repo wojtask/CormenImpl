@@ -1,10 +1,6 @@
 package pl.kwojtas.cormenimpl;
 
-import com.tngtech.java.junit.dataprovider.DataProvider;
-import com.tngtech.java.junit.dataprovider.DataProviderRunner;
-import com.tngtech.java.junit.dataprovider.UseDataProvider;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import pl.kwojtas.cormenimpl.util.Array;
 import pl.kwojtas.cormenimpl.util.Heap;
 import pl.kwojtas.cormenimpl.util.List;
@@ -18,29 +14,14 @@ import static pl.kwojtas.cormenimpl.Chapter6.parent;
 import static pl.kwojtas.cormenimpl.TestUtil.assertArrayEquals;
 import static pl.kwojtas.cormenimpl.TestUtil.assertShuffled;
 import static pl.kwojtas.cormenimpl.TestUtil.assertSorted;
-import static pl.kwojtas.cormenimpl.util.Util.geq;
-import static pl.kwojtas.cormenimpl.util.Util.leq;
 
-@RunWith(DataProviderRunner.class)
 public class Chapter6Test {
 
-    @DataProvider
-    public static Object[][] provideDataForHeapsort() {
-        return new Object[][]{
-                {new Array<>(34)},
-                {new Array<>(3,2,1)},
-                {new Array<>(5,7,9,2,6,8,6,6,3,1,7,8)},
-                {new Array<>(1,2,3,5,6,6,6,7,7,8,8,9)},
-                {new Array<>(3.14,-2.75,-0.53,2.55,2.23)},
-                {new Array<>("aaa","eee","ccc","ddd","bbb")}
-        };
-    }
-
     @Test
-    @UseDataProvider("provideDataForHeapsort")
-    public <T extends Comparable> void shouldSortArrayUsingHeapsort(Array<T> array) {
+    public void shouldSortArrayUsingHeapsort() {
         // given
-        Array<T> original = new Array<>(array);
+        Array<Integer> array = new Array<>(5,7,9,2,6,8,6,6,3,1,7,8);
+        Array<Integer> original = new Array<>(array);
 
         // when
         Chapter6.heapsort(array);
@@ -50,25 +31,13 @@ public class Chapter6Test {
         assertSorted(array);
     }
 
-    @DataProvider
-    public static Object[][] provideDataForMinHeapify() {
-        return new Object[][]{
-                {new Array<>(34), 1},
-                {new Array<>(2,1,3), 1},
-                {new Array<>(1,2,3), 1},
-                {new Array<>(0,1,16,3,4,7,17,12,10,5,13,9,8,27), 3},
-                {new Array<>(1,9,3,2,8,4,10,14,7,16), 2},
-                {new Array<>(-2.75,3.14,2.55,-0.53,2.23), 2},
-                {new Array<>("eee","aaa","ccc","bbb","ddd"), 1}
-        };
-    }
-
     @Test
-    @UseDataProvider("provideDataForMinHeapify")
-    public <T extends Comparable> void shouldRestoreMinHeapPropertyUsingMinHeapify(Array<T> array, int position) {
+    public void shouldRestoreMinHeapPropertyUsingMinHeapify() {
         // given
-        Heap<T> heap = new Heap<>(array);
-        Heap<T> original = new Heap<>(array);
+        Array<Integer> array = new Array<>(0,1,16,3,4,7,17,12,10,5,13,9,8,27);
+        Heap<Integer> heap = new Heap<>(array);
+        Heap<Integer> original = new Heap<>(array);
+        int position = 3;
 
         // when
         Chapter6.minHeapify(heap, position);
@@ -79,31 +48,19 @@ public class Chapter6Test {
         assertMinHeap(heap);
     }
 
-    private <T extends Comparable> void assertMinHeap(Heap<T> heap) {
+    private void assertMinHeap(Heap<Integer> heap) {
         for (int i = 2; i <= heap.heapSize; i++) {
-            assertTrue(leq(heap.at(parent(i)), heap.at(i)));
+            assertTrue(heap.at(parent(i)) <= heap.at(i));
         }
     }
 
-    @DataProvider
-    public static Object[][] provideDataForMaxHeapify() {
-        return new Object[][]{
-                {new Array<>(34), 1},
-                {new Array<>(2,3,1), 1},
-                {new Array<>(3,2,1), 1},
-                {new Array<>(16,4,10,14,7,9,3,2,8,1), 2},
-                {new Array<>(27,17,3,16,13,10,1,5,7,12,4,8,9,0), 3},
-                {new Array<>(3.14,-2.75,-0.53,2.55,2.23), 2},
-                {new Array<>("aaa","eee","ccc","ddd","bbb"), 1}
-        };
-    }
-
     @Test
-    @UseDataProvider("provideDataForMaxHeapify")
-    public <T extends Comparable> void shouldRestoreMaxHeapPropertyUsingIterativeMaxHeapify(Array<T> array, int position) {
+    public void shouldRestoreMaxHeapPropertyUsingIterativeMaxHeapify() {
         // given
-        Heap<T> heap = new Heap<>(array);
-        Heap<T> original = new Heap<>(array);
+        Array<Integer> array = new Array<>(27,17,3,16,13,10,1,5,7,12,4,8,9,0);
+        Heap<Integer> heap = new Heap<>(array);
+        Heap<Integer> original = new Heap<>(array);
+        int position = 3;
 
         // when
         Chapter6.iterativeMaxHeapify(heap, position);
@@ -114,27 +71,16 @@ public class Chapter6Test {
         assertMaxHeap(heap);
     }
 
-    private <T extends Comparable> void assertMaxHeap(Heap<T> heap) {
+    private void assertMaxHeap(Heap<Integer> heap) {
         for (int i = 2; i <= heap.heapSize; i++) {
-            assertTrue(geq(heap.at(parent(i)), heap.at(i)));
+            assertTrue(heap.at(parent(i)) >= heap.at(i));
         }
     }
 
-    @DataProvider
-    public static Object[][] provideDataForHeapMaximum() {
-        return new Object[][]{
-                {new Array<>(34)},
-                {new Array<>(3,2,1)},
-                {new Array<>(3,1,2)},
-                {new Array<>(16,14,10,8,7,9,3,2,4,1)},
-                {new Array<>(27,7,20,4,6,13,17,0,3,2,1,5,11,10)}
-        };
-    }
-
     @Test
-    @UseDataProvider("provideDataForHeapMaximum")
-    public void shouldGetMaximumFromMaxHeap(Array<Integer> array) {
+    public void shouldGetMaximumFromMaxHeap() {
         // given
+        Array<Integer> array = new Array<>(27,7,20,4,6,13,17,0,3,2,1,5,11,10);
         Heap<Integer> heap = new Heap<>(array);
         Heap<Integer> original = new Heap<>(array);
 
@@ -142,30 +88,15 @@ public class Chapter6Test {
         int actualMaximum = Chapter6.heapMaximum(heap);
 
         // then
-        assertHeapEquals(original, heap);
+        assertEquals(original.heapSize, heap.heapSize);
+        assertArrayEquals(original, heap);
         assertEquals(original.at(1), new Integer(actualMaximum));
     }
 
-    private static <T> void assertHeapEquals(Heap<T> expected, Heap<T> actual) {
-        assertEquals(expected.heapSize, actual.heapSize);
-        assertArrayEquals(expected, actual);
-    }
-
-    @DataProvider
-    public static Object[][] provideDataForExtractMax() {
-        return new Object[][]{
-                {new Array<>(34)},
-                {new Array<>(3,2,1)},
-                {new Array<>(3,1,2)},
-                {new Array<>(16,14,10,8,7,9,3,2,4,1)},
-                {new Array<>(27,7,20,4,6,13,17,0,3,2,1,5,11,10)}
-        };
-    }
-
     @Test
-    @UseDataProvider("provideDataForExtractMax")
-    public void shouldExtractMaximumFromMaxHeap(Array<Integer> array) {
+    public void shouldExtractMaximumFromMaxHeap() {
         // given
+        Array<Integer> array = new Array<>(27,7,20,4,6,13,17,0,3,2,1,5,11,10);
         Heap<Integer> heap = new Heap<>(array);
         Heap<Integer> original = new Heap<>(array);
 
@@ -181,41 +112,36 @@ public class Chapter6Test {
         }
     }
 
-    private <T> void assertHeapContains(Heap<T> heap, T element) {
-        boolean contains = false;
-        for (int i = 1; i <= heap.heapSize; i++) {
-            contains = contains || heap.at(i).equals(element);
+    private void assertHeapContains(Heap<Integer> heap, int element) {
+        boolean found = false;
+        for (int i = 1; i <= heap.heapSize && !found; i++) {
+            found = heap.at(i).equals(element);
         }
-        assertTrue(contains);
+        assertTrue(found);
     }
 
     @Test(expected = RuntimeException.class)
     public void shouldThrowExceptionWhenExtractingMaximumFromEmptyHeap() {
         // given
 
-        // when
-        Chapter6.heapExtractMax(Heap.withLength(3));
-
-        // then
-    }
-
-    @DataProvider
-    public static Object[][] provideDataForIncreasingKeyInMaxHeap() {
-        return new Object[][]{
-                {new Array<>(34), 1, 34},
-                {new Array<>(3,2,1), 2, 3},
-                {new Array<>(3,2,1), 2, 2},
-                {new Array<>(16,14,10,8,7,9,3,2,4,1), 10, 20},
-                {new Array<>(27,7,20,4,6,13,17,0,3,2,1,5,11,10), 12, 23}
-        };
+        try {
+            // when
+            Chapter6.heapExtractMax(Heap.withLength(3));
+        } catch (RuntimeException e) {
+            // then
+            assertEquals("heap underflow", e.getMessage());
+            throw e;
+        }
     }
 
     @Test
-    @UseDataProvider("provideDataForIncreasingKeyInMaxHeap")
-    public void shouldIncreaseKeyInMaxHeap(Array<Integer> array, int position, int newKey) {
+    public void shouldIncreaseKeyInMaxHeap() {
         // given
+        Array<Integer> array = new Array<>(27,7,20,4,6,13,17,0,3,2,1,5,11,10);
         Heap<Integer> heap = new Heap<>(array);
         Heap<Integer> original = new Heap<>(array);
+        int position = 12;
+        int newKey = 23;
 
         // when
         Chapter6.heapIncreaseKey(heap, position, newKey);
@@ -234,30 +160,28 @@ public class Chapter6Test {
     @Test(expected = RuntimeException.class)
     public void shouldThrowExceptionWhenIncreasingKeyInMaxHeapWithSmallerNumber() {
         // given
+        Array<Integer> array = new Array<>(27,7,20,4,6,13,17,0,3,2,1,5,11,10);
+        Heap<Integer> heap = new Heap<>(array);
+        int position = 3;
+        int newKey = 16;
 
-        // when
-        Chapter6.heapIncreaseKey(new Heap<>(new Array<>(16,14,10,8,7,9,3,2,4,1)), 3, 6);
-
-        // then
-    }
-
-    @DataProvider
-    public static Object[][] provideDataForInsertingIntoMaxHeap() {
-        return new Object[][]{
-                {new Array<>(), 34},
-                {new Array<>(34), 43},
-                {new Array<>(4,2,1), 3},
-                {new Array<>(15,13,9,5,12,8,7,4,0,6,2,1), 10},
-                {new Array<>(27,7,20,4,6,13,17,0,3,2,1,5,11,10), 34}
-        };
+        try {
+            // when
+            Chapter6.heapIncreaseKey(heap, position, newKey);
+        } catch (RuntimeException e) {
+            // then
+            assertEquals("new key is smaller than current key", e.getMessage());
+            throw e;
+        }
     }
 
     @Test
-    @UseDataProvider("provideDataForInsertingIntoMaxHeap")
-    public void shouldInsertIntoMaxHeap(Array<Integer> array, int newKey) {
+    public void shouldInsertIntoMaxHeap() {
         // given
-        Heap<Integer> heap = new Heap<>(array, array.length + 3);
-        Heap<Integer> original = new Heap<>(array, array.length + 3);
+        Array<Integer> array = new Array<>(27,7,20,4,6,13,17,0,3,2,1,5,11,10);
+        Heap<Integer> heap = new Heap<>(array, array.length + 1);
+        Heap<Integer> original = new Heap<>(array, array.length + 1);
+        int newKey = 34;
 
         // when
         Chapter6.maxHeapInsert(heap, newKey);
@@ -271,21 +195,10 @@ public class Chapter6Test {
         }
     }
 
-    @DataProvider
-    public static Object[][] provideDataForHeapMinimum() {
-        return new Object[][]{
-                {new Array<>(34)},
-                {new Array<>(1,2,3)},
-                {new Array<>(1,3,2)},
-                {new Array<>(1,2,3,7,8,4,10,14,9,16)},
-                {new Array<>(0,6,1,11,7,3,2,27,13,17,20,10,4,5)}
-        };
-    }
-
     @Test
-    @UseDataProvider("provideDataForHeapMinimum")
-    public void shouldGetMinimumFromMinHeap(Array<Integer> array) {
+    public void shouldGetMinimumFromMinHeap() {
         // given
+        Array<Integer> array = new Array<>(0,6,1,11,7,3,2,27,13,17,20,10,4,5);
         Heap<Integer> heap = new Heap<>(array);
         Heap<Integer> original = new Heap<>(array);
 
@@ -293,25 +206,15 @@ public class Chapter6Test {
         int actualMinimum = Chapter6.heapMinimum(heap);
 
         // then
-        assertHeapEquals(original, heap);
+        assertEquals(original.heapSize, heap.heapSize);
+        assertArrayEquals(original, heap);
         assertEquals(original.at(1), new Integer(actualMinimum));
     }
 
-    @DataProvider
-    public static Object[][] provideDataForExtractMin() {
-        return new Object[][]{
-                {new Array<>(34)},
-                {new Array<>(1,2,3)},
-                {new Array<>(1,3,2)},
-                {new Array<>(1,2,3,7,8,4,10,14,9,16)},
-                {new Array<>(0,6,1,11,7,3,2,27,13,17,20,10,4,5)}
-        };
-    }
-
     @Test
-    @UseDataProvider("provideDataForExtractMin")
-    public void shouldExtractMinimumFromMinHeap(Array<Integer> array) {
+    public void shouldExtractMinimumFromMinHeap() {
         // given
+        Array<Integer> array = new Array<>(0,6,1,11,7,3,2,27,13,17,20,10,4,5);
         Heap<Integer> heap = new Heap<>(array);
         Heap<Integer> original = new Heap<>(array);
 
@@ -331,29 +234,24 @@ public class Chapter6Test {
     public void shouldThrowExceptionWhenExtractingMinimumFromEmptyHeap() {
         // given
 
-        // when
-        Chapter6.heapExtractMin(Heap.withLength(3));
-
-        // then
-    }
-
-    @DataProvider
-    public static Object[][] provideDataForDecreasingKeyInMinHeap() {
-        return new Object[][]{
-                {new Array<>(34), 1, 34},
-                {new Array<>(1,2,3), 2, 1},
-                {new Array<>(1,2,3), 2, 2},
-                {new Array<>(1,2,3,7,8,4,10,14,9,16), 10, 0},
-                {new Array<>(0,6,1,11,7,3,2,27,13,17,20,10,4,5), 11, 4}
-        };
+        try {
+            // when
+            Chapter6.heapExtractMin(Heap.withLength(3));
+        } catch (RuntimeException e) {
+            // then
+            assertEquals("heap underflow", e.getMessage());
+            throw e;
+        }
     }
 
     @Test
-    @UseDataProvider("provideDataForDecreasingKeyInMinHeap")
-    public void shouldDecreaseKeyInMinHeap(Array<Integer> array, int position, int newKey) {
+    public void shouldDecreaseKeyInMinHeap() {
         // given
+        Array<Integer> array = new Array<>(0,6,1,11,7,3,2,27,13,17,20,10,4,5);
         Heap<Integer> heap = new Heap<>(array);
         Heap<Integer> original = new Heap<>(array);
+        int position = 11;
+        int newKey = 4;
 
         // when
         Chapter6.heapDecreaseKey(heap, position, newKey);
@@ -372,30 +270,28 @@ public class Chapter6Test {
     @Test(expected = RuntimeException.class)
     public void shouldThrowExceptionWhenDecreasingKeyInMinHeapWithLargerNumber() {
         // given
+        Array<Integer> array = new Array<>(0,6,1,11,7,3,2,27,13,17,20,10,4,5);
+        Heap<Integer> heap = new Heap<>(array);
+        int position = 4;
+        int newKey = 12;
 
-        // when
-        Chapter6.heapDecreaseKey(new Heap<>(new Array<>(1,2,3,7,8,4,10,14,9,16)), 4, 12);
-
-        // then
-    }
-
-    @DataProvider
-    public static Object[][] provideDataForInsertingIntoMinHeap() {
-        return new Object[][]{
-                {new Array<>(), 34},
-                {new Array<>(34), 23},
-                {new Array<>(1,3,4), 2},
-                {new Array<>(0,1,4,8,2,5,6,9,15,7,12,13), 3},
-                {new Array<>(1,6,2,11,7,3,4,27,13,17,20,10,14,5), 0}
-        };
+        try {
+            // when
+            Chapter6.heapDecreaseKey(heap, position, newKey);
+        } catch (RuntimeException e) {
+            // then
+            assertEquals("new key is larger than current key", e.getMessage());
+            throw e;
+        }
     }
 
     @Test
-    @UseDataProvider("provideDataForInsertingIntoMinHeap")
-    public void shouldInsertIntoMinHeap(Array<Integer> array, int newKey) {
+    public void shouldInsertIntoMinHeap() {
         // given
+        Array<Integer> array = new Array<>(1,6,2,11,7,3,4,27,13,17,20,10,14,5);
         Heap<Integer> heap = new Heap<>(array, array.length + 3);
         Heap<Integer> original = new Heap<>(array, array.length + 3);
+        int newKey = 0;
 
         // when
         Chapter6.minHeapInsert(heap, newKey);
@@ -409,29 +305,16 @@ public class Chapter6Test {
         }
     }
 
-    @DataProvider
-    public static Object[][] provideDataForHeapDelete() {
-        return new Object[][]{
-                {new Array<>(34), 1},
-                {new Array<>(2,1), 1},
-                {new Array<>(3,2,1), 1},
-                {new Array<>(3,2,1), 3},
-                {new Array<>(27,7,20,4,6,13,17,0,3,2,1,5,11,10), 1},
-                {new Array<>(27,7,20,4,6,13,17,0,3,2,1,5,11,10), 10},
-                {new Array<>(3.14,-0.53,2.55,-1.54,-2.75,2.23), 5},
-                {new Array<>("eee","ddd","ccc","aaa","bbb"), 1}
-        };
-    }
-
     @Test
-    @UseDataProvider("provideDataForHeapDelete")
-    public <T extends Comparable> void shouldDeleteFromMaxHeap(Array<T> array, int position) {
+    public void shouldDeleteFromMaxHeap() {
         // given
-        Heap<T> heap = new Heap<>(array);
-        Heap<T> original = new Heap<>(array);
+        Array<Integer> array = new Array<>(27,7,20,4,6,13,17,0,3,2,1,5,11,10);
+        Heap<Integer> heap = new Heap<>(array);
+        Heap<Integer> original = new Heap<>(array);
+        int position = 10;
 
         // when
-        T actualKey = Chapter6.maxHeapDelete(heap, position);
+        Integer actualKey = Chapter6.maxHeapDelete(heap, position);
 
         // then
         assertEquals(original.heapSize - 1, heap.heapSize);
@@ -444,86 +327,12 @@ public class Chapter6Test {
         }
     }
 
-    @DataProvider
-    public static Object[][] provideDataForFifoQueueOperationsUsingPriorityQueue() {
-        return new Object[][]{
-                {new Array<>(34,null), new Array<>()},
-                {new Array<>(4,1,3,null,8,null), new Array<>(3,8)},
-                {new Array<>(3.14,-0.53,null,-1.54,null,2.23), new Array<>(-1.54,2.23)},
-                {new Array<>("eee",null,"ccc","aaa",null), new Array<>("aaa")}
-        };
-    }
-
     @Test
-    @UseDataProvider("provideDataForFifoQueueOperationsUsingPriorityQueue")
-    public <T extends Comparable> void shouldPerformFifoQueueOperationsUsingPriorityQueue(Array<T> contents, Array<T> expectedContents) {
+    public void shouldMergeSortedLists() {
         // given
-        Chapter6.PriorityQueueWithRanks<T> priorityQueue = new Chapter6.PriorityQueueWithRanks<>(contents.length);
-
-        // when
-        for (int i = 1; i <= contents.length; i++) {
-            if (contents.at(i) != null) {
-                Chapter6.enqueueUsingPriorityQueue(priorityQueue, contents.at(i));
-            } else {
-                Chapter6.dequeueUsingPriorityQueue(priorityQueue);
-            }
-        }
-
-        // then
-        for (int i = 1; i <= expectedContents.length; i++) {
-            assertEquals(expectedContents.at(i), Chapter6.dequeueUsingPriorityQueue(priorityQueue));
-        }
-        assertEquals(0, priorityQueue.heapSize);
-    }
-
-    @DataProvider
-    public static Object[][] provideDataForStackOperationsUsingPriorityQueue() {
-        return new Object[][]{
-                {new Array<>(34,null), new Array<>()},
-                {new Array<>(4,1,3,null,8,null), new Array<>(1,4)},
-                {new Array<>(3.14,-0.53,null,-1.54,null,2.23), new Array<>(2.23,3.14)},
-                {new Array<>("eee",null,"ccc","aaa",null), new Array<>("ccc")}
-        };
-    }
-
-    @Test
-    @UseDataProvider("provideDataForStackOperationsUsingPriorityQueue")
-    public <T extends Comparable> void shouldPerformStackOperationsUsingPriorityQueue(Array<T> contents, Array<T> expectedContents) {
-        // given
-        Chapter6.PriorityQueueWithRanks<T> priorityQueue = new Chapter6.PriorityQueueWithRanks<>(contents.length);
-
-        // when
-        for (int i = 1; i <= contents.length; i++) {
-            if (contents.at(i) != null) {
-                Chapter6.pushUsingPriorityQueue(priorityQueue, contents.at(i));
-            } else {
-                Chapter6.popUsingPriorityQueue(priorityQueue);
-            }
-        }
-
-        // then
-        for (int i = 1; i <= expectedContents.length; i++) {
-            assertEquals(expectedContents.at(i), Chapter6.popUsingPriorityQueue(priorityQueue));
-        }
-        assertEquals(0, priorityQueue.heapSize);
-    }
-
-    @DataProvider
-    public static Object[][] provideDataForMergingSortedLists() {
-        return new Object[][]{
-                {new Array<>(new List<>())},
-                {new Array<>(new List<>(1))},
-                {new Array<>(new List<>(1,2,3),new List<>(4,5,6))},
-                {new Array<>(new List<>(1,5),new List<>(2,3,4,6))},
-                {new Array<>(new List<>(14,20,22,45,46),new List<>(4,4,23),new List<>(1),new List<>(5,6,12,16,18,22,24,56,67),
-                        new List<>(1),new List<>(4,6,20,30),new List<>(),new List<>(68,68,68,69),new List<>(45),new List<>(2,34))}
-        };
-    }
-
-    @Test
-    @UseDataProvider("provideDataForMergingSortedLists")
-    public void shouldMergeSortedLists(Array<List<Integer>> sortedLists) {
-        // given
+        Array<List<Integer>> sortedLists = new Array<>(new List<>(14,20,22,45,46),new List<>(4,4,23),new List<>(1),
+                new List<>(5,6,12,16,18,22,24,56,67),new List<>(1),new List<>(4,6,20,30),new List<>(),new List<>(68,68,68,69),
+                new List<>(45),new List<>(2,34));
         Array<List<Integer>> original = Array.withLength(sortedLists.length);
         for (int i = 1; i <= sortedLists.length; i++) {
             original.set(i, new List<>(sortedLists.at(i)));
@@ -545,7 +354,7 @@ public class Chapter6Test {
                 List<Integer>.Node y = sortedLists.at(i).head;
                 while (y != null && !found) {
                     if (y.key.equals(x.key)) {
-                        y.key = Integer.MAX_VALUE;
+                        y.key = Integer.MAX_VALUE; // mark found element with a special value
                         found = true;
                     }
                     y = y.next;
@@ -554,23 +363,19 @@ public class Chapter6Test {
             assertTrue(found);
             x = x.next;
         }
-    }
-
-    @DataProvider
-    public static Object[][] provideDataForBuildingMaxHeapUsingBuildMaxHeap_() {
-        return new Object[][]{
-                {new Array<>(34)},
-                {new Array<>(2,1)},
-                {new Array<>(1,2,3)},
-                {new Array<>(4,0,1,3,2)},
-                {new Array<>(20,4,0,13,5,17,1,2,6,10,7,27,11,3)}
-        };
+        for (int i = 1; i <= sortedLists.length; i++) {
+            List<Integer>.Node y = sortedLists.at(i).head;
+            while (y != null) {
+                assertEquals(new Integer(Integer.MAX_VALUE), y.key);
+                y = y.next;
+            }
+        }
     }
 
     @Test
-    @UseDataProvider("provideDataForBuildingMaxHeapUsingBuildMaxHeap_")
-    public void shouldBuildMaxHeapUsingBuildMaxHeap_(Array<Integer> array) {
+    public void shouldBuildMaxHeapUsingBuildMaxHeap_() {
         // given
+        Array<Integer> array = new Array<>(20,4,0,13,5,17,1,2,6,10,7,27,11,3);
         Array<Integer> original = new Array<>(array);
 
         // when
@@ -584,123 +389,102 @@ public class Chapter6Test {
         assertMaxHeap(actualHeap);
     }
 
-    @DataProvider
-    public static Object[][] provideDataForMultiaryMaxHeapify() {
-        return new Object[][]{
-                {new Array<>(34), 3, 1},
-                {new Array<>(2,1,3,4), 3, 1},
-                {new Array<>(4,1,2,3), 3, 1},
-                {new Array<>(6,14,10,9,7,12,3,2,8,1), 3, 1},
-                {new Array<>(21,17,27,13,20,16,8,9,13,18,23,24,5,3,12,7), 4, 1}
-        };
-    }
-
     @Test
-    @UseDataProvider("provideDataForMultiaryMaxHeapify")
-    public void shouldRestoreMaxMultiaryHeapProperty(Array<Integer> array, int d, int position) {
+    public void shouldRestoreMaxMultiaryHeapProperty() {
         // given
+        Array<Integer> array = new Array<>(21,17,27,13,20,16,8,9,13,18,23,24,5,3,12,7);
         Heap<Integer> heap = new Heap<>(array);
         Heap<Integer> original = new Heap<>(array);
+        int degree = 4;
+        int position = 1;
 
         // when
-        Chapter6.multiaryMaxHeapify(heap, d, position);
+        Chapter6.multiaryMaxHeapify(heap, degree, position);
 
         // then
         assertShuffled(original, heap);
         assertEquals(original.length, heap.length);
-        assertMultiaryMaxHeap(heap, d);
+        assertMultiaryMaxHeap(heap, degree);
     }
 
-    private void assertMultiaryMaxHeap(Heap<Integer> heap, int d) {
+    private void assertMultiaryMaxHeap(Heap<Integer> heap, int degree) {
         for (int i = 2; i <= heap.heapSize; i++) {
-            assertTrue(geq(heap.at(multiaryParent(d, i)), heap.at(i)));
+            assertTrue(heap.at(multiaryParent(degree, i)) >= heap.at(i));
         }
     }
 
-    @DataProvider
-    public static Object[][] provideDataForMultiaryExtractMax() {
-        return new Object[][]{
-                {new Array<>(34), 3},
-                {new Array<>(2,3,1), 3},
-                {new Array<>(3,2,1), 3},
-                {new Array<>(17,16,10,9,7,14,3,2,8,1), 3},
-                {new Array<>(32,17,27,13,20,16,8,9,13,18,23,24,5,3,12,7), 4}
-        };
-    }
-
     @Test
-    @UseDataProvider("provideDataForMultiaryExtractMax")
-    public void shouldExtractMaximumFromMultiaryMaxHeap(Array<Integer> array, int d) {
+    public void shouldExtractMaximumFromMultiaryMaxHeap() {
         // given
+        Array<Integer> array = new Array<>(32,17,27,13,20,16,8,9,13,18,23,24,5,3,12,7);
         Heap<Integer> heap = new Heap<>(array);
         Heap<Integer> original = new Heap<>(array);
+        int degree = 4;
 
         // when
-        int actualMaximum = Chapter6.multiaryHeapExtractMax(heap, d);
+        int actualMaximum = Chapter6.multiaryHeapExtractMax(heap, degree);
 
         // then
         assertEquals(original.heapSize - 1, heap.heapSize);
-        assertMultiaryMaxHeap(heap, d);
+        assertMultiaryMaxHeap(heap, degree);
         assertEquals(original.at(1), new Integer(actualMaximum));
         for (int i = 2; i <= original.heapSize; i++) {
             assertHeapContains(heap, original.at(i));
         }
     }
 
-    @DataProvider
-    public static Object[][] provideDataForInsertingToMultiaryMaxHeap() {
-        return new Object[][]{
-                {new Array<>(), 3, 34},
-                {new Array<>(34), 3, 43},
-                {new Array<>(4,1,2,3), 3, 0},
-                {new Array<>(17,16,10,9,7,14,3,2,8,1), 3, 20},
-                {new Array<>(32,17,27,13,20,16,8,9,13,18,23,24,5,3,12,7), 4, 35}
-        };
+    @Test(expected = RuntimeException.class)
+    public void shouldThrowExceptionWhenExtractingMaximumFromEmptyMultiaryHeap() {
+        // given
+        int degree = 4;
+
+        try {
+            // when
+            Chapter6.multiaryHeapExtractMax(Heap.withLength(6), degree);
+        } catch (RuntimeException e) {
+            // then
+            assertEquals("heap underflow", e.getMessage());
+            throw e;
+        }
     }
 
     @Test
-    @UseDataProvider("provideDataForInsertingToMultiaryMaxHeap")
-    public void shouldInsertToMultiaryMaxHeap(Array<Integer> array, int d, int newKey) {
+    public void shouldInsertToMultiaryMaxHeap() {
         // given
-        Heap<Integer> heap = new Heap<>(array, array.length + 3);
-        Heap<Integer> original = new Heap<>(array, array.length + 3);
+        Array<Integer> array = new Array<>(32,17,27,13,20,16,8,9,13,18,23,24,5,3,12,7);
+        Heap<Integer> heap = new Heap<>(array, array.length + 1);
+        Heap<Integer> original = new Heap<>(array, array.length + 1);
+        int degree = 4;
+        int newKey = 35;
 
         // when
-        Chapter6.multiaryMaxHeapInsert(heap, d, newKey);
+        Chapter6.multiaryMaxHeapInsert(heap, degree, newKey);
 
         // then
         assertEquals(original.heapSize + 1, heap.heapSize);
-        assertMultiaryMaxHeap(heap, d);
+        assertMultiaryMaxHeap(heap, degree);
         assertHeapContains(heap, newKey);
         for (int i = 1; i <= original.heapSize; i++) {
             assertHeapContains(heap, original.at(i));
         }
     }
 
-    @DataProvider
-    public static Object[][] provideDataForIncreasingKeyInMultiaryMapHeap() {
-        return new Object[][]{
-                {new Array<>(34), 3, 1, 43},
-                {new Array<>(2,3,1), 3, 3, 4},
-                {new Array<>(3,2,1), 3, 3, 1},
-                {new Array<>(17,16,10,9,7,14,3,2,8,1), 3, 5, 20},
-                {new Array<>(32,17,27,13,20,16,8,9,13,18,23,24,5,3,12,7), 4, 14, 35}
-        };
-    }
-
     @Test
-    @UseDataProvider("provideDataForIncreasingKeyInMultiaryMapHeap")
-    public void shouldIncreaseKeyInMultiaryMaxHeap(Array<Integer> array, int d, int position, int newKey) {
+    public void shouldIncreaseKeyInMultiaryMaxHeap() {
         // given
+        Array<Integer> array = new Array<>(32,17,27,13,20,16,8,9,13,18,23,24,5,3,12,7);
         Heap<Integer> heap = new Heap<>(array);
         Heap<Integer> original = new Heap<>(array);
+        int degree = 4;
+        int position = 14;
+        int newKey = 35;
 
         // when
-        Chapter6.multiaryHeapIncreaseKey(heap, d, position, newKey);
+        Chapter6.multiaryHeapIncreaseKey(heap, degree, position, newKey);
 
         // then
         assertEquals(original.heapSize, heap.heapSize);
-        assertMultiaryMaxHeap(heap, d);
+        assertMultiaryMaxHeap(heap, degree);
         assertHeapContains(heap, newKey);
         for (int i = 1; i <= original.heapSize; i++) {
             if (i != position) {
@@ -709,21 +493,10 @@ public class Chapter6Test {
         }
     }
 
-    @DataProvider
-    public static Object[][] provideDataForYoungSort() {
-        return new Object[][]{
-                {new Array<>(34)},
-                {new Array<>(4,3,2,1)},
-                {new Array<>(1,3,4,2)},
-                {new Array<>(5,7,9,2,6,8,6,6,3,1,7,8,6,3,7,8)},
-                {new Array<>(1,2,3,3,5,6,6,6,6,7,7,7,8,8,8,9)}
-        };
-    }
-
     @Test
-    @UseDataProvider("provideDataForYoungSort")
-    public void shouldSortArrayUsingYoungSort(Array<Integer> array) {
+    public void shouldSortArrayUsingYoungSort() {
         // given
+        Array<Integer> array = new Array<>(5,7,9,2,6,8,6,6,3,1,7,8,6,3,7,8);
         Array<Integer> original = new Array<>(array);
 
         // when
@@ -734,40 +507,15 @@ public class Chapter6Test {
         assertSorted(array);
     }
 
-    @DataProvider
-    public static Object[][] provideDataForSuccessfulYoungSearch() {
-        return new Object[][]{
-                {new Integer[][] {
-                        new Integer[]{34}
-                }, 34},
-                {new Integer[][] {
-                        new Integer[]{2,5},
-                        new Integer[]{4,Integer.MAX_VALUE}
-                }, 4},
-                {new Integer[][] {
-                        new Integer[]{2,Integer.MAX_VALUE},
-                        new Integer[]{Integer.MAX_VALUE,Integer.MAX_VALUE}
-                }, 2},
-                {new Integer[][] {
-                        new Integer[]{2,3,14,16},
-                        new Integer[]{4,8,Integer.MAX_VALUE,Integer.MAX_VALUE},
-                        new Integer[]{5,12,Integer.MAX_VALUE,Integer.MAX_VALUE},
-                        new Integer[]{9,Integer.MAX_VALUE,Integer.MAX_VALUE,Integer.MAX_VALUE}
-                }, 5},
-                {new Integer[][] {
-                        new Integer[]{2,3,14,16},
-                        new Integer[]{4,8,Integer.MAX_VALUE,Integer.MAX_VALUE},
-                        new Integer[]{5,12,Integer.MAX_VALUE,Integer.MAX_VALUE},
-                        new Integer[]{9,Integer.MAX_VALUE,Integer.MAX_VALUE,Integer.MAX_VALUE}
-                }, 16}
-        };
-    }
-
     @Test
-    @UseDataProvider("provideDataForSuccessfulYoungSearch")
-    public void shouldFindKeyUsingYoungSearch(Integer[][] rows, int key) {
+    public void shouldFindKeyUsingYoungSearch() {
         // given
-        Young Y = new Young(rows);
+        Young Y = new Young(
+                new Integer[]{2,3,14,16},
+                new Integer[]{4,8,Integer.MAX_VALUE,Integer.MAX_VALUE},
+                new Integer[]{5,12,Integer.MAX_VALUE,Integer.MAX_VALUE},
+                new Integer[]{9,Integer.MAX_VALUE,Integer.MAX_VALUE,Integer.MAX_VALUE});
+        int key = 12;
 
         // when
         boolean keyFound = Chapter6.youngSearch(Y, Y.rows, Y.columns, key);
@@ -776,43 +524,16 @@ public class Chapter6Test {
         assertTrue(keyFound);
     }
 
-    @DataProvider
-    public static Object[][] provideDataForUnsuccessfulYoungSearch() {
-        return new Object[][]{
-                {new Integer[][] {
-                        new Integer[]{34}
-                }, 35},
-                {new Integer[][] {
-                        new Integer[]{Integer.MAX_VALUE}
-                }, 35},
-                {new Integer[][] {
-                        new Integer[]{2,5},
-                        new Integer[]{4,Integer.MAX_VALUE}
-                }, 3},
-                {new Integer[][] {
-                        new Integer[]{2,Integer.MAX_VALUE},
-                        new Integer[]{Integer.MAX_VALUE,Integer.MAX_VALUE}
-                }, 1},
-                {new Integer[][] {
-                        new Integer[]{2,3,14,16},
-                        new Integer[]{4,8,Integer.MAX_VALUE,Integer.MAX_VALUE},
-                        new Integer[]{5,12,Integer.MAX_VALUE,Integer.MAX_VALUE},
-                        new Integer[]{9,Integer.MAX_VALUE,Integer.MAX_VALUE,Integer.MAX_VALUE}
-                }, 10},
-                {new Integer[][] {
-                        new Integer[]{2,3,14,16},
-                        new Integer[]{4,8,Integer.MAX_VALUE,Integer.MAX_VALUE},
-                        new Integer[]{5,12,Integer.MAX_VALUE,Integer.MAX_VALUE},
-                        new Integer[]{9,Integer.MAX_VALUE,Integer.MAX_VALUE,Integer.MAX_VALUE}
-                }, 17}
-        };
-    }
-
     @Test
-    @UseDataProvider("provideDataForUnsuccessfulYoungSearch")
-    public void shouldNotFindKeyUsingYoungSearch(Integer[][] rows, int key) {
+    public void shouldNotFindNonexistentKeyUsingYoungSearch() {
         // given
-        Young Y = new Young(rows);
+        Young Y = new Young(
+                new Integer[]{2,3,14,16},
+                new Integer[]{4,8,Integer.MAX_VALUE,Integer.MAX_VALUE},
+                new Integer[]{5,12,Integer.MAX_VALUE,Integer.MAX_VALUE},
+                new Integer[]{9,Integer.MAX_VALUE,Integer.MAX_VALUE,Integer.MAX_VALUE}
+        );
+        int key = 10;
 
         // when
         boolean keyFound = Chapter6.youngSearch(Y, Y.rows, Y.columns, key);

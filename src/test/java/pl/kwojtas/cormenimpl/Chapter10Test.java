@@ -281,38 +281,6 @@ public class Chapter10Test {
     }
 
     @Test
-    @UseDataProvider("provideDataForStackOperations")
-    public <T extends Comparable> void shouldPerformStackOperationsOnQueues(Array<T> contents, Array<T> expectedContents) {
-        // given
-        Queue<T> queue1 = Queue.withLength(5);
-        Queue<T> queue2 = Queue.withLength(5);
-
-        // when
-        for (int i = 1; i <= contents.length; i++) {
-            if (contents.at(i) != null) {
-                Chapter10.pushOnQueues(queue1, queue2, contents.at(i));
-            } else {
-                Chapter10.popOnQueues(queue1, queue2);
-            }
-        }
-
-        // then
-        for (int i = 1; i <= expectedContents.length; i++) {
-            assertEquals(expectedContents.at(i), Chapter10.popOnQueues(queue1, queue2));
-        }
-    }
-
-    @Test(expected = RuntimeException.class)
-    public void shouldThrowExceptionWhenRemovingElementFromEmptyStackOnQueues() {
-        // given
-
-        // when
-        Chapter10.popOnQueues(Queue.withLength(5), Queue.withLength(5));
-
-        // then
-    }
-
-    @Test
     @UseDataProvider("provideDataForQueueOperations")
     public <T extends Comparable> void shouldPerformQueueOperationsOnStacks(Array<T> contents, Array<T> expectedContents) {
         // given
@@ -340,6 +308,38 @@ public class Chapter10Test {
 
         // when
         Chapter10.dequeueOnStacks(Stack.withLength(5), Stack.withLength(5));
+
+        // then
+    }
+
+    @Test
+    @UseDataProvider("provideDataForStackOperations")
+    public <T extends Comparable> void shouldPerformStackOperationsOnQueues(Array<T> contents, Array<T> expectedContents) {
+        // given
+        Queue<T> queue1 = Queue.withLength(5);
+        Queue<T> queue2 = Queue.withLength(5);
+
+        // when
+        for (int i = 1; i <= contents.length; i++) {
+            if (contents.at(i) != null) {
+                Chapter10.pushOnQueues(queue1, queue2, contents.at(i));
+            } else {
+                Chapter10.popOnQueues(queue1, queue2);
+            }
+        }
+
+        // then
+        for (int i = 1; i <= expectedContents.length; i++) {
+            assertEquals(expectedContents.at(i), Chapter10.popOnQueues(queue1, queue2));
+        }
+    }
+
+    @Test(expected = RuntimeException.class)
+    public void shouldThrowExceptionWhenRemovingElementFromEmptyStackOnQueues() {
+        // given
+
+        // when
+        Chapter10.popOnQueues(Queue.withLength(5), Queue.withLength(5));
 
         // then
     }

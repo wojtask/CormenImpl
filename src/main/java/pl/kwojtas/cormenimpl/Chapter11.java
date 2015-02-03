@@ -183,7 +183,7 @@ public final class Chapter11 {
         return null;
     }
 
-    public static final int DELETED = Integer.MAX_VALUE;
+    public static final Integer DELETED = Integer.MAX_VALUE;
 
     // solution of 11.4-2
     public static void hashDelete(ZeroBasedIndexedArray<Integer> T, int k, HashProbingFunction h) {

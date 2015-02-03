@@ -3,6 +3,7 @@ package pl.kwojtas.cormenimpl;
 import pl.kwojtas.cormenimpl.util.Array;
 import pl.kwojtas.cormenimpl.util.List;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 
 import static org.junit.Assert.assertEquals;
@@ -34,6 +35,21 @@ public class TestUtil {
         for (int i = 1; i <= shuffled.length; i++) {
             assertArrayContains(original, shuffled.at(i));
         }
+    }
+
+    public static <T extends Comparable> void sortArray(Array<T> array, Comparator<T> comparator) {
+        ArrayList<T> arrayList = new ArrayList<>();
+        for (int i = 1; i <= array.length; i++) {
+            arrayList.add(array.at(i));
+        }
+        arrayList.sort(comparator);
+        for (int i = 1; i <= array.length; i++) {
+            array.set(i, arrayList.get(i - 1));
+        }
+    }
+
+    public static <T extends Comparable> void sortArray(Array<T> array) {
+        sortArray(array, Comparator.<T>naturalOrder());
     }
 
     public static <T extends Comparable> void assertSorted(Array<T> array) {
