@@ -186,9 +186,9 @@ public final class Chapter6 {
         heapDecreaseKey(A, A.heapSize, key);
     }
 
-    private static class KeyWithRank<T> {
-        private T key;
-        private int rank;
+    public static class KeyWithRank<T> {
+        public T key;
+        public int rank;
 
         public KeyWithRank(T key, int rank) {
             this.key = key;
@@ -201,11 +201,11 @@ public final class Chapter6 {
 
         public PriorityQueueWithRanks(int initialLength) {
             super(new Array<>(), initialLength);
+            currentRank = 1;
         }
 
         public int getCurrentRank() {
-            currentRank++;
-            return currentRank;
+            return currentRank++;
         }
     }
 
@@ -225,9 +225,6 @@ public final class Chapter6 {
 
     // solution of 6.5-6
     private static <T> void heapDecreaseRank(PriorityQueueWithRanks<T> priorityQueue, int i, int rank) {
-        if (rank > priorityQueue.at(i).rank) {
-            throw new RuntimeException("new rank is larger than current rank");
-        }
         priorityQueue.at(i).rank = rank;
         while (i > 1 && priorityQueue.at(parent(i)).rank > priorityQueue.at(i).rank) {
             priorityQueue.exch(i, parent(i));
@@ -242,9 +239,6 @@ public final class Chapter6 {
 
     // solution of 6.5-6
     private static <T> KeyWithRank<T> heapExtractMinWithRanks(PriorityQueueWithRanks<T> priorityQueue) {
-        if (priorityQueue.heapSize < 1) {
-            throw new RuntimeException("queue underflow");
-        }
         KeyWithRank<T> min = priorityQueue.at(1);
         priorityQueue.set(1, priorityQueue.at(priorityQueue.heapSize));
         priorityQueue.heapSize--;
@@ -287,9 +281,6 @@ public final class Chapter6 {
 
     // solution of 6.5-6
     private static <T> void heapIncreaseRank(PriorityQueueWithRanks<T> priorityQueue, int i, int rank) {
-        if (rank < priorityQueue.at(i).rank) {
-            throw new RuntimeException("new rank is smaller than current rank");
-        }
         priorityQueue.at(i).rank = rank;
         while (i > 1 && priorityQueue.at(parent(i)).rank < priorityQueue.at(i).rank) {
             priorityQueue.exch(i, parent(i));
@@ -304,9 +295,6 @@ public final class Chapter6 {
 
     // solution of 6.5-6
     private static <T> KeyWithRank<T> heapExtractMaxWithRanks(PriorityQueueWithRanks<T> priorityQueue) {
-        if (priorityQueue.heapSize < 1) {
-            throw new RuntimeException("stack underflow");
-        }
         KeyWithRank<T> max = priorityQueue.at(1);
         priorityQueue.set(1, priorityQueue.at(priorityQueue.heapSize));
         priorityQueue.heapSize--;

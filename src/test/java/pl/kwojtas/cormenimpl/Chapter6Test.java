@@ -1,6 +1,8 @@
 package pl.kwojtas.cormenimpl;
 
 import org.junit.Test;
+import pl.kwojtas.cormenimpl.Chapter6.KeyWithRank;
+import pl.kwojtas.cormenimpl.Chapter6.PriorityQueueWithRanks;
 import pl.kwojtas.cormenimpl.util.Array;
 import pl.kwojtas.cormenimpl.util.Heap;
 import pl.kwojtas.cormenimpl.util.List;
@@ -303,6 +305,83 @@ public class Chapter6Test {
         for (int i = 1; i <= original.heapSize; i++) {
             assertHeapContains(heap, original.at(i));
         }
+    }
+
+    @Test
+    public void shouldEnqueueUsingPriorityQueue() {
+        // given
+        PriorityQueueWithRanks<String> priorityQueueWithRanks = getExemplaryPriorityQueueWithRanks();
+        String newKey = "xyz";
+        int currentRank = 10;
+
+        // when
+        Chapter6.enqueueUsingPriorityQueue(priorityQueueWithRanks, newKey);
+
+        // then
+        assertEquals(currentRank + 1, priorityQueueWithRanks.getCurrentRank());
+        assertEquals(newKey, priorityQueueWithRanks.at(currentRank).key);
+        assertEquals(currentRank, priorityQueueWithRanks.at(currentRank).rank);
+    }
+
+    private PriorityQueueWithRanks<String> getExemplaryPriorityQueueWithRanks() {
+        PriorityQueueWithRanks<String> priorityQueueWithRanks = new PriorityQueueWithRanks<>(12);
+        priorityQueueWithRanks.set(1, new KeyWithRank<>("aaa", priorityQueueWithRanks.getCurrentRank()));
+        priorityQueueWithRanks.set(3, new KeyWithRank<>("bbb", priorityQueueWithRanks.getCurrentRank()));
+        priorityQueueWithRanks.set(2, new KeyWithRank<>("ccc", priorityQueueWithRanks.getCurrentRank()));
+        priorityQueueWithRanks.set(6, new KeyWithRank<>("ddd", priorityQueueWithRanks.getCurrentRank()));
+        priorityQueueWithRanks.set(4, new KeyWithRank<>("eee", priorityQueueWithRanks.getCurrentRank()));
+        priorityQueueWithRanks.set(7, new KeyWithRank<>("fff", priorityQueueWithRanks.getCurrentRank()));
+        priorityQueueWithRanks.set(8, new KeyWithRank<>("ggg", priorityQueueWithRanks.getCurrentRank()));
+        priorityQueueWithRanks.set(9, new KeyWithRank<>("hhh", priorityQueueWithRanks.getCurrentRank()));
+        priorityQueueWithRanks.set(5, new KeyWithRank<>("iii", priorityQueueWithRanks.getCurrentRank()));
+        priorityQueueWithRanks.heapSize = 9;
+        return priorityQueueWithRanks;
+    }
+
+    @Test
+    public void shouldDequeueUsingPriorityQueue() {
+        // given
+        PriorityQueueWithRanks<String> priorityQueueWithRanks = getExemplaryPriorityQueueWithRanks();
+        String expectedDeletedElement = "aaa";
+        int currentRank = 10;
+
+        // when
+        String actualDeletedElement = Chapter6.dequeueUsingPriorityQueue(priorityQueueWithRanks);
+
+        // then
+        assertEquals(currentRank, priorityQueueWithRanks.getCurrentRank());
+        assertEquals(expectedDeletedElement, actualDeletedElement);
+    }
+
+    @Test
+    public void shouldPushUsingPriorityQueue() {
+        // given
+        PriorityQueueWithRanks<String> priorityQueueWithRanks = getExemplaryPriorityQueueWithRanks();
+        String newKey = "xyz";
+        int currentRank = 10;
+
+        // when
+        Chapter6.pushUsingPriorityQueue(priorityQueueWithRanks, newKey);
+
+        // then
+        assertEquals(currentRank + 1, priorityQueueWithRanks.getCurrentRank());
+        assertEquals(newKey, priorityQueueWithRanks.at(1).key);
+        assertEquals(currentRank, priorityQueueWithRanks.at(1).rank);
+    }
+
+    @Test
+    public void shouldPopUsingPriorityQueue() {
+        // given
+        PriorityQueueWithRanks<String> priorityQueueWithRanks = getExemplaryPriorityQueueWithRanks();
+        String expectedDeletedElement = "aaa";
+        int currentRank = 10;
+
+        // when
+        String actualDeletedElement = Chapter6.popUsingPriorityQueue(priorityQueueWithRanks);
+
+        // then
+        assertEquals(currentRank, priorityQueueWithRanks.getCurrentRank());
+        assertEquals(expectedDeletedElement, actualDeletedElement);
     }
 
     @Test
