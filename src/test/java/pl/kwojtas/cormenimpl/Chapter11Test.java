@@ -10,7 +10,6 @@ import pl.kwojtas.cormenimpl.util.ZeroBasedIndexedArray;
 
 import static junit.framework.TestCase.assertNull;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 import static pl.kwojtas.cormenimpl.Chapter11.DELETED;
 
 public class Chapter11Test {

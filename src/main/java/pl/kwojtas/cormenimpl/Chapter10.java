@@ -1,5 +1,6 @@
 package pl.kwojtas.cormenimpl;
 
+import pl.kwojtas.cormenimpl.util.Array;
 import pl.kwojtas.cormenimpl.util.BinaryTree;
 import pl.kwojtas.cormenimpl.util.CircularList;
 import pl.kwojtas.cormenimpl.util.Deque;
@@ -109,7 +110,7 @@ public final class Chapter10 {
 
     // solution of 10.1-2
     private static <T> boolean secondStackEmpty(DoubleStack<T> A) {
-        return A.top1 == A.length + 1;
+        return A.top2 == A.length + 1;
     }
 
     // solution of 10.1-4
@@ -569,6 +570,65 @@ public final class Chapter10 {
             prev = curr;
             curr = next;
         }
+    }
+
+    // solution of 10-2(a)
+    public static List<Integer> sortedListMakeMinHeap() {
+        return new List<>();
+    }
+
+    // solution of 10-2(a)
+    public static void sortedListMinHeapInsert(List<Integer> L, int key) {
+        List<Integer>.Node x = L.new Node(key);
+        if (L.head == null) {
+            L.head = x;
+            return;
+        }
+        if (key < L.head.key) {
+            x.next = L.head;
+            L.head.prev = x;
+            L.head = x;
+            return;
+        }
+        List<Integer>.Node y = L.head;
+        while (y.next != null && y.next.key < key) {
+            y = y.next;
+        }
+        if (y.next != null) {
+            x.next = y.next;
+            x.prev = y;
+            y.next.prev = x;
+            y.next = x;
+        } else {
+            x.prev = y;
+            y.next = x;
+        }
+    }
+
+    // solution of 10-2(a)
+    public static int sortedListHeapMinimum(List<Integer> L) {
+        if (L.head == null) {
+            throw new RuntimeException("heap underflow");
+        }
+        return L.head.key;
+    }
+
+    // solution of 10-2(a)
+    public static int sortedListHeapExtractMin(List<Integer> L) {
+        if (L.head == null) {
+            throw new RuntimeException("heap underflow");
+        }
+        int minimum = L.head.key;
+        if (L.head.next != null) {
+            L.head.next.prev = L.head;
+        }
+        L.head = L.head.next;
+        return minimum;
+    }
+
+    // solution of 10-2(a)
+    public static List<Integer> sortedListMinHeapUnion(List<Integer> L1, List<Integer> L2) {
+        return Chapter6.mergeSortedLists(new Array<>(L1, L2));
     }
 
     // problem 10-3

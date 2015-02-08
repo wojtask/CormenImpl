@@ -421,7 +421,7 @@ public class Chapter6Test {
         List<Integer> actualMergedList = Chapter6.mergeSortedLists(sortedLists);
 
         // then
-        assertSorted(actualMergedList);
+        assertSorted(actualMergedList.toArray());
         assertMerged(original, actualMergedList);
     }
 

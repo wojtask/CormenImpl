@@ -1,13 +1,10 @@
 package pl.kwojtas.cormenimpl;
 
-import com.tngtech.java.junit.dataprovider.DataProvider;
-import com.tngtech.java.junit.dataprovider.DataProviderRunner;
-import com.tngtech.java.junit.dataprovider.UseDataProvider;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import pl.kwojtas.cormenimpl.util.Array;
 import pl.kwojtas.cormenimpl.util.BinaryTree;
 import pl.kwojtas.cormenimpl.util.CircularList;
@@ -17,7 +14,6 @@ import pl.kwojtas.cormenimpl.util.List;
 import pl.kwojtas.cormenimpl.util.ListWithSentinel;
 import pl.kwojtas.cormenimpl.util.MultiaryTree;
 import pl.kwojtas.cormenimpl.util.MultipleArrayList;
-import pl.kwojtas.cormenimpl.util.Pair;
 import pl.kwojtas.cormenimpl.util.Queue;
 import pl.kwojtas.cormenimpl.util.SingleArrayList;
 import pl.kwojtas.cormenimpl.util.SinglyLinkedList;
@@ -30,13 +26,12 @@ import java.io.PrintStream;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+import static pl.kwojtas.cormenimpl.TestUtil.assertArrayEquals;
 import static pl.kwojtas.cormenimpl.TestUtil.assertShuffled;
 
-@RunWith(DataProviderRunner.class)
 public class Chapter10Test {
 
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
@@ -55,874 +50,904 @@ public class Chapter10Test {
         return outContent.toString().split(System.getProperty("line.separator"));
     }
 
-    @DataProvider
-    public static Object[][] provideDataForStackOperations() {
-        return new Object[][]{
-                {new Array<>(34,null), new Array<>()},
-                {new Array<>(4,1,3,null,8,null), new Array<>(1,4)},
-                {new Array<>(3.14,-0.53,null,-1.54,null,2.23), new Array<>(2.23,3.14)},
-                {new Array<>("eee",null,"ccc","aaa",null), new Array<>("ccc")}
-        };
+    @Test
+    public void shouldDetectEmptyStack() {
+        // given
+        Stack<String> stack = Stack.withLength(6);
+
+        // when
+        boolean actualEmpty = Chapter10.stackEmpty(stack);
+
+        // then
+        assertTrue(actualEmpty);
     }
 
     @Test
-    @UseDataProvider("provideDataForStackOperations")
-    public <T extends Comparable> void shouldPerformStackOperations(Array<T> contents, Array<T> expectedContents) {
+    public void shouldDetectNonemptyStack() {
         // given
-        Stack<T> stack = Stack.withLength(5);
+        Stack<String> stack = Stack.withLength(6);
+        stack.top = 4;
 
         // when
-        for (int i = 1; i <= contents.length; i++) {
-            if (contents.at(i) != null) {
-                Chapter10.push(stack, contents.at(i));
-            } else {
-                Chapter10.pop(stack);
-            }
-        }
+        boolean actualEmpty = Chapter10.stackEmpty(stack);
 
         // then
-        if (expectedContents.length > 0) {
-            assertFalse(Chapter10.stackEmpty(stack));
-        }
-        for (int i = 1; i <= expectedContents.length; i++) {
-            assertEquals(expectedContents.at(i), Chapter10.pop(stack));
-        }
-        assertTrue(Chapter10.stackEmpty(stack));
-    }
-
-    @Test(expected = RuntimeException.class)
-    public void shouldThrowExceptionWhenRemovingElementFromEmptyStack() {
-        // given
-
-        // when
-        Chapter10.pop(Stack.withLength(5));
-
-        // then
-    }
-
-    @DataProvider
-    public static Object[][] provideDataForQueueOperations() {
-        return new Object[][]{
-                {new Array<>(34,null), new Array<>()},
-                {new Array<>(4,1,3,null,8,null), new Array<>(3,8)},
-                {new Array<>(4,1,3,5,null,8,null), new Array<>(3,5,8)},
-                {new Array<>(3.14,-0.53,null,-1.54,null,2.23), new Array<>(-1.54,2.23)},
-                {new Array<>("eee",null,"ccc","aaa",null), new Array<>("aaa")}
-        };
+        assertFalse(actualEmpty);
     }
 
     @Test
-    @UseDataProvider("provideDataForQueueOperations")
-    public <T extends Comparable> void shouldPerformQueueOperations(Array<T> contents, Array<T> expectedContents) {
+    public void shouldInsertToStack() {
         // given
-        Queue<T> queue = Queue.withLength(5);
+        Stack<String> stack = Stack.withLength(6);
+        stack.top = 4;
+        String element = "xyz";
+        int topBeforeInserting = stack.top;
 
         // when
-        for (int i = 1; i <= contents.length; i++) {
-            if (contents.at(i) != null) {
-                Chapter10.enqueue(queue, contents.at(i));
-            } else {
-                Chapter10.dequeue(queue);
-            }
-        }
+        Chapter10.push(stack, element);
 
         // then
-        if (expectedContents.length > 0) {
-            assertFalse(Chapter10.queueEmpty(queue));
-        }
-        for (int i = 1; i <= expectedContents.length; i++) {
-            assertEquals(expectedContents.at(i), Chapter10.dequeue(queue));
-        }
-        assertTrue(Chapter10.queueEmpty(queue));
+        assertEquals(topBeforeInserting + 1, stack.top);
+        assertEquals(element, stack.at(stack.top));
+    }
+
+    @Test
+     public void shouldRemoveFromStack() {
+        // given
+        Stack<String> stack = Stack.withLength(6);
+        stack.set(4, "xyz");
+        stack.top = 4;
+        int topBeforeRemoving = stack.top;
+        String expectedElement = "xyz";
+
+        // when
+        String actualElement = Chapter10.pop(stack);
+
+        // then
+        assertEquals(topBeforeRemoving - 1, stack.top);
+        assertEquals(expectedElement, actualElement);
     }
 
     @Test(expected = RuntimeException.class)
-    public void shouldThrowExceptionWhenInsertingElementToFullQueue() {
+    public void shouldThrowExceptionWhenRemovingFromEmptyStack() {
         // given
-        Queue<Integer> queue = Queue.withLength(5);
+        Stack<String> stack = Stack.withLength(6);
+
+        try {
+            // when
+            Chapter10.pop(stack);
+        } catch (RuntimeException e) {
+            // then
+            assertEquals("underflow", e.getMessage());
+            throw e;
+        }
+    }
+
+    @Test
+    public void shouldInsertToQueue() {
+        // given
+        Queue<String> queue = Queue.withLength(6);
         queue.head = 4;
-        queue.tail = 3;
+        queue.tail = 2;
+        String element = "xyz";
+        int tailBeforeInserting = queue.tail;
 
         // when
-        Chapter10.enqueue(queue, 1);
+        Chapter10.enqueue(queue, element);
 
         // then
+        assertEquals(tailBeforeInserting + 1, queue.tail);
+        assertEquals(element, queue.at(queue.tail - 1));
+    }
+
+    @Test
+    public void shouldInsertToQueueWithTailEqualsLength() {
+        // given
+        Queue<String> queue = Queue.withLength(6);
+        queue.head = 4;
+        queue.tail = 6;
+        String element = "xyz";
+
+        // when
+        Chapter10.enqueue(queue, element);
+
+        // then
+        assertEquals(1, queue.tail);
+        assertEquals(element, queue.at(queue.length));
     }
 
     @Test(expected = RuntimeException.class)
-    public void shouldThrowExceptionWhenInsertingElementToFullQueue2() {
+    public void shouldThrowExceptionWhenInsertingToFullQueue() {
         // given
-        Queue<Integer> queue = Queue.withLength(5);
+        Queue<String> queue = Queue.withLength(6);
+        queue.head = 3;
+        queue.tail = 2;
+        String element = "xyz";
+
+        try {
+            // when
+            Chapter10.enqueue(queue, element);
+        } catch (RuntimeException e) {
+            // then
+            assertEquals("overflow", e.getMessage());
+            throw e;
+        }
+    }
+
+    @Test(expected = RuntimeException.class)
+    public void shouldThrowExceptionWhenInsertingToFullQueueWithTailEqualsLength() {
+        // given
+        Queue<String> queue = Queue.withLength(6);
         queue.head = 1;
+        queue.tail = 6;
+        String element = "xyz";
+
+        try {
+            // when
+            Chapter10.enqueue(queue, element);
+        } catch (RuntimeException e) {
+            // then
+            assertEquals("overflow", e.getMessage());
+            throw e;
+        }
+    }
+
+    @Test
+    public void shouldRemoveFromQueue() {
+        // given
+        Queue<String> queue = Queue.withLength(6);
+        queue.set(4, "xyz");
+        queue.head = 4;
+        queue.tail = 6;
+        int headBeforeRemoving = queue.head;
+        String expectedElement = "xyz";
+
+        // when
+        String actualElement = Chapter10.dequeue(queue);
+
+        // then
+        assertEquals(headBeforeRemoving + 1, queue.head);
+        assertEquals(expectedElement, actualElement);
+    }
+
+    @Test(expected = RuntimeException.class)
+    public void shouldThrowExceptionWhenRemovingFromEmptyQueue() {
+        // given
+        Queue<String> queue = Queue.withLength(6);
+
+        try {
+            // when
+            Chapter10.dequeue(queue);
+        } catch (RuntimeException e) {
+            // then
+            assertEquals("underflow", e.getMessage());
+            throw e;
+        }
+    }
+
+    @Test
+    public void shouldDetectEmptyQueue() {
+        // given
+        Queue<String> queue = Queue.withLength(6);
+
+        // when
+        boolean actualEmpty = Chapter10.queueEmpty(queue);
+
+        // then
+        assertTrue(actualEmpty);
+    }
+
+    @Test
+    public void shouldDetectNonemptyQueue() {
+        // given
+        Queue<String> queue = Queue.withLength(6);
+        queue.head = 2;
         queue.tail = 5;
 
         // when
-        Chapter10.enqueue(queue, 1);
+        boolean actualEmpty = Chapter10.queueEmpty(queue);
 
         // then
-    }
-
-    @Test(expected = RuntimeException.class)
-    public void shouldThrowExceptionWhenRemovingElementFromEmptyQueue() {
-        // given
-
-        // when
-        Chapter10.dequeue(Queue.withLength(5));
-
-        // then
-    }
-
-    @DataProvider
-    public static Object[][] provideDataForStackOperationsUsingTwoStacksOnSingleArray() {
-        return new Object[][]{
-                {new Array<>(new Pair<>(1,34),new Pair<>(1,null)), new Array<>(), new Array<>()},
-                {new Array<>(new Pair<>(1,4),new Pair<>(2,6),new Pair<>(1,1),new Pair<>(1,3),new Pair<>(2,null),
-                        new Pair<>(1,null),new Pair<>(2,8),new Pair<>(1,null)), new Array<>(4), new Array<>(8)},
-                {new Array<>(new Pair<>(2,3.14),new Pair<>(2,-0.53),new Pair<>(2,null),new Pair<>(1,-1.54),new Pair<>(1,null),
-                        new Pair<>(2,2.23)), new Array<>(), new Array<>(2.23,3.14)},
-                {new Array<>(new Pair<>(2,"eee"),new Pair<>(2,null),new Pair<>(1,"ccc"),new Pair<>(2,"aaa"),new Pair<>(1,"bbb")),
-                        new Array<>("bbb","ccc"), new Array<>("aaa")}
-        };
+        assertFalse(actualEmpty);
     }
 
     @Test
-    @UseDataProvider("provideDataForStackOperationsUsingTwoStacksOnSingleArray")
-    public <T extends Comparable> void shouldPerformStackOperationsUsingTwoStacksOnSingleArray(
-            Array<Pair<Integer, T>> contents, Array<T> expectedContents1, Array<T> expectedContents2) {
+    public void shouldInsertToFirstStackOfDoubleStack() {
         // given
-        DoubleStack<T> doubleStack = DoubleStack.withLength(5);
+        DoubleStack<String> doubleStack = DoubleStack.withLength(6);
+        doubleStack.top1 = 2;
+        doubleStack.top2 = 4;
+        String element = "xyz";
+        int top1BeforeInserting = doubleStack.top1;
 
         // when
-        for (int i = 1; i <= contents.length; i++) {
-            if (contents.at(i).first == 1) {
-                if (contents.at(i).second != null) {
-                    Chapter10.firstStackPush(doubleStack, contents.at(i).second);
-                } else {
-                    Chapter10.firstStackPop(doubleStack);
-                }
-            } else {
-                if (contents.at(i).second != null) {
-                    Chapter10.secondStackPush(doubleStack, contents.at(i).second);
-                } else {
-                    Chapter10.secondStackPop(doubleStack);
-                }
-            }
-        }
+        Chapter10.firstStackPush(doubleStack, element);
 
         // then
-        for (int i = 1; i <= expectedContents1.length; i++) {
-            assertEquals(expectedContents1.at(i), Chapter10.firstStackPop(doubleStack));
-        }
-        for (int i = 1; i <= expectedContents2.length; i++) {
-            assertEquals(expectedContents2.at(i), Chapter10.secondStackPop(doubleStack));
-        }
-    }
-
-    @Test(expected = RuntimeException.class)
-    public void shouldThrowExceptionWhenRemovingElementFromEmptyFirstStackOnSingleArray() {
-        // given
-
-        // when
-        Chapter10.firstStackPop(DoubleStack.withLength(5));
-
-        // then
-    }
-
-    @Test(expected = RuntimeException.class)
-    public void shouldThrowExceptionWhenRemovingElementFromEmptySecondStackOnSingleArray() {
-        // given
-
-        // when
-        Chapter10.secondStackPop(DoubleStack.withLength(5));
-
-        // then
-    }
-
-    @DataProvider
-    public static Object[][] provideDataForDequeOperations() {
-        return new Object[][]{
-                {new Array<>(new Pair<>(1,34),new Pair<>(1,null)), new Array<>()},
-                {new Array<>(new Pair<>(1,4),new Pair<>(2,6),new Pair<>(1,1),new Pair<>(1,3),new Pair<>(2,null),
-                        new Pair<>(1,null),new Pair<>(2,8),new Pair<>(1,null)), new Array<>(4,8)},
-                {new Array<>(new Pair<>(2,3.14),new Pair<>(2,-0.53),new Pair<>(2,null),new Pair<>(1,-1.54),new Pair<>(1,null),
-                        new Pair<>(2,2.23)), new Array<>(3.14,2.23)},
-                {new Array<>(new Pair<>(2,"eee"),new Pair<>(2,null),new Pair<>(1,"ccc"),new Pair<>(2,"aaa"),new Pair<>(1,"bbb")),
-                        new Array<>("bbb","ccc","aaa")}
-        };
+        assertEquals(top1BeforeInserting + 1, doubleStack.top1);
+        assertEquals(element, doubleStack.at(doubleStack.top1));
     }
 
     @Test
-    @UseDataProvider("provideDataForDequeOperations")
-    public <T extends Comparable> void shouldPerformDequeOperations(Array<Pair<Integer, T>> contents, Array<T> expectedContents) {
+    public void shouldRemoveFromFirstStackOfDoubleStack() {
         // given
-        Deque<T> deque = Deque.withLength(5);
+        DoubleStack<String> doubleStack = DoubleStack.withLength(6);
+        doubleStack.set(2, "xyz");
+        doubleStack.top1 = 2;
+        doubleStack.top2 = 4;
+        int top1BeforeRemoving = doubleStack.top1;
+        String expectedElement = "xyz";
 
         // when
-        for (int i = 1; i <= contents.length; i++) {
-            if (contents.at(i).first == 1) {
-                if (contents.at(i).second != null) {
-                    Chapter10.headEnqueue(deque, contents.at(i).second);
-                } else {
-                    Chapter10.headDequeue(deque);
-                }
-            } else {
-                if (contents.at(i).second != null) {
-                    Chapter10.tailEnqueue(deque, contents.at(i).second);
-                } else {
-                    Chapter10.tailDequeue(deque);
-                }
-            }
-        }
+        String actualElement = Chapter10.firstStackPop(doubleStack);
 
         // then
-        for (int i = 1; i <= expectedContents.length; i++) {
-            assertEquals(expectedContents.at(i), Chapter10.headDequeue(deque));
+        assertEquals(top1BeforeRemoving - 1, doubleStack.top1);
+        assertEquals(expectedElement, actualElement);
+    }
+
+    @Test(expected = RuntimeException.class)
+    public void shouldThrowExceptionWhenRemovingFromEmptyFirstStackOfDoubleStack() {
+        // given
+        DoubleStack<String> doubleStack = DoubleStack.withLength(6);
+        doubleStack.top2 = 3;
+
+        try {
+            // when
+            Chapter10.firstStackPop(doubleStack);
+        } catch (RuntimeException e) {
+            // then
+            assertEquals("underflow", e.getMessage());
+            throw e;
         }
     }
 
     @Test
-    @UseDataProvider("provideDataForQueueOperations")
-    public <T extends Comparable> void shouldPerformQueueOperationsOnStacks(Array<T> contents, Array<T> expectedContents) {
+    public void shouldInsertToSecondStackOfDoubleStack() {
         // given
-        Stack<T> stack1 = Stack.withLength(5);
-        Stack<T> stack2 = Stack.withLength(5);
+        DoubleStack<String> doubleStack = DoubleStack.withLength(6);
+        doubleStack.top1 = 2;
+        doubleStack.top2 = 4;
+        String element = "xyz";
+        int top2BeforeInserting = doubleStack.top2;
 
         // when
-        for (int i = 1; i <= contents.length; i++) {
-            if (contents.at(i) != null) {
-                Chapter10.enqueueOnStacks(stack1, stack2, contents.at(i));
-            } else {
-                Chapter10.dequeueOnStacks(stack1, stack2);
-            }
-        }
+        Chapter10.secondStackPush(doubleStack, element);
 
         // then
-        for (int i = 1; i <= expectedContents.length; i++) {
-            assertEquals(expectedContents.at(i), Chapter10.dequeueOnStacks(stack1, stack2));
-        }
-    }
-
-    @Test(expected = RuntimeException.class)
-    public void shouldThrowExceptionWhenRemovingElementFromEmptyQueueOnStacks() {
-        // given
-
-        // when
-        Chapter10.dequeueOnStacks(Stack.withLength(5), Stack.withLength(5));
-
-        // then
+        assertEquals(top2BeforeInserting - 1, doubleStack.top2);
+        assertEquals(element, doubleStack.at(doubleStack.top2));
     }
 
     @Test
-    @UseDataProvider("provideDataForStackOperations")
-    public <T extends Comparable> void shouldPerformStackOperationsOnQueues(Array<T> contents, Array<T> expectedContents) {
+    public void shouldRemoveFromSecondStackOfDoubleStack() {
         // given
-        Queue<T> queue1 = Queue.withLength(5);
-        Queue<T> queue2 = Queue.withLength(5);
+        DoubleStack<String> doubleStack = DoubleStack.withLength(6);
+        doubleStack.set(4, "xyz");
+        doubleStack.top1 = 2;
+        doubleStack.top2 = 4;
+        int top2BeforeRemoving = doubleStack.top2;
+        String expectedElement = "xyz";
 
         // when
-        for (int i = 1; i <= contents.length; i++) {
-            if (contents.at(i) != null) {
-                Chapter10.pushOnQueues(queue1, queue2, contents.at(i));
-            } else {
-                Chapter10.popOnQueues(queue1, queue2);
-            }
-        }
+        String actualElement = Chapter10.secondStackPop(doubleStack);
 
         // then
-        for (int i = 1; i <= expectedContents.length; i++) {
-            assertEquals(expectedContents.at(i), Chapter10.popOnQueues(queue1, queue2));
-        }
+        assertEquals(top2BeforeRemoving + 1, doubleStack.top2);
+        assertEquals(expectedElement, actualElement);
     }
 
     @Test(expected = RuntimeException.class)
-    public void shouldThrowExceptionWhenRemovingElementFromEmptyStackOnQueues() {
+    public void shouldThrowExceptionWhenRemovingFromEmptySecondStackOfDoubleStack() {
         // given
+        DoubleStack<String> doubleStack = DoubleStack.withLength(6);
+        doubleStack.top1 = 4;
 
-        // when
-        Chapter10.popOnQueues(Queue.withLength(5), Queue.withLength(5));
-
-        // then
-    }
-
-    @DataProvider
-    public static Object[][] provideDataForSuccessfulListSearch() {
-        return new Object[][]{
-                {new List<>(34), 34},
-                {new List<>(5,7,9,2,6,1,6,6,3,1,7,8), 6},
-                {new List<>(5,7,9,2,6,1,6,6,3,1,7,8), 8},
-                {new List<>(5.0,-2.3,-1.3,-1.9,-2.3), -2.3},
-                {new List<>("aaa","bbb","aaa","ccc"), "ccc"}
-        };
+        try {
+            // when
+            Chapter10.secondStackPop(doubleStack);
+        } catch (RuntimeException e) {
+            // then
+            assertEquals("underflow", e.getMessage());
+            throw e;
+        }
     }
 
     @Test
-    @UseDataProvider("provideDataForSuccessfulListSearch")
-    public <T> void shouldFindKeyUsingListSearch(List<T> list, T key) {
+    public void shouldInsertToBeginningOfDeque() {
         // given
+        Deque<String> deque = Deque.withLength(6);
+        deque.head = 2;
+        deque.tail = 4;
+        int headBeforeInserting = deque.head;
+        String element = "xyz";
 
         // when
-        List<T>.Node actualNode = Chapter10.listSearch(list, key);
+        Chapter10.headEnqueue(deque, element);
+
+        // then
+        assertEquals(headBeforeInserting - 1, deque.head);
+        assertEquals(element, deque.at(deque.head));
+    }
+
+    @Test
+    public void shouldInsertToBeginningOfDequeWithHeadEquals1() {
+        // given
+        Deque<String> deque = Deque.withLength(6);
+        deque.head = 1;
+        deque.tail = 4;
+        String element = "xyz";
+
+        // when
+        Chapter10.headEnqueue(deque, element);
+
+        // then
+        assertEquals(deque.length, deque.head);
+        assertEquals(element, deque.at(deque.head));
+    }
+
+    @Test
+    public void shouldRemoveFromBeginningOfDeque() {
+        // given
+        Deque<String> deque = Deque.withLength(6);
+        deque.set(2, "xyz");
+        deque.head = 2;
+        deque.tail = 4;
+        int headBeforeInserting = deque.head;
+        String expectedElement = "xyz";
+
+        // when
+        String actualElement = Chapter10.headDequeue(deque);
+
+        // then
+        assertEquals(headBeforeInserting + 1, deque.head);
+        assertEquals(expectedElement, actualElement);
+    }
+
+    @Test
+    public void shouldRemoveFromBeginningOfDequeWithHeadEqualsLength() {
+        // given
+        Deque<String> deque = Deque.withLength(6);
+        deque.set(6, "xyz");
+        deque.head = 6;
+        deque.tail = 4;
+        String expectedElement = "xyz";
+
+        // when
+        String actualElement = Chapter10.headDequeue(deque);
+
+        // then
+        assertEquals(1, deque.head);
+        assertEquals(expectedElement, actualElement);
+    }
+
+    @Test
+    public void shouldInsertToEndOfDeque() {
+        // given
+        Deque<String> deque = Deque.withLength(6);
+        deque.head = 2;
+        deque.tail = 4;
+        int tailBeforeInserting = deque.tail;
+        String element = "xyz";
+
+        // when
+        Chapter10.tailEnqueue(deque, element);
+
+        // then
+        assertEquals(tailBeforeInserting + 1, deque.tail);
+        assertEquals(element, deque.at(deque.tail - 1));
+    }
+
+    @Test
+    public void shouldInsertToEndOfDequeWithTailEqualsLength() {
+        // given
+        Deque<String> deque = Deque.withLength(6);
+        deque.head = 2;
+        deque.tail = 6;
+        String element = "xyz";
+
+        // when
+        Chapter10.tailEnqueue(deque, element);
+
+        // then
+        assertEquals(1, deque.tail);
+        assertEquals(element, deque.at(deque.length));
+    }
+
+    @Test
+    public void shouldRemoveFromEndOfDeque() {
+        // given
+        Deque<String> deque = Deque.withLength(6);
+        deque.set(3, "xyz");
+        deque.head = 2;
+        deque.tail = 4;
+        int tailBeforeInserting = deque.tail;
+        String expectedElement = "xyz";
+
+        // when
+        String actualElement = Chapter10.tailDequeue(deque);
+
+        // then
+        assertEquals(tailBeforeInserting - 1, deque.tail);
+        assertEquals(expectedElement, actualElement);
+    }
+
+    @Test
+    public void shouldRemoveFromEndOfDequeWithTailEquals1() {
+        // given
+        Deque<String> deque = Deque.withLength(6);
+        deque.set(6, "xyz");
+        deque.head = 2;
+        deque.tail = 1;
+        String expectedElement = "xyz";
+
+        // when
+        String actualElement = Chapter10.tailDequeue(deque);
+
+        // then
+        assertEquals(deque.length, deque.tail);
+        assertEquals(expectedElement, actualElement);
+    }
+
+    @Test
+    public void shouldInsertToQueueOnStacks() {
+        // given
+        Stack<String> stack1 = Stack.withLength(4);
+        Stack<String> stack2 = Stack.withLength(4);
+        stack1.top = 2;
+        int topBeforeInserting = stack1.top;
+        String element = "xyz";
+
+        // when
+        Chapter10.enqueueOnStacks(stack1, stack2, element);
+
+        // then
+        assertEquals(topBeforeInserting + 1, stack1.top);
+        assertEquals(element, stack1.at(stack1.top));
+    }
+
+    @Test
+    public void shouldRemoveFromQueueOnStacks() {
+        // given
+        Stack<String> stack1 = Stack.withLength(4);
+        Stack<String> stack2 = Stack.withLength(4);
+        stack1.set(1, "xyz");
+        stack1.top = 2;
+        int topBeforeInserting = stack1.top;
+        String expectedElement = "xyz";
+
+        // when
+        String actualElement = Chapter10.dequeueOnStacks(stack1, stack2);
+
+        // then
+        assertEquals(topBeforeInserting - 1, stack1.top);
+        assertEquals(expectedElement, actualElement);
+    }
+
+    @Test(expected = RuntimeException.class)
+    public void shouldThrowExceptionWhenRemovingFromEmptyQueueOnStacks() {
+        // given
+        Stack<String> stack1 = Stack.withLength(4);
+        Stack<String> stack2 = Stack.withLength(4);
+
+        try {
+            // when
+            Chapter10.dequeueOnStacks(stack1, stack2);
+        } catch (RuntimeException e) {
+            // then
+            assertEquals("underflow", e.getMessage());
+            throw e;
+        }
+    }
+
+    @Test
+    public void shouldInsertToStackOnQueues() {
+        // given
+        Queue<String> queue1 = Queue.withLength(4);
+        Queue<String> queue2 = Queue.withLength(4);
+        queue1.head = 4;
+        queue1.tail = 2;
+        int tailBeforeInserting = queue1.tail;
+        String element = "xyz";
+
+        // when
+        Chapter10.pushOnQueues(queue1, queue2, element);
+
+        // then
+        assertEquals(tailBeforeInserting + 1, queue1.tail);
+        assertEquals(element, queue1.at(queue1.tail - 1));
+    }
+
+    @Test
+    public void shouldRemoveFromStackOnQueues() {
+        // given
+        Queue<String> queue1 = Queue.withLength(4);
+        Queue<String> queue2 = Queue.withLength(4);
+        queue1.set(1, "xyz");
+        queue1.head = 4;
+        queue1.tail = 2;
+        int tailBeforeInserting = queue1.tail;
+        int stackSize = queue1.tail - queue1.head + queue1.length;
+        String expectedElement = "xyz";
+
+        // when
+        String actualElement = Chapter10.popOnQueues(queue1, queue2);
+
+        // then
+        assertEquals(tailBeforeInserting, queue1.head);
+        assertEquals(tailBeforeInserting + stackSize - 1, queue1.tail);
+        assertEquals(expectedElement, actualElement);
+    }
+
+    @Test(expected = RuntimeException.class)
+    public void shouldThrowExceptionWhenRemovingFromEmptyStackOnQueues() {
+        // given
+        Queue<String> queue1 = Queue.withLength(4);
+        Queue<String> queue2 = Queue.withLength(4);
+
+        try {
+            // when
+            Chapter10.popOnQueues(queue1, queue2);
+        } catch (RuntimeException e) {
+            // then
+            assertEquals("underflow", e.getMessage());
+            throw e;
+        }
+    }
+
+    @Test
+    public void shouldFindKeyOnList() {
+        // given
+        List<Integer> list = new List<>(5,7,9,2,6,1,6,6,3,1,7,8);
+        int keyToFind = 6;
+
+        // when
+        List<Integer>.Node actualNode = Chapter10.listSearch(list, keyToFind);
 
         // then
         assertNotNull(actualNode);
-        assertEquals(key, actualNode.key);
-        List<T>.Node x = list.head;
-        boolean found = false;
-        while (x != null && !found) {
-            found = x.key.equals(actualNode.key);
-            x = x.next;
-        }
-        assertTrue(found);
-    }
-
-    @DataProvider
-    public static Object[][] provideDataForUnsuccessfulListSearch() {
-        return new Object[][]{
-                {new List<>(34), 35},
-                {new List<>(5,7,9,2,6,1,6,6,3,1,7,8), 4},
-                {new List<>(5.0,-2.3,-1.3,-1.9,-2.3), 2.3},
-                {new List<>("aaa","bbb","aaa","ccc"), "xyz"}
-        };
+        assertEquals(new Integer(keyToFind), actualNode.key);
     }
 
     @Test
-    @UseDataProvider("provideDataForUnsuccessfulListSearch")
-    public <T> void shouldNotFindKeyUsingListSearch(List<T> list, T key) {
+    public void shouldNotFindNonexistentKeyOnList() {
         // given
+        List<Integer> list = new List<>(5,7,9,2,6,1,6,6,3,1,7,8);
+        int keyToFind = 4;
 
         // when
-        List<T>.Node actualNode = Chapter10.listSearch(list, key);
+        List<Integer>.Node actualNode = Chapter10.listSearch(list, keyToFind);
 
         // then
         assertNull(actualNode);
     }
 
-    @DataProvider
-    public static Object[][] provideDataForInsertingElementOnList() {
-        return new Object[][]{
-                {new List<>(), 35},
-                {new List<>(34), 35},
-                {new List<>(5,7,9,2,6,1,6,6,3,1,7,8), 3},
-                {new List<>(5.0,-2.3,-1.3,-1.9,-2.3), 2.3},
-                {new List<>("aaa","bbb","aaa","ccc"), "xyz"}
-        };
-    }
-
     @Test
-    @UseDataProvider("provideDataForInsertingElementOnList")
-    public <T> void shouldInsertElementOnList(List<T> list, T key) {
+    public void shouldInsertElementOntoList() {
         // given
-        List<T> original = new List<>(list);
+        List<Integer> list = new List<>(5,7,9,2,6,1,6,6,3,1,7,8);
+        List<Integer> original = new List<>(list);
+        int keyToInsert = 3;
 
         // when
-        Chapter10.listInsert(list, list.new Node(key));
+        Chapter10.listInsert(list, list.new Node(keyToInsert));
 
         // then
-        assertNotNull(list.head);
-        assertEquals(key, list.head.key);
-        List<T>.Node x = original.head;
-        List<T>.Node y = list.head.next;
-        while (x != null) {
-            assertEquals(x.key, y.key);
-            x = x.next;
-            y = y.next;
-        }
-    }
-
-    @DataProvider
-    public static Object[][] provideDataForDeletingElementFromList() {
-        return new Object[][]{
-                {new List<>(34), 1},
-                {new List<>(5,7,9,2,6,1,6,6,3,1,7,8), 4},
-                {new List<>(5.0,-2.3,-1.3,-1.9,-2.3), 4},
-                {new List<>("aaa","bbb","aaa","ccc"), 4}
-        };
+        Array<Integer> listArray = list.toArray();
+        Array<Integer> originalArray = original.toArray();
+        assertElementInsertedIntoBeginningOfList(keyToInsert, listArray, originalArray);
     }
 
     @Test
-    @UseDataProvider("provideDataForDeletingElementFromList")
-    public <T> void shouldDeleteElementFromList(List<T> list, int elementPosition) {
+    public void shouldDeleteElementFromList() {
         // given
-        List<T>.Node nodeToDelete = list.head;
-        for (int i = 2; i <= elementPosition; i++) {
-            nodeToDelete = nodeToDelete.next;
-        }
-        List<T> original = new List<>(list);
+        List<Integer> list = new List<>(5,7,9,2,6,1,6,6,3,1,7,8);
+        List<Integer> original = new List<>(list);
+        int keyToDelete = 6;
+        List<Integer>.Node nodeToDelete = list.head.next.next.next.next; // first element on the list with key = 6
 
         // when
         Chapter10.listDelete(list, nodeToDelete);
 
         // then
-        List<T>.Node x = original.head;
-        List<T>.Node y = list.head;
-        while (x != null) {
-            if (y != null && x.key.equals(y.key)) {
-                x = x.next;
-                y = y.next;
-            } else {
-                assertEquals(x.key, nodeToDelete.key);
-                x = x.next;
-            }
-        }
+        assertElementDeletedFromList(keyToDelete, list.toArray(), original.toArray());
     }
 
-    @DataProvider
-    public static Object[][] provideDataForDeletingElementFromListWithSentinel() {
-        return new Object[][]{
-                {new ListWithSentinel<>(34), 1},
-                {new ListWithSentinel<>(5,7,9,2,6,1,6,6,3,1,7,8), 4},
-                {new ListWithSentinel<>(5.0,-2.3,-1.3,-1.9,-2.3), 4},
-                {new ListWithSentinel<>("aaa","bbb","aaa","ccc"), 4}
-        };
+    private void assertElementDeletedFromList(int deletedKey, Array<Integer> listArray, Array<Integer> originalArray) {
+        assertEquals(originalArray.length - 1, listArray.length);
+        int i = 0;
+        boolean elementsEqual = true;
+        while (i + 1 <= listArray.length && elementsEqual) {
+            i++;
+            elementsEqual = listArray.at(i).equals(originalArray.at(i));
+        }
+        assertEquals(new Integer(deletedKey), originalArray.at(i));
+        while (i <= listArray.length) {
+            assertEquals(listArray.at(i), originalArray.at(i + 1));
+            i++;
+        }
     }
 
     @Test
-    @UseDataProvider("provideDataForDeletingElementFromListWithSentinel")
-    public <T> void shouldDeleteElementFromListWithSentinel(ListWithSentinel<T> list, int elementPosition) {
+    public void shouldDeleteElementFromListWithSentinel() {
         // given
-        ListWithSentinel<T>.Node nodeToDelete = list.nil;
-        for (int i = 1; i <= elementPosition; i++) {
-            nodeToDelete = nodeToDelete.next;
-        }
-        ListWithSentinel<T> original = new ListWithSentinel<>(list);
+        ListWithSentinel<Integer> list = new ListWithSentinel<>(5,7,9,2,6,1,6,6,3,1,7,8);
+        ListWithSentinel<Integer> original = new ListWithSentinel<>(list);
+        int keyToDelete = 2;
+        ListWithSentinel<Integer>.Node nodeToDelete = list.nil.next.next.next.next; // element with key = 2
 
         // when
         Chapter10.listDelete_(list, nodeToDelete);
 
         // then
-        ListWithSentinel<T>.Node x = original.nil.next;
-        ListWithSentinel<T>.Node y = list.nil.next;
-        while (x != original.nil) {
-            if (y != list.nil && x.key.equals(y.key)) {
-                x = x.next;
-                y = y.next;
-            } else {
-                assertEquals(x.key, nodeToDelete.key);
-                x = x.next;
-            }
-        }
-    }
-
-    @DataProvider
-    public static Object[][] provideDataForSuccessfulListWithSentinelSearch() {
-        return new Object[][]{
-                {new ListWithSentinel<>(34), 34},
-                {new ListWithSentinel<>(5,7,9,2,6,1,6,6,3,1,7,8), 6},
-                {new ListWithSentinel<>(5,7,9,2,6,1,6,6,3,1,7,8), 8},
-                {new ListWithSentinel<>(5.0,-2.3,-1.3,-1.9,-2.3), -2.3},
-                {new ListWithSentinel<>("aaa","bbb","aaa","ccc"), "ccc"}
-        };
+        assertElementDeletedFromList(keyToDelete, list.toArray(), original.toArray());
     }
 
     @Test
-    @UseDataProvider("provideDataForSuccessfulListWithSentinelSearch")
-    public <T> void shouldFindKeyOnListWithSentinel(ListWithSentinel<T> list, T key) {
+    public void shouldFindKeyOnListWithSentinel() {
         // given
+        ListWithSentinel<Integer> list = new ListWithSentinel<>(5,7,9,2,6,1,6,6,3,1,7,8);
+        int keyToFind = 6;
 
         // when
-        ListWithSentinel<T>.Node actualNode = Chapter10.listSearch_(list, key);
+        ListWithSentinel<Integer>.Node actualNode = Chapter10.listSearch_(list, keyToFind);
 
         // then
         assertNotNull(actualNode);
-        assertEquals(key, actualNode.key);
-        ListWithSentinel<T>.Node x = list.nil.next;
-        boolean found = false;
-        while (x != list.nil && !found) {
-            found = x.key.equals(actualNode.key);
-            x = x.next;
-        }
-        assertTrue(found);
-    }
-
-    @DataProvider
-    public static Object[][] provideDataForUnsuccessfulListWithSentinelSearch() {
-        return new Object[][]{
-                {new ListWithSentinel<>(34), 35},
-                {new ListWithSentinel<>(5,7,9,2,6,1,6,6,3,1,7,8), 4},
-                {new ListWithSentinel<>(5.0,-2.3,-1.3,-1.9,-2.3), 2.3},
-                {new ListWithSentinel<>("aaa","bbb","aaa","ccc"), "xyz"}
-        };
+        assertEquals(new Integer(keyToFind), actualNode.key);
     }
 
     @Test
-    @UseDataProvider("provideDataForUnsuccessfulListWithSentinelSearch")
-    public <T> void shouldNotFindKeyOnListWithSentinel(ListWithSentinel<T> list, T key) {
+    public void shouldNotFindNonexistentKeyOnListWithSentinel() {
         // given
+        ListWithSentinel<Integer> list = new ListWithSentinel<>(5,7,9,2,6,1,6,6,3,1,7,8);
+        int keyToFind = 4;
 
         // when
-        ListWithSentinel<T>.Node actualNode = Chapter10.listSearch_(list, key);
+        ListWithSentinel<Integer>.Node actualNode = Chapter10.listSearch_(list, keyToFind);
 
         // then
-        assertNotNull(actualNode);
         assertEquals(list.nil, actualNode);
     }
 
-    @DataProvider
-    public static Object[][] provideDataForInsertingElementOnListWithSentinel() {
-        return new Object[][]{
-                {new ListWithSentinel<>(), 35},
-                {new ListWithSentinel<>(34), 35},
-                {new ListWithSentinel<>(5,7,9,2,6,1,6,6,3,1,7,8), 3},
-                {new ListWithSentinel<>(5.0,-2.3,-1.3,-1.9,-2.3), 2.3},
-                {new ListWithSentinel<>("aaa","bbb","aaa","ccc"), "xyz"}
-        };
-    }
-
     @Test
-    @UseDataProvider("provideDataForInsertingElementOnListWithSentinel")
-    public <T> void shouldInsertElementOnListWithSentinel(ListWithSentinel<T> list, T key) {
+    public void shouldInsertElementOntoListWithSentinel() {
         // given
-        ListWithSentinel<T> original = new ListWithSentinel<>(list);
+        ListWithSentinel<Integer> list = new ListWithSentinel<>(5,7,9,2,6,1,6,6,3,1,7,8);
+        ListWithSentinel<Integer> original = new ListWithSentinel<>(list);
+        int keyToInsert = 3;
 
         // when
-        Chapter10.listInsert_(list, list.new Node(key));
+        Chapter10.listInsert_(list, list.new Node(keyToInsert));
 
         // then
-        assertNotEquals(list.nil.next, list.nil);
-        assertEquals(key, list.nil.next.key);
-        ListWithSentinel<T>.Node x = original.nil.next;
-        ListWithSentinel<T>.Node y = list.nil.next.next;
-        while (x != original.nil) {
-            assertEquals(x.key, y.key);
-            x = x.next;
-            y = y.next;
+        Array<Integer> listArray = list.toArray();
+        Array<Integer> originalArray = original.toArray();
+        assertElementInsertedIntoBeginningOfList(keyToInsert, listArray, originalArray);
+    }
+
+    private void assertElementInsertedIntoBeginningOfList(int keyToInsert, Array<Integer> listArray, Array<Integer> originalArray) {
+        assertEquals(originalArray.length + 1, listArray.length);
+        assertEquals(new Integer(keyToInsert), listArray.at(1));
+        for (int i = 2; i <= listArray.length; i++) {
+            assertEquals(originalArray.at(i - 1), listArray.at(i));
         }
     }
 
-    @DataProvider
-    public static Object[][] provideDataForInsertingElementOnSinglyLinkedList() {
-        return new Object[][]{
-                {new SinglyLinkedList<>(), 35},
-                {new SinglyLinkedList<>(34), 35},
-                {new SinglyLinkedList<>(5,7,9,2,6,1,6,6,3,1,7,8), 3},
-                {new SinglyLinkedList<>(5.0,-2.3,-1.3,-1.9,-2.3), 2.3},
-                {new SinglyLinkedList<>("aaa","bbb","aaa","ccc"), "xyz"}
-        };
-    }
-
     @Test
-    @UseDataProvider("provideDataForInsertingElementOnSinglyLinkedList")
-    public <T> void shouldInsertElementOnSinglyLinkedList(SinglyLinkedList<T> list, T key) {
+    public void shouldInsertElementOntoSinglyLinkedList() {
         // given
-        SinglyLinkedList<T> original = new SinglyLinkedList<>(list);
+        SinglyLinkedList<Integer> list = new SinglyLinkedList<>(5,7,9,2,6,1,6,6,3,1,7,8);
+        SinglyLinkedList<Integer> original = new SinglyLinkedList<>(list);
+        int keyToInsert = 3;
 
         // when
-        Chapter10.singlyLinkedListInsert(list, list.new Node(key));
+        Chapter10.singlyLinkedListInsert(list, list.new Node(keyToInsert));
 
         // then
-        assertNotNull(list.head);
-        assertEquals(key, list.head.key);
-        SinglyLinkedList<T>.Node x = original.head;
-        SinglyLinkedList<T>.Node y = list.head.next;
-        while (x != null) {
-            assertEquals(x.key, y.key);
-            x = x.next;
-            y = y.next;
-        }
-    }
-
-    @DataProvider
-    public static Object[][] provideDataForDeletingElementFromSinglyLinkedList() {
-        return new Object[][]{
-                {new SinglyLinkedList<>(34), 1},
-                {new SinglyLinkedList<>(5,7,9,2,6,1,6,6,3,1,7,8), 4},
-                {new SinglyLinkedList<>(5.0,-2.3,-1.3,-1.9,-2.3), 4},
-                {new SinglyLinkedList<>("aaa","bbb","aaa","ccc"), 4}
-        };
+        Array<Integer> listArray = list.toArray();
+        Array<Integer> originalArray = original.toArray();
+        assertElementInsertedIntoBeginningOfList(keyToInsert, listArray, originalArray);
     }
 
     @Test
-    @UseDataProvider("provideDataForDeletingElementFromSinglyLinkedList")
-    public <T> void shouldDeleteElementFromSinglyLinkedList(SinglyLinkedList<T> list, int elementPosition) {
+    public void shouldDeleteElementFromSinglyLinkedList() {
         // given
-        SinglyLinkedList<T>.Node nodeToDelete = list.head;
-        for (int i = 2; i <= elementPosition; i++) {
-            nodeToDelete = nodeToDelete.next;
-        }
-        SinglyLinkedList<T> original = new SinglyLinkedList<>(list);
+        SinglyLinkedList<Integer> list = new SinglyLinkedList<>(5,7,9,2,6,1,6,6,3,1,7,8);
+        SinglyLinkedList<Integer> original = new SinglyLinkedList<>(list);
+        int keyToDelete = 6;
+        SinglyLinkedList<Integer>.Node nodeToDelete = list.head.next.next.next.next; // first element on the list with key = 6
 
         // when
         Chapter10.singlyLinkedListDelete(list, nodeToDelete);
 
         // then
-        SinglyLinkedList<T>.Node x = original.head;
-        SinglyLinkedList<T>.Node y = list.head;
-        while (x != null) {
-            if (y != null && x.key.equals(y.key)) {
-                x = x.next;
-                y = y.next;
-            } else {
-                assertEquals(x.key, nodeToDelete.key);
-                x = x.next;
-            }
-        }
+        assertElementDeletedFromList(keyToDelete, list.toArray(), original.toArray());
     }
 
     @Test
-    @UseDataProvider("provideDataForInsertingElementOnSinglyLinkedList")
-    public <T> void shouldPushElementOnSinglyLinkedList(SinglyLinkedList<T> list, T key) {
+    public void shouldInsertElementIntoStackOnSinglyLinkedList() {
         // given
-        SinglyLinkedList<T> original = new SinglyLinkedList<>(list);
+        SinglyLinkedList<Integer> list = new SinglyLinkedList<>(5,7,9,2,6,1,6,6,3,1,7,8);
+        SinglyLinkedList<Integer> original = new SinglyLinkedList<>(list);
+        int keyToInsert = 3;
 
         // when
-        Chapter10.singlyLinkedListPush(list, key);
+        Chapter10.singlyLinkedListPush(list, keyToInsert);
 
         // then
-        assertNotNull(list.head);
-        assertEquals(key, list.head.key);
-        SinglyLinkedList<T>.Node x = original.head;
-        SinglyLinkedList<T>.Node y = list.head.next;
-        while (x != null) {
-            assertEquals(x.key, y.key);
-            x = x.next;
-            y = y.next;
-        }
-    }
-
-    @DataProvider
-    public static Object[][] provideDataForPerformingPopOnSinglyLinkedList() {
-        return new Object[][]{
-                {new SinglyLinkedList<>(34)},
-                {new SinglyLinkedList<>(5,7,9,2,6,1,6,6,3,1,7,8)},
-                {new SinglyLinkedList<>(5.0,-2.3,-1.3,-1.9,-2.3)},
-                {new SinglyLinkedList<>("aaa","bbb","aaa","ccc")}
-        };
+        Array<Integer> listArray = list.toArray();
+        Array<Integer> originalArray = original.toArray();
+        assertElementInsertedIntoBeginningOfList(keyToInsert, listArray, originalArray);
     }
 
     @Test
-    @UseDataProvider("provideDataForPerformingPopOnSinglyLinkedList")
-    public <T> void shouldPopElementFromSinglyLinkedList(SinglyLinkedList<T> list) {
+    public void shouldDeleteElementFromStackOnSinglyLinkedList() {
         // given
-        SinglyLinkedList<T> original = new SinglyLinkedList<>(list);
+        SinglyLinkedList<Integer> list = new SinglyLinkedList<>(5,7,9,2,6,1,6,6,3,1,7,8);
+        SinglyLinkedList<Integer> original = new SinglyLinkedList<>(list);
+        int expectedElement = 5;
 
         // when
-        Chapter10.singlyLinkedListPop(list);
+        Integer actualElement = Chapter10.singlyLinkedListPop(list);
 
         // then
-        SinglyLinkedList<T>.Node x = original.head.next;
-        SinglyLinkedList<T>.Node y = list.head;
-        while (x != null) {
-            assertEquals(x.key, y.key);
-            x = x.next;
-            y = y.next;
+        assertEquals(new Integer(expectedElement), actualElement);
+        Array<Integer> listArray = list.toArray();
+        Array<Integer> originalArray = original.toArray();
+        assertEquals(originalArray.length - 1, listArray.length);
+        for (int i = 1; i <= listArray.length; i++) {
+            assertEquals(originalArray.at(i + 1), listArray.at(i));
         }
     }
 
-    @DataProvider
-    public static Object[][] provideDataForPerformingEnqueueOnSinglyLinkedListWithTail() {
-        return new Object[][]{
-                {new SinglyLinkedListWithTail<>(), 35},
-                {new SinglyLinkedListWithTail<>(34), 35},
-                {new SinglyLinkedListWithTail<>(5,7,9,2,6,1,6,6,3,1,7,8), 3},
-                {new SinglyLinkedListWithTail<>(5.0,-2.3,-1.3,-1.9,-2.3), 2.3},
-                {new SinglyLinkedListWithTail<>("aaa","bbb","aaa","ccc"), "xyz"}
-        };
+    @Test(expected = RuntimeException.class)
+    public void shouldThrowExceptionWhenDeletingFromEmptyStackOnSinglyLinkedList() {
+        // given
+        SinglyLinkedList<Integer> list = new SinglyLinkedList<>();
+
+        try {
+            // when
+            Chapter10.singlyLinkedListPop(list);
+        } catch (RuntimeException e) {
+            // then
+            assertEquals("underflow", e.getMessage());
+            throw e;
+        }
     }
 
     @Test
-    @UseDataProvider("provideDataForPerformingEnqueueOnSinglyLinkedListWithTail")
-    public <T> void shouldEnqueueElementOnSinglyLinkedList(SinglyLinkedListWithTail<T> list, T key) {
+    public void shouldInsertElementIntoQueueOnSinglyLinkedListWithTail() {
         // given
-        SinglyLinkedListWithTail<T> original = new SinglyLinkedListWithTail<>(list);
+        SinglyLinkedListWithTail<Integer> list = new SinglyLinkedListWithTail<>(5,7,9,2,6,1,6,6,3,1,7,8);
+        SinglyLinkedListWithTail<Integer> original = new SinglyLinkedListWithTail<>(list);
+        int keyToInsert = 3;
 
         // when
-        Chapter10.singlyLinkedListEnqueue(list, key);
+        Chapter10.singlyLinkedListEnqueue(list, keyToInsert);
 
         // then
-        assertNotNull(list.head);
-        SinglyLinkedListWithTail<T>.Node x = original.head;
-        SinglyLinkedListWithTail<T>.Node y = list.head;
-        while (x != original.tail) {
-            assertEquals(x.key, y.key);
-            x = x.next;
-            y = y.next;
+        Array<Integer> listArray = list.toArray();
+        Array<Integer> originalArray = original.toArray();
+        assertEquals(originalArray.length + 1, listArray.length);
+        assertEquals(new Integer(keyToInsert), listArray.at(listArray.length));
+        for (int i = 1; i <= listArray.length - 1; i++) {
+            assertEquals(originalArray.at(i), listArray.at(i));
         }
-        assertEquals(key, list.tail.key);
-    }
-
-    @DataProvider
-    public static Object[][] provideDataForPerformingDequeueOnSinglyLinkedListWithTail() {
-        return new Object[][]{
-                {new SinglyLinkedListWithTail<>(34)},
-                {new SinglyLinkedListWithTail<>(5,7,9,2,6,1,6,6,3,1,7,8)},
-                {new SinglyLinkedListWithTail<>(5.0,-2.3,-1.3,-1.9,-2.3)},
-                {new SinglyLinkedListWithTail<>("aaa","bbb","aaa","ccc")}
-        };
     }
 
     @Test
-    @UseDataProvider("provideDataForPerformingDequeueOnSinglyLinkedListWithTail")
-    public <T> void shouldDequeueElementFromSinglyLinkedListWithTail(SinglyLinkedListWithTail<T> list) {
+    public void shouldDeleteElementFromQueueOnSinglyLinkedListWithTail() {
         // given
-        SinglyLinkedListWithTail<T> original = new SinglyLinkedListWithTail<>(list);
+        SinglyLinkedListWithTail<Integer> list = new SinglyLinkedListWithTail<>(5,7,9,2,6,1,6,6,3,1,7,8);
+        SinglyLinkedListWithTail<Integer> original = new SinglyLinkedListWithTail<>(list);
+        int expectedElement = 5;
 
         // when
-        Chapter10.singlyLinkedListDequeue(list);
+        Integer actualElement = Chapter10.singlyLinkedListDequeue(list);
 
         // then
-        SinglyLinkedList<T>.Node x = original.head.next;
-        SinglyLinkedList<T>.Node y = list.head;
-        while (x != null) {
-            assertEquals(x.key, y.key);
-            x = x.next;
-            y = y.next;
+        assertEquals(new Integer(expectedElement), actualElement);
+        Array<Integer> listArray = list.toArray();
+        Array<Integer> originalArray = original.toArray();
+        assertEquals(originalArray.length - 1, listArray.length);
+        for (int i = 1; i <= listArray.length; i++) {
+            assertEquals(originalArray.at(i + 1), listArray.at(i));
         }
     }
 
-    @DataProvider
-    public static Object[][] provideDataForInsertingElementOnCircularList() {
-        return new Object[][]{
-                {new CircularList<>(), 35},
-                {new CircularList<>(34), 35},
-                {new CircularList<>(5,7,9,2,6,1,6,6,3,1,7,8), 3},
-                {new CircularList<>(5.0,-2.3,-1.3,-1.9,-2.3), 2.3},
-                {new CircularList<>("aaa","bbb","aaa","ccc"), "xyz"}
-        };
+    @Test(expected = RuntimeException.class)
+    public void shouldThrowExceptionWhenDeletingFromEmptyQueueOnSinglyLinkedListWithTail() {
+        // given
+        SinglyLinkedListWithTail<Integer> list = new SinglyLinkedListWithTail<>();
+
+        try {
+            // when
+            Chapter10.singlyLinkedListDequeue(list);
+        } catch (RuntimeException e) {
+            // then
+            assertEquals("underflow", e.getMessage());
+            throw e;
+        }
     }
 
     @Test
-    @UseDataProvider("provideDataForInsertingElementOnCircularList")
-    public <T> void shouldInsertElementOnCircularList(CircularList<T> list, T key) {
+    public void shouldInsertElementOntoCircularList() {
         // given
-        CircularList<T> original = new CircularList<>(list);
+        CircularList<Integer> list = new CircularList<>(5,7,9,2,6,1,6,6,3,1,7,8);
+        CircularList<Integer> original = new CircularList<>(list);
+        int keyToInsert = 3;
 
         // when
-        Chapter10.circularListInsert(list, list.new Node(key));
+        Chapter10.circularListInsert(list, list.new Node(keyToInsert));
 
         // then
-        assertNotNull(list.head);
-        assertEquals(key, list.head.next.key);
-        if (original.head == null) {
-            return;
+        Array<Integer> listArray = list.toArray();
+        Array<Integer> originalArray = original.toArray();
+        assertEquals(originalArray.length + 1, listArray.length);
+        assertEquals(originalArray.at(1), listArray.at(1));
+        assertEquals(new Integer(keyToInsert), listArray.at(2));
+        for (int i = 3; i <= listArray.length; i++) {
+            assertEquals(originalArray.at(i - 1), listArray.at(i));
         }
-        CircularList<T>.Node x = original.head.next;
-        CircularList<T>.Node y = list.head.next.next;
-        while (x != original.head) {
-            assertEquals(x.key, y.key);
-            x = x.next;
-            y = y.next;
-        }
-    }
-
-    @DataProvider
-    public static Object[][] provideDataForDeletingElementFromCircularList() {
-        return new Object[][]{
-                {new CircularList<>(34), 1},
-                {new CircularList<>(5,7,9,2,6,1,6,6,3,1,7,8), 4},
-                {new CircularList<>(5.0,-2.3,-1.3,-1.9,-2.3), 4},
-                {new CircularList<>("aaa","bbb","aaa","ccc"), 4}
-        };
     }
 
     @Test
-    @UseDataProvider("provideDataForDeletingElementFromCircularList")
-    public <T> void shouldDeleteElementFromCircularList(CircularList<T> list, int elementPosition) {
+    public void shouldDeleteElementFromCircularList() {
         // given
-        CircularList<T>.Node nodeToDelete = list.head;
-        for (int i = 2; i <= elementPosition; i++) {
-            nodeToDelete = nodeToDelete.next;
-        }
-        CircularList<T> original = new CircularList<>(list);
+        CircularList<Integer> list = new CircularList<>(5,7,9,2,6,1,6,6,3,1,7,8);
+        CircularList<Integer> original = new CircularList<>(list);
+        int keyToDelete = 6;
+        CircularList<Integer>.Node nodeToDelete = list.head.next.next.next.next; // first element on the list with key = 6
 
         // when
         Chapter10.circularListDelete(list, nodeToDelete);
 
         // then
-        if (list.head == null) {
-            return;
-        }
-        if (!original.head.key.equals(list.head.key)) {
-            assertEquals(original.head.key, nodeToDelete.key);
-        }
-        CircularList<T>.Node x = original.head.next;
-        CircularList<T>.Node y = list.head.next;
-        while (x != original.head) {
-            if (y != original.head && x.key.equals(y.key)) {
-                x = x.next;
-                y = y.next;
-            } else {
-                assertEquals(x.key, nodeToDelete.key);
-                x = x.next;
-            }
-        }
-    }
-
-    @DataProvider
-    public static Object[][] provideDataForSuccessfulListSearchUsingCircularListSearch() {
-        return new Object[][]{
-                {new CircularList<>(34), 34},
-                {new CircularList<>(5,7,9,2,6,1,6,6,3,1,7,8), 6},
-                {new CircularList<>(5,7,9,2,6,1,6,6,3,1,7,8), 8},
-                {new CircularList<>(5.0,-2.3,-1.3,-1.9,-2.3), -2.3},
-                {new CircularList<>("aaa","bbb","aaa","ccc"), "ccc"}
-        };
+        assertElementDeletedFromList(keyToDelete, list.toArray(), original.toArray());
     }
 
     @Test
-    @UseDataProvider("provideDataForSuccessfulListSearchUsingCircularListSearch")
-    public <T> void shouldFindKeyOnCircularList(CircularList<T> list, T key) {
+    public void shouldFindKeyOnCircularList() {
         // given
+        CircularList<Integer> list = new CircularList<>(5,7,9,2,6,1,6,6,3,1,7,8);
+        int keyToFind = 6;
 
         // when
-        CircularList<T>.Node actualNode = Chapter10.circularListSearch(list, key);
+        CircularList<Integer>.Node actualNode = Chapter10.circularListSearch(list, keyToFind);
 
         // then
         assertNotNull(actualNode);
-        assertEquals(key, actualNode.key);
-        assertNotNull(list.head);
-        boolean found = list.head.key.equals(actualNode.key);
-        CircularList<T>.Node x = list.head.next;
-        while (x != list.head && !found) {
-            found = x.key.equals(actualNode.key);
-            x = x.next;
-        }
-        assertTrue(found);
-    }
-
-    @DataProvider
-    public static Object[][] provideDataForUnsuccessfulListSearchUsingCircularListSearch() {
-        return new Object[][]{
-                {new CircularList<>(34), 35},
-                {new CircularList<>(5,7,9,2,6,1,6,6,3,1,7,8), 4},
-                {new CircularList<>(5.0,-2.3,-1.3,-1.9,-2.3), 2.3},
-                {new CircularList<>("aaa","bbb","aaa","ccc"), "xyz"}
-        };
+        assertEquals(new Integer(keyToFind), actualNode.key);
     }
 
     @Test
-    @UseDataProvider("provideDataForUnsuccessfulListSearchUsingCircularListSearch")
-    public <T> void shouldNotFindKeyOnCircularList(CircularList<T> list, T key) {
+    public void shouldNotFindNonexistentKeyOnCircularList() {
         // given
+        CircularList<Integer> list = new CircularList<>(5,7,9,2,6,1,6,6,3,1,7,8);
+        int keyToFind = 4;
 
         // when
-        CircularList<T>.Node actualNode = Chapter10.circularListSearch(list, key);
+        CircularList<Integer>.Node actualNode = Chapter10.circularListSearch(list, keyToFind);
 
         // then
         assertNull(actualNode);
     }
 
-    @DataProvider
-    public static Object[][] provideDataForCircularListsUnion() {
-        return new Object[][]{
-                {new CircularList<>(),new CircularList<>()},
-                {new CircularList<>(1),new CircularList<>()},
-                {new CircularList<>(12,44,26,20,67,4,21,66,35,51,13),new CircularList<>(55,23,2,74,30,47)}
-        };
-    }
-
     @Test
-    @UseDataProvider("provideDataForCircularListsUnion")
-    public <T> void shouldUnionCircularLists(CircularList<T> list1, CircularList<T> list2) {
+    public void shouldUnionCircularLists() {
         // given
-        Array<T> originalArray1 = list1.toArray();
-        Array<T> originalArray2 = list2.toArray();
+        CircularList<Integer> list1 = new CircularList<>(12,44,26,20,67,4,21,66,35,51,13);
+        CircularList<Integer> list2 = new CircularList<>(55,23,2,74,30,47);
+        Array<Integer> originalArray1 = list1.toArray();
+        Array<Integer> originalArray2 = list2.toArray();
 
         // when
-        CircularList<T> actualMergedLists = Chapter10.circularListsUnion(list1, list2);
+        CircularList<Integer> actualMergedLists = Chapter10.circularListsUnion(list1, list2);
 
         // then
-        Array<T> actualMergedArray = actualMergedLists.toArray();
-        Array<T> expectedMergedArray = Array.withLength(originalArray1.length + originalArray2.length);
+        Array<Integer> actualMergedArray = actualMergedLists.toArray();
+        Array<Integer> expectedMergedArray = Array.withLength(originalArray1.length + originalArray2.length);
         for (int i = 1; i <= originalArray1.length; i++) {
             expectedMergedArray.set(i, originalArray1.at(i));
         }
@@ -932,42 +957,22 @@ public class Chapter10Test {
         assertShuffled(expectedMergedArray, actualMergedArray);
     }
 
-    @DataProvider
-    public static Object[][] provideDataForReversingSinglyLinkedList() {
-        return new Object[][]{
-                {new SinglyLinkedList<>()},
-                {new SinglyLinkedList<>(34)},
-                {new SinglyLinkedList<>(5,7,9,2,6,1,6,6,3,1,7,8)},
-                {new SinglyLinkedList<>(5.0,-2.3,-1.3,-1.9,-2.3)},
-                {new SinglyLinkedList<>("aaa","bbb","aaa","ccc")}
-        };
-    }
-
     @Test
-    @UseDataProvider("provideDataForReversingSinglyLinkedList")
-    public <T> void shouldReverseSinglyLinkedList(SinglyLinkedList<T> list) {
+    public void shouldReverseSinglyLinkedList() {
         // given
-        SinglyLinkedList<T> original = new SinglyLinkedList<>(list);
+        SinglyLinkedList<Integer> list = new SinglyLinkedList<>(5,7,9,2,6,1,6,6,3,1,7,8);
+        SinglyLinkedList<Integer> original = new SinglyLinkedList<>(list);
 
         // when
         Chapter10.singlyLinkedListReverse(list);
 
         // then
-        SinglyLinkedList<T> expectedReversed = new SinglyLinkedList<>();
-        SinglyLinkedList<T>.Node x = original.head;
-        SinglyLinkedList<T>.Node y;
-        while (x != null) {
-            y = expectedReversed.new Node(x.key);
-            y.next = expectedReversed.head;
-            expectedReversed.head = y;
-            x = x.next;
-        }
-        x = list.head;
-        y = expectedReversed.head;
-        while (x != null) {
-            assertEquals(y.key, x.key);
-            x = x.next;
-            y = y.next;
+        Array<Integer> listArray = list.toArray();
+        Array<Integer> originalArray = original.toArray();
+        assertEquals(originalArray.length, listArray.length);
+        int n = listArray.length;
+        for (int i = 1; i <= n; i++) {
+            assertEquals(originalArray.at(i), listArray.at(n - i + 1));
         }
     }
 
@@ -1273,7 +1278,104 @@ public class Chapter10Test {
         // then
         String[] actualOutput = splitOutContent();
         String[] expectedOutput = new String[]{"1","4","10","11","14","19","20"};
-        assertArrayEquals(expectedOutput, actualOutput);
+        Assert.assertArrayEquals(expectedOutput, actualOutput);
+    }
+
+    @Test
+    public void shouldMakeNewHeapOnSortedLists() {
+        // given
+
+        // when
+        List<Integer> actualHeap = Chapter10.sortedListMakeMinHeap();
+
+        // then
+        assertEquals(0, actualHeap.getLength());
+    }
+
+    @Test
+    public void shouldInsertElementAtTheBeginningOfHeapOnSortedLists() {
+        // given
+        List<Integer> sortedList = new List<>(2,4,8,8,13,14,15);
+        int key = 1;
+        List<Integer> expectedAfterInsertion = new List<>(1,2,4,8,8,13,14,15);
+
+        // when
+        Chapter10.sortedListMinHeapInsert(sortedList, key);
+
+        // then
+        assertArrayEquals(expectedAfterInsertion.toArray(), sortedList.toArray());
+    }
+
+    @Test
+    public void shouldInsertElementAtTheEndOfHeapOnSortedLists() {
+        // given
+        List<Integer> sortedList = new List<>(2,4,8,8,13,14,15);
+        int key = 20;
+        List<Integer> expectedAfterInsertion = new List<>(2,4,8,8,13,14,15,20);
+
+        // when
+        Chapter10.sortedListMinHeapInsert(sortedList, key);
+
+        // then
+        assertArrayEquals(expectedAfterInsertion.toArray(), sortedList.toArray());
+    }
+
+    @Test
+    public void shouldInsertElementInTheMiddleOfHeapOnSortedLists() {
+        // given
+        List<Integer> sortedList = new List<>(2,4,8,8,13,14,15);
+        int key = 12;
+        List<Integer> expectedAfterInsertion = new List<>(2,4,8,8,12,13,14,15);
+
+        // when
+        Chapter10.sortedListMinHeapInsert(sortedList, key);
+
+        // then
+        assertArrayEquals(expectedAfterInsertion.toArray(), sortedList.toArray());
+    }
+
+    @Test
+    public void shouldGetMinimumFromHeapOnSortedLists() {
+        // given
+        List<Integer> sortedList = new List<>(2,4,8,8,13,14,15);
+        List<Integer> original = new List<>(sortedList);
+        int expectedMinimum = 2;
+
+        // when
+        int actualMinimum = Chapter10.sortedListHeapMinimum(sortedList);
+
+        // then
+        assertEquals(expectedMinimum, actualMinimum);
+        assertArrayEquals(original.toArray(), sortedList.toArray());
+    }
+
+    @Test
+    public void shouldExtractMinimumFromHeapOnSortedLists() {
+        // given
+        List<Integer> sortedList = new List<>(2,4,8,8,13,14,15);
+        List<Integer> expectedAfterExtraction = new List<>(4,8,8,13,14,15);
+        int expectedMinimum = 2;
+
+        // when
+        int actualMinimum = Chapter10.sortedListHeapExtractMin(sortedList);
+
+        // then
+        assertEquals(expectedMinimum, actualMinimum);
+        assertArrayEquals(expectedAfterExtraction.toArray(), sortedList.toArray());
+    }
+
+    @Test
+    public void shouldMergeHeapsOnSortedLists() {
+        // given
+        List<Integer> sortedList1 = new List<>(2,4,8,8,13,14,15);
+        List<Integer> sortedList2 = new List<>(1,2,5,6,8,12,14,14);
+        List<Integer> expectedMerged = new List<>(1,2,2,4,5,6,8,8,8,12,13,14,14,14,15);
+
+        // when
+        List<Integer> actualMerged = Chapter10.sortedListMinHeapUnion(sortedList1, sortedList2);
+
+        // then
+        assertArrayEquals(expectedMerged.toArray(), actualMerged.toArray());
     }
 
     @Test
