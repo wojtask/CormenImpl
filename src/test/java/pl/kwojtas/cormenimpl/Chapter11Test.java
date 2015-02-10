@@ -148,8 +148,7 @@ public class Chapter11Test {
     private ZeroBasedIndexedArray<List<Element<String>>> getExemplaryDirectAddressTableWithNonDistinctKeys() {
         ZeroBasedIndexedArray<List<Element<String>>> directAddressTable = ZeroBasedIndexedArray.withLength(5);
         directAddressTable.set(0, new List<>(new Element<>(0, "zero")));
-        directAddressTable.set(1, new List<>(new Element<>(1, "oneA"), new Element<>(1, "oneB"),
-                new Element<>(1, "oneC")));
+        directAddressTable.set(1, new List<>(new Element<>(1, "oneA"), new Element<>(1, "oneB"), new Element<>(1, "oneC")));
         directAddressTable.set(2, new List<>());
         directAddressTable.set(3, new List<>(new Element<>(3, "threeA"), new Element<>(3, "threeB")));
         directAddressTable.set(4, new List<>());
@@ -159,8 +158,7 @@ public class Chapter11Test {
     @Test
     public void shouldFindElementInDirectAddressTableWithNonDistinctKeys() {
         // given
-        ZeroBasedIndexedArray<List<Element<String>>> directAddressTable
-                = getExemplaryDirectAddressTableWithNonDistinctKeys();
+        ZeroBasedIndexedArray<List<Element<String>>> directAddressTable = getExemplaryDirectAddressTableWithNonDistinctKeys();
         Element<String> element = new Element<>(3, "threeA");
 
         // when
@@ -174,8 +172,7 @@ public class Chapter11Test {
     @Test
     public void shouldNotFindNonexistentElementInDirectAddressTableWithNonDistinctKeys() {
         // given
-        ZeroBasedIndexedArray<List<Element<String>>> directAddressTable
-                = getExemplaryDirectAddressTableWithNonDistinctKeys();
+        ZeroBasedIndexedArray<List<Element<String>>> directAddressTable = getExemplaryDirectAddressTableWithNonDistinctKeys();
         int key = 2;
 
         // when
@@ -188,8 +185,7 @@ public class Chapter11Test {
     @Test
     public void shouldInsertIntoDirectAddressTableWithNonDistinctKeys() {
         // given
-        ZeroBasedIndexedArray<List<Element<String>>> directAddressTable
-                = getExemplaryDirectAddressTableWithNonDistinctKeys();
+        ZeroBasedIndexedArray<List<Element<String>>> directAddressTable = getExemplaryDirectAddressTableWithNonDistinctKeys();
         Element<String> element = new Element<>(4, "four");
         int key = 4;
 
@@ -204,8 +200,7 @@ public class Chapter11Test {
     @Test
     public void shouldDeleteFromDirectAddressTableWithNonDistinctKeys() {
         // given
-        ZeroBasedIndexedArray<List<Element<String>>> directAddressTable
-                = getExemplaryDirectAddressTableWithNonDistinctKeys();
+        ZeroBasedIndexedArray<List<Element<String>>> directAddressTable = getExemplaryDirectAddressTableWithNonDistinctKeys();
         int key = 1;
 
         // when

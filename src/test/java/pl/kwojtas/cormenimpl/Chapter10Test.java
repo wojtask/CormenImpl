@@ -92,24 +92,24 @@ public class Chapter10Test {
     }
 
     @Test
-     public void shouldRemoveFromStack() {
+     public void shouldDeleteFromStack() {
         // given
         Stack<String> stack = Stack.withLength(6);
         stack.set(4, "xyz");
         stack.top = 4;
-        int topBeforeRemoving = stack.top;
+        int topBeforeDeleting = stack.top;
         String expectedElement = "xyz";
 
         // when
         String actualElement = Chapter10.pop(stack);
 
         // then
-        assertEquals(topBeforeRemoving - 1, stack.top);
+        assertEquals(topBeforeDeleting - 1, stack.top);
         assertEquals(expectedElement, actualElement);
     }
 
     @Test(expected = RuntimeException.class)
-    public void shouldThrowExceptionWhenRemovingFromEmptyStack() {
+    public void shouldThrowExceptionWhenDeletingFromEmptyStack() {
         // given
         Stack<String> stack = Stack.withLength(6);
 
@@ -193,25 +193,25 @@ public class Chapter10Test {
     }
 
     @Test
-    public void shouldRemoveFromQueue() {
+    public void shouldDeleteFromQueue() {
         // given
         Queue<String> queue = Queue.withLength(6);
         queue.set(4, "xyz");
         queue.head = 4;
         queue.tail = 6;
-        int headBeforeRemoving = queue.head;
+        int headBeforeDeleting = queue.head;
         String expectedElement = "xyz";
 
         // when
         String actualElement = Chapter10.dequeue(queue);
 
         // then
-        assertEquals(headBeforeRemoving + 1, queue.head);
+        assertEquals(headBeforeDeleting + 1, queue.head);
         assertEquals(expectedElement, actualElement);
     }
 
     @Test(expected = RuntimeException.class)
-    public void shouldThrowExceptionWhenRemovingFromEmptyQueue() {
+    public void shouldThrowExceptionWhenDeletingFromEmptyQueue() {
         // given
         Queue<String> queue = Queue.withLength(6);
 
@@ -269,25 +269,25 @@ public class Chapter10Test {
     }
 
     @Test
-    public void shouldRemoveFromFirstStackOfDoubleStack() {
+    public void shouldDeleteFromFirstStackOfDoubleStack() {
         // given
         DoubleStack<String> doubleStack = DoubleStack.withLength(6);
         doubleStack.set(2, "xyz");
         doubleStack.top1 = 2;
         doubleStack.top2 = 4;
-        int top1BeforeRemoving = doubleStack.top1;
+        int top1BeforeDeleting = doubleStack.top1;
         String expectedElement = "xyz";
 
         // when
         String actualElement = Chapter10.firstStackPop(doubleStack);
 
         // then
-        assertEquals(top1BeforeRemoving - 1, doubleStack.top1);
+        assertEquals(top1BeforeDeleting - 1, doubleStack.top1);
         assertEquals(expectedElement, actualElement);
     }
 
     @Test(expected = RuntimeException.class)
-    public void shouldThrowExceptionWhenRemovingFromEmptyFirstStackOfDoubleStack() {
+    public void shouldThrowExceptionWhenDeletingFromEmptyFirstStackOfDoubleStack() {
         // given
         DoubleStack<String> doubleStack = DoubleStack.withLength(6);
         doubleStack.top2 = 3;
@@ -300,6 +300,31 @@ public class Chapter10Test {
             assertEquals("underflow", e.getMessage());
             throw e;
         }
+    }
+
+    @Test
+    public void shouldDetectEmptyFirstStackOfDoubleStack() {
+        // given
+        DoubleStack<String> doubleStack = DoubleStack.withLength(6);
+
+        // when
+        boolean actualEmpty = Chapter10.firstStackEmpty(doubleStack);
+
+        // then
+        assertTrue(actualEmpty);
+    }
+
+    @Test
+    public void shouldDetectNonemptyFirstStackOfDoubleStack() {
+        // given
+        DoubleStack<String> doubleStack = DoubleStack.withLength(6);
+        doubleStack.top1 = 2;
+
+        // when
+        boolean actualEmpty = Chapter10.firstStackEmpty(doubleStack);
+
+        // then
+        assertFalse(actualEmpty);
     }
 
     @Test
@@ -320,25 +345,25 @@ public class Chapter10Test {
     }
 
     @Test
-    public void shouldRemoveFromSecondStackOfDoubleStack() {
+    public void shouldDeleteFromSecondStackOfDoubleStack() {
         // given
         DoubleStack<String> doubleStack = DoubleStack.withLength(6);
         doubleStack.set(4, "xyz");
         doubleStack.top1 = 2;
         doubleStack.top2 = 4;
-        int top2BeforeRemoving = doubleStack.top2;
+        int top2BeforeDeleting = doubleStack.top2;
         String expectedElement = "xyz";
 
         // when
         String actualElement = Chapter10.secondStackPop(doubleStack);
 
         // then
-        assertEquals(top2BeforeRemoving + 1, doubleStack.top2);
+        assertEquals(top2BeforeDeleting + 1, doubleStack.top2);
         assertEquals(expectedElement, actualElement);
     }
 
     @Test(expected = RuntimeException.class)
-    public void shouldThrowExceptionWhenRemovingFromEmptySecondStackOfDoubleStack() {
+    public void shouldThrowExceptionWhenDeletingFromEmptySecondStackOfDoubleStack() {
         // given
         DoubleStack<String> doubleStack = DoubleStack.withLength(6);
         doubleStack.top1 = 4;
@@ -351,6 +376,31 @@ public class Chapter10Test {
             assertEquals("underflow", e.getMessage());
             throw e;
         }
+    }
+
+    @Test
+    public void shouldDetectEmptySecondStackOfDoubleStack() {
+        // given
+        DoubleStack<String> doubleStack = DoubleStack.withLength(6);
+
+        // when
+        boolean actualEmpty = Chapter10.secondStackEmpty(doubleStack);
+
+        // then
+        assertTrue(actualEmpty);
+    }
+
+    @Test
+    public void shouldDetectNonemptySecondStackOfDoubleStack() {
+        // given
+        DoubleStack<String> doubleStack = DoubleStack.withLength(6);
+        doubleStack.top2 = 3;
+
+        // when
+        boolean actualEmpty = Chapter10.secondStackEmpty(doubleStack);
+
+        // then
+        assertFalse(actualEmpty);
     }
 
     @Test
@@ -387,7 +437,7 @@ public class Chapter10Test {
     }
 
     @Test
-    public void shouldRemoveFromBeginningOfDeque() {
+    public void shouldDeleteFromBeginningOfDeque() {
         // given
         Deque<String> deque = Deque.withLength(6);
         deque.set(2, "xyz");
@@ -405,7 +455,7 @@ public class Chapter10Test {
     }
 
     @Test
-    public void shouldRemoveFromBeginningOfDequeWithHeadEqualsLength() {
+    public void shouldDeleteFromBeginningOfDequeWithHeadEqualsLength() {
         // given
         Deque<String> deque = Deque.withLength(6);
         deque.set(6, "xyz");
@@ -455,7 +505,7 @@ public class Chapter10Test {
     }
 
     @Test
-    public void shouldRemoveFromEndOfDeque() {
+    public void shouldDeleteFromEndOfDeque() {
         // given
         Deque<String> deque = Deque.withLength(6);
         deque.set(3, "xyz");
@@ -473,7 +523,7 @@ public class Chapter10Test {
     }
 
     @Test
-    public void shouldRemoveFromEndOfDequeWithTailEquals1() {
+    public void shouldDeleteFromEndOfDequeWithTailEquals1() {
         // given
         Deque<String> deque = Deque.withLength(6);
         deque.set(6, "xyz");
@@ -507,7 +557,7 @@ public class Chapter10Test {
     }
 
     @Test
-    public void shouldRemoveFromQueueOnStacks() {
+    public void shouldDeleteFromQueueOnStacks() {
         // given
         Stack<String> stack1 = Stack.withLength(4);
         Stack<String> stack2 = Stack.withLength(4);
@@ -525,7 +575,7 @@ public class Chapter10Test {
     }
 
     @Test(expected = RuntimeException.class)
-    public void shouldThrowExceptionWhenRemovingFromEmptyQueueOnStacks() {
+    public void shouldThrowExceptionWhenDeletingFromEmptyQueueOnStacks() {
         // given
         Stack<String> stack1 = Stack.withLength(4);
         Stack<String> stack2 = Stack.withLength(4);
@@ -559,7 +609,7 @@ public class Chapter10Test {
     }
 
     @Test
-    public void shouldRemoveFromStackOnQueues() {
+    public void shouldDeleteFromStackOnQueues() {
         // given
         Queue<String> queue1 = Queue.withLength(4);
         Queue<String> queue2 = Queue.withLength(4);
@@ -580,7 +630,7 @@ public class Chapter10Test {
     }
 
     @Test(expected = RuntimeException.class)
-    public void shouldThrowExceptionWhenRemovingFromEmptyStackOnQueues() {
+    public void shouldThrowExceptionWhenDeletingFromEmptyStackOnQueues() {
         // given
         Queue<String> queue1 = Queue.withLength(4);
         Queue<String> queue2 = Queue.withLength(4);
@@ -623,7 +673,7 @@ public class Chapter10Test {
     }
 
     @Test
-    public void shouldInsertElementOntoList() {
+    public void shouldInsertOntoList() {
         // given
         List<Integer> list = new List<>(5,7,9,2,6,1,6,6,3,1,7,8);
         List<Integer> original = new List<>(list);
@@ -639,7 +689,7 @@ public class Chapter10Test {
     }
 
     @Test
-    public void shouldDeleteElementFromList() {
+    public void shouldDeleteFromList() {
         // given
         List<Integer> list = new List<>(5,7,9,2,6,1,6,6,3,1,7,8);
         List<Integer> original = new List<>(list);
@@ -669,7 +719,7 @@ public class Chapter10Test {
     }
 
     @Test
-    public void shouldDeleteElementFromListWithSentinel() {
+    public void shouldDeleteFromListWithSentinel() {
         // given
         ListWithSentinel<Integer> list = new ListWithSentinel<>(5,7,9,2,6,1,6,6,3,1,7,8);
         ListWithSentinel<Integer> original = new ListWithSentinel<>(list);
@@ -711,7 +761,7 @@ public class Chapter10Test {
     }
 
     @Test
-    public void shouldInsertElementOntoListWithSentinel() {
+    public void shouldInsertOntoListWithSentinel() {
         // given
         ListWithSentinel<Integer> list = new ListWithSentinel<>(5,7,9,2,6,1,6,6,3,1,7,8);
         ListWithSentinel<Integer> original = new ListWithSentinel<>(list);
@@ -735,7 +785,7 @@ public class Chapter10Test {
     }
 
     @Test
-    public void shouldInsertElementOntoSinglyLinkedList() {
+    public void shouldInsertOntoSinglyLinkedList() {
         // given
         SinglyLinkedList<Integer> list = new SinglyLinkedList<>(5,7,9,2,6,1,6,6,3,1,7,8);
         SinglyLinkedList<Integer> original = new SinglyLinkedList<>(list);
@@ -751,7 +801,7 @@ public class Chapter10Test {
     }
 
     @Test
-    public void shouldDeleteElementFromSinglyLinkedList() {
+    public void shouldDeleteFromSinglyLinkedList() {
         // given
         SinglyLinkedList<Integer> list = new SinglyLinkedList<>(5,7,9,2,6,1,6,6,3,1,7,8);
         SinglyLinkedList<Integer> original = new SinglyLinkedList<>(list);
@@ -766,7 +816,7 @@ public class Chapter10Test {
     }
 
     @Test
-    public void shouldInsertElementIntoStackOnSinglyLinkedList() {
+    public void shouldInsertIntoStackOnSinglyLinkedList() {
         // given
         SinglyLinkedList<Integer> list = new SinglyLinkedList<>(5,7,9,2,6,1,6,6,3,1,7,8);
         SinglyLinkedList<Integer> original = new SinglyLinkedList<>(list);
@@ -782,7 +832,7 @@ public class Chapter10Test {
     }
 
     @Test
-    public void shouldDeleteElementFromStackOnSinglyLinkedList() {
+    public void shouldDeleteFromStackOnSinglyLinkedList() {
         // given
         SinglyLinkedList<Integer> list = new SinglyLinkedList<>(5,7,9,2,6,1,6,6,3,1,7,8);
         SinglyLinkedList<Integer> original = new SinglyLinkedList<>(list);
@@ -817,7 +867,7 @@ public class Chapter10Test {
     }
 
     @Test
-    public void shouldInsertElementIntoQueueOnSinglyLinkedListWithTail() {
+    public void shouldInsertIntoQueueOnSinglyLinkedListWithTail() {
         // given
         SinglyLinkedListWithTail<Integer> list = new SinglyLinkedListWithTail<>(5,7,9,2,6,1,6,6,3,1,7,8);
         SinglyLinkedListWithTail<Integer> original = new SinglyLinkedListWithTail<>(list);
@@ -837,7 +887,7 @@ public class Chapter10Test {
     }
 
     @Test
-    public void shouldDeleteElementFromQueueOnSinglyLinkedListWithTail() {
+    public void shouldDeleteFromQueueOnSinglyLinkedListWithTail() {
         // given
         SinglyLinkedListWithTail<Integer> list = new SinglyLinkedListWithTail<>(5,7,9,2,6,1,6,6,3,1,7,8);
         SinglyLinkedListWithTail<Integer> original = new SinglyLinkedListWithTail<>(list);
@@ -872,7 +922,7 @@ public class Chapter10Test {
     }
 
     @Test
-    public void shouldInsertElementOntoCircularList() {
+    public void shouldInsertOntoCircularList() {
         // given
         CircularList<Integer> list = new CircularList<>(5,7,9,2,6,1,6,6,3,1,7,8);
         CircularList<Integer> original = new CircularList<>(list);
@@ -893,7 +943,7 @@ public class Chapter10Test {
     }
 
     @Test
-    public void shouldDeleteElementFromCircularList() {
+    public void shouldDeleteFromCircularList() {
         // given
         CircularList<Integer> list = new CircularList<>(5,7,9,2,6,1,6,6,3,1,7,8);
         CircularList<Integer> original = new CircularList<>(list);
@@ -1293,7 +1343,7 @@ public class Chapter10Test {
     }
 
     @Test
-    public void shouldInsertElementAtTheBeginningOfHeapOnSortedLists() {
+    public void shouldInsertAtTheBeginningOfHeapOnSortedLists() {
         // given
         List<Integer> sortedList = new List<>(2,4,8,8,13,14,15);
         int key = 1;
@@ -1307,7 +1357,7 @@ public class Chapter10Test {
     }
 
     @Test
-    public void shouldInsertElementAtTheEndOfHeapOnSortedLists() {
+    public void shouldInsertAtTheEndOfHeapOnSortedLists() {
         // given
         List<Integer> sortedList = new List<>(2,4,8,8,13,14,15);
         int key = 20;
@@ -1321,7 +1371,7 @@ public class Chapter10Test {
     }
 
     @Test
-    public void shouldInsertElementInTheMiddleOfHeapOnSortedLists() {
+    public void shouldInsertInTheMiddleOfHeapOnSortedLists() {
         // given
         List<Integer> sortedList = new List<>(2,4,8,8,13,14,15);
         int key = 12;
