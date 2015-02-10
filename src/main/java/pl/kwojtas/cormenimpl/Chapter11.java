@@ -1,7 +1,9 @@
 package pl.kwojtas.cormenimpl;
 
+import pl.kwojtas.cormenimpl.util.Element;
 import pl.kwojtas.cormenimpl.util.HashFunction;
 import pl.kwojtas.cormenimpl.util.HashProbingFunction;
+import pl.kwojtas.cormenimpl.util.HashTableWithFreeList;
 import pl.kwojtas.cormenimpl.util.List;
 import pl.kwojtas.cormenimpl.util.Stack;
 import pl.kwojtas.cormenimpl.util.ZeroBasedIndexedArray;
@@ -10,38 +12,23 @@ public final class Chapter11 {
 
     private Chapter11() { }
 
-    static class ElementWithKey<T> {
-        public int key;
-        public T data;
-
-        public ElementWithKey(int key, T data) {
-            this.key = key;
-            this.data = data;
-        }
-
-        public ElementWithKey(ElementWithKey<T> otherElementWithKey) {
-            this.key = otherElementWithKey.key;
-            this.data = otherElementWithKey.data;
-        }
-    }
-
     // subchapter 11.1
-    public static <T> ElementWithKey<T> directAddressSearch(ZeroBasedIndexedArray<ElementWithKey<T>> T, int k) {
+    public static <T> Element<T> directAddressSearch(ZeroBasedIndexedArray<Element<T>> T, int k) {
         return T.at(k);
     }
 
     // subchapter 11.1
-    public static <T> void directAddressInsert(ZeroBasedIndexedArray<ElementWithKey<T>> T, ElementWithKey<T> x) {
+    public static <T> void directAddressInsert(ZeroBasedIndexedArray<Element<T>> T, Element<T> x) {
         T.set(x.key, x);
     }
 
     // subchapter 11.1
-    public static <T> void directAddressDelete(ZeroBasedIndexedArray<ElementWithKey<T>> T, ElementWithKey<T> x) {
+    public static <T> void directAddressDelete(ZeroBasedIndexedArray<Element<T>> T, Element<T> x) {
         T.set(x.key, null);
     }
 
     // solution of 11.1-1
-    public static <T> ElementWithKey<T> directAddressMaximum(ZeroBasedIndexedArray<ElementWithKey<T>> T) {
+    public static <T> Element<T> directAddressMaximum(ZeroBasedIndexedArray<Element<T>> T) {
         int m = T.length;
         for (int i = m - 1; i >= 0; i--) {
             if (T.at(i) != null) {
@@ -67,8 +54,8 @@ public final class Chapter11 {
     }
 
     // solution of 11.1-3
-    public static <T> ElementWithKey<T> directAddressSearch_(ZeroBasedIndexedArray<List<ElementWithKey<T>>> T, int k) {
-        List<ElementWithKey<T>> list = T.at(k);
+    public static <T> Element<T> directAddressSearch_(ZeroBasedIndexedArray<List<Element<T>>> T, int k) {
+        List<Element<T>> list = T.at(k);
         if (list.head != null) {
             return list.head.key;
         }
@@ -76,21 +63,21 @@ public final class Chapter11 {
     }
 
     // solution of 11.1-3
-    public static <T> void directAddressInsert_(ZeroBasedIndexedArray<List<ElementWithKey<T>>> T, ElementWithKey<T> x) {
-        List<ElementWithKey<T>> list = T.at(x.key);
+    public static <T> void directAddressInsert_(ZeroBasedIndexedArray<List<Element<T>>> T, Element<T> x) {
+        List<Element<T>> list = T.at(x.key);
         Chapter10.listInsert(list, list.new Node(x));
     }
 
     // solution of 11.1-3
-    public static <T> void directAddressDelete_(ZeroBasedIndexedArray<List<ElementWithKey<T>>> T, ElementWithKey<T> x) {
-        List<ElementWithKey<T>> list = T.at(x.key);
-        List<ElementWithKey<T>>.Node node = Chapter10.listSearch(list, x);
+    public static <T> void directAddressDelete_(ZeroBasedIndexedArray<List<Element<T>>> T, Element<T> x) {
+        List<Element<T>> list = T.at(x.key);
+        List<Element<T>>.Node node = Chapter10.listSearch(list, x);
         Chapter10.listDelete(list, node);
     }
 
     static class HugeArray<T> {
         public ZeroBasedIndexedArray<Integer> T;
-        public Stack<ElementWithKey<T>> S;
+        public Stack<Element<T>> S;
 
         public HugeArray(int size, int capacity) {
             T = ZeroBasedIndexedArray.withLength(size);
@@ -102,39 +89,37 @@ public final class Chapter11 {
     }
 
     // solution of 11.1-4
-    public static <T> ElementWithKey<T> hugeArraySearch(HugeArray<T> H, int k) {
+    public static <T> Element<T> hugeArraySearch(HugeArray<T> H, int k) {
         if (1 <= H.T.at(k) && H.T.at(k) <= H.S.top && H.S.at(H.T.at(k)).key == k) {
-            return new ElementWithKey<>(H.S.at(H.T.at(k)));
+            return new Element<>(H.S.at(H.T.at(k)));
         }
         return null;
     }
 
     // solution of 11.1-4
-    public static <T> void hugeArrayInsert(HugeArray<T> H, ElementWithKey<T> x) {
+    public static <T> void hugeArrayInsert(HugeArray<T> H, Element<T> x) {
         Chapter10.push(H.S, x);
         H.T.set(x.key, H.S.top);
     }
 
     // solution of 11.1-4
-    public static <T> void hugeArrayDelete(HugeArray<T> H, ElementWithKey<T> x) {
+    public static <T> void hugeArrayDelete(HugeArray<T> H, Element<T> x) {
         int k = x.key;
-        ElementWithKey<T> y = Chapter10.pop(H.S);
+        Element<T> y = Chapter10.pop(H.S);
         H.S.set(H.T.at(k), y);
         H.T.set(y.key, H.T.at(k));
     }
 
     // subchapter 11.2
-    public static <T> void chainedHashInsert(
-            ZeroBasedIndexedArray<List<ElementWithKey<T>>> T, ElementWithKey<T> x, HashFunction h) {
-        List<ElementWithKey<T>> list = T.at(h.compute(x.key));
+    public static <T> void chainedHashInsert(ZeroBasedIndexedArray<List<Element<T>>> T, Element<T> x, HashFunction h) {
+        List<Element<T>> list = T.at(h.compute(x.key));
         Chapter10.listInsert(list, list.new Node(x));
     }
 
     // subchapter 11.2
-    public static <T> ElementWithKey<T> chainedHashSearch(
-            ZeroBasedIndexedArray<List<ElementWithKey<T>>> T, int k, HashFunction h) {
-        List<ElementWithKey<T>> list = T.at(h.compute(k));
-        List<ElementWithKey<T>>.Node x = list.head;
+    public static <T> Element<T> chainedHashSearch(ZeroBasedIndexedArray<List<Element<T>>> T, int k, HashFunction h) {
+        List<Element<T>> list = T.at(h.compute(k));
+        List<Element<T>>.Node x = list.head;
         while (x != null) {
             if (x.key.key == k) {
                 return x.key;
@@ -145,11 +130,90 @@ public final class Chapter11 {
     }
 
     // subchapter 11.2
-    public static <T> void chainedHashDelete(
-            ZeroBasedIndexedArray<List<ElementWithKey<T>>> T, ElementWithKey<T> x, HashFunction h) {
-        List<ElementWithKey<T>> list = T.at(h.compute(x.key));
-        List<ElementWithKey<T>>.Node node = Chapter10.listSearch(list, x);
+    public static <T> void chainedHashDelete(ZeroBasedIndexedArray<List<Element<T>>> T, Element<T> x, HashFunction h) {
+        List<Element<T>> list = T.at(h.compute(x.key));
+        List<Element<T>>.Node node = Chapter10.listSearch(list, x);
         Chapter10.listDelete(list, node);
+    }
+
+    // solution of 11.2-4
+    public static <T> int inPlaceChainedHashInsert(HashTableWithFreeList<T> T, Element<T> x, HashFunction h) {
+        int position = h.compute(x.key);
+        if (T.at(position).element == null) {
+            allocateHashTableNode(T, position);
+            T.at(position).next = T.at(position).prev = null;
+            T.at(position).element = x;
+            return position;
+        }
+        HashTableWithFreeList<T>.Node otherNode = T.at(position);
+        int otherElementPosition = h.compute(otherNode.element.key);
+        if (otherElementPosition == position) {
+            int newPosition = allocateHashTableNode(T, T.free);
+            T.at(newPosition).element = x;
+            T.at(newPosition).prev = position;
+            T.at(newPosition).next = otherNode.next;
+            otherNode.next = newPosition;
+            return newPosition;
+        } else {
+            int newPosition = allocateHashTableNode(T, T.free);
+            T.at(newPosition).element = otherNode.element;
+            if (otherNode.prev != null) {
+                T.at(otherNode.prev).next = newPosition;
+            }
+            if (otherNode.next != null) {
+                T.at(otherNode.next).prev = newPosition;
+            }
+            T.at(position).element = x;
+            return position;
+        }
+    }
+
+    // solution of 11.2-4
+    private static <T> int allocateHashTableNode(HashTableWithFreeList<T> T, int position) {
+        if (T.free == null) {
+            throw new RuntimeException("overflow");
+        }
+        HashTableWithFreeList.Node node = T.at(position);
+        if (node.prev != null) {
+            T.at(node.prev).next = node.next;
+        }
+        if (node.next != null) {
+            T.at(node.next).prev = node.prev;
+        }
+        if (T.free == position) {
+            T.free = node.next;
+        }
+        return position;
+    }
+
+    // solution of 11.2-4
+    public static <T> Integer inPlaceChainedHashSearch(HashTableWithFreeList<T> T, int k, HashFunction h) {
+        Integer position = h.compute(k);
+        while (position != null && T.at(position).element != null) {
+            if (T.at(position).element.key == k) {
+                return position;
+            }
+            position = T.at(position).next;
+        }
+        return null;
+    }
+
+    // solution of 11.2-4
+    public static <T> void inPlaceChainedHashDelete(HashTableWithFreeList<T> T, int x, HashFunction h) {
+        HashTableWithFreeList.Node node = T.at(x);
+        if (node.prev != null) {
+            T.at(node.prev).next = node.next;
+        }
+        if (node.next != null) {
+            T.at(node.next).prev = node.prev;
+        }
+        node.element = null;
+        node.prev = null;
+        node.next = T.free;
+        if (T.free != null) {
+            T.at(T.free).prev = x;
+        }
+        T.free = x;
     }
 
     // subchapter 11.4
@@ -206,7 +270,7 @@ public final class Chapter11 {
         int i = 0;
         do {
             int j = h.compute(k, i);
-            if (T.at(j) == null || T.at(j) == DELETED) {
+            if (T.at(j) == null || T.at(j).equals(DELETED)) {
                 T.set(j, k);
                 return j;
             } else {

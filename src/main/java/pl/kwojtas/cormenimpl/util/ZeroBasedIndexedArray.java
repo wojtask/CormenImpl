@@ -15,6 +15,10 @@ public class ZeroBasedIndexedArray<T> {
         return new ZeroBasedIndexedArray<>((T[]) new Object[length]);
     }
 
+    public ZeroBasedIndexedArray(ZeroBasedIndexedArray<T> otherArray) {
+        set(otherArray);
+    }
+
     public T at(int position) {
         if (position < 0 || position > length - 1) {
             throw new RuntimeException("Array index out of bound");
@@ -27,6 +31,15 @@ public class ZeroBasedIndexedArray<T> {
             throw new RuntimeException("Array index out of bound");
         }
         data[position] = element;
+    }
+
+    public void set(ZeroBasedIndexedArray<T> otherArray) {
+        if (this == otherArray) {
+            return;
+        }
+        this.data = (T[]) new Object[otherArray.length];
+        System.arraycopy(otherArray.data, 0, data, 0, otherArray.length);
+        this.length = otherArray.length;
     }
 
     public void exch(int position1, int position2) {
