@@ -1,8 +1,7 @@
 package pl.kwojtas.cormenimpl.util;
 
-public class SingleArrayList {
+public class SingleArrayList extends Array<Integer> {
 
-    public Array<Integer> A;
     public Integer L;
     public Integer free;
 
@@ -11,7 +10,7 @@ public class SingleArrayList {
         Integer x = L;
         while (x != null) {
             length++;
-            x = A.at(x + 1);
+            x = at(x + 1);
         }
         return length;
     }

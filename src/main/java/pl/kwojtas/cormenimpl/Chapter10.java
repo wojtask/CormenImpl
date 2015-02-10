@@ -89,7 +89,7 @@ public final class Chapter10 {
     }
 
     // solution of 10.1-2
-    private static <T> boolean firstStackEmpty(DoubleStack<T> A) {
+    public static <T> boolean firstStackEmpty(DoubleStack<T> A) {
         return A.top1 == 0;
     }
 
@@ -109,7 +109,7 @@ public final class Chapter10 {
     }
 
     // solution of 10.1-2
-    private static <T> boolean secondStackEmpty(DoubleStack<T> A) {
+    public static <T> boolean secondStackEmpty(DoubleStack<T> A) {
         return A.top2 == A.length + 1;
     }
 
@@ -405,19 +405,19 @@ public final class Chapter10 {
     }
 
     // solution of 10.3-2
-    public static <T> int singleArrayAllocateObject(SingleArrayList L) {
-        if (L.free == null) {
+    public static int singleArrayAllocateObject(SingleArrayList A) {
+        if (A.free == null) {
             throw new RuntimeException("out of space");
         }
-        int i = L.free;
-        L.free = L.A.at(i + 1);
+        int i = A.free;
+        A.free = A.at(i + 1);
         return i;
     }
 
     // solution of 10.3-2
-    public static <T> void singleArrayFreeObject(SingleArrayList L, int i) {
-        L.A.set(i + 1, L.free);
-        L.free = i;
+    public static void singleArrayFreeObject(SingleArrayList A, int i) {
+        A.set(i + 1, A.free);
+        A.free = i;
     }
 
     // solution of 10.3-4
@@ -489,7 +489,6 @@ public final class Chapter10 {
         fixPrevFields(L);
     }
 
-    // solution of 10.3-5
     private static <T> void setPrevFields(MultipleArrayList<T> L, int value) {
         Integer x = L.L;
         while (x != null) {
@@ -498,7 +497,6 @@ public final class Chapter10 {
         }
     }
 
-    // solution of 10.3-5
     private static <T> void fixPrevFields(MultipleArrayList<T> L) {
         if (L.L == null) {
             return;
@@ -541,7 +539,6 @@ public final class Chapter10 {
         }
     }
 
-    // solution of 10.4-5
     private static <T> BinaryTree<T>.Node stacklessInorderVisit(BinaryTree<T>.Node x) {
         System.out.println(x.key);
         if (x.right != null) {

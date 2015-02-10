@@ -8,21 +8,22 @@ import java.util.HashSet;
 import java.util.Set;
 
 import static java.lang.Math.abs;
-import static java.lang.Math.max;
-import static java.lang.Math.min;
 import static pl.kwojtas.cormenimpl.Chapter7.randomizedPartition;
 import static pl.kwojtas.cormenimpl.util.Util.ceil;
+import static pl.kwojtas.cormenimpl.util.Util.greater;
 import static pl.kwojtas.cormenimpl.util.Util.less;
+import static pl.kwojtas.cormenimpl.util.Util.min;
+import static pl.kwojtas.cormenimpl.util.Util.max;
 
 public final class Chapter9 {
 
     private Chapter9() { }
 
     // subchapter 9.1
-    public static int minimum(Array<Integer> A) {
-        int min = A.at(1);
+    public static <T extends Comparable> T minimum(Array<T> A) {
+        T min = A.at(1);
         for (int i = 2; i <= A.length; i++) {
-            if (min > A.at(i)) {
+            if (greater(min, A.at(i))) {
                 min = A.at(i);
             }
         }
@@ -30,15 +31,15 @@ public final class Chapter9 {
     }
 
     // subchapter 9.1
-    public static Pair<Integer, Integer> minimumMaximum(Array<Integer> A) {
+    public static <T extends Comparable> Pair<T, T> minimumMaximum(Array<T> A) {
         int n = A.length;
-        Pair<Integer, Integer> p;
+        Pair<T, T> p;
         int i;
         if (n % 2 == 1) {
             p = new Pair<>(A.at(1), A.at(1));
             i = 2;
         } else {
-            if (A.at(1) < A.at(2)) {
+            if (less(A.at(1), A.at(2))) {
                 p = new Pair<>(A.at(1), A.at(2));
             } else {
                 p = new Pair<>(A.at(2), A.at(1));
@@ -46,18 +47,18 @@ public final class Chapter9 {
             i = 3;
         }
         while (i + 1 <= A.length) {
-            if (A.at(i) < A.at(i + 1)) {
-                if (A.at(i) < p.first) {
+            if (less(A.at(i), A.at(i + 1))) {
+                if (less(A.at(i), p.first)) {
                     p.first = A.at(i);
                 }
-                if (A.at(i + 1) > p.second) {
+                if (greater(A.at(i + 1), p.second)) {
                     p.second = A.at(i + 1);
                 }
             } else {
-                if (A.at(i + 1) < p.first) {
+                if (less(A.at(i + 1), p.first)) {
                     p.first = A.at(i + 1);
                 }
-                if (A.at(i) > p.second) {
+                if (greater(A.at(i), p.second)) {
                     p.second = A.at(i);
                 }
             }
@@ -67,7 +68,7 @@ public final class Chapter9 {
     }
 
     // subchapter 9.2
-    public static int randomizedSelect(Array<Integer> A, int p, int r, int i) {
+    public static <T extends Comparable> T randomizedSelect(Array<T> A, int p, int r, int i) {
         if (p == r) {
             return A.at(p);
         }
@@ -83,7 +84,7 @@ public final class Chapter9 {
     }
 
     // solution of 9.2-3
-    public static int iterativeRandomizedSelect(Array<Integer> A, int p, int r, int i) {
+    public static <T extends Comparable> T iterativeRandomizedSelect(Array<T> A, int p, int r, int i) {
         while (p < r) {
             int q = randomizedPartition(A, p, r);
             int k = q - p + 1;
@@ -129,7 +130,6 @@ public final class Chapter9 {
         return select(A, p + k, r, i - k);
     }
 
-    // subchapter 9.3
     private static <T extends Comparable> int partitionAround(Array<T> A, int p, int r, T x) {
         int q = p;
         while (!A.at(q).equals(x)) {
@@ -158,12 +158,12 @@ public final class Chapter9 {
     }
 
     // solution of 9.3-5
-    public static int selectUsingMedianSubroutine(Array<Integer> A, int p, int r, int i) {
+    public static <T extends Comparable> T selectUsingMedianSubroutine(Array<T> A, int p, int r, int i) {
         if (p == r) {
             return A.at(p);
         }
         int q = (p + r) / 2;
-        int x = select(A, p, r, q); // black-box median subroutine
+        T x = select(A, p, r, q); // black-box median subroutine
         partitionAround(A, p, r, x); // we need to partition around the median because we could have used other black-box than select
         int k = q - p + 1;
         if (i == k) {
@@ -176,7 +176,7 @@ public final class Chapter9 {
     }
 
     // solution of 9.3-6
-    public static Set<Integer> quantiles(Array<Integer> A, int p, int r, int k) {
+    public static <T extends Comparable> Set<T> quantiles(Array<T> A, int p, int r, int k) {
         int n = r - p + 1;
         if (k == 1) {
             return new HashSet<>();
@@ -187,8 +187,8 @@ public final class Chapter9 {
         if (q1 != q2) {
             select(A, q1 + 1, r, q2 - q1);
         }
-        Set<Integer> L = quantiles(A, p, q1 - 1, k / 2);
-        Set<Integer> R = quantiles(A, q2 + 1, r, k / 2);
+        Set<T> L = quantiles(A, p, q1 - 1, k / 2);
+        Set<T> R = quantiles(A, q2 + 1, r, k / 2);
         L.add(A.at(q1));
         L.add(A.at(q2));
         L.addAll(R);
@@ -217,7 +217,7 @@ public final class Chapter9 {
     }
 
     // solution of 9.3-8
-    public static int twoArraysMedian(Array<Integer> X, int pX, int rX, Array<Integer> Y, int pY, int rY) {
+    public static <T extends Comparable> T twoArraysMedian(Array<T> X, int pX, int rX, Array<T> Y, int pY, int rY) {
         if (rX - pX <= 1) {
             return min(max(X.at(pX), Y.at(pY)), min(X.at(rX), Y.at(rY)));
         }
@@ -228,7 +228,7 @@ public final class Chapter9 {
         if (X.at(qX).equals(Y.at(qY))) {
             return X.at(qX);
         }
-        if (X.at(qX) < Y.at(qY)) {
+        if (less(X.at(qX), Y.at(qY))) {
             return twoArraysMedian(X, qX, rX, Y, pY, qY_);
         } else {
             return twoArraysMedian(X, pX, qX_, Y, qY, rY);
@@ -236,7 +236,7 @@ public final class Chapter9 {
     }
 
     // solution of 9-2(b)
-    public static double weightedMedianUsingSorting(Array<Double> A, Array<Double> w) {
+    public static <T extends Comparable> T weightedMedianUsingSorting(Array<T> A, Array<Double> w) {
         sortWithWeights(A, w, 1, A.length);
         double weightSum = 0.0;
         int i = 1;
@@ -247,8 +247,7 @@ public final class Chapter9 {
         return A.at(i - 1);
     }
 
-    // solution of 9-2(b)
-    private static void sortWithWeights(Array<Double> A, Array<Double> w, int p, int r) {
+    private static <T extends Comparable> void sortWithWeights(Array<T> A, Array<Double> w, int p, int r) {
         if (p < r) {
             int q = partitionWithWeights(A, w, p, r);
             sortWithWeights(A, w, p, q - 1);
@@ -256,7 +255,6 @@ public final class Chapter9 {
         }
     }
 
-    // solution of 9-2(b)
     private static <T extends Comparable> int partitionWithWeights(Array<T> A, Array<Double> w, int p, int r) {
         T x = A.at(r);
         int i = p - 1;
@@ -296,7 +294,6 @@ public final class Chapter9 {
         }
     }
 
-    // solution of 9-2(c)
     private static <T extends Comparable> void partitionAroundMedianWithWeights(Array<T> A, Array<Double> w, int p, int r) {
         T x = select(new Array<>(A), p, r, (p + r) / 2);
         int q = p;

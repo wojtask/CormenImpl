@@ -226,8 +226,8 @@ public class Chapter9Test {
     public void shouldReturnMedianAsMedianProximityOf1() {
         // given
         Array<Integer> array = new Array<>(5,0,15,17,4,2,6,16,3,1);
-        Array<Integer> original = new Array<>(array);
         int proximitySize = 1;
+        int expectedMedian = 4;
 
         // when
         Set<Integer> actualMedianProximity = Chapter9.medianProximity(array, proximitySize);
@@ -236,7 +236,7 @@ public class Chapter9Test {
         assertNotNull(actualMedianProximity);
         assertEquals(1, actualMedianProximity.size());
         int actualMedian = actualMedianProximity.iterator().next();
-        assertEquals(4, actualMedian); // should be the lower median
+        assertEquals(expectedMedian, actualMedian); // should be the lower median
     }
 
     @Test
@@ -295,9 +295,9 @@ public class Chapter9Test {
     @Test
     public void shouldFindWeightedMedianUsingSorting() {
         // given
-        Array<Double> array = new Array<>(0.0,1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0,9.0);
+        Array<Integer> array = new Array<>(0,1,2,3,4,5,6,7,8,9);
         Array<Double> weights = new Array<>(0.05,0.05,0.1,0.2,0.02,0.1,0.03,0.05,0.3,0.1);
-        Array<Double> originalArray = new Array<>(array);
+        Array<Integer> originalArray = new Array<>(array);
         Array<Double> originalWeights = new Array<>(weights);
 
         // when
@@ -307,7 +307,7 @@ public class Chapter9Test {
         assertWeightedMedian(originalArray, originalWeights, actualWeightedMedian);
     }
 
-    private void assertWeightedMedian(Array<Double> array, Array<Double> weights, double actualWeightedMedian) {
+    private void assertWeightedMedian(Array<Integer> array, Array<Double> weights, double actualWeightedMedian) {
         double weightLeftSum = 0.0;
         double weightRightSum = 0.0;
         for (int i = 1; i <= array.length; i++) {
@@ -324,9 +324,9 @@ public class Chapter9Test {
     @Test
     public void shouldFindWeightedMedian() {
         // given
-        Array<Double> array = new Array<>(0.0,1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0,9.0);
+        Array<Integer> array = new Array<>(0,1,2,3,4,5,6,7,8,9);
         Array<Double> weights = new Array<>(0.05,0.05,0.1,0.2,0.02,0.1,0.03,0.05,0.3,0.1);
-        Array<Double> originalArray = new Array<>(array);
+        Array<Integer> originalArray = new Array<>(array);
         Array<Double> originalWeights = new Array<>(weights);
 
         // when

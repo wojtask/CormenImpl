@@ -84,7 +84,6 @@ public final class Chapter8 {
         }
     }
 
-    // subchapter 8.3
     private static void stableSortOnDigit(Array<Integer> A, int digit, int k) {
         ZeroBasedIndexedArray<Integer> C = ZeroBasedIndexedArray.withLength(k);
         for (int i = 0; i <= k - 1; i++) {
@@ -106,7 +105,6 @@ public final class Chapter8 {
         }
     }
 
-    // subchapter 8.3
     private static int getDigit(int number, int digit, int k) {
         while (digit > 1) {
             number /= k;
@@ -139,7 +137,6 @@ public final class Chapter8 {
         concatenateListsToArray(B, A);
     }
 
-    // subchapter 8.4
     private static void listInsertionSort(List<Double> L) {
         if (L.head == null) {
             return;
@@ -170,7 +167,6 @@ public final class Chapter8 {
         }
     }
 
-    // subchapter 8.4
     private static void concatenateListsToArray(ZeroBasedIndexedArray<List<Double>> B, Array<Double> A) {
         int k = 1;
         for (int i = 0; i <= B.length - 1; i++) {
@@ -202,7 +198,6 @@ public final class Chapter8 {
         concatenateListsOfUnitCirclePoints(B, points);
     }
 
-    // solution of 8.4-4
     private static void listInsertionSortUnitCirclePoints(List<Pair<Point2D, Double>> L) {
         if (L.head == null) {
             return;
@@ -233,9 +228,8 @@ public final class Chapter8 {
         }
     }
 
-    // solution of 8.4-4
-    private static void concatenateListsOfUnitCirclePoints(ZeroBasedIndexedArray<List<Pair<Point2D, Double>>> B,
-                                                        Array<Point2D> points) {
+    private static void concatenateListsOfUnitCirclePoints(
+            ZeroBasedIndexedArray<List<Pair<Point2D, Double>>> B, Array<Point2D> points) {
         int k = 1;
         for (int i = 0; i <= B.length - 1; i++) {
             List<Pair<Point2D, Double>>.Node x = B.at(i).head;
@@ -324,7 +318,6 @@ public final class Chapter8 {
         }
     }
 
-    // solution of 8-3(a)
     private static void variousLengthNonNegativeNumbersSort(Array<Integer> A) {
         if (A.length == 0) {
             return;
@@ -372,7 +365,6 @@ public final class Chapter8 {
         }
     }
 
-    // solution of 8-3(a)
     private static void variousLengthSortByLength(Array<Integer> A, int k) {
         ZeroBasedIndexedArray<Integer> C = ZeroBasedIndexedArray.withLength(k + 1);
         for (int i = 0; i <= k; i++) {
@@ -392,7 +384,6 @@ public final class Chapter8 {
         A.set(B);
     }
 
-    // solution of 8-3(a)
     private static int getNumberLength(int number) {
         if (number == 0) {
             return 1;
@@ -431,7 +422,6 @@ public final class Chapter8 {
         }
     }
 
-    // solution of 8-3(b)
     private static void countingSortByCharacter(Array<String> A, int position) {
         ZeroBasedIndexedArray<Integer> C = ZeroBasedIndexedArray.withLength(128); // 128 = capacity for ASCII characters
         for (int i = 0; i <= 127; i++) {
@@ -475,7 +465,6 @@ public final class Chapter8 {
         }
     }
 
-    // solution of 8-4(c)
     private static int jugsPartition(Array<Double> R, Array<Double> B, int p, int r) {
         R.exch(r, random(p, r));
         double x = R.at(r);
@@ -505,7 +494,7 @@ public final class Chapter8 {
     }
 
     // solution of 8-5(d)
-    public static void kSort(Array<Integer> A, int k, int p, int r) {
+    public static <T extends Comparable> void kSort(Array<T> A, int k, int p, int r) {
         if (p + k - 1 < r) {
             int q = Chapter7.partition(A, p, r);
             kSort(A, k, p, q - 1);

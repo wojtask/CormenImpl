@@ -1,9 +1,10 @@
 package pl.kwojtas.cormenimpl;
 
+import pl.kwojtas.cormenimpl.util.ChainedHashTable;
 import pl.kwojtas.cormenimpl.util.Element;
 import pl.kwojtas.cormenimpl.util.HashFunction;
-import pl.kwojtas.cormenimpl.util.HashProbingFunction;
 import pl.kwojtas.cormenimpl.util.HashTableWithFreeList;
+import pl.kwojtas.cormenimpl.util.HashTableWithProbing;
 import pl.kwojtas.cormenimpl.util.List;
 import pl.kwojtas.cormenimpl.util.Stack;
 import pl.kwojtas.cormenimpl.util.ZeroBasedIndexedArray;
@@ -75,14 +76,14 @@ public final class Chapter11 {
         Chapter10.listDelete(list, node);
     }
 
-    static class HugeArray<T> {
+    public static class HugeArray<T> {
         public ZeroBasedIndexedArray<Integer> T;
         public Stack<Element<T>> S;
 
         public HugeArray(int size, int capacity) {
             T = ZeroBasedIndexedArray.withLength(size);
             for (int i = 0; i <= size - 1; i++) {
-                T.set(i, 0); // initializing T as it contains nulls, initialized could be anything nonnull
+                T.set(i, 0); // initializing T as it contains nulls; the initializer can be anything nonnull
             }
             S = Stack.withLength(capacity);
         }
@@ -111,14 +112,14 @@ public final class Chapter11 {
     }
 
     // subchapter 11.2
-    public static <T> void chainedHashInsert(ZeroBasedIndexedArray<List<Element<T>>> T, Element<T> x, HashFunction h) {
-        List<Element<T>> list = T.at(h.compute(x.key));
+    public static <T> void chainedHashInsert(ChainedHashTable<T> T, Element<T> x) {
+        List<Element<T>> list = T.at(T.h.compute(x.key));
         Chapter10.listInsert(list, list.new Node(x));
     }
 
     // subchapter 11.2
-    public static <T> Element<T> chainedHashSearch(ZeroBasedIndexedArray<List<Element<T>>> T, int k, HashFunction h) {
-        List<Element<T>> list = T.at(h.compute(k));
+    public static <T> Element<T> chainedHashSearch(ChainedHashTable<T> T, int k) {
+        List<Element<T>> list = T.at(T.h.compute(k));
         List<Element<T>>.Node x = list.head;
         while (x != null) {
             if (x.key.key == k) {
@@ -130,15 +131,15 @@ public final class Chapter11 {
     }
 
     // subchapter 11.2
-    public static <T> void chainedHashDelete(ZeroBasedIndexedArray<List<Element<T>>> T, Element<T> x, HashFunction h) {
-        List<Element<T>> list = T.at(h.compute(x.key));
+    public static <T> void chainedHashDelete(ChainedHashTable<T> T, Element<T> x) {
+        List<Element<T>> list = T.at(T.h.compute(x.key));
         List<Element<T>>.Node node = Chapter10.listSearch(list, x);
         Chapter10.listDelete(list, node);
     }
 
     // solution of 11.2-4
-    public static <T> int inPlaceChainedHashInsert(HashTableWithFreeList<T> T, Element<T> x, HashFunction h) {
-        int position = h.compute(x.key);
+    public static <T> int inPlaceChainedHashInsert(HashTableWithFreeList<T> T, Element<T> x) {
+        int position = T.h.compute(x.key);
         if (T.at(position).element == null) {
             allocateHashTableNode(T, position);
             T.at(position).next = T.at(position).prev = null;
@@ -146,7 +147,7 @@ public final class Chapter11 {
             return position;
         }
         HashTableWithFreeList<T>.Node otherNode = T.at(position);
-        int otherElementPosition = h.compute(otherNode.element.key);
+        int otherElementPosition = T.h.compute(otherNode.element.key);
         if (otherElementPosition == position) {
             int newPosition = allocateHashTableNode(T, T.free);
             T.at(newPosition).element = x;
@@ -168,7 +169,6 @@ public final class Chapter11 {
         }
     }
 
-    // solution of 11.2-4
     private static <T> int allocateHashTableNode(HashTableWithFreeList<T> T, int position) {
         if (T.free == null) {
             throw new RuntimeException("overflow");
@@ -187,8 +187,8 @@ public final class Chapter11 {
     }
 
     // solution of 11.2-4
-    public static <T> Integer inPlaceChainedHashSearch(HashTableWithFreeList<T> T, int k, HashFunction h) {
-        Integer position = h.compute(k);
+    public static <T> Integer inPlaceChainedHashSearch(HashTableWithFreeList<T> T, int k) {
+        Integer position = T.h.compute(k);
         while (position != null && T.at(position).element != null) {
             if (T.at(position).element.key == k) {
                 return position;
@@ -199,8 +199,8 @@ public final class Chapter11 {
     }
 
     // solution of 11.2-4
-    public static <T> void inPlaceChainedHashDelete(HashTableWithFreeList<T> T, int x, HashFunction h) {
-        HashTableWithFreeList.Node node = T.at(x);
+    public static <T> void inPlaceChainedHashDelete(HashTableWithFreeList<T> T, int position) {
+        HashTableWithFreeList.Node node = T.at(position);
         if (node.prev != null) {
             T.at(node.prev).next = node.next;
         }
@@ -211,17 +211,17 @@ public final class Chapter11 {
         node.prev = null;
         node.next = T.free;
         if (T.free != null) {
-            T.at(T.free).prev = x;
+            T.at(T.free).prev = position;
         }
-        T.free = x;
+        T.free = position;
     }
 
     // subchapter 11.4
-    public static int hashInsert(ZeroBasedIndexedArray<Integer> T, int k, HashProbingFunction h) {
+    public static int hashInsert(HashTableWithProbing T, int k) {
         int m = T.length;
         int i = 0;
         do {
-            int j = h.compute(k, i);
+            int j = T.h.compute(k, i);
             if (T.at(j) == null) {
                 T.set(j, k);
                 return j;
@@ -229,16 +229,16 @@ public final class Chapter11 {
                 i++;
             }
         } while (i != m);
-        throw new RuntimeException("overflow");
+        throw new RuntimeException("hash table overflow");
     }
 
     // subchapter 11.4
-    public static Integer hashSearch(ZeroBasedIndexedArray<Integer> T, int k, HashProbingFunction h) {
+    public static Integer hashSearch(HashTableWithProbing T, int k) {
         int m = T.length;
         int i = 0;
         int j;
         do {
-            j = h.compute(k, i);
+            j = T.h.compute(k, i);
             if (T.at(j) != null && T.at(j) == k) {
                 return j;
             }
@@ -250,12 +250,12 @@ public final class Chapter11 {
     public static final Integer DELETED = Integer.MAX_VALUE;
 
     // solution of 11.4-2
-    public static void hashDelete(ZeroBasedIndexedArray<Integer> T, int k, HashProbingFunction h) {
+    public static void hashDelete(HashTableWithProbing T, int k) {
         int m = T.length;
         int i = 0;
         int j;
         do {
-            j = h.compute(k, i);
+            j = T.h.compute(k, i);
             if (T.at(j) == k) {
                 T.set(j, DELETED);
                 return;
@@ -265,11 +265,11 @@ public final class Chapter11 {
     }
 
     // solution of 11.4-2
-    public static int hashInsert_(ZeroBasedIndexedArray<Integer> T, int k, HashProbingFunction h) {
+    public static int hashInsert_(HashTableWithProbing T, int k) {
         int m = T.length;
         int i = 0;
         do {
-            int j = h.compute(k, i);
+            int j = T.h.compute(k, i);
             if (T.at(j) == null || T.at(j).equals(DELETED)) {
                 T.set(j, k);
                 return j;
@@ -277,7 +277,7 @@ public final class Chapter11 {
                 i++;
             }
         } while (i != m);
-        throw new RuntimeException("overflow");
+        throw new RuntimeException("hash table overflow");
     }
 
     // problem 11-3

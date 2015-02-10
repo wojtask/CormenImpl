@@ -22,7 +22,6 @@ public final class Chapter7 {
         }
     }
 
-    // subchapter 7.1
     public static <T extends Comparable> int partition(Array<T> A, int p, int r) {
         T x = A.at(r);
         int i = p - 1;
@@ -36,7 +35,6 @@ public final class Chapter7 {
         return i + 1;
     }
 
-    // subchapter 7.3
     public static <T extends Comparable> int randomizedPartition(Array<T> A, int p, int r) {
         int i = random(p, r);
         A.exch(r, i);
@@ -65,7 +63,6 @@ public final class Chapter7 {
         }
     }
 
-    // exercise 7.4-5
     private static <T extends Comparable> void quicksortNearlySorted(Array<T> A, int p, int r, int k) {
         if (r - p + 1 >= k) {
             int q = partition(A, p, r);
@@ -74,7 +71,6 @@ public final class Chapter7 {
         }
     }
 
-    // problem 7-1
     private static <T extends Comparable> int hoarePartition(Array<T> A, int p, int r) {
         T x = A.at(p);
         int i = p - 1;
@@ -167,8 +163,7 @@ public final class Chapter7 {
         }
     }
 
-    // solution of 7-6(a)
-    public static Pair<Integer, Integer> fuzzyPartition(Array<Interval> A, int p, int r) {
+    private static Pair<Integer, Integer> fuzzyPartition(Array<Interval> A, int p, int r) {
         A.exch(r, random(p, r));
         double x = A.at(r).a;
         int i = p - 1;

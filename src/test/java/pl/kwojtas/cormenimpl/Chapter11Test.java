@@ -2,10 +2,12 @@ package pl.kwojtas.cormenimpl;
 
 import org.junit.Test;
 import pl.kwojtas.cormenimpl.Chapter11.HugeArray;
+import pl.kwojtas.cormenimpl.util.ChainedHashTable;
 import pl.kwojtas.cormenimpl.util.Element;
 import pl.kwojtas.cormenimpl.util.HashFunction;
 import pl.kwojtas.cormenimpl.util.HashProbingFunction;
 import pl.kwojtas.cormenimpl.util.HashTableWithFreeList;
+import pl.kwojtas.cormenimpl.util.HashTableWithProbing;
 import pl.kwojtas.cormenimpl.util.List;
 import pl.kwojtas.cormenimpl.util.ZeroBasedIndexedArray;
 
@@ -286,32 +288,30 @@ public class Chapter11Test {
         assertEquals(new Integer(1), hugeArray.T.at(10));
     }
 
-    private ZeroBasedIndexedArray<List<Element<String>>> getExemplaryChainedHashTable() {
-        ZeroBasedIndexedArray<List<Element<String>>> chainedHashTable = ZeroBasedIndexedArray.withLength(5);
+    private ChainedHashTable<String> getExemplaryChainedHashTable() {
+        ChainedHashTable<String> chainedHashTable = ChainedHashTable.withLengthAndHashFunction(5,
+                new HashFunction() {
+                    @Override
+                    public int compute(int key) {
+                        return key % 5;
+                    }
+                }
+        );
         chainedHashTable.set(0, new List<>(new Element<>(35, "thirtyFive")));
-        chainedHashTable.set(1, new List<>(new Element<>(51, "fiftyOne"), new Element<>(16, "sixteen"),
-                new Element<>(1, "one")));
-        chainedHashTable.set(2, new List<>());
+        chainedHashTable.set(1, new List<>(new Element<>(51, "fiftyOne"), new Element<>(16, "sixteen"), new Element<>(1, "one")));
         chainedHashTable.set(3, new List<>(new Element<>(38, "thirtyEight"), new Element<>(23, "twentyThree")));
-        chainedHashTable.set(4, new List<>());
         return chainedHashTable;
     }
 
     @Test
     public void shouldInsertIntoChainedHashTable() {
         // given
-        ZeroBasedIndexedArray<List<Element<String>>> chainedHashTable = getExemplaryChainedHashTable();
-        HashFunction h = new HashFunction() {
-            @Override
-            public int compute(int key) {
-                return key % chainedHashTable.length;
-            }
-        };
+        ChainedHashTable<String> chainedHashTable = getExemplaryChainedHashTable();
         Element<String> element = new Element<>(64, "sixtyFour");
-        int hashedKey = h.compute(element.key);
+        int hashedKey = chainedHashTable.h.compute(element.key);
 
         // when
-        Chapter11.chainedHashInsert(chainedHashTable, element, h);
+        Chapter11.chainedHashInsert(chainedHashTable, element);
 
         // then
         assertEquals(element.key, chainedHashTable.at(hashedKey).head.key.key);
@@ -321,17 +321,11 @@ public class Chapter11Test {
     @Test
     public void shouldFindElementInChainedHashTable() {
         // given
-        ZeroBasedIndexedArray<List<Element<String>>> chainedHashTable = getExemplaryChainedHashTable();
-        HashFunction h = new HashFunction() {
-            @Override
-            public int compute(int key) {
-                return key % chainedHashTable.length;
-            }
-        };
+        ChainedHashTable<String> chainedHashTable = getExemplaryChainedHashTable();
         Element<String> element = new Element<>(23, "twentyThree");
 
         // when
-        Element<String> actualFoundElement = Chapter11.chainedHashSearch(chainedHashTable, element.key, h);
+        Element<String> actualFoundElement = Chapter11.chainedHashSearch(chainedHashTable, element.key);
 
         // then
         assertEquals(element.key, actualFoundElement.key);
@@ -341,17 +335,11 @@ public class Chapter11Test {
     @Test
     public void shouldNotFindNonexistentElementInChainedHashTable() {
         // given
-        ZeroBasedIndexedArray<List<Element<String>>> chainedHashTable = getExemplaryChainedHashTable();
-        HashFunction h = new HashFunction() {
-            @Override
-            public int compute(int key) {
-                return key % chainedHashTable.length;
-            }
-        };
+        ChainedHashTable<String> chainedHashTable = getExemplaryChainedHashTable();
         int key = 42;
 
         // when
-        Element<String> actualFoundElement = Chapter11.chainedHashSearch(chainedHashTable, key, h);
+        Element<String> actualFoundElement = Chapter11.chainedHashSearch(chainedHashTable, key);
 
         // then
         assertNull(actualFoundElement);
@@ -360,18 +348,12 @@ public class Chapter11Test {
     @Test
     public void shouldDeleteFromChainedHashTable() {
         // given
-        ZeroBasedIndexedArray<List<Element<String>>> chainedHashTable = getExemplaryChainedHashTable();
-        HashFunction h = new HashFunction() {
-            @Override
-            public int compute(int key) {
-                return key % chainedHashTable.length;
-            }
-        };
+        ChainedHashTable<String> chainedHashTable = getExemplaryChainedHashTable();
         Element<String> element = chainedHashTable.at(1).head.next.key;
         int chainLength = chainedHashTable.at(1).getLength();
 
         // when
-        Chapter11.chainedHashDelete(chainedHashTable, element, h);
+        Chapter11.chainedHashDelete(chainedHashTable, element);
 
         // then
         assertEquals(chainLength - 1, chainedHashTable.at(1).getLength());
@@ -381,18 +363,12 @@ public class Chapter11Test {
     public void shouldInsertOntoFreePositionInHashTableWithFreeList() {
         // given
         HashTableWithFreeList<String> hashTableWithFreeList = getExemplaryHashTableWithFreeList();
-        HashFunction h = new HashFunction() {
-            @Override
-            public int compute(int key) {
-                return key % hashTableWithFreeList.length;
-            }
-        };
         Element<String> element = new Element<>(43, "fortyThree");
         int expectedPosition = 3;
         int expectedFreeListHeadPosition = 0;
 
         // when
-        int actualPosition = Chapter11.inPlaceChainedHashInsert(hashTableWithFreeList, element, h);
+        int actualPosition = Chapter11.inPlaceChainedHashInsert(hashTableWithFreeList, element);
 
         // then
         assertEquals(expectedPosition, actualPosition);
@@ -403,7 +379,14 @@ public class Chapter11Test {
     }
 
     private HashTableWithFreeList<String> getExemplaryHashTableWithFreeList() {
-        HashTableWithFreeList<String> hashTableWithFreeList = HashTableWithFreeList.withLength(8);
+        HashTableWithFreeList<String> hashTableWithFreeList = HashTableWithFreeList.withLengthAndHashFunction(8,
+                new HashFunction() {
+                    @Override
+                    public int compute(int key) {
+                        return key % 8;
+                    }
+                }
+        );
         hashTableWithFreeList.free = 3;
         hashTableWithFreeList.at(0).prev = 3;
         hashTableWithFreeList.at(1).element = new Element<>(17, "seventeen");
@@ -426,18 +409,12 @@ public class Chapter11Test {
     public void shouldInsertOntoTakenPositionWithEligibleElementInHashTableWithFreeList() {
         // given
         HashTableWithFreeList<String> hashTableWithFreeList = getExemplaryHashTableWithFreeList();
-        HashFunction h = new HashFunction() {
-            @Override
-            public int compute(int key) {
-                return key % hashTableWithFreeList.length;
-            }
-        };
         Element<String> element = new Element<>(25, "twentyFive");
         int expectedPosition = 3;
         int expectedFreeListHeadPosition = 0;
 
         // when
-        int actualPosition = Chapter11.inPlaceChainedHashInsert(hashTableWithFreeList, element, h);
+        int actualPosition = Chapter11.inPlaceChainedHashInsert(hashTableWithFreeList, element);
 
         // then
         assertEquals(expectedPosition, actualPosition);
@@ -448,44 +425,42 @@ public class Chapter11Test {
     }
 
     @Test
-    public void shouldInsertIntoHashTableWithProbing() {
+    public void shouldInsertOntoTakenPositionWithNoneligibleElementInHashTableWithFreeList() {
         // given
-        ZeroBasedIndexedArray<Integer> hashTableWithProbing = new ZeroBasedIndexedArray<>(35,51,null,38,null);
-        HashProbingFunction h = new HashProbingFunction() {
-            @Override
-            public int compute(int key, int i) {
-                int m = hashTableWithProbing.length;
-                int primaryHashValue = key % m;
-                return (primaryHashValue + i) % m;
-            }
-        };
-        int key = 45;
+        HashTableWithFreeList<String> hashTableWithFreeList = getExemplaryHashTableWithFreeList();
+        Element<String> element = new Element<>(13, "thirteen");
+        int expectedPosition = 5;
+        int expectedFreeListHeadPosition = 0;
+        int freeListPosition = 3;
+        Element<String> noneligibleElement = hashTableWithFreeList.at(expectedPosition).element;
 
         // when
-        int actualPosition = Chapter11.hashInsert(hashTableWithProbing, key, h);
+        int actualPosition = Chapter11.inPlaceChainedHashInsert(hashTableWithFreeList, element);
 
         // then
-        assertEquals(2, actualPosition);
-        assertEquals(new Integer(key), hashTableWithProbing.at(2));
+        assertEquals(expectedPosition, actualPosition);
+        assertEquals(element, hashTableWithFreeList.at(expectedPosition).element);
+        assertEquals(noneligibleElement, hashTableWithFreeList.at(freeListPosition).element);
+        assertEquals(new Integer(expectedFreeListHeadPosition), hashTableWithFreeList.free);
     }
 
     @Test(expected = RuntimeException.class)
-    public void shouldThrowExceptionWhenInsertingIntoFullHashTableWithProbing() {
+    public void shouldThrowExceptionWhenInsertingIntoFullHashTableWithFreeList() {
         // given
-        ZeroBasedIndexedArray<Integer> hashTableWithProbing = new ZeroBasedIndexedArray<>(35,51,45,38,16);
-        HashProbingFunction h = new HashProbingFunction() {
-            @Override
-            public int compute(int key, int i) {
-                int m = hashTableWithProbing.length;
-                int primaryHashValue = key % m;
-                return (primaryHashValue + i) % m;
-            }
-        };
-        int key = 32;
+        HashTableWithFreeList<String> hashTableWithFreeList = HashTableWithFreeList.withLengthAndHashFunction(8,
+                new HashFunction() {
+                    @Override
+                    public int compute(int key) {
+                        return key % 8;
+                    }
+                }
+        );
+        hashTableWithFreeList.free = null;
+        Element<String> element = new Element<>(25, "twentyFive");
 
         try {
             // when
-            Chapter11.hashInsert(hashTableWithProbing, key, h);
+            Chapter11.inPlaceChainedHashInsert(hashTableWithFreeList, element);
         } catch (RuntimeException e) {
             // then
             assertEquals("overflow", e.getMessage());
@@ -494,21 +469,114 @@ public class Chapter11Test {
     }
 
     @Test
-    public void shouldFindElementInHashTableWithProbing() {
+    public void shouldFindElementInHashTableWithFreeList() {
         // given
-        ZeroBasedIndexedArray<Integer> hashTableWithProbing = new ZeroBasedIndexedArray<>(35,51,45,38,null);
-        HashProbingFunction h = new HashProbingFunction() {
-            @Override
-            public int compute(int key, int i) {
-                int m = hashTableWithProbing.length;
-                int primaryHashValue = key % m;
-                return (primaryHashValue + i) % m;
-            }
-        };
+        HashTableWithFreeList<String> hashTableWithFreeList = getExemplaryHashTableWithFreeList();
+        int key = 9;
+        int expectedPosition = 5;
+
+        // when
+        Integer actualPosition = Chapter11.inPlaceChainedHashSearch(hashTableWithFreeList, key);
+
+        // then
+        assertEquals(new Integer(expectedPosition), actualPosition);
+    }
+
+    @Test
+    public void shouldNotFindNonexistentElementInHashTableWithFreeList() {
+        // given
+        HashTableWithFreeList<String> hashTableWithFreeList = getExemplaryHashTableWithFreeList();
+        int key = 33;
+
+        // when
+        Integer actualPosition = Chapter11.inPlaceChainedHashSearch(hashTableWithFreeList, key);
+
+        // then
+        assertNull(actualPosition);
+    }
+
+    @Test
+    public void shouldDeleteFromHashTableWithFreeList() {
+        // given
+        HashTableWithFreeList<String> hashTableWithFreeList = getExemplaryHashTableWithFreeList();
+        int position = 5;
+        int freeListPosition = hashTableWithFreeList.free;
+
+        // when
+        Chapter11.inPlaceChainedHashDelete(hashTableWithFreeList, position);
+
+        // then
+        assertNull(hashTableWithFreeList.at(position).element);
+        assertNull(hashTableWithFreeList.at(position).prev);
+        assertEquals(new Integer(freeListPosition), hashTableWithFreeList.at(position).next);
+        assertEquals(new Integer(position), hashTableWithFreeList.free);
+    }
+
+    @Test
+    public void shouldInsertIntoHashTableWithProbing() {
+        // given
+        HashTableWithProbing hashTableWithProbing = HashTableWithProbing.withLengthAndHashFunction(5,
+                new HashProbingFunction() {
+                    @Override
+                    public int compute(int key, int i) {
+                        int primaryHashValue = key % 5;
+                        return (primaryHashValue + i) % 5;
+                    }
+                }
+        );
+        hashTableWithProbing.set(new ZeroBasedIndexedArray<>(35,51,null,38,null));
         int key = 45;
 
         // when
-        Integer actualPosition = Chapter11.hashSearch(hashTableWithProbing, key, h);
+        int actualPosition = Chapter11.hashInsert(hashTableWithProbing, key);
+
+        // then
+        assertEquals(2, actualPosition);
+        assertEquals(new Integer(key), hashTableWithProbing.at(2));
+    }
+
+    @Test(expected = RuntimeException.class)
+    public void shouldThrowExceptionWhenInsertingIntoFullHashTableWithProbing() throws Exception {
+        // given
+        HashTableWithProbing hashTableWithProbing = HashTableWithProbing.withLengthAndHashFunction(5,
+                new HashProbingFunction() {
+                    @Override
+                    public int compute(int key, int i) {
+                        int primaryHashValue = key % 5;
+                        return (primaryHashValue + i) % 5;
+                    }
+                }
+        );
+        hashTableWithProbing.set(new ZeroBasedIndexedArray<>(35,51,45,38,16));
+        int key = 32;
+
+        try {
+            // when
+            Chapter11.hashInsert(hashTableWithProbing, key);
+        } catch (RuntimeException e) {
+            // then
+            assertEquals("hash table overflow", e.getMessage());
+            throw e;
+        }
+    }
+
+    @Test
+    public void shouldFindElementInHashTableWithProbing() {
+        // given
+        HashTableWithProbing hashTableWithProbing = HashTableWithProbing.withLengthAndHashFunction(5,
+                new HashProbingFunction() {
+                    @Override
+                    public int compute(int key, int i) {
+                        int primaryHashValue = key % 5;
+                        return (primaryHashValue + i) % 5;
+                    }
+                }
+        );
+        hashTableWithProbing.set(new ZeroBasedIndexedArray<>(35,51,45,38,null));
+        int key = 45;
+
+        // when
+        Integer actualPosition = Chapter11.hashSearch(hashTableWithProbing, key);
 
         // then
         assertEquals(new Integer(2), actualPosition);
@@ -517,19 +585,20 @@ public class Chapter11Test {
     @Test
     public void shouldNotFindNonexistentElementInHashTableWithProbing() {
         // given
-        ZeroBasedIndexedArray<Integer> hashTableWithProbing = new ZeroBasedIndexedArray<>(35,51,45,38,null);
-        HashProbingFunction h = new HashProbingFunction() {
-            @Override
-            public int compute(int key, int i) {
-                int m = hashTableWithProbing.length;
-                int primaryHashValue = key % m;
-                return (primaryHashValue + i) % m;
-            }
-        };
+        HashTableWithProbing hashTableWithProbing = HashTableWithProbing.withLengthAndHashFunction(5,
+                new HashProbingFunction() {
+                    @Override
+                    public int compute(int key, int i) {
+                        int primaryHashValue = key % 5;
+                        return (primaryHashValue + i) % 5;
+                    }
+                }
+        );
+        hashTableWithProbing.set(new ZeroBasedIndexedArray<>(35,51,45,38,null));
         int key = 26;
 
         // when
-        Integer actualPosition = Chapter11.hashSearch(hashTableWithProbing, key, h);
+        Integer actualPosition = Chapter11.hashSearch(hashTableWithProbing, key);
 
         // then
         assertNull(actualPosition);
@@ -538,19 +607,20 @@ public class Chapter11Test {
     @Test
     public void shouldDeleteFromHashTableWithProbing() {
         // given
-        ZeroBasedIndexedArray<Integer> hashTableWithProbing = new ZeroBasedIndexedArray<>(35,51,45,38,null);
-        HashProbingFunction h = new HashProbingFunction() {
-            @Override
-            public int compute(int key, int i) {
-                int m = hashTableWithProbing.length;
-                int primaryHashValue = key % m;
-                return (primaryHashValue + i) % m;
-            }
-        };
+        HashTableWithProbing hashTableWithProbing = HashTableWithProbing.withLengthAndHashFunction(5,
+                new HashProbingFunction() {
+                    @Override
+                    public int compute(int key, int i) {
+                        int primaryHashValue = key % 5;
+                        return (primaryHashValue + i) % 5;
+                    }
+                }
+        );
+        hashTableWithProbing.set(new ZeroBasedIndexedArray<>(35,51,45,38,null));
         int key = 45;
 
         // when
-        Chapter11.hashDelete(hashTableWithProbing, key, h);
+        Chapter11.hashDelete(hashTableWithProbing, key);
 
         // then
         assertEquals(DELETED, hashTableWithProbing.at(2));
@@ -559,19 +629,20 @@ public class Chapter11Test {
     @Test
     public void shouldInsertIntoHashTableWithProbingUsingHashInsert_() {
         // given
-        ZeroBasedIndexedArray<Integer> hashTableWithProbing = new ZeroBasedIndexedArray<>(35,51,DELETED,38,DELETED);
-        HashProbingFunction h = new HashProbingFunction() {
-            @Override
-            public int compute(int key, int i) {
-                int m = hashTableWithProbing.length;
-                int primaryHashValue = key % m;
-                return (primaryHashValue + i) % m;
-            }
-        };
+        HashTableWithProbing hashTableWithProbing = HashTableWithProbing.withLengthAndHashFunction(5,
+                new HashProbingFunction() {
+                    @Override
+                    public int compute(int key, int i) {
+                        int primaryHashValue = key % 5;
+                        return (primaryHashValue + i) % 5;
+                    }
+                }
+        );
+        hashTableWithProbing.set(new ZeroBasedIndexedArray<>(35,51,DELETED,38,DELETED));
         int key = 45;
 
         // when
-        int actualPosition = Chapter11.hashInsert_(hashTableWithProbing, key, h);
+        int actualPosition = Chapter11.hashInsert_(hashTableWithProbing, key);
 
         // then
         assertEquals(2, actualPosition);
@@ -581,23 +652,24 @@ public class Chapter11Test {
     @Test(expected = RuntimeException.class)
     public void shouldThrowExceptionWhenInsertingIntoFullHashTableWithProbingUsingHashInsert_() {
         // given
-        ZeroBasedIndexedArray<Integer> hashTableWithProbing = new ZeroBasedIndexedArray<>(35,51,45,38,16);
-        HashProbingFunction h = new HashProbingFunction() {
-            @Override
-            public int compute(int key, int i) {
-                int m = hashTableWithProbing.length;
-                int primaryHashValue = key % m;
-                return (primaryHashValue + i) % m;
-            }
-        };
+        HashTableWithProbing hashTableWithProbing = HashTableWithProbing.withLengthAndHashFunction(5,
+                new HashProbingFunction() {
+                    @Override
+                    public int compute(int key, int i) {
+                        int primaryHashValue = key % 5;
+                        return (primaryHashValue + i) % 5;
+                    }
+                }
+        );
+        hashTableWithProbing.set(new ZeroBasedIndexedArray<>(35,51,45,38,16));
         int key = 32;
 
         try {
             // when
-            Chapter11.hashInsert_(hashTableWithProbing, key, h);
+            Chapter11.hashInsert_(hashTableWithProbing, key);
         } catch (RuntimeException e) {
             // then
-            assertEquals("overflow", e.getMessage());
+            assertEquals("hash table overflow", e.getMessage());
             throw e;
         }
     }

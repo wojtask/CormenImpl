@@ -35,7 +35,6 @@ public final class Chapter5 {
         return x;
     }
 
-    // solution of 5.1-3
     private static int biasedRandom() {
         return rand.nextDouble() <= probabilityForBiasedRandom ? 1 : 0;
     }
@@ -51,7 +50,6 @@ public final class Chapter5 {
         return A;
     }
 
-    // subchapter 5.3
     private static <T> void sortUsingExternalKeys(Array<T> A, Array<Integer> keys, int p, int r) {
         if (p < r) {
             int q = (p + r) / 2;
@@ -61,7 +59,6 @@ public final class Chapter5 {
         }
     }
 
-    // subchapter 5.3
     private static <T> void mergeUsingExternalKeys(Array<T> A, Array<Integer> keys, int p, int q, int r) {
         int n1 = q - p + 1;
         int n2 = r - q;
@@ -122,7 +119,6 @@ public final class Chapter5 {
         return A;
     }
 
-    // solution of 5.3-6
     private static <T> void sortUniformlyUsingExternalKeys(Array<T> A, Array<Integer> keys, int p, int r) {
         if (p < r) {
             int q = (p + r) / 2;
@@ -132,7 +128,6 @@ public final class Chapter5 {
         }
     }
 
-    // solution of 5.3-6
     private static <T> void mergeUniformlyUsingExternalKeys(Array<T> A, Array<Integer> keys, int p, int q, int r) {
         int n1 = q - p + 1;
         int n2 = r - q;

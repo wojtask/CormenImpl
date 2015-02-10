@@ -1,6 +1,6 @@
 package pl.kwojtas.cormenimpl.util;
 
-public class HashTableWithFreeList<T> {
+public class HashTableWithFreeList<T> extends ZeroBasedIndexedArray<HashTableWithFreeList<T>.Node> {
 
     public class Node {
         public Element<T> element;
@@ -16,25 +16,21 @@ public class HashTableWithFreeList<T> {
         public Node() { }
     }
 
-    public ZeroBasedIndexedArray<HashTableWithFreeList.Node> T;
     public Integer free;
-    public int length;
+    public HashFunction h;
 
-    private HashTableWithFreeList(int length) {
-        T = ZeroBasedIndexedArray.withLength(length);
+    private HashTableWithFreeList(int length, HashFunction h) {
+        super(ZeroBasedIndexedArray.withLength(length));
         for (int i = 0; i <= length - 1; i++) {
-            T.set(i, new Node());
+            set(i, new Node());
         }
         free = 0;
         this.length = length;
+        this.h = h;
     }
 
-    public static <T> HashTableWithFreeList<T> withLength(int length) {
-        return new HashTableWithFreeList<>(length);
-    }
-
-    public Node at(int position) {
-        return T.at(position);
+    public static <T> HashTableWithFreeList<T> withLengthAndHashFunction(int length, HashFunction h) {
+        return new HashTableWithFreeList<>(length, h);
     }
 
 }

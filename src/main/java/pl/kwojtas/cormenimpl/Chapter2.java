@@ -78,7 +78,6 @@ public final class Chapter2 {
         }
     }
 
-    // subchapter 2.3
     private static void merge(Array<Integer> A, int p, int q, int r) {
         int n1 = q - p + 1;
         int n2 = r - q;
@@ -208,11 +207,11 @@ public final class Chapter2 {
     }
 
     // problem 2-3
-    public static double horner(ZeroBasedIndexedArray<Double> a, double x) {
+    public static double horner(ZeroBasedIndexedArray<Double> A, double x) {
         double y = 0.0;
-        int i = a.length - 1;
+        int i = A.length - 1;
         while (i >= 0) {
-            y = a.at(i) + x * y;
+            y = A.at(i) + x * y;
             i--;
         }
         return y;
@@ -233,7 +232,7 @@ public final class Chapter2 {
     }
 
     // solution of 2-4(d)
-    public static <T extends Comparable> int countInversions(Array<T> A, int p, int r) {
+    public static int countInversions(Array<Integer> A, int p, int r) {
         int inversions = 0;
         if (p < r) {
             int q = (p + r) / 2;
@@ -244,23 +243,24 @@ public final class Chapter2 {
         return inversions;
     }
 
-    // solution of 2-4(d)
-    private static <T extends Comparable> int mergeInversions(Array<T> A, int p, int q, int r) {
+    private static int mergeInversions(Array<Integer> A, int p, int q, int r) {
         int n1 = q - p + 1;
         int n2 = r - q;
-        Array<T> L = Array.withLength(n1);
-        Array<T> R = Array.withLength(n2);
+        Array<Integer> L = Array.withLength(n1 + 1);
+        Array<Integer> R = Array.withLength(n2 + 1);
         for (int i = 1; i <= n1; i++) {
             L.set(i, A.at(p + i - 1));
         }
         for (int j = 1; j <= n2; j++) {
             R.set(j, A.at(q + j));
         }
-        int i = 1, j = 1;
-        int k = p;
+        L.set(n1 + 1, Integer.MAX_VALUE);
+        R.set(n2 + 1, Integer.MAX_VALUE);
+        int i = 1;
+        int j = 1;
         int inversions = 0;
-        while (i <= n1 && j <= n2) {
-            if (leq(L.at(i), R.at(j))) {
+        for (int k = p; k <= r; k++) {
+            if (L.at(i) <= R.at(j)) {
                 A.set(k, L.at(i));
                 i++;
             } else {
@@ -268,17 +268,6 @@ public final class Chapter2 {
                 j++;
                 inversions += n1 - i + 1;
             }
-            k++;
-        }
-        while (i <= n1) {
-            A.set(k, L.at(i));
-            i++;
-            k++;
-        }
-        while (j <= n2) {
-            A.set(k, R.at(j));
-            j++;
-            k++;
         }
         return inversions;
     }

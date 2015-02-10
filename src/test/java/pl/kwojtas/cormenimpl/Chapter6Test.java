@@ -11,11 +11,10 @@ import pl.kwojtas.cormenimpl.util.Young;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static pl.kwojtas.cormenimpl.Chapter6.multiaryParent;
-import static pl.kwojtas.cormenimpl.Chapter6.parent;
 import static pl.kwojtas.cormenimpl.TestUtil.assertArrayEquals;
 import static pl.kwojtas.cormenimpl.TestUtil.assertShuffled;
 import static pl.kwojtas.cormenimpl.TestUtil.assertSorted;
+import static pl.kwojtas.cormenimpl.util.Util.ceil;
 
 public class Chapter6Test {
 
@@ -52,7 +51,7 @@ public class Chapter6Test {
 
     private void assertMinHeap(Heap<Integer> heap) {
         for (int i = 2; i <= heap.heapSize; i++) {
-            assertTrue(heap.at(parent(i)) <= heap.at(i));
+            assertTrue(heap.at(i / 2) <= heap.at(i));
         }
     }
 
@@ -75,7 +74,7 @@ public class Chapter6Test {
 
     private void assertMaxHeap(Heap<Integer> heap) {
         for (int i = 2; i <= heap.heapSize; i++) {
-            assertTrue(heap.at(parent(i)) >= heap.at(i));
+            assertTrue(heap.at(i / 2) >= heap.at(i));
         }
     }
 
@@ -469,30 +468,6 @@ public class Chapter6Test {
     }
 
     @Test
-    public void shouldRestoreMaxMultiaryHeapProperty() {
-        // given
-        Array<Integer> array = new Array<>(21,17,27,13,20,16,8,9,13,18,23,24,5,3,12,7);
-        Heap<Integer> heap = new Heap<>(array);
-        Heap<Integer> original = new Heap<>(array);
-        int degree = 4;
-        int position = 1;
-
-        // when
-        Chapter6.multiaryMaxHeapify(heap, degree, position);
-
-        // then
-        assertShuffled(original, heap);
-        assertEquals(original.length, heap.length);
-        assertMultiaryMaxHeap(heap, degree);
-    }
-
-    private void assertMultiaryMaxHeap(Heap<Integer> heap, int degree) {
-        for (int i = 2; i <= heap.heapSize; i++) {
-            assertTrue(heap.at(multiaryParent(degree, i)) >= heap.at(i));
-        }
-    }
-
-    @Test
     public void shouldExtractMaximumFromMultiaryMaxHeap() {
         // given
         Array<Integer> array = new Array<>(32,17,27,13,20,16,8,9,13,18,23,24,5,3,12,7);
@@ -509,6 +484,13 @@ public class Chapter6Test {
         assertEquals(original.at(1), new Integer(actualMaximum));
         for (int i = 2; i <= original.heapSize; i++) {
             assertHeapContains(heap, original.at(i));
+        }
+    }
+
+    private void assertMultiaryMaxHeap(Heap<Integer> heap, int degree) {
+        for (int i = 2; i <= heap.heapSize; i++) {
+            int parent = ceil(i - 1, degree);
+            assertTrue(heap.at(parent) >= heap.at(i));
         }
     }
 

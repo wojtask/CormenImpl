@@ -120,7 +120,7 @@ public class Chapter7Test {
 
         // then
         assertShuffled(original, array);
-        assertTrue(1 <= pivotIndex && pivotIndex <= array.length);
+        assertTrue(2 <= pivotIndex && pivotIndex <= array.length - 1);
         assertArrayPartitioned(array, pivotIndex);
     }
 

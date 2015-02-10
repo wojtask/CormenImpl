@@ -1033,7 +1033,7 @@ public class Chapter10Test {
     public void shouldAllocateObjectOnSingleArrayList() {
         // given
         SingleArrayList singleArrayList = new SingleArrayList();
-        singleArrayList.A = new Array<>(100,10,4,200,1,null,300,null,13,400,null,1,500,7,null);
+        singleArrayList.set(new Array<>(100,10,4,200,1,null,300,null,13,400,null,1,500,7,null));
         singleArrayList.L = 4;
         singleArrayList.free = 13;
 
@@ -1049,7 +1049,7 @@ public class Chapter10Test {
     public void shouldNotAllocateObjectOnFullSingleArrayList() {
         // given
         SingleArrayList singleArrayList = new SingleArrayList();
-        singleArrayList.A = new Array<>(100,10,4,200,1,null,300,null,13,400,13,1,500,7,10);
+        singleArrayList.set(new Array<>(100,10,4,200,1,null,300,null,13,400,13,1,500,7,10));
         singleArrayList.L = 4;
         singleArrayList.free = null;
 
@@ -1067,7 +1067,7 @@ public class Chapter10Test {
     public void shouldFreeObjectOnSingleArrayList() {
         // given
         SingleArrayList singleArrayList = new SingleArrayList();
-        singleArrayList.A = new Array<>(100,10,4,200,1,null,300,null,13,400,null,1,500,7,null);
+        singleArrayList.set(new Array<>(100,10,4,200,1,null,300,null,13,400,null,1,500,7,null));
         singleArrayList.L = 4;
         singleArrayList.free = 13;
 
@@ -1076,7 +1076,7 @@ public class Chapter10Test {
 
         // then
         assertEquals(new Integer(1), singleArrayList.free);
-        assertEquals(new Integer(13), singleArrayList.A.at(2));
+        assertEquals(new Integer(13), singleArrayList.at(2));
     }
 
     @Test
