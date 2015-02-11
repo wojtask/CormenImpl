@@ -33,13 +33,13 @@ public class Chapter12Test {
 
     private BinaryTree<Integer> getExemplaryBinaryTree() {
         BinaryTree<Integer> tree = new BinaryTree<>();
-        BinaryTree<Integer>.Node x1 = tree.new Node(10);
-        BinaryTree<Integer>.Node x2 = tree.new Node(4);
-        BinaryTree<Integer>.Node x3 = tree.new Node(14);
-        BinaryTree<Integer>.Node x4 = tree.new Node(1);
-        BinaryTree<Integer>.Node x5 = tree.new Node(11);
-        BinaryTree<Integer>.Node x6 = tree.new Node(19);
-        BinaryTree<Integer>.Node x7 = tree.new Node(20);
+        BinaryTree.Node<Integer> x1 = new BinaryTree.Node<>(10);
+        BinaryTree.Node<Integer> x2 = new BinaryTree.Node<>(4);
+        BinaryTree.Node<Integer> x3 = new BinaryTree.Node<>(14);
+        BinaryTree.Node<Integer> x4 = new BinaryTree.Node<>(1);
+        BinaryTree.Node<Integer> x5 = new BinaryTree.Node<>(11);
+        BinaryTree.Node<Integer> x6 = new BinaryTree.Node<>(19);
+        BinaryTree.Node<Integer> x7 = new BinaryTree.Node<>(20);
         tree.root = x1;
         x1.left = x2;
         x2.p = x1;
@@ -138,7 +138,7 @@ public class Chapter12Test {
         int key = 11;
 
         // when
-        BinaryTree<Integer>.Node actualFoundNode = Chapter12.treeSearch(tree.root, key);
+        BinaryTree.Node<Integer> actualFoundNode = Chapter12.treeSearch(tree.root, key);
 
         // then
         assertNotNull(actualFoundNode);
@@ -155,7 +155,7 @@ public class Chapter12Test {
         int key = 17;
 
         // when
-        BinaryTree<Integer>.Node actualFoundNode = Chapter12.treeSearch(tree.root, key);
+        BinaryTree.Node<Integer> actualFoundNode = Chapter12.treeSearch(tree.root, key);
 
         // then
         assertNull(actualFoundNode);
@@ -168,7 +168,7 @@ public class Chapter12Test {
         int key = 11;
 
         // when
-        BinaryTree<Integer>.Node actualFoundNode = Chapter12.iterativeTreeSearch(tree.root, key);
+        BinaryTree.Node<Integer> actualFoundNode = Chapter12.iterativeTreeSearch(tree.root, key);
 
         // then
         assertNotNull(actualFoundNode);
@@ -185,7 +185,7 @@ public class Chapter12Test {
         int key = 17;
 
         // when
-        BinaryTree<Integer>.Node actualFoundNode = Chapter12.iterativeTreeSearch(tree.root, key);
+        BinaryTree.Node<Integer> actualFoundNode = Chapter12.iterativeTreeSearch(tree.root, key);
 
         // then
         assertNull(actualFoundNode);
@@ -197,7 +197,7 @@ public class Chapter12Test {
         BinaryTree<Integer> tree = getExemplaryBinaryTree();
 
         // when
-        BinaryTree<Integer>.Node actualMinimum = Chapter12.treeMinimum(tree.root);
+        BinaryTree.Node<Integer> actualMinimum = Chapter12.treeMinimum(tree.root);
 
         // then
         assertNotNull(actualMinimum);
@@ -213,7 +213,7 @@ public class Chapter12Test {
         BinaryTree<Integer> tree = getExemplaryBinaryTree();
 
         // when
-        BinaryTree<Integer>.Node actualMaximum = Chapter12.treeMaximum(tree.root);
+        BinaryTree.Node<Integer> actualMaximum = Chapter12.treeMaximum(tree.root);
 
         // then
         assertNotNull(actualMaximum);
@@ -229,7 +229,7 @@ public class Chapter12Test {
         BinaryTree<Integer> tree = getExemplaryBinaryTree();
 
         // when
-        BinaryTree<Integer>.Node actualSuccessor = Chapter12.treeSuccessor(tree.root);
+        BinaryTree.Node<Integer> actualSuccessor = Chapter12.treeSuccessor(tree.root);
 
         // then
         assertNotNull(actualSuccessor);
@@ -245,7 +245,7 @@ public class Chapter12Test {
         BinaryTree<Integer> tree = getExemplaryBinaryTree();
 
         // when
-        BinaryTree<Integer>.Node actualMinimum = Chapter12.recursiveTreeMinimum(tree.root);
+        BinaryTree.Node<Integer> actualMinimum = Chapter12.recursiveTreeMinimum(tree.root);
 
         // then
         assertNotNull(actualMinimum);
@@ -261,7 +261,7 @@ public class Chapter12Test {
         BinaryTree<Integer> tree = getExemplaryBinaryTree();
 
         // when
-        BinaryTree<Integer>.Node actualMaximum = Chapter12.recursiveTreeMaximum(tree.root);
+        BinaryTree.Node<Integer> actualMaximum = Chapter12.recursiveTreeMaximum(tree.root);
 
         // then
         assertNotNull(actualMaximum);
@@ -275,10 +275,10 @@ public class Chapter12Test {
     public void shouldFindPredecessorInTree() {
         // given
         BinaryTree<Integer> tree = getExemplaryBinaryTree();
-        BinaryTree<Integer>.Node node = tree.root.right.left; // node of key = 11
+        BinaryTree.Node<Integer> node = tree.root.right.left; // node of key = 11
 
         // when
-        BinaryTree<Integer>.Node actualPredecessor = Chapter12.treePredecessor(node);
+        BinaryTree.Node<Integer> actualPredecessor = Chapter12.treePredecessor(node);
 
         // then
         assertNotNull(actualPredecessor);
@@ -317,7 +317,7 @@ public class Chapter12Test {
     public void shouldInsertNodeToEmptyTree() {
         // given
         BinaryTree<Integer> tree = new BinaryTree<>();
-        BinaryTree<Integer>.Node nodeToInsert = tree.new Node(12);
+        BinaryTree.Node<Integer> nodeToInsert = new BinaryTree.Node<>(12);
 
         // when
         Chapter12.treeInsert(tree, nodeToInsert);
@@ -334,7 +334,7 @@ public class Chapter12Test {
     public void shouldInsertNodeToNonemptyTree() {
         // given
         BinaryTree<Integer> tree = getExemplaryBinaryTree();
-        BinaryTree<Integer>.Node nodeToInsert = tree.new Node(12);
+        BinaryTree.Node<Integer> nodeToInsert = new BinaryTree.Node<>(12);
 
         // when
         Chapter12.treeInsert(tree, nodeToInsert);
@@ -398,7 +398,7 @@ public class Chapter12Test {
     public void shouldInsertNodeToEmptyTreeUsingRecursiveTreeInsert() {
         // given
         BinaryTree<Integer> tree = new BinaryTree<>();
-        BinaryTree<Integer>.Node nodeToInsert = tree.new Node(12);
+        BinaryTree.Node<Integer> nodeToInsert = new BinaryTree.Node<>(12);
 
         // when
         Chapter12.recursiveTreeInsert(tree, tree.root, nodeToInsert);
@@ -415,7 +415,7 @@ public class Chapter12Test {
     public void shouldInsertNodeToNonemptyTreeUsingRecursiveTreeInsert() {
         // given
         BinaryTree<Integer> tree = getExemplaryBinaryTree();
-        BinaryTree<Integer>.Node nodeToInsert = tree.new Node(12);
+        BinaryTree.Node<Integer> nodeToInsert = new BinaryTree.Node<>(12);
 
         // when
         Chapter12.recursiveTreeInsert(tree, tree.root, nodeToInsert);

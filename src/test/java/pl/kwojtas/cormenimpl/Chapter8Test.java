@@ -182,9 +182,9 @@ public class Chapter8Test {
     @Test
     public void shouldSortArrayUsingCountingSortInPlace() {
         // given
-        Array<Integer> array = new Array<>(6,0,2,0,1,3,4,6,1,3,2);
+        Array<Integer> array = new Array<>(7,1,3,1,2,4,5,7,2,4,3);
         Array<Integer> original = new Array<>(array);
-        int boundary = 6;
+        int boundary = 7;
 
         // when
         Chapter8.countingSortInPlace(array, boundary);

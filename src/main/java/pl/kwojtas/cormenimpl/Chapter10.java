@@ -203,8 +203,8 @@ public final class Chapter10 {
     }
 
     // subchapter 10.2
-    public static <T> List<T>.Node listSearch(List<T> L, T k) {
-        List<T>.Node x = L.head;
+    public static <T> List.Node<T> listSearch(List<T> L, T k) {
+        List.Node<T> x = L.head;
         while (x != null && !x.key.equals(k)) {
             x = x.next;
         }
@@ -212,7 +212,7 @@ public final class Chapter10 {
     }
 
     // subchapter 10.2
-    public static <T> void listInsert(List<T> L, List<T>.Node x) {
+    public static <T> void listInsert(List<T> L, List.Node<T> x) {
         x.next = L.head;
         if (L.head != null) {
             L.head.prev = x;
@@ -222,7 +222,7 @@ public final class Chapter10 {
     }
 
     // subchapter 10.2
-    public static <T> void listDelete(List<T> L, List<T>.Node x) {
+    public static <T> void listDelete(List<T> L, List.Node<T> x) {
         if (x.prev != null) {
             x.prev.next = x.next;
         } else {
@@ -234,14 +234,14 @@ public final class Chapter10 {
     }
 
     // subchapter 10.2
-    public static <T> void listDelete_(ListWithSentinel<T> L, ListWithSentinel<T>.Node x) {
+    public static <T> void listDelete_(ListWithSentinel<T> L, ListWithSentinel.Node<T> x) {
         x.prev.next = x.next;
         x.next.prev = x.prev;
     }
 
     // subchapter 10.2
-    public static <T> ListWithSentinel<T>.Node listSearch_(ListWithSentinel<T> L, T k) {
-        ListWithSentinel<T>.Node x = L.nil.next;
+    public static <T> ListWithSentinel.Node<T> listSearch_(ListWithSentinel<T> L, T k) {
+        ListWithSentinel.Node<T> x = L.nil.next;
         while (x != L.nil && !x.key.equals(k)) {
             x = x.next;
         }
@@ -249,7 +249,7 @@ public final class Chapter10 {
     }
 
     // subchapter 10.2
-    public static <T> void listInsert_(ListWithSentinel<T> L, ListWithSentinel<T>.Node x) {
+    public static <T> void listInsert_(ListWithSentinel<T> L, ListWithSentinel.Node<T> x) {
         x.next = L.nil.next;
         L.nil.next.prev = x;
         L.nil.next = x;
@@ -257,17 +257,17 @@ public final class Chapter10 {
     }
 
     // solution of 10.2-1
-    public static <T> void singlyLinkedListInsert(SinglyLinkedList<T> L, SinglyLinkedList<T>.Node x) {
+    public static <T> void singlyLinkedListInsert(SinglyLinkedList<T> L, SinglyLinkedList.Node<T> x) {
         x.next = L.head;
         L.head = x;
     }
 
     // solution of 10.2-1
-    public static <T> void singlyLinkedListDelete(SinglyLinkedList<T> L, SinglyLinkedList<T>.Node x) {
+    public static <T> void singlyLinkedListDelete(SinglyLinkedList<T> L, SinglyLinkedList.Node<T> x) {
         if (x == L.head) {
             L.head = L.head.next;
         } else {
-            SinglyLinkedList<T>.Node y = L.head;
+            SinglyLinkedList.Node<T> y = L.head;
             while (y.next != x) {
                 y = y.next;
             }
@@ -277,7 +277,7 @@ public final class Chapter10 {
 
     // solution of 10.2-2
     public static <T> void singlyLinkedListPush(SinglyLinkedList<T> L, T k) {
-        SinglyLinkedList<T>.Node x = L.new Node(k);
+        SinglyLinkedList.Node<T> x = new SinglyLinkedList.Node<>(k);
         singlyLinkedListInsert(L, x);
     }
 
@@ -286,14 +286,14 @@ public final class Chapter10 {
         if (L.head == null) {
             throw new RuntimeException("underflow");
         }
-        SinglyLinkedList<T>.Node x = L.head;
+        SinglyLinkedList.Node<T> x = L.head;
         L.head = x.next;
         return x.key;
     }
 
     // solution of 10.2-3
     public static <T> void singlyLinkedListEnqueue(SinglyLinkedListWithTail<T> L, T k) {
-        SinglyLinkedListWithTail<T>.Node x = L.new Node(k);
+        SinglyLinkedListWithTail.Node<T> x = new SinglyLinkedList.Node<>(k);
         if (L.tail != null) {
             L.tail.next = x;
         } else {
@@ -307,7 +307,7 @@ public final class Chapter10 {
         if (L.head == null) {
             throw new RuntimeException("underflow");
         }
-        SinglyLinkedListWithTail<T>.Node x = L.head;
+        SinglyLinkedListWithTail.Node<T> x = L.head;
         L.head = x.next;
         if (L.tail == x) {
             L.tail = null;
@@ -316,7 +316,7 @@ public final class Chapter10 {
     }
 
     // solution of 10.2-5
-    public static <T> void circularListInsert(CircularList<T> L, CircularList<T>.Node x) {
+    public static <T> void circularListInsert(CircularList<T> L, CircularList.Node<T> x) {
         if (L.head == null) {
             L.head = x.next = x;
         } else {
@@ -326,8 +326,8 @@ public final class Chapter10 {
     }
 
     // solution of 10.2-5
-    public static <T> void circularListDelete(CircularList<T> L, CircularList<T>.Node x) {
-        CircularList<T>.Node y = L.head;
+    public static <T> void circularListDelete(CircularList<T> L, CircularList.Node<T> x) {
+        CircularList.Node<T> y = L.head;
         while (y.next != x) {
             y = y.next;
         }
@@ -342,14 +342,14 @@ public final class Chapter10 {
     }
 
     // solution of 10.2-5
-    public static <T> CircularList<T>.Node circularListSearch(CircularList<T> L, T k) {
+    public static <T> CircularList.Node<T> circularListSearch(CircularList<T> L, T k) {
         if (L.head == null) {
             return null;
         }
         if (L.head.key.equals(k)) {
             return L.head;
         }
-        CircularList<T>.Node x = L.head.next;
+        CircularList.Node<T> x = L.head.next;
         while (x != L.head) {
             if (x.key.equals(k)) {
                 return x;
@@ -363,7 +363,7 @@ public final class Chapter10 {
     public static <T> CircularList<T> circularListsUnion(CircularList<T> S1, CircularList<T> S2) {
         CircularList<T> S = new CircularList<>();
         if (S1.head != null && S2.head != null) {
-            CircularList<T>.Node x = S1.head.next;
+            CircularList.Node<T> x = S1.head.next;
             S1.head.next = S2.head.next;
             S2.head.next = x;
         }
@@ -381,7 +381,7 @@ public final class Chapter10 {
         SinglyLinkedList<T> L_ = new SinglyLinkedList<>();
         L_.head = null;
         while (L.head != null) {
-            SinglyLinkedList<T>.Node x = L.head;
+            SinglyLinkedList.Node<T> x = L.head;
             singlyLinkedListDelete(L, L.head);
             singlyLinkedListInsert(L_, x);
         }
@@ -428,7 +428,7 @@ public final class Chapter10 {
     // solution of 10.3-4
     public static <T> void compactListFreeObject(MultipleArrayList<T> L, int x) {
         int n = L.getLength();
-        Integer y;
+        int y;
         if (L.free == null) {
             y = n;
         } else {
@@ -437,10 +437,10 @@ public final class Chapter10 {
         L.key.set(x, L.key.at(y));
         L.next.set(x, L.next.at(y));
         L.prev.set(x, L.prev.at(y));
-        if (L.next.at(y) != null) {
+        if (L.next.at(y) != null && L.next.at(y) != x) {
             L.prev.set(L.next.at(y), x);
         }
-        if (L.prev.at(y) != null) {
+        if (L.prev.at(y) != null && L.prev.at(y) != x) {
             L.next.set(L.prev.at(y), x);
         }
         if (L.L.equals(y)) {
@@ -516,10 +516,10 @@ public final class Chapter10 {
         if (T.root == null) {
             return;
         }
-        Stack<BinaryTree<T>.Node> S = Stack.withLength(T.getSize());
+        Stack<BinaryTree.Node<T>> S = Stack.withLength(T.getSize());
         push(S, T.root);
         while (!stackEmpty(S)) {
-            BinaryTree<T>.Node x = pop(S);
+            BinaryTree.Node<T> x = pop(S);
             System.out.println(x.key);
             if (x.right != null) {
                 push(S, x.right);
@@ -531,7 +531,7 @@ public final class Chapter10 {
     }
 
     // solution of 10.4-4
-    public static <T> void treeWalk(MultiaryTree<T>.Node x) {
+    public static <T> void treeWalk(MultiaryTree.Node<T> x) {
         if (x != null) {
             System.out.println(x.key);
             treeWalk(x.leftChild);
@@ -539,7 +539,7 @@ public final class Chapter10 {
         }
     }
 
-    private static <T> BinaryTree<T>.Node stacklessInorderVisit(BinaryTree<T>.Node x) {
+    private static <T> BinaryTree.Node<T> stacklessInorderVisit(BinaryTree.Node<T> x) {
         System.out.println(x.key);
         if (x.right != null) {
             return x.right;
@@ -549,9 +549,9 @@ public final class Chapter10 {
 
     // solution of 10.4-5
     public static <T> void stacklessInorderTreeWalk(BinaryTree<T> T) {
-        BinaryTree<T>.Node prev = null;
-        BinaryTree<T>.Node curr = T.root;
-        BinaryTree<T>.Node next = null;
+        BinaryTree.Node<T> prev = null;
+        BinaryTree.Node<T> curr = T.root;
+        BinaryTree.Node<T> next = null;
         while (curr != null) {
             if (prev == curr.p) {
                 if (curr.left != null) {
@@ -576,7 +576,7 @@ public final class Chapter10 {
 
     // solution of 10-2(a)
     public static void sortedListMinHeapInsert(List<Integer> L, int key) {
-        List<Integer>.Node x = L.new Node(key);
+        List.Node<Integer> x = new List.Node<>(key);
         if (L.head == null) {
             L.head = x;
             return;
@@ -587,7 +587,7 @@ public final class Chapter10 {
             L.head = x;
             return;
         }
-        List<Integer>.Node y = L.head;
+        List.Node<Integer> y = L.head;
         while (y.next != null && y.next.key < key) {
             y = y.next;
         }

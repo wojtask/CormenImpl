@@ -2,24 +2,24 @@ package pl.kwojtas.cormenimpl.util;
 
 public class BinaryTree<T> {
 
-    public class Node {
-        public T key;
-        public Node p;
-        public Node left;
-        public Node right;
+    public static class Node<U> {
+        public U key;
+        public Node<U> p;
+        public Node<U> left;
+        public Node<U> right;
 
-        public Node(T key) {
+        public Node(U key) {
             this.key = key;
         }
     }
 
-    public Node root;
+    public Node<T> root;
 
     public int getSize() {
         return getSize(root);
     }
 
-    private int getSize(Node x) {
+    private int getSize(Node<T> x) {
         if (x == null) {
             return 0;
         }

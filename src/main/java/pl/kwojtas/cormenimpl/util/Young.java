@@ -1,24 +1,25 @@
 package pl.kwojtas.cormenimpl.util;
 
-import java.util.Arrays;
-
 public class Young extends Matrix<Integer> {
 
     public Young(int rows, int columns) {
         super(matrixOfInfinities(rows, columns));
     }
 
-    public Young(Integer[]... rows) {
-        super(rows);
-    }
-
-    private static Integer[][] matrixOfInfinities(int rows, int columns) {
-        Integer infinities[][] = new Integer[rows][];
-        for (int i = 0; i < rows; i++) {
-            infinities[i] = new Integer[columns];
-            Arrays.fill(infinities[i], Integer.MAX_VALUE);
+    private static Array<Array<Integer>> matrixOfInfinities(int rows, int columns) {
+        Array<Array<Integer>> infinities = Array.withLength(rows);
+        for (int i = 1; i <= rows; i++) {
+            infinities.set(i, Array.withLength(columns));
+            for (int j = 1; j <= columns; j++) {
+                infinities.at(i).set(j, Integer.MAX_VALUE);
+            }
         }
         return infinities;
+    }
+
+    @SafeVarargs
+    public Young(Array<Integer>... rows) {
+        super(rows);
     }
 
 }

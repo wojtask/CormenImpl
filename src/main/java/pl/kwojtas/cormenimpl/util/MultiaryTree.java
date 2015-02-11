@@ -2,17 +2,17 @@ package pl.kwojtas.cormenimpl.util;
 
 public class MultiaryTree<T> {
 
-    public class Node {
-        public T key;
-        public Node p;
-        public Node leftChild;
-        public Node rightSibling;
+    public static class Node<U> {
+        public U key;
+        public Node<U> p;
+        public Node<U> leftChild;
+        public Node<U> rightSibling;
 
-        public Node(T key) {
+        public Node(U key) {
             this.key = key;
         }
     }
 
-    public Node root;
+    public Node<T> root;
 
 }

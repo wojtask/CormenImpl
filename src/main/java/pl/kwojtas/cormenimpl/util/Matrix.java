@@ -1,21 +1,40 @@
 package pl.kwojtas.cormenimpl.util;
 
-public class Matrix<T extends Number> {
+public class Matrix<T> {
 
     private T[][] data;
     public int rows;
     public int columns;
 
     @SafeVarargs
-    public Matrix(T[]... rows) {
-        this.data = rows;
-        for (T[] row : rows) {
-            if (row.length != rows[0].length) {
+    public Matrix(Array<T>... rows) {
+        this.data = (T[][]) new Object[rows.length][];
+        for (int i = 0; i < rows.length; i++) {
+            if (rows[i].length != rows[0].length) {
                 throw new RuntimeException("Different sizes of rows");
+            }
+            this.data[i] = (T[]) new Object[rows[i].length];
+            for (int j = 0; j < rows[i].length; j++) {
+                this.data[i][j] = rows[i].at(j + 1);
             }
         }
         this.rows = rows.length;
         this.columns = rows.length > 0 ? rows[0].length : 0;
+    }
+
+    public Matrix(Array<Array<T>> rows) {
+        this.data = (T[][]) new Object[rows.length][];
+        for (int i = 0; i < rows.length; i++) {
+            if (rows.at(i + 1).length != rows.at(1).length) {
+                throw new RuntimeException("Different sizes of rows");
+            }
+            this.data[i] = (T[]) new Object[rows.at(i + 1).length];
+            for (int j = 0; j < rows.at(i + 1).length; j++) {
+                this.data[i][j] = rows.at(i + 1).at(j + 1);
+            }
+        }
+        this.rows = rows.length;
+        this.columns = rows.length > 0 ? rows.at(1).length : 0;
     }
 
     public Matrix(Matrix<T> otherMatrix) {

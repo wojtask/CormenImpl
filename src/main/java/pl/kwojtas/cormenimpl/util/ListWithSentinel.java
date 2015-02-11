@@ -2,28 +2,28 @@ package pl.kwojtas.cormenimpl.util;
 
 public class ListWithSentinel<T> {
 
-    public class Node {
-        public T key;
-        public Node prev;
-        public Node next;
+    public static class Node<U> {
+        public U key;
+        public Node<U> prev;
+        public Node<U> next;
 
-        public Node(T key) {
+        public Node(U key) {
             this.key = key;
         }
     }
 
-    public Node nil;
+    public Node<T> nil;
 
     @SafeVarargs
     public ListWithSentinel(T... elements) {
-        nil = new Node(null);
+        nil = new Node<>(null);
         nil.prev = nil.next = nil;
         if (elements.length == 0) {
             return;
         }
-        Node x = nil;
+        Node<T> x = nil;
         for (T element : elements) {
-            Node y = new Node(element);
+            Node<T> y = new Node<>(element);
             y.prev = x;
             x.next = y;
             y.next = nil;
@@ -33,12 +33,12 @@ public class ListWithSentinel<T> {
     }
 
     public ListWithSentinel(ListWithSentinel<T> otherList) {
-        nil = new Node(null);
+        nil = new Node<>(null);
         nil.prev = nil.next = nil;
-        Node x = nil;
-        Node z = otherList.nil.next;
+        Node<T> x = nil;
+        Node<T> z = otherList.nil.next;
         while (z != otherList.nil) {
-            Node y = new Node(z.key);
+            Node<T> y = new Node<>(z.key);
             y.prev = x;
             x.next = y;
             y.next = nil;
@@ -50,7 +50,7 @@ public class ListWithSentinel<T> {
 
     public int getLength() {
         int length = 0;
-        Node x = nil.next;
+        Node<T> x = nil.next;
         while (x != nil) {
             length++;
             x = x.next;
@@ -60,7 +60,7 @@ public class ListWithSentinel<T> {
 
     public Array<T> toArray() {
         Array<T> array = Array.withLength(getLength());
-        Node x = nil.next;
+        Node<T> x = nil.next;
         int i = 1;
         while (x != nil) {
             array.set(i, x.key);

@@ -89,12 +89,12 @@ public final class Chapter4 {
 
     private static Array<Integer> mongeLeftmostMinimaIndexesOfEvenRows(Matrix<Double> A) {
         int m = A.rows;
-        Double[][] oddRows = new Double[m / 2][];
+        Array<Array<Double>> oddRows = Array.withLength(m / 2);
         for (int i = 2; i <= m; i += 2) {
             int n = A.row(i).length;
-            oddRows[i / 2 - 1] = new Double[n];
+            oddRows.set(i / 2, Array.withLength(n));
             for (int j = 1; j <= n; j++) {
-                oddRows[i / 2 - 1][j - 1] = A.row(i).at(j);
+                oddRows.at(i / 2).set(j, A.row(i).at(j));
             }
         }
         Matrix<Double> A_ = new Matrix<>(oddRows);

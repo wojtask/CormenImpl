@@ -40,13 +40,13 @@ public class Chapter4Test {
     public void shouldGetLeftmostMinimaIndexesOfMongeArray() {
         // given
         Matrix<Double> matrix = new Matrix<>(
-                new Double[]{10.0,17.0,13.0,28.0,23.0},
-                new Double[]{17.0,22.0,16.0,29.0,23.0},
-                new Double[]{24.0,28.0,22.0,34.0,24.0},
-                new Double[]{11.0,13.0, 6.0,17.0, 7.0},
-                new Double[]{45.0,44.0,32.0,37.0,23.0},
-                new Double[]{36.0,33.0,19.0,21.0, 6.0},
-                new Double[]{75.0,66.0,51.0,53.0,34.0}
+                new Array<>(10.0,17.0,13.0,28.0,23.0),
+                new Array<>(17.0,22.0,16.0,29.0,23.0),
+                new Array<>(24.0,28.0,22.0,34.0,24.0),
+                new Array<>(11.0,13.0, 6.0,17.0, 7.0),
+                new Array<>(45.0,44.0,32.0,37.0,23.0),
+                new Array<>(36.0,33.0,19.0,21.0, 6.0),
+                new Array<>(75.0,66.0,51.0,53.0,34.0)
         );
         Matrix<Double> original = new Matrix<>(matrix);
 

@@ -3,6 +3,7 @@ package pl.kwojtas.cormenimpl;
 import pl.kwojtas.cormenimpl.util.Array;
 import pl.kwojtas.cormenimpl.util.Pair;
 import pl.kwojtas.cormenimpl.util.Point2D;
+import pl.kwojtas.cormenimpl.util.ZeroBasedIndexedArray;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -12,8 +13,8 @@ import static pl.kwojtas.cormenimpl.Chapter7.randomizedPartition;
 import static pl.kwojtas.cormenimpl.util.Util.ceil;
 import static pl.kwojtas.cormenimpl.util.Util.greater;
 import static pl.kwojtas.cormenimpl.util.Util.less;
-import static pl.kwojtas.cormenimpl.util.Util.min;
 import static pl.kwojtas.cormenimpl.util.Util.max;
+import static pl.kwojtas.cormenimpl.util.Util.min;
 
 public final class Chapter9 {
 
@@ -106,18 +107,18 @@ public final class Chapter9 {
         if (n == 1) {
             return A.at(p);
         }
-        Array<T>[] groups = new Array[ceil(n, 5)];
+        ZeroBasedIndexedArray<Array<T>> groups = ZeroBasedIndexedArray.withLength(ceil(n, 5));
         for (int j = 0; j < groups.length - 1; j++) {
-            groups[j] = Array.withLength(5);
+            groups.set(j, Array.withLength(5));
         }
-        groups[groups.length - 1] = Array.withLength(n % 5 > 0 ? n % 5 : 5);
+        groups.set(groups.length - 1, Array.withLength(n % 5 > 0 ? n % 5 : 5));
         for (int j = p; j <= r; j++) {
-            groups[(j - p) / 5].set((j - p) % 5 + 1, A.at(j));
+            groups.at((j - p) / 5).set((j - p) % 5 + 1, A.at(j));
         }
         Array<T> medians = Array.withLength(groups.length);
         for (int j = 0; j < groups.length; j++) {
-            Chapter2.insertionSort(groups[j]);
-            medians.set(j + 1, groups[j].at((groups[j].length + 1) / 2));
+            Chapter2.insertionSort(groups.at(j));
+            medians.set(j + 1, groups.at(j).at((groups.at(j).length + 1) / 2));
         }
         T x = select(medians, 1, medians.length, (medians.length + 1) / 2);
         int k = partitionAround(A, p, r, x) - p + 1;

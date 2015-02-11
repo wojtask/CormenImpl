@@ -3,7 +3,6 @@ package pl.kwojtas.cormenimpl;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import pl.kwojtas.cormenimpl.util.Array;
 import pl.kwojtas.cormenimpl.util.BinaryTree;
@@ -652,7 +651,7 @@ public class Chapter10Test {
         int keyToFind = 6;
 
         // when
-        List<Integer>.Node actualNode = Chapter10.listSearch(list, keyToFind);
+        List.Node<Integer> actualNode = Chapter10.listSearch(list, keyToFind);
 
         // then
         assertNotNull(actualNode);
@@ -666,7 +665,7 @@ public class Chapter10Test {
         int keyToFind = 4;
 
         // when
-        List<Integer>.Node actualNode = Chapter10.listSearch(list, keyToFind);
+        List.Node<Integer> actualNode = Chapter10.listSearch(list, keyToFind);
 
         // then
         assertNull(actualNode);
@@ -680,7 +679,7 @@ public class Chapter10Test {
         int keyToInsert = 3;
 
         // when
-        Chapter10.listInsert(list, list.new Node(keyToInsert));
+        Chapter10.listInsert(list, new List.Node<>(keyToInsert));
 
         // then
         Array<Integer> listArray = list.toArray();
@@ -694,7 +693,7 @@ public class Chapter10Test {
         List<Integer> list = new List<>(5,7,9,2,6,1,6,6,3,1,7,8);
         List<Integer> original = new List<>(list);
         int keyToDelete = 6;
-        List<Integer>.Node nodeToDelete = list.head.next.next.next.next; // first element on the list with key = 6
+        List.Node<Integer> nodeToDelete = list.head.next.next.next.next; // first element on the list with key = 6
 
         // when
         Chapter10.listDelete(list, nodeToDelete);
@@ -724,7 +723,7 @@ public class Chapter10Test {
         ListWithSentinel<Integer> list = new ListWithSentinel<>(5,7,9,2,6,1,6,6,3,1,7,8);
         ListWithSentinel<Integer> original = new ListWithSentinel<>(list);
         int keyToDelete = 2;
-        ListWithSentinel<Integer>.Node nodeToDelete = list.nil.next.next.next.next; // element with key = 2
+        ListWithSentinel.Node<Integer> nodeToDelete = list.nil.next.next.next.next; // element with key = 2
 
         // when
         Chapter10.listDelete_(list, nodeToDelete);
@@ -740,7 +739,7 @@ public class Chapter10Test {
         int keyToFind = 6;
 
         // when
-        ListWithSentinel<Integer>.Node actualNode = Chapter10.listSearch_(list, keyToFind);
+        ListWithSentinel.Node<Integer> actualNode = Chapter10.listSearch_(list, keyToFind);
 
         // then
         assertNotNull(actualNode);
@@ -754,7 +753,7 @@ public class Chapter10Test {
         int keyToFind = 4;
 
         // when
-        ListWithSentinel<Integer>.Node actualNode = Chapter10.listSearch_(list, keyToFind);
+        ListWithSentinel.Node<Integer> actualNode = Chapter10.listSearch_(list, keyToFind);
 
         // then
         assertEquals(list.nil, actualNode);
@@ -768,7 +767,7 @@ public class Chapter10Test {
         int keyToInsert = 3;
 
         // when
-        Chapter10.listInsert_(list, list.new Node(keyToInsert));
+        Chapter10.listInsert_(list, new ListWithSentinel.Node<>(keyToInsert));
 
         // then
         Array<Integer> listArray = list.toArray();
@@ -792,7 +791,7 @@ public class Chapter10Test {
         int keyToInsert = 3;
 
         // when
-        Chapter10.singlyLinkedListInsert(list, list.new Node(keyToInsert));
+        Chapter10.singlyLinkedListInsert(list, new SinglyLinkedList.Node<>(keyToInsert));
 
         // then
         Array<Integer> listArray = list.toArray();
@@ -806,7 +805,7 @@ public class Chapter10Test {
         SinglyLinkedList<Integer> list = new SinglyLinkedList<>(5,7,9,2,6,1,6,6,3,1,7,8);
         SinglyLinkedList<Integer> original = new SinglyLinkedList<>(list);
         int keyToDelete = 6;
-        SinglyLinkedList<Integer>.Node nodeToDelete = list.head.next.next.next.next; // first element on the list with key = 6
+        SinglyLinkedList.Node<Integer> nodeToDelete = list.head.next.next.next.next; // first element on the list with key = 6
 
         // when
         Chapter10.singlyLinkedListDelete(list, nodeToDelete);
@@ -929,7 +928,7 @@ public class Chapter10Test {
         int keyToInsert = 3;
 
         // when
-        Chapter10.circularListInsert(list, list.new Node(keyToInsert));
+        Chapter10.circularListInsert(list, new CircularList.Node<>(keyToInsert));
 
         // then
         Array<Integer> listArray = list.toArray();
@@ -948,7 +947,7 @@ public class Chapter10Test {
         CircularList<Integer> list = new CircularList<>(5,7,9,2,6,1,6,6,3,1,7,8);
         CircularList<Integer> original = new CircularList<>(list);
         int keyToDelete = 6;
-        CircularList<Integer>.Node nodeToDelete = list.head.next.next.next.next; // first element on the list with key = 6
+        CircularList.Node<Integer> nodeToDelete = list.head.next.next.next.next; // first element on the list with key = 6
 
         // when
         Chapter10.circularListDelete(list, nodeToDelete);
@@ -964,7 +963,7 @@ public class Chapter10Test {
         int keyToFind = 6;
 
         // when
-        CircularList<Integer>.Node actualNode = Chapter10.circularListSearch(list, keyToFind);
+        CircularList.Node<Integer> actualNode = Chapter10.circularListSearch(list, keyToFind);
 
         // then
         assertNotNull(actualNode);
@@ -978,7 +977,7 @@ public class Chapter10Test {
         int keyToFind = 4;
 
         // when
-        CircularList<Integer>.Node actualNode = Chapter10.circularListSearch(list, keyToFind);
+        CircularList.Node<Integer> actualNode = Chapter10.circularListSearch(list, keyToFind);
 
         // then
         assertNull(actualNode);
@@ -1165,7 +1164,6 @@ public class Chapter10Test {
         }
     }
 
-    @Ignore
     @Test
     public void shouldFreeObjectOnCompactList() {
         // given
@@ -1186,13 +1184,12 @@ public class Chapter10Test {
         assertNull(multipleArrayList.next.at(1));
     }
 
-    @Ignore
     @Test
     public void shouldCompactifyList() {
         // given
         MultipleArrayList<String> multipleArrayList = new MultipleArrayList<>();
         multipleArrayList.next = new Array<>(9,8,null,1,2,5,null,10,7,3);
-        multipleArrayList.prev = new Array<>(null,5,10,null,6,null,null,2,null,8);
+        multipleArrayList.prev = new Array<>(4,5,10,null,6,null,9,2,1,8);
         multipleArrayList.key = Array.withLength(10);
         multipleArrayList.L = 6;
         multipleArrayList.free = 4;
@@ -1229,13 +1226,13 @@ public class Chapter10Test {
     public void shouldPrintOutNonEmptyTreeInPreorder() {
         // given
         BinaryTree<Integer> tree = new BinaryTree<>();
-        BinaryTree<Integer>.Node x1 = tree.new Node(10);
-        BinaryTree<Integer>.Node x2 = tree.new Node(4);
-        BinaryTree<Integer>.Node x3 = tree.new Node(14);
-        BinaryTree<Integer>.Node x4 = tree.new Node(1);
-        BinaryTree<Integer>.Node x5 = tree.new Node(11);
-        BinaryTree<Integer>.Node x6 = tree.new Node(19);
-        BinaryTree<Integer>.Node x7 = tree.new Node(20);
+        BinaryTree.Node<Integer> x1 = new BinaryTree.Node<>(10);
+        BinaryTree.Node<Integer> x2 = new BinaryTree.Node<>(4);
+        BinaryTree.Node<Integer> x3 = new BinaryTree.Node<>(14);
+        BinaryTree.Node<Integer> x4 = new BinaryTree.Node<>(1);
+        BinaryTree.Node<Integer> x5 = new BinaryTree.Node<>(11);
+        BinaryTree.Node<Integer> x6 = new BinaryTree.Node<>(19);
+        BinaryTree.Node<Integer> x7 = new BinaryTree.Node<>(20);
         tree.root = x1;
         x1.left = x2; x2.p = x1; x1.right = x3; x3.p = x1;
         x2.left = x4; x4.p = x2;
@@ -1266,16 +1263,16 @@ public class Chapter10Test {
     public void shouldPrintOutNonEmptyMultiaryTree() {
         // given
         MultiaryTree<Integer> tree = new MultiaryTree<>();
-        MultiaryTree<Integer>.Node x1 = tree.new Node(1);
-        MultiaryTree<Integer>.Node x2 = tree.new Node(2);
-        MultiaryTree<Integer>.Node x3 = tree.new Node(3);
-        MultiaryTree<Integer>.Node x4 = tree.new Node(4);
-        MultiaryTree<Integer>.Node x5 = tree.new Node(5);
-        MultiaryTree<Integer>.Node x6 = tree.new Node(6);
-        MultiaryTree<Integer>.Node x7 = tree.new Node(7);
-        MultiaryTree<Integer>.Node x8 = tree.new Node(8);
-        MultiaryTree<Integer>.Node x9 = tree.new Node(9);
-        MultiaryTree<Integer>.Node x10 = tree.new Node(10);
+        MultiaryTree.Node<Integer> x1 = new MultiaryTree.Node<>(1);
+        MultiaryTree.Node<Integer> x2 = new MultiaryTree.Node<>(2);
+        MultiaryTree.Node<Integer> x3 = new MultiaryTree.Node<>(3);
+        MultiaryTree.Node<Integer> x4 = new MultiaryTree.Node<>(4);
+        MultiaryTree.Node<Integer> x5 = new MultiaryTree.Node<>(5);
+        MultiaryTree.Node<Integer> x6 = new MultiaryTree.Node<>(6);
+        MultiaryTree.Node<Integer> x7 = new MultiaryTree.Node<>(7);
+        MultiaryTree.Node<Integer> x8 = new MultiaryTree.Node<>(8);
+        MultiaryTree.Node<Integer> x9 = new MultiaryTree.Node<>(9);
+        MultiaryTree.Node<Integer> x10 = new MultiaryTree.Node<>(10);
         tree.root = x1;
         x1.leftChild = x2; x2.p = x1;
         x2.leftChild = x5; x5.p = x2; x2.rightSibling = x3; x3.p = x1;
@@ -1309,13 +1306,13 @@ public class Chapter10Test {
     public void shouldPrintOutNonEmptyTreeInInorder() {
         // given
         BinaryTree<Integer> tree = new BinaryTree<>();
-        BinaryTree<Integer>.Node x1 = tree.new Node(10);
-        BinaryTree<Integer>.Node x2 = tree.new Node(4);
-        BinaryTree<Integer>.Node x3 = tree.new Node(14);
-        BinaryTree<Integer>.Node x4 = tree.new Node(1);
-        BinaryTree<Integer>.Node x5 = tree.new Node(11);
-        BinaryTree<Integer>.Node x6 = tree.new Node(19);
-        BinaryTree<Integer>.Node x7 = tree.new Node(20);
+        BinaryTree.Node<Integer> x1 = new BinaryTree.Node<>(10);
+        BinaryTree.Node<Integer> x2 = new BinaryTree.Node<>(4);
+        BinaryTree.Node<Integer> x3 = new BinaryTree.Node<>(14);
+        BinaryTree.Node<Integer> x4 = new BinaryTree.Node<>(1);
+        BinaryTree.Node<Integer> x5 = new BinaryTree.Node<>(11);
+        BinaryTree.Node<Integer> x6 = new BinaryTree.Node<>(19);
+        BinaryTree.Node<Integer> x7 = new BinaryTree.Node<>(20);
         tree.root = x1;
         x1.left = x2; x2.p = x1; x1.right = x3; x3.p = x1;
         x2.left = x4; x4.p = x2;

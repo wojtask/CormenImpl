@@ -66,13 +66,13 @@ public final class Chapter11 {
     // solution of 11.1-3
     public static <T> void directAddressInsert_(ZeroBasedIndexedArray<List<Element<T>>> T, Element<T> x) {
         List<Element<T>> list = T.at(x.key);
-        Chapter10.listInsert(list, list.new Node(x));
+        Chapter10.listInsert(list, new List.Node<>(x));
     }
 
     // solution of 11.1-3
     public static <T> void directAddressDelete_(ZeroBasedIndexedArray<List<Element<T>>> T, Element<T> x) {
         List<Element<T>> list = T.at(x.key);
-        List<Element<T>>.Node node = Chapter10.listSearch(list, x);
+        List.Node<Element<T>> node = Chapter10.listSearch(list, x);
         Chapter10.listDelete(list, node);
     }
 
@@ -114,13 +114,13 @@ public final class Chapter11 {
     // subchapter 11.2
     public static <T> void chainedHashInsert(ChainedHashTable<T> T, Element<T> x) {
         List<Element<T>> list = T.at(T.h.compute(x.key));
-        Chapter10.listInsert(list, list.new Node(x));
+        Chapter10.listInsert(list, new List.Node<>(x));
     }
 
     // subchapter 11.2
     public static <T> Element<T> chainedHashSearch(ChainedHashTable<T> T, int k) {
         List<Element<T>> list = T.at(T.h.compute(k));
-        List<Element<T>>.Node x = list.head;
+        List.Node<Element<T>> x = list.head;
         while (x != null) {
             if (x.key.key == k) {
                 return x.key;
@@ -133,7 +133,7 @@ public final class Chapter11 {
     // subchapter 11.2
     public static <T> void chainedHashDelete(ChainedHashTable<T> T, Element<T> x) {
         List<Element<T>> list = T.at(T.h.compute(x.key));
-        List<Element<T>>.Node node = Chapter10.listSearch(list, x);
+        List.Node<Element<T>> node = Chapter10.listSearch(list, x);
         Chapter10.listDelete(list, node);
     }
 
@@ -146,7 +146,7 @@ public final class Chapter11 {
             T.at(position).element = x;
             return position;
         }
-        HashTableWithFreeList<T>.Node otherNode = T.at(position);
+        HashTableWithFreeList.Node<T> otherNode = T.at(position);
         int otherElementPosition = T.h.compute(otherNode.element.key);
         if (otherElementPosition == position) {
             int newPosition = allocateHashTableNode(T, T.free);
@@ -173,7 +173,7 @@ public final class Chapter11 {
         if (T.free == null) {
             throw new RuntimeException("overflow");
         }
-        HashTableWithFreeList.Node node = T.at(position);
+        HashTableWithFreeList.Node<T> node = T.at(position);
         if (node.prev != null) {
             T.at(node.prev).next = node.next;
         }

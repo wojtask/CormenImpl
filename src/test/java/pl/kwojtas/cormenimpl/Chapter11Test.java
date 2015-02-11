@@ -531,7 +531,7 @@ public class Chapter11Test {
     }
 
     @Test(expected = RuntimeException.class)
-    public void shouldThrowExceptionWhenInsertingIntoFullHashTableWithProbing() throws Exception {
+    public void shouldThrowExceptionWhenInsertingIntoFullHashTableWithProbing() {
         // given
         HashTableWithProbing hashTableWithProbing = HashTableWithProbing.withLengthAndHashFunction(5,
                 new HashProbingFunction() {

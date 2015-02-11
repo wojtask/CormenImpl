@@ -9,7 +9,7 @@ public final class Chapter12 {
     private Chapter12() { }
 
     // subchapter 12.1
-    public static <T> void inorderTreeWalk(BinaryTree<T>.Node x) {
+    public static <T> void inorderTreeWalk(BinaryTree.Node<T> x) {
         if (x != null) {
             inorderTreeWalk(x.left);
             System.out.println(x.key);
@@ -18,7 +18,7 @@ public final class Chapter12 {
     }
 
     // solution of 12.1-4
-    public static <T> void preorderTreeWalk(BinaryTree<T>.Node x) {
+    public static <T> void preorderTreeWalk(BinaryTree.Node<T> x) {
         if (x != null) {
             System.out.println(x.key);
             preorderTreeWalk(x.left);
@@ -27,7 +27,7 @@ public final class Chapter12 {
     }
 
     // solution of 12.1-4
-    public static <T> void postorderTreeWalk(BinaryTree<T>.Node x) {
+    public static <T> void postorderTreeWalk(BinaryTree.Node<T> x) {
         if (x != null) {
             postorderTreeWalk(x.left);
             postorderTreeWalk(x.right);
@@ -36,7 +36,7 @@ public final class Chapter12 {
     }
 
     // subchapter 12.2
-    public static <T extends Comparable> BinaryTree<T>.Node treeSearch(BinaryTree<T>.Node x, T k) {
+    public static <T extends Comparable> BinaryTree.Node<T> treeSearch(BinaryTree.Node<T> x, T k) {
         if (x == null || k.equals(x.key)) {
             return x;
         }
@@ -48,7 +48,7 @@ public final class Chapter12 {
     }
 
     // subchapter 12.2
-    public static <T extends Comparable> BinaryTree<T>.Node iterativeTreeSearch(BinaryTree<T>.Node x, T k) {
+    public static <T extends Comparable> BinaryTree.Node<T> iterativeTreeSearch(BinaryTree.Node<T> x, T k) {
         while (x != null && !k.equals(x.key)) {
             if (less(k, x.key)) {
                 x = x.left;
@@ -60,7 +60,7 @@ public final class Chapter12 {
     }
 
     // subchapter 12.2
-    public static <T> BinaryTree<T>.Node treeMinimum(BinaryTree<T>.Node x) {
+    public static <T> BinaryTree.Node<T> treeMinimum(BinaryTree.Node<T> x) {
         while (x.left != null) {
             x = x.left;
         }
@@ -68,7 +68,7 @@ public final class Chapter12 {
     }
 
     // subchapter 12.2
-    public static <T> BinaryTree<T>.Node treeMaximum(BinaryTree<T>.Node x) {
+    public static <T> BinaryTree.Node<T> treeMaximum(BinaryTree.Node<T> x) {
         while (x.right != null) {
             x = x.right;
         }
@@ -76,11 +76,11 @@ public final class Chapter12 {
     }
 
     // subchapter 12.2
-    public static <T extends Comparable> BinaryTree<T>.Node treeSuccessor(BinaryTree<T>.Node x) {
+    public static <T extends Comparable> BinaryTree.Node<T> treeSuccessor(BinaryTree.Node<T> x) {
         if (x.right != null) {
             return treeMinimum(x.right);
         }
-        BinaryTree<T>.Node y = x.p;
+        BinaryTree.Node<T> y = x.p;
         while (y != null && x == y.right) {
             x = y;
             y = y.p;
@@ -89,7 +89,7 @@ public final class Chapter12 {
     }
 
     // solution of 12.2-2
-    public static <T extends Comparable> BinaryTree<T>.Node recursiveTreeMinimum(BinaryTree<T>.Node x) {
+    public static <T extends Comparable> BinaryTree.Node<T> recursiveTreeMinimum(BinaryTree.Node<T> x) {
         if (x.left != null) {
             return recursiveTreeMinimum(x.left);
         }
@@ -97,7 +97,7 @@ public final class Chapter12 {
     }
 
     // solution of 12.2-2
-    public static <T extends Comparable> BinaryTree<T>.Node recursiveTreeMaximum(BinaryTree<T>.Node x) {
+    public static <T extends Comparable> BinaryTree.Node<T> recursiveTreeMaximum(BinaryTree.Node<T> x) {
         if (x.right != null) {
             return recursiveTreeMaximum(x.right);
         }
@@ -105,11 +105,11 @@ public final class Chapter12 {
     }
 
     // solution of 12.2-3
-    public static <T extends Comparable> BinaryTree<T>.Node treePredecessor(BinaryTree<T>.Node x) {
+    public static <T extends Comparable> BinaryTree.Node<T> treePredecessor(BinaryTree.Node<T> x) {
         if (x.left != null) {
             return treeMaximum(x.left);
         }
-        BinaryTree<T>.Node y = x.p;
+        BinaryTree.Node<T> y = x.p;
         while (y != null && x == y.left) {
             x = y;
             y = y.p;
@@ -123,7 +123,7 @@ public final class Chapter12 {
             return;
         }
         int n = T.getSize();
-        BinaryTree<T>.Node x = treeMinimum(T.root);
+        BinaryTree.Node<T> x = treeMinimum(T.root);
         System.out.println(x.key);
         for (int i = 1; i <= n - 1; i++) {
             x = treeSuccessor(x);
@@ -132,9 +132,9 @@ public final class Chapter12 {
     }
 
     // subchapter 12.3
-    public static <T extends Comparable> void treeInsert(BinaryTree<T> T, BinaryTree<T>.Node z) {
-        BinaryTree<T>.Node y = null;
-        BinaryTree<T>.Node x = T.root;
+    public static <T extends Comparable> void treeInsert(BinaryTree<T> T, BinaryTree.Node<T> z) {
+        BinaryTree.Node<T> y = null;
+        BinaryTree.Node<T> x = T.root;
         while (x != null) {
             y = x;
             if (less(z.key, x.key)) {
@@ -156,14 +156,14 @@ public final class Chapter12 {
     }
 
     // subchapter 12.3
-    public static <T extends Comparable> BinaryTree<T>.Node treeDelete(BinaryTree<T> T, BinaryTree<T>.Node z) {
-        BinaryTree<T>.Node y;
+    public static <T extends Comparable> BinaryTree.Node<T> treeDelete(BinaryTree<T> T, BinaryTree.Node<T> z) {
+        BinaryTree.Node<T> y;
         if (z.left == null && z.right == null) {
             y = z;
         } else {
             y = treeSuccessor(z);
         }
-        BinaryTree<T>.Node x;
+        BinaryTree.Node<T> x;
         if (y.left != null) {
             x = y.left;
         } else {
@@ -188,7 +188,7 @@ public final class Chapter12 {
     }
 
     // solution of 12.3-1
-    public static <T extends Comparable> void recursiveTreeInsert(BinaryTree<T> T, BinaryTree<T>.Node x, BinaryTree<T>.Node z) {
+    public static <T extends Comparable> void recursiveTreeInsert(BinaryTree<T> T, BinaryTree.Node<T> x, BinaryTree.Node<T> z) {
         if (x == null) {
             T.root = z;
             return;

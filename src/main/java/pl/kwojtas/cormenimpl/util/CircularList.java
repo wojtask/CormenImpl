@@ -7,11 +7,11 @@ public class CircularList<T> extends SinglyLinkedList<T> {
         if (elements.length == 0) {
             return;
         }
-        head = new Node(elements[0]);
+        head = new Node<>(elements[0]);
         head.next = head;
-        Node x = head;
+        Node<T> x = head;
         for (int i = 1; i < elements.length; i++) {
-            Node y = new Node(elements[i]);
+            Node<T> y = new Node<>(elements[i]);
             y.next = head;
             x.next = y;
             x = y;
@@ -22,12 +22,12 @@ public class CircularList<T> extends SinglyLinkedList<T> {
         if (otherList.head == null) {
             return;
         }
-        head = new Node(otherList.head.key);
+        head = new Node<>(otherList.head.key);
         head.next = head;
-        Node x = head;
-        Node z = otherList.head.next;
+        Node<T> x = head;
+        Node<T> z = otherList.head.next;
         while (z != otherList.head) {
-            Node y = new Node(z.key);
+            Node<T> y = new Node<>(z.key);
             x.next = y;
             y.next = head;
             x = y;
@@ -40,7 +40,7 @@ public class CircularList<T> extends SinglyLinkedList<T> {
             return 0;
         }
         int length = 1;
-        Node x = head.next;
+        Node<T> x = head.next;
         while (x != head) {
             length++;
             x = x.next;
@@ -54,7 +54,7 @@ public class CircularList<T> extends SinglyLinkedList<T> {
         }
         Array<T> array = Array.withLength(getLength());
         array.set(1, head.key);
-        Node x = head.next;
+        Node<T> x = head.next;
         int i = 2;
         while (x != head) {
             array.set(i, x.key);

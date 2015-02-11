@@ -128,7 +128,7 @@ public final class Chapter8 {
             B.set(i, new List<>());
         }
         for (int i = 1; i <= n; i++) {
-            List<Double>.Node x = B.at((int) (n * A.at(i))).new Node(A.at(i));
+            List.Node<Double> x = new List.Node<>(A.at(i));
             Chapter10.listInsert(B.at((int) (n * A.at(i))), x);
         }
         for (int i = 0; i <= n - 1; i++) {
@@ -141,13 +141,13 @@ public final class Chapter8 {
         if (L.head == null) {
             return;
         }
-        List<Double>.Node x = L.head.next;
+        List.Node<Double> x = L.head.next;
         while (x != null) {
-            List<Double>.Node y = x.prev;
+            List.Node<Double> y = x.prev;
             while (y != null && y.key > x.key) {
                 y = y.prev;
             }
-            List<Double>.Node z = x.next;
+            List.Node<Double> z = x.next;
             if (y != x.prev) {
                 x.prev.next = z;
                 if (z != null) {
@@ -170,7 +170,7 @@ public final class Chapter8 {
     private static void concatenateListsToArray(ZeroBasedIndexedArray<List<Double>> B, Array<Double> A) {
         int k = 1;
         for (int i = 0; i <= B.length - 1; i++) {
-            List<Double>.Node x = B.at(i).head;
+            List.Node<Double> x = B.at(i).head;
             while (x != null) {
                 A.set(k, x.key);
                 k++;
@@ -189,7 +189,7 @@ public final class Chapter8 {
         for (int i = 1; i <= n; i++) {
             double distance = sqrt(points.at(i).x * points.at(i).x + points.at(i).y * points.at(i).y);
             int bucket = (int) (distance * distance * n);
-            List<Pair<Point2D, Double>>.Node x = B.at(bucket).new Node(new Pair<>(points.at(i), distance));
+            List.Node<Pair<Point2D, Double>> x = new List.Node<>(new Pair<>(points.at(i), distance));
             Chapter10.listInsert(B.at(bucket), x);
         }
         for (int i = 0; i <= n - 1; i++) {
@@ -202,13 +202,13 @@ public final class Chapter8 {
         if (L.head == null) {
             return;
         }
-        List<Pair<Point2D, Double>>.Node x = L.head.next;
+        List.Node<Pair<Point2D, Double>> x = L.head.next;
         while (x != null) {
-            List<Pair<Point2D, Double>>.Node y = x.prev;
+            List.Node<Pair<Point2D, Double>> y = x.prev;
             while (y != null && y.key.second > x.key.second) {
                 y = y.prev;
             }
-            List<Pair<Point2D, Double>>.Node z = x.next;
+            List.Node<Pair<Point2D, Double>> z = x.next;
             if (y != x.prev) {
                 x.prev.next = z;
                 if (z != null) {
@@ -232,7 +232,7 @@ public final class Chapter8 {
             ZeroBasedIndexedArray<List<Pair<Point2D, Double>>> B, Array<Point2D> points) {
         int k = 1;
         for (int i = 0; i <= B.length - 1; i++) {
-            List<Pair<Point2D, Double>>.Node x = B.at(i).head;
+            List.Node<Pair<Point2D, Double>> x = B.at(i).head;
             while (x != null) {
                 points.set(k, x.key.first);
                 k++;
@@ -270,14 +270,15 @@ public final class Chapter8 {
         for (int i = 1; i <= k; i++) {
             C.set(i, C.at(i) + C.at(i - 1));
         }
-        for (int i = 0; i <= k - 1; i++) {
-            int j = C.at(i);
-            while (j > 0 && A.at(j) >= i) {
-                while (A.at(j) > i) {
-                    C.set(A.at(j), C.at(A.at(j)) - 1);
-                    A.exch(j, C.at(A.at(j)) + 1);
-                }
-                j--;
+        ZeroBasedIndexedArray<Integer> positions = new ZeroBasedIndexedArray<>(C);
+        int i = A.length;
+        while (i >= 1) {
+            int key = A.at(i);
+            if (positions.at(key - 1) < i && i <= positions.at(key)) {
+                i--;
+            } else {
+                A.exch(i, C.at(key));
+                C.set(key, C.at(key) - 1);
             }
         }
     }

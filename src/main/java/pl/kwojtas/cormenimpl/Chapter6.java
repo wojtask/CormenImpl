@@ -332,7 +332,7 @@ public final class Chapter6 {
         }
         while (minPriorityQueue.heapSize > 0) {
             Pair<Integer, List<Integer>> min = heapExtractMinForMergingLists(minPriorityQueue);
-            listInsert(reversedMergedList, reversedMergedList.new Node(min.first));
+            listInsert(reversedMergedList, new List.Node<>(min.first));
             if (min.second.head != null) {
                 minHeapInsertForMergingLists(minPriorityQueue, new Pair<>(min.second.head.key, min.second));
                 min.second.head = min.second.head.next;
@@ -340,7 +340,7 @@ public final class Chapter6 {
         }
         List<Integer> mergedList = new List<>();
         while (reversedMergedList.head != null) {
-            List<Integer>.Node x = reversedMergedList.head;
+            List.Node<Integer> x = reversedMergedList.head;
             listDelete(reversedMergedList, reversedMergedList.head);
             listInsert(mergedList, x);
         }
