@@ -126,27 +126,16 @@ public final class Chapter2 {
         for (int j = 1; j <= n2; j++) {
             R.set(j, A.at(q + j));
         }
-        int i = 1, j = 1;
-        int k = p;
-        while (i <= n1 && j <= n2) {
-            if (leq(L.at(i), R.at(j))) {
+        int i = 1;
+        int j = 1;
+        for (int k = p; k <= r; k++) {
+            if (j > n2 || less(L.at(i), R.at(j))) {
                 A.set(k, L.at(i));
                 i++;
             } else {
                 A.set(k, R.at(j));
                 j++;
             }
-            k++;
-        }
-        while (i <= n1) {
-            A.set(k, L.at(i));
-            i++;
-            k++;
-        }
-        while (j <= n2) {
-            A.set(k, R.at(j));
-            j++;
-            k++;
         }
     }
 

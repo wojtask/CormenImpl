@@ -26,7 +26,6 @@ public final class Chapter4 {
         return missingInteger;
     }
 
-    // solution of 4-2
     private static Array<Integer> extendArrayWithExtraIntegers(Array<Integer> A) {
         int n = A.length;
         while (!isPowerOf2Minus1(n)) {
@@ -42,7 +41,6 @@ public final class Chapter4 {
         return extended;
     }
 
-    // solution of 4-2
     private static boolean isPowerOf2Minus1(int n) {
         while (n > 0) {
             if (n % 2 == 0) {
@@ -53,7 +51,6 @@ public final class Chapter4 {
         return true;
     }
 
-    // solution of 4-2
     private static int getBitLength(int n) {
         int bitLength = 0;
         while (n > 0) {
@@ -63,7 +60,6 @@ public final class Chapter4 {
         return bitLength;
     }
 
-    // solution of 4-2
     private static boolean getBit(int j, Array<Integer> A, int i) {
         return (A.at(i) & (1 << j)) != 0;
     }
