@@ -320,4 +320,129 @@ public final class Chapter9 {
         return new Point2D(xp, yp);
     }
 
+    // solution of 9-3(a)
+    public static <T extends Comparable> T smallOrderSelect(Array<T> A, int i) {
+        smallOrderSelect(A, 1, A.length, i);
+        return A.at(i);
+    }
+
+    private static <T extends Comparable> ZeroBasedIndexedArray<Integer> smallOrderSelect(Array<T> A, int p, int r, int i) {
+        int n = r - p + 1;
+        int m = n / 2;
+        if (i >= m) {
+            return permutationProducingSelect(A, p, r, i);
+        }
+        ZeroBasedIndexedArray<Integer> permutation = ZeroBasedIndexedArray.withLength(n);
+        for (int j = 0; j <= n - 1; j++) {
+            permutation.set(j, j);
+        }
+        for (int j = 0; j <= m - 1; j++) {
+            if (less(A.at(p + j), A.at(p + m + j))) {
+                A.exch(p + j, p + m + j);
+                permutation.exch(j, m + j);
+            }
+        }
+        ZeroBasedIndexedArray<Integer> permutationChanges = smallOrderSelect(A, p + m, r, i);
+        applyPermutationChanges(permutation, permutationChanges, m);
+        applyPermutationChangesWithArrayUpdate(permutation, permutationChanges, A, p, p + m - 1);
+        for (int j = 0; j <= i - 1; j++) {
+            A.exch(p + i + j, p + m + j);
+            permutation.exch(i + j, m + j);
+        }
+        permutationChanges = permutationProducingSelect(A, p, p + 2 * i - 1, i);
+        applyPermutationChanges(permutation, permutationChanges, 0);
+        return permutation;
+    }
+
+    private static <T extends Comparable> ZeroBasedIndexedArray<Integer> permutationProducingSelect(
+            Array<T> A, int p, int r, int i) {
+        int n = r - p + 1;
+        ZeroBasedIndexedArray<Integer> permutation = ZeroBasedIndexedArray.withLength(n);
+        for (int j = 0; j <= n - 1; j++) {
+            permutation.set(j, j);
+        }
+        if (n == 1) {
+            return permutation;
+        }
+        ZeroBasedIndexedArray<Array<T>> groups = ZeroBasedIndexedArray.withLength(ceil(n, 5));
+        for (int j = 0; j < groups.length - 1; j++) {
+            groups.set(j, Array.withLength(5));
+        }
+        groups.set(groups.length - 1, Array.withLength(n % 5 > 0 ? n % 5 : 5));
+        for (int j = p; j <= r; j++) {
+            groups.at((j - p) / 5).set((j - p) % 5 + 1, A.at(j));
+        }
+        Array<T> medians = Array.withLength(groups.length);
+        for (int j = 0; j < groups.length; j++) {
+            Chapter2.insertionSort(groups.at(j));
+            medians.set(j + 1, groups.at(j).at((groups.at(j).length + 1) / 2));
+        }
+        T x = select(medians, 1, medians.length, (medians.length + 1) / 2);
+        int k = permutationChangingPartitionAround(A, p, r, x, permutation) - p + 1;
+        if (i < k) {
+            ZeroBasedIndexedArray<Integer> permutationChanges = permutationProducingSelect(A, p, p + k - 2, i);
+            applyPermutationChanges(permutation, permutationChanges, 0);
+        } else if (i > k) {
+            ZeroBasedIndexedArray<Integer> permutationChanges = permutationProducingSelect(A, p + k, r, i - k);
+            applyPermutationChanges(permutation, permutationChanges, k);
+        }
+        return permutation;
+    }
+
+    private static void applyPermutationChanges(
+            ZeroBasedIndexedArray<Integer> permutation, ZeroBasedIndexedArray<Integer> permutationChanges, int offset) {
+        ZeroBasedIndexedArray<Integer> appliedChanges = ZeroBasedIndexedArray.withLength(permutationChanges.length);
+        for (int j = 0; j <= permutationChanges.length - 1; j++) {
+            appliedChanges.set(j, permutation.at(offset + permutationChanges.at(j)));
+        }
+        for (int j = 0; j <= permutationChanges.length - 1; j++) {
+            permutation.set(offset + j, appliedChanges.at(j));
+        }
+    }
+
+    private static <T extends Comparable> void applyPermutationChangesWithArrayUpdate(
+            ZeroBasedIndexedArray<Integer> permutation,
+            ZeroBasedIndexedArray<Integer> permutationChanges,
+            Array<T> A,
+            int p,
+            int r) {
+        int changesLength = r - p + 1;
+        ZeroBasedIndexedArray<Integer> appliedChanges = ZeroBasedIndexedArray.withLength(changesLength);
+        Array<T> permutedArrayFragment = Array.withLength(changesLength);
+        for (int j = 0; j <= changesLength - 1; j++) {
+            if (permutationChanges.at(j) < changesLength - 1) {
+                appliedChanges.set(j, permutation.at(permutationChanges.at(j)));
+                permutedArrayFragment.set(j + 1, A.at(p + permutationChanges.at(j)));
+            } else {
+                appliedChanges.set(j, permutation.at(permutationChanges.at(changesLength - 1)));
+                permutedArrayFragment.set(j + 1, A.at(p + permutationChanges.at(changesLength - 1)));
+            }
+        }
+        for (int j = 0; j <= changesLength - 1; j++) {
+            permutation.set(j, appliedChanges.at(j));
+            A.set(p + j, permutedArrayFragment.at(j + 1));
+        }
+    }
+
+    private static <T extends Comparable> int permutationChangingPartitionAround(
+            Array<T> A, int p, int r, T x, ZeroBasedIndexedArray<Integer> permutation) {
+        int q = p;
+        while (!A.at(q).equals(x)) {
+            q++;
+        }
+        A.exch(q, r);
+        permutation.exch(q - p, r - p);
+        int i = p - 1;
+        for (int j = p; j <= r - 1; j++) {
+            if (less(A.at(j), x)) {
+                i++;
+                A.exch(i, j);
+                permutation.exch(i - p, j - p);
+            }
+        }
+        A.exch(i + 1, r);
+        permutation.exch(i + 1 - p, r - p);
+        return i + 1;
+    }
+
 }

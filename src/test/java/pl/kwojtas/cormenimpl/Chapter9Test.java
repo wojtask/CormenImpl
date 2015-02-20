@@ -365,4 +365,18 @@ public class Chapter9Test {
         return totalWeighedDistance;
     }
 
+    @Test
+    public void shouldFindOrderStatisticUsingSmallOrderSelect() {
+        // given
+        Array<Integer> array = new Array<>(5,12,1,0,13,12,0,10,9,1,4,3,16,15,19,6,11,20,2);
+        Array<Integer> original = new Array<>(array);
+        int order = 3;
+
+        // when
+        int actualOrderStatistic = Chapter9.smallOrderSelect(array, order);
+
+        // then
+        assertOrderStatistic(original, order, actualOrderStatistic);
+    }
+
 }

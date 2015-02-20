@@ -6,7 +6,7 @@
 
     <groupId>org.kwojtas</groupId>
     <artifactId>cormenimpl</artifactId>
-    <version>0.1-SNAPSHOT</version>
+    <version>0.5-SNAPSHOT</version>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
