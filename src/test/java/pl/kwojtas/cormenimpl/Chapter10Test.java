@@ -655,7 +655,7 @@ public class Chapter10Test {
 
         // then
         assertNotNull(actualNode);
-        assertEquals(new Integer(keyToFind), actualNode.key);
+        assertEquals(Integer.valueOf(keyToFind), actualNode.key);
     }
 
     @Test
@@ -710,7 +710,7 @@ public class Chapter10Test {
             i++;
             elementsEqual = listArray.at(i).equals(originalArray.at(i));
         }
-        assertEquals(new Integer(deletedKey), originalArray.at(i));
+        assertEquals(Integer.valueOf(deletedKey), originalArray.at(i));
         while (i <= listArray.length) {
             assertEquals(listArray.at(i), originalArray.at(i + 1));
             i++;
@@ -743,7 +743,7 @@ public class Chapter10Test {
 
         // then
         assertNotNull(actualNode);
-        assertEquals(new Integer(keyToFind), actualNode.key);
+        assertEquals(Integer.valueOf(keyToFind), actualNode.key);
     }
 
     @Test
@@ -777,7 +777,7 @@ public class Chapter10Test {
 
     private void assertElementInsertedIntoBeginningOfList(int keyToInsert, Array<Integer> listArray, Array<Integer> originalArray) {
         assertEquals(originalArray.length + 1, listArray.length);
-        assertEquals(new Integer(keyToInsert), listArray.at(1));
+        assertEquals(Integer.valueOf(keyToInsert), listArray.at(1));
         for (int i = 2; i <= listArray.length; i++) {
             assertEquals(originalArray.at(i - 1), listArray.at(i));
         }
@@ -841,7 +841,7 @@ public class Chapter10Test {
         Integer actualElement = Chapter10.singlyLinkedListPop(list);
 
         // then
-        assertEquals(new Integer(expectedElement), actualElement);
+        assertEquals(Integer.valueOf(expectedElement), actualElement);
         Array<Integer> listArray = list.toArray();
         Array<Integer> originalArray = original.toArray();
         assertEquals(originalArray.length - 1, listArray.length);
@@ -879,7 +879,7 @@ public class Chapter10Test {
         Array<Integer> listArray = list.toArray();
         Array<Integer> originalArray = original.toArray();
         assertEquals(originalArray.length + 1, listArray.length);
-        assertEquals(new Integer(keyToInsert), listArray.at(listArray.length));
+        assertEquals(Integer.valueOf(keyToInsert), listArray.at(listArray.length));
         for (int i = 1; i <= listArray.length - 1; i++) {
             assertEquals(originalArray.at(i), listArray.at(i));
         }
@@ -896,7 +896,7 @@ public class Chapter10Test {
         Integer actualElement = Chapter10.singlyLinkedListDequeue(list);
 
         // then
-        assertEquals(new Integer(expectedElement), actualElement);
+        assertEquals(Integer.valueOf(expectedElement), actualElement);
         Array<Integer> listArray = list.toArray();
         Array<Integer> originalArray = original.toArray();
         assertEquals(originalArray.length - 1, listArray.length);
@@ -935,7 +935,7 @@ public class Chapter10Test {
         Array<Integer> originalArray = original.toArray();
         assertEquals(originalArray.length + 1, listArray.length);
         assertEquals(originalArray.at(1), listArray.at(1));
-        assertEquals(new Integer(keyToInsert), listArray.at(2));
+        assertEquals(Integer.valueOf(keyToInsert), listArray.at(2));
         for (int i = 3; i <= listArray.length; i++) {
             assertEquals(originalArray.at(i - 1), listArray.at(i));
         }
@@ -967,7 +967,7 @@ public class Chapter10Test {
 
         // then
         assertNotNull(actualNode);
-        assertEquals(new Integer(keyToFind), actualNode.key);
+        assertEquals(Integer.valueOf(keyToFind), actualNode.key);
     }
 
     @Test
@@ -1039,7 +1039,7 @@ public class Chapter10Test {
 
         // then
         assertEquals(5, actualNewPosition);
-        assertEquals(new Integer(3), multipleArrayList.free);
+        assertEquals(Integer.valueOf(3), multipleArrayList.free);
     }
 
     @Test(expected = RuntimeException.class)
@@ -1074,8 +1074,8 @@ public class Chapter10Test {
         Chapter10.freeObject(multipleArrayList, 1);
 
         // then
-        assertEquals(new Integer(1), multipleArrayList.free);
-        assertEquals(new Integer(5), multipleArrayList.next.at(1));
+        assertEquals(Integer.valueOf(1), multipleArrayList.free);
+        assertEquals(Integer.valueOf(5), multipleArrayList.next.at(1));
     }
 
     @Test
@@ -1091,7 +1091,7 @@ public class Chapter10Test {
 
         // then
         assertEquals(13, actualNewPosition);
-        assertEquals(new Integer(7), singleArrayList.free);
+        assertEquals(Integer.valueOf(7), singleArrayList.free);
     }
 
     @Test(expected = RuntimeException.class)
@@ -1124,8 +1124,8 @@ public class Chapter10Test {
         Chapter10.singleArrayFreeObject(singleArrayList, 1);
 
         // then
-        assertEquals(new Integer(1), singleArrayList.free);
-        assertEquals(new Integer(13), singleArrayList.at(2));
+        assertEquals(Integer.valueOf(1), singleArrayList.free);
+        assertEquals(Integer.valueOf(13), singleArrayList.at(2));
     }
 
     @Test
@@ -1142,7 +1142,7 @@ public class Chapter10Test {
 
         // then
         assertEquals(4, actualNewPosition);
-        assertEquals(new Integer(5), multipleArrayList.free);
+        assertEquals(Integer.valueOf(5), multipleArrayList.free);
     }
 
     @Test(expected = RuntimeException.class)
@@ -1178,8 +1178,8 @@ public class Chapter10Test {
         Chapter10.compactListFreeObject(multipleArrayList, 1);
 
         // then
-        assertEquals(new Integer(3), multipleArrayList.free);
-        assertEquals(new Integer(4), multipleArrayList.next.at(3));
+        assertEquals(Integer.valueOf(3), multipleArrayList.free);
+        assertEquals(Integer.valueOf(4), multipleArrayList.next.at(3));
         assertEquals("ccc", multipleArrayList.key.at(1));
         assertNull(multipleArrayList.next.at(1));
     }
@@ -1439,7 +1439,7 @@ public class Chapter10Test {
         Integer actualFoundPosition = Chapter10.compactListSearch(multipleArrayList, 6, "eee");
 
         // then
-        assertEquals(new Integer(6), actualFoundPosition);
+        assertEquals(Integer.valueOf(6), actualFoundPosition);
     }
 
     @Test

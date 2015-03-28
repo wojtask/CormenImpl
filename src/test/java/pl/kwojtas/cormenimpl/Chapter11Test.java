@@ -129,7 +129,7 @@ public class Chapter11Test {
         Chapter11.bitVectorInsert(bitVector, key);
 
         // then
-        assertEquals(new Integer(1), bitVector.at(key));
+        assertEquals(Integer.valueOf(1), bitVector.at(key));
     }
 
     @Test
@@ -142,7 +142,7 @@ public class Chapter11Test {
         Chapter11.bitVectorDelete(bitVector, key);
 
         // then
-        assertEquals(new Integer(0), bitVector.at(key));
+        assertEquals(Integer.valueOf(0), bitVector.at(key));
     }
 
     private ZeroBasedIndexedArray<List<Element<String>>> getExemplaryDirectAddressTableWithNonDistinctKeys() {
@@ -263,7 +263,7 @@ public class Chapter11Test {
         assertEquals(hugeArraySize + 1, hugeArray.S.top);
         assertEquals(element.key, hugeArray.S.at(hugeArraySize + 1).key);
         assertEquals(element.data, hugeArray.S.at(hugeArraySize + 1).data);
-        assertEquals(new Integer(hugeArraySize + 1), hugeArray.T.at(element.key));
+        assertEquals(Integer.valueOf(hugeArraySize + 1), hugeArray.T.at(element.key));
     }
 
     @Test
@@ -280,7 +280,7 @@ public class Chapter11Test {
         assertEquals(hugeArraySize - 1, hugeArray.S.top);
         assertEquals(10, hugeArray.S.at(1).key);
         assertEquals("ten", hugeArray.S.at(1).data);
-        assertEquals(new Integer(1), hugeArray.T.at(10));
+        assertEquals(Integer.valueOf(1), hugeArray.T.at(10));
     }
 
     private ChainedHashTable<String> getExemplaryChainedHashTable() {
@@ -370,7 +370,7 @@ public class Chapter11Test {
         assertEquals(element, hashTableWithFreeList.at(expectedPosition).element);
         assertNull(hashTableWithFreeList.at(expectedPosition).prev);
         assertNull(hashTableWithFreeList.at(expectedPosition).next);
-        assertEquals(new Integer(expectedFreeListHeadPosition), hashTableWithFreeList.free);
+        assertEquals(Integer.valueOf(expectedFreeListHeadPosition), hashTableWithFreeList.free);
     }
 
     private HashTableWithFreeList<String> getExemplaryHashTableWithFreeList() {
@@ -414,9 +414,9 @@ public class Chapter11Test {
         // then
         assertEquals(expectedPosition, actualPosition);
         assertEquals(element, hashTableWithFreeList.at(expectedPosition).element);
-        assertEquals(new Integer(1), hashTableWithFreeList.at(expectedPosition).prev);
-        assertEquals(new Integer(5), hashTableWithFreeList.at(expectedPosition).next);
-        assertEquals(new Integer(expectedFreeListHeadPosition), hashTableWithFreeList.free);
+        assertEquals(Integer.valueOf(1), hashTableWithFreeList.at(expectedPosition).prev);
+        assertEquals(Integer.valueOf(5), hashTableWithFreeList.at(expectedPosition).next);
+        assertEquals(Integer.valueOf(expectedFreeListHeadPosition), hashTableWithFreeList.free);
     }
 
     @Test
@@ -436,7 +436,7 @@ public class Chapter11Test {
         assertEquals(expectedPosition, actualPosition);
         assertEquals(element, hashTableWithFreeList.at(expectedPosition).element);
         assertEquals(noneligibleElement, hashTableWithFreeList.at(freeListPosition).element);
-        assertEquals(new Integer(expectedFreeListHeadPosition), hashTableWithFreeList.free);
+        assertEquals(Integer.valueOf(expectedFreeListHeadPosition), hashTableWithFreeList.free);
     }
 
     @Test(expected = RuntimeException.class)
@@ -474,7 +474,7 @@ public class Chapter11Test {
         Integer actualPosition = Chapter11.inPlaceChainedHashSearch(hashTableWithFreeList, key);
 
         // then
-        assertEquals(new Integer(expectedPosition), actualPosition);
+        assertEquals(Integer.valueOf(expectedPosition), actualPosition);
     }
 
     @Test
@@ -503,8 +503,8 @@ public class Chapter11Test {
         // then
         assertNull(hashTableWithFreeList.at(position).element);
         assertNull(hashTableWithFreeList.at(position).prev);
-        assertEquals(new Integer(freeListPosition), hashTableWithFreeList.at(position).next);
-        assertEquals(new Integer(position), hashTableWithFreeList.free);
+        assertEquals(Integer.valueOf(freeListPosition), hashTableWithFreeList.at(position).next);
+        assertEquals(Integer.valueOf(position), hashTableWithFreeList.free);
     }
 
     @Test
@@ -527,7 +527,7 @@ public class Chapter11Test {
 
         // then
         assertEquals(2, actualPosition);
-        assertEquals(new Integer(key), hashTableWithProbing.at(2));
+        assertEquals(Integer.valueOf(key), hashTableWithProbing.at(2));
     }
 
     @Test(expected = RuntimeException.class)
@@ -574,7 +574,7 @@ public class Chapter11Test {
         Integer actualPosition = Chapter11.hashSearch(hashTableWithProbing, key);
 
         // then
-        assertEquals(new Integer(2), actualPosition);
+        assertEquals(Integer.valueOf(2), actualPosition);
     }
 
     @Test
@@ -641,7 +641,7 @@ public class Chapter11Test {
 
         // then
         assertEquals(2, actualPosition);
-        assertEquals(new Integer(key), hashTableWithProbing.at(2));
+        assertEquals(Integer.valueOf(key), hashTableWithProbing.at(2));
     }
 
     @Test(expected = RuntimeException.class)
@@ -685,7 +685,7 @@ public class Chapter11Test {
         Integer actualPosition = Chapter11.quadraticProbingSearch(hashTable, key, h);
 
         // then
-        assertEquals(new Integer(6), actualPosition);
+        assertEquals(Integer.valueOf(6), actualPosition);
     }
 
     @Test

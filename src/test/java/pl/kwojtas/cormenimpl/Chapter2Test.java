@@ -57,7 +57,7 @@ public class Chapter2Test {
         // then
         assertNotNull(actualIndex);
         assertTrue(1 <= actualIndex && actualIndex <= original.length);
-        assertEquals(new Integer(6), original.at(actualIndex));
+        assertEquals(Integer.valueOf(6), original.at(actualIndex));
     }
 
     @Test
@@ -156,7 +156,7 @@ public class Chapter2Test {
         // then
         assertNotNull(actualIndex);
         assertTrue(1 <= actualIndex && actualIndex <= original.length);
-        assertEquals(new Integer(key), original.at(actualIndex));
+        assertEquals(Integer.valueOf(key), original.at(actualIndex));
     }
 
     @Test
@@ -185,7 +185,7 @@ public class Chapter2Test {
         // then
         assertNotNull(actualIndex);
         assertTrue(1 <= actualIndex && actualIndex <= original.length);
-        assertEquals(new Integer(key), original.at(actualIndex));
+        assertEquals(Integer.valueOf(key), original.at(actualIndex));
     }
 
     @Test

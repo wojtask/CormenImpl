@@ -4,7 +4,6 @@ import pl.kwojtas.cormenimpl.util.Array;
 import pl.kwojtas.cormenimpl.util.ZeroBasedIndexedArray;
 
 import static pl.kwojtas.cormenimpl.util.Util.greater;
-import static pl.kwojtas.cormenimpl.util.Util.leq;
 import static pl.kwojtas.cormenimpl.util.Util.less;
 
 public final class Chapter2 {

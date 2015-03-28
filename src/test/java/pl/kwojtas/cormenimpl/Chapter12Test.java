@@ -142,7 +142,7 @@ public class Chapter12Test {
 
         // then
         assertNotNull(actualFoundNode);
-        assertEquals(new Integer(key), actualFoundNode.key);
+        assertEquals(Integer.valueOf(key), actualFoundNode.key);
         while (actualFoundNode != tree.root) {
             actualFoundNode = actualFoundNode.p;
         }
@@ -172,7 +172,7 @@ public class Chapter12Test {
 
         // then
         assertNotNull(actualFoundNode);
-        assertEquals(new Integer(key), actualFoundNode.key);
+        assertEquals(Integer.valueOf(key), actualFoundNode.key);
         while (actualFoundNode != tree.root) {
             actualFoundNode = actualFoundNode.p;
         }
@@ -201,7 +201,7 @@ public class Chapter12Test {
 
         // then
         assertNotNull(actualMinimum);
-        assertEquals(new Integer(1), actualMinimum.key);
+        assertEquals(Integer.valueOf(1), actualMinimum.key);
         while (actualMinimum != tree.root) {
             actualMinimum = actualMinimum.p;
         }
@@ -217,7 +217,7 @@ public class Chapter12Test {
 
         // then
         assertNotNull(actualMaximum);
-        assertEquals(new Integer(20), actualMaximum.key);
+        assertEquals(Integer.valueOf(20), actualMaximum.key);
         while (actualMaximum != tree.root) {
             actualMaximum = actualMaximum.p;
         }
@@ -233,7 +233,7 @@ public class Chapter12Test {
 
         // then
         assertNotNull(actualSuccessor);
-        assertEquals(new Integer(11), actualSuccessor.key);
+        assertEquals(Integer.valueOf(11), actualSuccessor.key);
         while (actualSuccessor != tree.root) {
             actualSuccessor = actualSuccessor.p;
         }
@@ -249,7 +249,7 @@ public class Chapter12Test {
 
         // then
         assertNotNull(actualMinimum);
-        assertEquals(new Integer(1), actualMinimum.key);
+        assertEquals(Integer.valueOf(1), actualMinimum.key);
         while (actualMinimum != tree.root) {
             actualMinimum = actualMinimum.p;
         }
@@ -265,7 +265,7 @@ public class Chapter12Test {
 
         // then
         assertNotNull(actualMaximum);
-        assertEquals(new Integer(20), actualMaximum.key);
+        assertEquals(Integer.valueOf(20), actualMaximum.key);
         while (actualMaximum != tree.root) {
             actualMaximum = actualMaximum.p;
         }
@@ -282,7 +282,7 @@ public class Chapter12Test {
 
         // then
         assertNotNull(actualPredecessor);
-        assertEquals(new Integer(10), actualPredecessor.key);
+        assertEquals(Integer.valueOf(10), actualPredecessor.key);
         while (actualPredecessor != tree.root) {
             actualPredecessor = actualPredecessor.p;
         }
@@ -323,7 +323,7 @@ public class Chapter12Test {
         Chapter12.treeInsert(tree, nodeToInsert);
 
         // then
-        assertEquals(new Integer(12), nodeToInsert.key);
+        assertEquals(Integer.valueOf(12), nodeToInsert.key);
         assertNull(nodeToInsert.left);
         assertNull(nodeToInsert.right);
         assertNull(nodeToInsert.p);
@@ -340,11 +340,11 @@ public class Chapter12Test {
         Chapter12.treeInsert(tree, nodeToInsert);
 
         // then
-        assertEquals(new Integer(12), nodeToInsert.key);
+        assertEquals(Integer.valueOf(12), nodeToInsert.key);
         assertNull(nodeToInsert.left);
         assertNull(nodeToInsert.right);
         assertEquals(nodeToInsert, nodeToInsert.p.right); // for the particular tree the new node will be right son of its parent
-        assertEquals(new Integer(11), nodeToInsert.p.key); // and its parent will be the node of key = 11
+        assertEquals(Integer.valueOf(11), nodeToInsert.p.key); // and its parent will be the node of key = 11
         while (nodeToInsert != tree.root) {
             nodeToInsert = nodeToInsert.p;
         }
@@ -375,7 +375,7 @@ public class Chapter12Test {
 
         // then
         assertNotNull(tree.root.right.right);
-        assertEquals(new Integer(20), tree.root.right.right.key);
+        assertEquals(Integer.valueOf(20), tree.root.right.right.key);
         assertEquals(exampleTreeSize - 1, tree.getSize());
     }
 
@@ -390,7 +390,7 @@ public class Chapter12Test {
 
         // then
         assertNotNull(tree.root.right);
-        assertEquals(new Integer(19), tree.root.right.key);
+        assertEquals(Integer.valueOf(19), tree.root.right.key);
         assertEquals(exampleTreeSize - 1, tree.getSize());
     }
 
@@ -404,7 +404,7 @@ public class Chapter12Test {
         Chapter12.recursiveTreeInsert(tree, tree.root, nodeToInsert);
 
         // then
-        assertEquals(new Integer(12), nodeToInsert.key);
+        assertEquals(Integer.valueOf(12), nodeToInsert.key);
         assertNull(nodeToInsert.left);
         assertNull(nodeToInsert.right);
         assertNull(nodeToInsert.p);
@@ -421,11 +421,11 @@ public class Chapter12Test {
         Chapter12.recursiveTreeInsert(tree, tree.root, nodeToInsert);
 
         // then
-        assertEquals(new Integer(12), nodeToInsert.key);
+        assertEquals(Integer.valueOf(12), nodeToInsert.key);
         assertNull(nodeToInsert.left);
         assertNull(nodeToInsert.right);
         assertEquals(nodeToInsert, nodeToInsert.p.right); // for the particular tree the new node will be right son of its parent
-        assertEquals(new Integer(11), nodeToInsert.p.key); // and its parent will be the node of key = 11
+        assertEquals(Integer.valueOf(11), nodeToInsert.p.key); // and its parent will be the node of key = 11
         while (nodeToInsert != tree.root) {
             nodeToInsert = nodeToInsert.p;
         }

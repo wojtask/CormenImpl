@@ -91,7 +91,7 @@ public class Chapter6Test {
         // then
         assertEquals(original.heapSize, heap.heapSize);
         assertArrayEquals(original, heap);
-        assertEquals(original.at(1), new Integer(actualMaximum));
+        assertEquals(original.at(1), Integer.valueOf(actualMaximum));
     }
 
     @Test
@@ -107,7 +107,7 @@ public class Chapter6Test {
         // then
         assertEquals(original.heapSize - 1, heap.heapSize);
         assertMaxHeap(heap);
-        assertEquals(original.at(1), new Integer(actualMaximum));
+        assertEquals(original.at(1), Integer.valueOf(actualMaximum));
         for (int i = 2; i <= original.heapSize; i++) {
             assertHeapContains(heap, original.at(i));
         }
@@ -209,7 +209,7 @@ public class Chapter6Test {
         // then
         assertEquals(original.heapSize, heap.heapSize);
         assertArrayEquals(original, heap);
-        assertEquals(original.at(1), new Integer(actualMinimum));
+        assertEquals(original.at(1), Integer.valueOf(actualMinimum));
     }
 
     @Test
@@ -225,7 +225,7 @@ public class Chapter6Test {
         // then
         assertEquals(original.heapSize - 1, heap.heapSize);
         assertMinHeap(heap);
-        assertEquals(original.at(1), new Integer(actualMinimum));
+        assertEquals(original.at(1), Integer.valueOf(actualMinimum));
         for (int i = 2; i <= original.heapSize; i++) {
             assertHeapContains(heap, original.at(i));
         }
@@ -444,7 +444,7 @@ public class Chapter6Test {
         for (int i = 1; i <= sortedLists.length; i++) {
             List.Node<Integer> y = sortedLists.at(i).head;
             while (y != null) {
-                assertEquals(new Integer(Integer.MAX_VALUE), y.key);
+                assertEquals(Integer.valueOf(Integer.MAX_VALUE), y.key);
                 y = y.next;
             }
         }
@@ -481,7 +481,7 @@ public class Chapter6Test {
         // then
         assertEquals(original.heapSize - 1, heap.heapSize);
         assertMultiaryMaxHeap(heap, degree);
-        assertEquals(original.at(1), new Integer(actualMaximum));
+        assertEquals(original.at(1), Integer.valueOf(actualMaximum));
         for (int i = 2; i <= original.heapSize; i++) {
             assertHeapContains(heap, original.at(i));
         }

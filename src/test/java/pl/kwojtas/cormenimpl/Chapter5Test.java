@@ -89,7 +89,7 @@ public class Chapter5Test {
         // then
         assertNotNull(actualIndex);
         assertTrue(1 <= actualIndex && actualIndex <= original.length);
-        assertEquals(new Integer(key), original.at(actualIndex));
+        assertEquals(Integer.valueOf(key), original.at(actualIndex));
     }
 
     @Test

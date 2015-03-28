@@ -29,9 +29,9 @@ public class Chapter4Test {
         while (i <= original.length && original.at(i) == i - 1) {
             i++;
         }
-        assertEquals(new Integer(i - 1), actualMissingInteger);
+        assertEquals(Integer.valueOf(i - 1), actualMissingInteger);
         while (i <= original.length) {
-            assertEquals(new Integer(i), original.at(i));
+            assertEquals(Integer.valueOf(i), original.at(i));
             i++;
         }
     }
