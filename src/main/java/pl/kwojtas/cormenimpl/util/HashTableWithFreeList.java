@@ -7,12 +7,6 @@ public class HashTableWithFreeList<T> extends ZeroBasedIndexedArray<HashTableWit
         public Integer next;
         public Integer prev;
 
-        public Node(Element<U> element, Integer next, Integer prev) {
-            this.element = element;
-            this.next = next;
-            this.prev = prev;
-        }
-
         public Node() { }
     }
 
