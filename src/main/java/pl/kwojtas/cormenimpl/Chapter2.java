@@ -14,7 +14,7 @@ public final class Chapter2 {
     private Chapter2() { }
 
     /**
-     * Sorts elements using insertion sort algorithm.
+     * Sorts elements using insertion sort.
      * <p><span style="font-variant:small-caps;">Insertion-Sort</span> from subchapter 2.1.</p>
      *
      * @param A the {@link Array} of elements to sort
@@ -33,7 +33,7 @@ public final class Chapter2 {
     }
 
     /**
-     * Sorts elements in non-increasing order using insertion sort algorithm.
+     * Sorts elements in non-increasing order using insertion sort.
      * <p>Solution to exercise 2.1-2.</p>
      *
      * @param A the {@link Array} of elements to sort
@@ -52,7 +52,7 @@ public final class Chapter2 {
     }
 
     /**
-     * Searches for element in an array using linear search.
+     * Searches for an element in an array using linear search.
      * <p><span style="font-variant:small-caps;">Linear-Search</span> from solution to exercise 2.1-3.</p>
      *
      * @param A the {@link Array} of elements
@@ -94,7 +94,7 @@ public final class Chapter2 {
     }
 
     /**
-     * Sorts elements using selection sort algorithm.
+     * Sorts elements using selection sort.
      * <p><span style="font-variant:small-caps;">Selection-Sort</span> from solution to exercise 2.2-2.</p>
      *
      * @param A the {@link Array} of elements to sort
@@ -149,7 +149,7 @@ public final class Chapter2 {
     }
 
     /**
-     * Sorts elements using merge sort algorithm.
+     * Sorts elements using merge sort.
      * <p><span style="font-variant:small-caps;">Merge-Sort</span> from subchapter 2.3.</p>
      *
      * @param A the {@link Array} of elements to sort
@@ -201,7 +201,7 @@ public final class Chapter2 {
     }
 
     /**
-     * Searches for element in an array using recursive binary search.
+     * Searches for an element in an array using recursive binary search.
      * <p><span style="font-variant:small-caps;">Recursive-Binary-Search</span> from solution to exercise 2.3-5.</p>
      *
      * @param A the {@link Array} of elements
@@ -226,7 +226,7 @@ public final class Chapter2 {
     }
 
     /**
-     * Searches for element in an array using iterative binary search.
+     * Searches for an element in an array using iterative binary search.
      * <p><span style="font-variant:small-caps;">Iterative-Binary-Search</span> from solution to exercise 2.3-5.</p>
      *
      * @param A the {@link Array} of elements
@@ -271,7 +271,7 @@ public final class Chapter2 {
     }
 
     /**
-     * Sorts elements using bubble sort algorithm.
+     * Sorts elements using bubble sort.
      * <p><span style="font-variant:small-caps;">Bubble-Sort</span> from problem 2-2.</p>
      *
      * @param A the {@link Array} of elements to sort

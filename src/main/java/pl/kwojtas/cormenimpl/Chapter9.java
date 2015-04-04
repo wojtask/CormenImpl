@@ -16,11 +16,21 @@ import static pl.kwojtas.cormenimpl.util.Util.less;
 import static pl.kwojtas.cormenimpl.util.Util.max;
 import static pl.kwojtas.cormenimpl.util.Util.min;
 
+/**
+ * Implements algorithms from Chapter 9.
+ */
 public final class Chapter9 {
 
     private Chapter9() { }
 
-    // subchapter 9.1
+    /**
+     *
+     * <p><span style="font-variant:small-caps;">Minimum</span> from subchapter 9.1.</p>
+     *
+     * @param A
+     * @param <T>
+     * @return
+     */
     public static <T extends Comparable> T minimum(Array<T> A) {
         T min = A.at(1);
         for (int i = 2; i <= A.length; i++) {
@@ -31,7 +41,14 @@ public final class Chapter9 {
         return min;
     }
 
-    // subchapter 9.1
+    /**
+     *
+     * <p>Subchapter 9.1.</p>
+     *
+     * @param A
+     * @param <T>
+     * @return
+     */
     public static <T extends Comparable> Pair<T, T> minimumMaximum(Array<T> A) {
         int n = A.length;
         Pair<T, T> p;
@@ -68,7 +85,17 @@ public final class Chapter9 {
         return p;
     }
 
-    // subchapter 9.2
+    /**
+     *
+     * <p><span style="font-variant:small-caps;">Randomized-Select</span> from subchapter 9.2.</p>
+     *
+     * @param A
+     * @param p
+     * @param r
+     * @param i
+     * @param <T>
+     * @return
+     */
     public static <T extends Comparable> T randomizedSelect(Array<T> A, int p, int r, int i) {
         if (p == r) {
             return A.at(p);
@@ -84,7 +111,17 @@ public final class Chapter9 {
         }
     }
 
-    // solution of 9.2-3
+    /**
+     *
+     * <p><span style="font-variant:small-caps;">Iterative-Randomized-Select</span> from solution to exercise 9.2-3.</p>
+     *
+     * @param A
+     * @param p
+     * @param r
+     * @param i
+     * @param <T>
+     * @return
+     */
     public static <T extends Comparable> T iterativeRandomizedSelect(Array<T> A, int p, int r, int i) {
         while (p < r) {
             int q = randomizedPartition(A, p, r);
@@ -101,7 +138,17 @@ public final class Chapter9 {
         return A.at(p);
     }
 
-    // subchapter 9.3
+    /**
+     *
+     * <p>Subchapter 9.3.</p>
+     *
+     * @param A
+     * @param p
+     * @param r
+     * @param i
+     * @param <T>
+     * @return
+     */
     public static <T extends Comparable> T select(Array<T> A, int p, int r, int i) {
         int n = r - p + 1;
         if (n == 1) {
@@ -148,7 +195,15 @@ public final class Chapter9 {
         return i + 1;
     }
 
-    // solution of 9.3-3
+    /**
+     *
+     * <p>Solution to exercise 9.3-3.</p>
+     *
+     * @param A
+     * @param p
+     * @param r
+     * @param <T>
+     */
     public static <T extends Comparable> void bestCaseQuicksort(Array<T> A, int p, int r) {
         if (p < r) {
             int q = (p + r) / 2;
@@ -158,7 +213,17 @@ public final class Chapter9 {
         }
     }
 
-    // solution of 9.3-5
+    /**
+     *
+     * <p>Solution to exercise 9.3-5.</p>
+     *
+     * @param A
+     * @param p
+     * @param r
+     * @param i
+     * @param <T>
+     * @return
+     */
     public static <T extends Comparable> T selectUsingMedianSubroutine(Array<T> A, int p, int r, int i) {
         if (p == r) {
             return A.at(p);
@@ -176,7 +241,17 @@ public final class Chapter9 {
         }
     }
 
-    // solution of 9.3-6
+    /**
+     *
+     * <p><span style="font-variant:small-caps;">Quantiles</span> from solution to exercise 9.3-6.</p>
+     *
+     * @param A
+     * @param p
+     * @param r
+     * @param k
+     * @param <T>
+     * @return
+     */
     public static <T extends Comparable> Set<T> quantiles(Array<T> A, int p, int r, int k) {
         int n = r - p + 1;
         if (k == 1) {
@@ -196,7 +271,14 @@ public final class Chapter9 {
         return L;
     }
 
-    // solution of 9.3-7
+    /**
+     *
+     * <p><span style="font-variant:small-caps;">Median-Proximity</span> from solution to exercise 9.3-7.</p>
+     *
+     * @param S
+     * @param k
+     * @return
+     */
     public static Set<Integer> medianProximity(Array<Integer> S, int k) {
         int n = S.length;
         int x = select(S, 1, n, (n + 1) / 2);
@@ -217,7 +299,19 @@ public final class Chapter9 {
         return M;
     }
 
-    // solution of 9.3-8
+    /**
+     *
+     * <p><span style="font-variant:small-caps;">Two-Arrays-Median</span> from solution to exercise 9.3-8.</p>
+     *
+     * @param X
+     * @param pX
+     * @param rX
+     * @param Y
+     * @param pY
+     * @param rY
+     * @param <T>
+     * @return
+     */
     public static <T extends Comparable> T twoArraysMedian(Array<T> X, int pX, int rX, Array<T> Y, int pY, int rY) {
         if (rX - pX <= 1) {
             return min(max(X.at(pX), Y.at(pY)), min(X.at(rX), Y.at(rY)));
@@ -236,7 +330,15 @@ public final class Chapter9 {
         }
     }
 
-    // solution of 9-2(b)
+    /**
+     *
+     * <p>Solution to problem 9-2(b).</p>
+     *
+     * @param A
+     * @param w
+     * @param <T>
+     * @return
+     */
     public static <T extends Comparable> T weightedMedianUsingSorting(Array<T> A, Array<Double> w) {
         sortWithWeights(A, w, 1, A.length);
         double weightSum = 0.0;
@@ -271,7 +373,17 @@ public final class Chapter9 {
         return i + 1;
     }
 
-    // solution of 9-2(c)
+    /**
+     *
+     * <p><span style="font-variant:small-caps;">Weighted-Median</span> from solution to problem 9-2(c).</p>
+     *
+     * @param A
+     * @param w
+     * @param p
+     * @param r
+     * @param <T>
+     * @return
+     */
     public static <T extends Comparable> T weightedMedian(Array<T> A, Array<Double> w, int p, int r) {
         if (r - p + 1 <= 2) {
             return w.at(p) >= w.at(r) ? A.at(p) : A.at(r);
@@ -306,7 +418,14 @@ public final class Chapter9 {
         partitionWithWeights(A, w, p, r);
     }
 
-    // solution of 9-2(e)
+    /**
+     *
+     * <p>Solution to problem 9-2(e).</p>
+     *
+     * @param A
+     * @param w
+     * @return
+     */
     public static Point2D postOfficeLocation2D(Array<Point2D> A, Array<Double> w) {
         int n = A.length;
         Array<Double> X = Array.withLength(n);
@@ -320,7 +439,15 @@ public final class Chapter9 {
         return new Point2D(xp, yp);
     }
 
-    // solution of 9-3(a)
+    /**
+     *
+     * <p>Solution to problem 9-3(a).</p>
+     *
+     * @param A
+     * @param i
+     * @param <T>
+     * @return
+     */
     public static <T extends Comparable> T smallOrderSelect(Array<T> A, int i) {
         smallOrderSelect(A, 1, A.length, i);
         return A.at(i);

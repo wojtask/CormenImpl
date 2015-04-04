@@ -5,14 +5,24 @@ import pl.kwojtas.cormenimpl.util.Util;
 
 import java.util.Random;
 
+/**
+ * Implements algorithms from Chapter 5.
+ */
 public final class Chapter5 {
 
-    private static Random rand = new Random(System.currentTimeMillis());
-    private static double probabilityForBiasedRandom = rand.nextDouble();
+    private static final Random RANDOM = new Random(System.currentTimeMillis());
+    private static final double UNFAIR_COIN_PROBABILITY = RANDOM.nextDouble();
 
     private Chapter5() { }
 
-    // solution of 5.1-2
+    /**
+     * Returns random number from {@code a..b}.
+     * <p><span style="font-variant:small-caps;">Random</span> from solution to exercise 5.1-2.</p>
+     *
+     * @param a the lower bound
+     * @param b the upper bound
+     * @return random number from {@code a..b}
+     */
     public static int random(int a, int b) {
         while (a < b) {
             int mid = (a + b) / 2;
@@ -25,7 +35,12 @@ public final class Chapter5 {
         return a;
     }
 
-    // solution of 5.1-3
+    /**
+     * Flips a fair coin.
+     * <p><span style="font-variant:small-caps;">Unbiased-Random</span> from solution to exercise 5.1-3.</p>
+     *
+     * @return {@code 0} with probability {@code 1/2} and {@code 1} with probability {@code 1/2}
+     */
     public static int unbiasedRandom() {
         int x, y;
         do {
@@ -35,11 +50,23 @@ public final class Chapter5 {
         return x;
     }
 
+    /**
+     * Flips an unfair coin.
+     *
+     * @return {@code 0} with probability {@code 1 - p} and {@code 1} with probability {@code p}
+     */
     private static int biasedRandom() {
-        return rand.nextDouble() <= probabilityForBiasedRandom ? 1 : 0;
+        return RANDOM.nextDouble() <= UNFAIR_COIN_PROBABILITY ? 1 : 0;
     }
 
-    // subchapter 5.3
+    /**
+     * Permutes an array by sorting it.
+     * <p><span style="font-variant:small-caps;">Permute-By-Sorting</span> from subchapter 5.3.</p>
+     *
+     * @param A the {@link Array} of elements to permute
+     * @param <T> the type of elements in {@code A}
+     * @return the permuted array
+     */
     public static <T> Array<T> permuteBySorting(Array<T> A) {
         int n = A.length;
         Array<Integer> P = Array.withLength(n);
@@ -50,6 +77,15 @@ public final class Chapter5 {
         return A;
     }
 
+    /**
+     * Sorts an array using another array as keys.
+     *
+     * @param A the {@link Array} of elements to sort
+     * @param keys the {@link Array} of keys
+     * @param p the index of the beginning of subarray in {@code A} to sort
+     * @param r the index of the end of subarray in {@code A} to sort
+     * @param <T> the type of elements in {@code A}
+     */
     private static <T> void sortUsingExternalKeys(Array<T> A, Array<Integer> keys, int p, int r) {
         if (p < r) {
             int q = (p + r) / 2;
@@ -59,6 +95,17 @@ public final class Chapter5 {
         }
     }
 
+    /**
+     * Merges two sorted subarrays {@code A[p..q]} and {@code A[q + 1..r]} into one sorted array {@code A[p..r]} using another
+     * array as keys.
+     *
+     * @param A the {@link Array} of elements to merge
+     * @param keys the {@link Array} of keys
+     * @param p the index of the beginning of the first subarray in {@code A} to merge
+     * @param q the index of the end of the first subarray in {@code A} to merge
+     * @param r the index of end of the second subarray in {@code A} to merge
+     * @param <T> the type of elements in {@code A}
+     */
     private static <T> void mergeUsingExternalKeys(Array<T> A, Array<Integer> keys, int p, int q, int r) {
         int n1 = q - p + 1;
         int n2 = r - q;
@@ -91,7 +138,13 @@ public final class Chapter5 {
         }
     }
 
-    // subchapter 5.3
+    /**
+     * Permutes an array in place.
+     * <p><span style="font-variant:small-caps;">Randomize-In-Place</span> from subchapter 5.3.</p>
+     *
+     * @param A the {@link Array} of elements to permute
+     * @param <T> the type of elements in {@code A}
+     */
     public static <T> void randomizeInPlace(Array<T> A) {
         int n = A.length;
         for (int i = 1; i <= n; i++) {
@@ -99,7 +152,13 @@ public final class Chapter5 {
         }
     }
 
-    // solution of 5.3-1
+    /**
+     * Permutes an array in place - alternative version.
+     * <p><span style="font-variant:small-caps;">Randomize-In-Place'</span> from solution to exercise 5.3-1.</p>
+     *
+     * @param A the {@link Array} of elements to permute
+     * @param <T> the type of elements in {@code A}
+     */
     public static <T> void randomizeInPlace_(Array<T> A) {
         int n = A.length;
         A.exch(1, random(1, n));
@@ -108,7 +167,14 @@ public final class Chapter5 {
         }
     }
 
-    // solution of 5.3-6
+    /**
+     * Permutes an array uniformly by sorting.
+     * <p>Solution to exercise 5.3-6.</p>
+     *
+     * @param A the {@link Array} of elements to permute
+     * @param <T> the type of elements in {@code A}
+     * @return the permuted array
+     */
     public static <T> Array<T> permuteUniformlyBySorting(Array<T> A) {
         int n = A.length;
         Array<Integer> P = Array.withLength(n);
@@ -119,6 +185,15 @@ public final class Chapter5 {
         return A;
     }
 
+    /**
+     * Sorts an array uniformly using another array as keys.
+     *
+     * @param A the {@link Array} of elements to sort
+     * @param keys the {@link Array} of keys
+     * @param p the index of the beginning of subarray in {@code A} to sort
+     * @param r the index of the end of subarray in {@code A} to sort
+     * @param <T> the type of elements in {@code A}
+     */
     private static <T> void sortUniformlyUsingExternalKeys(Array<T> A, Array<Integer> keys, int p, int r) {
         if (p < r) {
             int q = (p + r) / 2;
@@ -128,6 +203,17 @@ public final class Chapter5 {
         }
     }
 
+    /**
+     * Merges two sorted subarrays {@code A[p..q]} and {@code A[q + 1..r]} uniformly into one sorted array {@code A[p..r]}
+     * using another array as keys.
+     *
+     * @param A the {@link Array} of elements to merge
+     * @param keys the {@link Array} of keys
+     * @param p the index of the beginning of the first subarray in {@code A} to merge
+     * @param q the index of the end of the first subarray in {@code A} to merge
+     * @param r the index of end of the second subarray in {@code A} to merge
+     * @param <T> the type of elements in {@code A}
+     */
     private static <T> void mergeUniformlyUsingExternalKeys(Array<T> A, Array<Integer> keys, int p, int q, int r) {
         int n1 = q - p + 1;
         int n2 = r - q;
@@ -160,7 +246,15 @@ public final class Chapter5 {
         }
     }
 
-    // solution of 5-2(a)
+    /**
+     * Searches for an element in an array by picking array elements at random.
+     * <p><span style="font-variant:small-caps;">Random-Search</span> from solution to problem 5-2(a).</p>
+     *
+     * @param A the {@link Array} of elements
+     * @param x the element to find
+     * @param <T> the type of elements in {@code A}
+     * @return index {@code i} such that {@code A[i] = v}, or {@code null} if {@code v} does not appear in {@code A}
+     */
     public static <T> Integer randomSearch(Array<T> A, T x) {
         int n = A.length;
         Array<Boolean> B = Array.withLength(n);

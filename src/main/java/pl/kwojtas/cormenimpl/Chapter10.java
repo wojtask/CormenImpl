@@ -19,22 +19,46 @@ import static pl.kwojtas.cormenimpl.util.Util.greater;
 import static pl.kwojtas.cormenimpl.util.Util.leq;
 import static pl.kwojtas.cormenimpl.util.Util.less;
 
+/**
+ * Implements algorithms and data structures from Chapter 10.
+ */
 public final class Chapter10 {
 
     private Chapter10() { }
 
-    // subchapter 10.1
+    /**
+     *
+     * <p><span style="font-variant:small-caps;">Stack-Empty</span> from subchapter 10.1.</p>
+     *
+     * @param S
+     * @param <T>
+     * @return
+     */
     public static <T> boolean stackEmpty(Stack<T> S) {
         return S.top == 0;
     }
 
-    // subchapter 10.1
+    /**
+     *
+     * <p><span style="font-variant:small-caps;">Push</span> from subchapter 10.1.</p>
+     *
+     * @param S
+     * @param x
+     * @param <T>
+     */
     public static <T> void push(Stack<T> S, T x) {
         S.top++;
         S.set(S.top, x);
     }
 
-    // subchapter 10.1
+    /**
+     *
+     * <p><span style="font-variant:small-caps;">Pop</span> from subchapter 10.1.</p>
+     *
+     * @param S
+     * @param <T>
+     * @return
+     */
     public static <T> T pop(Stack<T> S) {
         if (stackEmpty(S)) {
             throw new RuntimeException("underflow");
@@ -43,7 +67,14 @@ public final class Chapter10 {
         return S.at(S.top + 1);
     }
 
-    // subchapter 10.1, solution of 10.1-4
+    /**
+     *
+     * <p><span style="font-variant:small-caps;">Enqueue</span> from subchapter 10.1 and solution to exercise 10.1-4.</p>
+     *
+     * @param Q
+     * @param x
+     * @param <T>
+     */
     public static <T> void enqueue(Queue<T> Q, T x) {
         if (Q.head == Q.tail + 1) {
             throw new RuntimeException("overflow");
@@ -59,7 +90,14 @@ public final class Chapter10 {
         }
     }
 
-    // subchapter 10.1, solution of 10.1-4
+    /**
+     *
+     * <p><span style="font-variant:small-caps;">Dequeue</span> from subchapter 10.1 and solution to exercise 10.1-4.</p>
+     *
+     * @param Q
+     * @param <T>
+     * @return
+     */
     public static <T> T dequeue(Queue<T> Q) {
         if (queueEmpty(Q)) {
             throw new RuntimeException("underflow");
@@ -73,13 +111,27 @@ public final class Chapter10 {
         return x;
     }
 
-    // solution of 10.1-2
+    /**
+     *
+     * <p>Solution to exercise 10.1-2.</p>
+     *
+     * @param A
+     * @param x
+     * @param <T>
+     */
     public static <T> void firstStackPush(DoubleStack<T> A, T x) {
         A.top1++;
         A.set(A.top1, x);
     }
 
-    // solution of 10.1-2
+    /**
+     *
+     * <p>Solution to exercise 10.1-2.</p>
+     *
+     * @param A
+     * @param <T>
+     * @return
+     */
     public static <T> T firstStackPop(DoubleStack<T> A) {
         if (firstStackEmpty(A)) {
             throw new RuntimeException("underflow");
@@ -88,18 +140,39 @@ public final class Chapter10 {
         return A.at(A.top1 + 1);
     }
 
-    // solution of 10.1-2
+    /**
+     *
+     * <p>Solution to exercise 10.1-2.</p>
+     *
+     * @param A
+     * @param <T>
+     * @return
+     */
     public static <T> boolean firstStackEmpty(DoubleStack<T> A) {
         return A.top1 == 0;
     }
 
-    // solution of 10.1-2
+    /**
+     *
+     * <p>Solution to exercise 10.1-2.</p>
+     *
+     * @param A
+     * @param x
+     * @param <T>
+     */
     public static <T> void secondStackPush(DoubleStack<T> A, T x) {
         A.top2--;
         A.set(A.top2, x);
     }
 
-    // solution of 10.1-2
+    /**
+     *
+     * <p>Solution to exercise 10.1-2.</p>
+     *
+     * @param A
+     * @param <T>
+     * @return
+     */
     public static <T> T secondStackPop(DoubleStack<T> A) {
         if (secondStackEmpty(A)) {
             throw new RuntimeException("underflow");
@@ -108,17 +181,38 @@ public final class Chapter10 {
         return A.at(A.top2 - 1);
     }
 
-    // solution of 10.1-2
+    /**
+     *
+     * <p>Solution to exercise 10.1-2.</p>
+     *
+     * @param A
+     * @param <T>
+     * @return
+     */
     public static <T> boolean secondStackEmpty(DoubleStack<T> A) {
         return A.top2 == A.length + 1;
     }
 
-    // solution of 10.1-4
+    /**
+     *
+     * <p><span style="font-variant:small-caps;">Queue-Empty</span> from solution to exercise 10.1-4.</p>
+     *
+     * @param Q
+     * @param <T>
+     * @return
+     */
     public static <T> boolean queueEmpty(Queue<T> Q) {
         return Q.head == Q.tail;
     }
 
-    // solution of 10.1-5
+    /**
+     *
+     * <p><span style="font-variant:small-caps;">Head-Enqueue</span> from solution to exercise 10.1-5.</p>
+     *
+     * @param D
+     * @param x
+     * @param <T>
+     */
     public static <T> void headEnqueue(Deque<T> D, T x) {
         if (D.head == 1) {
             D.head = D.length;
@@ -128,7 +222,14 @@ public final class Chapter10 {
         D.set(D.head, x);
     }
 
-    // solution of 10.1-5
+    /**
+     *
+     * <p><span style="font-variant:small-caps;">Head-Dequeue</span> from solution to exercise 10.1-5.</p>
+     *
+     * @param D
+     * @param <T>
+     * @return
+     */
     public static <T> T headDequeue(Deque<T> D) {
         T x = D.at(D.head);
         if (D.head == D.length) {
@@ -139,7 +240,14 @@ public final class Chapter10 {
         return x;
     }
 
-    // solution of 10.1-5
+    /**
+     *
+     * <p><span style="font-variant:small-caps;">Tail-Enqueue</span> from solution to exercise 10.1-5.</p>
+     *
+     * @param D
+     * @param x
+     * @param <T>
+     */
     public static <T> void tailEnqueue(Deque<T> D, T x) {
         D.set(D.tail, x);
         if (D.tail == D.length) {
@@ -149,7 +257,14 @@ public final class Chapter10 {
         }
     }
 
-    // solution of 10.1-5
+    /**
+     *
+     * <p><span style="font-variant:small-caps;">Tail-Dequeue</span> from solution to exercise 10.1-5.</p>
+     *
+     * @param D
+     * @param <T>
+     * @return
+     */
     public static <T> T tailDequeue(Deque<T> D) {
         if (D.tail == 1) {
             D.tail = D.length;
@@ -159,12 +274,28 @@ public final class Chapter10 {
         return D.at(D.tail);
     }
 
-    // solution of 10.1-6
+    /**
+     *
+     * <p>Solution to exercise 10.1-6.</p>
+     *
+     * @param S1
+     * @param S2
+     * @param x
+     * @param <T>
+     */
     public static <T> void enqueueOnStacks(Stack<T> S1, Stack<T> S2, T x) {
         push(S1, x);
     }
 
-    // solution of 10.1-6
+    /**
+     *
+     * <p>Solution to exercise 10.1-6.</p>
+     *
+     * @param S1
+     * @param S2
+     * @param <T>
+     * @return
+     */
     public static <T> T dequeueOnStacks(Stack<T> S1, Stack<T> S2) {
         if (stackEmpty(S1)) {
             throw new RuntimeException("underflow");
@@ -179,12 +310,28 @@ public final class Chapter10 {
         return x;
     }
 
-    // solution of 10.1-7
+    /**
+     *
+     * <p>Solution to exercise 10.1-7.</p>
+     *
+     * @param Q1
+     * @param Q2
+     * @param x
+     * @param <T>
+     */
     public static <T> void pushOnQueues(Queue<T> Q1, Queue<T> Q2, T x) {
         enqueue(Q1, x);
     }
 
-    // solution of 10.1-7
+    /**
+     *
+     * <p>Solution to exercise 10.1-7.</p>
+     *
+     * @param Q1
+     * @param Q2
+     * @param <T>
+     * @return
+     */
     public static <T> T popOnQueues(Queue<T> Q1, Queue<T> Q2) {
         if (queueEmpty(Q1)) {
             throw new RuntimeException("underflow");
@@ -202,7 +349,15 @@ public final class Chapter10 {
         return x;
     }
 
-    // subchapter 10.2
+    /**
+     *
+     * <p><span style="font-variant:small-caps;">List-Search</span> from subchapter 10.2.</p>
+     *
+     * @param L
+     * @param k
+     * @param <T>
+     * @return
+     */
     public static <T> List.Node<T> listSearch(List<T> L, T k) {
         List.Node<T> x = L.head;
         while (x != null && !x.key.equals(k)) {
@@ -211,7 +366,14 @@ public final class Chapter10 {
         return x;
     }
 
-    // subchapter 10.2
+    /**
+     *
+     * <p><span style="font-variant:small-caps;">List-Insert</span> from suchapter 10.2.</p>
+     *
+     * @param L
+     * @param x
+     * @param <T>
+     */
     public static <T> void listInsert(List<T> L, List.Node<T> x) {
         x.next = L.head;
         if (L.head != null) {
@@ -221,7 +383,14 @@ public final class Chapter10 {
         x.prev = null;
     }
 
-    // subchapter 10.2
+    /**
+     *
+     * <p><span style="font-variant:small-caps;">List-Delete</span> from subchapter 10.2.</p>
+     *
+     * @param L
+     * @param x
+     * @param <T>
+     */
     public static <T> void listDelete(List<T> L, List.Node<T> x) {
         if (x.prev != null) {
             x.prev.next = x.next;
@@ -233,13 +402,28 @@ public final class Chapter10 {
         }
     }
 
-    // subchapter 10.2
+    /**
+     *
+     * <p><span style="font-variant:small-caps;">List-Delete'</span> from subchapter 10.2.</p>
+     *
+     * @param L
+     * @param x
+     * @param <T>
+     */
     public static <T> void listDelete_(ListWithSentinel<T> L, ListWithSentinel.Node<T> x) {
         x.prev.next = x.next;
         x.next.prev = x.prev;
     }
 
-    // subchapter 10.2
+    /**
+     *
+     * <p><span style="font-variant:small-caps;">List-Search'</span> from subchapter 10.2.</p>
+     *
+     * @param L
+     * @param k
+     * @param <T>
+     * @return
+     */
     public static <T> ListWithSentinel.Node<T> listSearch_(ListWithSentinel<T> L, T k) {
         ListWithSentinel.Node<T> x = L.nil.next;
         while (x != L.nil && !x.key.equals(k)) {
@@ -248,7 +432,14 @@ public final class Chapter10 {
         return x;
     }
 
-    // subchapter 10.2
+    /**
+     *
+     * <p><span style="font-variant:small-caps;">List-Insert'</span> from subchapter 10.2.</p>
+     *
+     * @param L
+     * @param x
+     * @param <T>
+     */
     public static <T> void listInsert_(ListWithSentinel<T> L, ListWithSentinel.Node<T> x) {
         x.next = L.nil.next;
         L.nil.next.prev = x;
@@ -256,13 +447,27 @@ public final class Chapter10 {
         x.prev = L.nil;
     }
 
-    // solution of 10.2-1
+    /**
+     *
+     * <p><span style="font-variant:small-caps;">Singly-Linked-List-Insert</span> from solution to exercise 10.2-1.</p>
+     *
+     * @param L
+     * @param x
+     * @param <T>
+     */
     public static <T> void singlyLinkedListInsert(SinglyLinkedList<T> L, SinglyLinkedList.Node<T> x) {
         x.next = L.head;
         L.head = x;
     }
 
-    // solution of 10.2-1
+    /**
+     *
+     * <p><span style="font-variant:small-caps;">Singly-Linked-List-Delete</span> from solution to exercise 10.2-1.</p>
+     *
+     * @param L
+     * @param x
+     * @param <T>
+     */
     public static <T> void singlyLinkedListDelete(SinglyLinkedList<T> L, SinglyLinkedList.Node<T> x) {
         if (x == L.head) {
             L.head = L.head.next;
@@ -275,13 +480,27 @@ public final class Chapter10 {
         }
     }
 
-    // solution of 10.2-2
+    /**
+     *
+     * <p><span style="font-variant:small-caps;">Singly-Linked-List-Push</span> from solution to exercise 10.2-2.</p>
+     *
+     * @param L
+     * @param k
+     * @param <T>
+     */
     public static <T> void singlyLinkedListPush(SinglyLinkedList<T> L, T k) {
         SinglyLinkedList.Node<T> x = new SinglyLinkedList.Node<>(k);
         singlyLinkedListInsert(L, x);
     }
 
-    // solution of 10.2-2
+    /**
+     *
+     * <p><span style="font-variant:small-caps;">Singly-Linked-List-Pop</span> from solution to exercise 10.2-2.</p>
+     *
+     * @param L
+     * @param <T>
+     * @return
+     */
     public static <T> T singlyLinkedListPop(SinglyLinkedList<T> L) {
         if (L.head == null) {
             throw new RuntimeException("underflow");
@@ -291,7 +510,14 @@ public final class Chapter10 {
         return x.key;
     }
 
-    // solution of 10.2-3
+    /**
+     *
+     * <p><span style="font-variant:small-caps;">Singly-Linked-List-Enqueue</span> from solution to exercise 10.2-3.</p>
+     *
+     * @param L
+     * @param k
+     * @param <T>
+     */
     public static <T> void singlyLinkedListEnqueue(SinglyLinkedListWithTail<T> L, T k) {
         SinglyLinkedListWithTail.Node<T> x = new SinglyLinkedList.Node<>(k);
         if (L.tail != null) {
@@ -302,7 +528,14 @@ public final class Chapter10 {
         L.tail = x;
     }
 
-    // solution of 10.2-3
+    /**
+     *
+     * <p><span style="font-variant:small-caps;">Singly-Linked-List-Dequeue</span> from solution to exercise 10.2-3.</p>
+     *
+     * @param L
+     * @param <T>
+     * @return
+     */
     public static <T> T singlyLinkedListDequeue(SinglyLinkedListWithTail<T> L) {
         if (L.head == null) {
             throw new RuntimeException("underflow");
@@ -315,7 +548,14 @@ public final class Chapter10 {
         return x.key;
     }
 
-    // solution of 10.2-5
+    /**
+     *
+     * <p><span style="font-variant:small-caps;">Circular-List-Insert</span> from solution to exercise 10.2-5.</p>
+     *
+     * @param L
+     * @param x
+     * @param <T>
+     */
     public static <T> void circularListInsert(CircularList<T> L, CircularList.Node<T> x) {
         if (L.head == null) {
             L.head = x.next = x;
@@ -325,7 +565,14 @@ public final class Chapter10 {
         }
     }
 
-    // solution of 10.2-5
+    /**
+     *
+     * <p><span style="font-variant:small-caps;">Circular-List-Delete</span> from solution to exercise 10.2-5.</p>
+     *
+     * @param L
+     * @param x
+     * @param <T>
+     */
     public static <T> void circularListDelete(CircularList<T> L, CircularList.Node<T> x) {
         CircularList.Node<T> y = L.head;
         while (y.next != x) {
@@ -341,7 +588,15 @@ public final class Chapter10 {
         }
     }
 
-    // solution of 10.2-5
+    /**
+     *
+     * <p><span style="font-variant:small-caps;">Circular-List-Search</span> from solution to exercise 10.2-5.</p>
+     *
+     * @param L
+     * @param k
+     * @param <T>
+     * @return
+     */
     public static <T> CircularList.Node<T> circularListSearch(CircularList<T> L, T k) {
         if (L.head == null) {
             return null;
@@ -359,7 +614,15 @@ public final class Chapter10 {
         return null;
     }
 
-    // solution of 10.2-6
+    /**
+     *
+     * <p>Solution to exercise 10.2-6.</p>
+     *
+     * @param S1
+     * @param S2
+     * @param <T>
+     * @return
+     */
     public static <T> CircularList<T> circularListsUnion(CircularList<T> S1, CircularList<T> S2) {
         CircularList<T> S = new CircularList<>();
         if (S1.head != null && S2.head != null) {
@@ -376,7 +639,13 @@ public final class Chapter10 {
         return S;
     }
 
-    // solution of 10.2-7
+    /**
+     *
+     * <p><span style="font-variant:small-caps;">Singly-Linked-List-Reverse</span> from solution to exercise 10.2-7.</p>
+     *
+     * @param L
+     * @param <T>
+     */
     public static <T> void singlyLinkedListReverse(SinglyLinkedList<T> L) {
         SinglyLinkedList<T> L_ = new SinglyLinkedList<>();
         L_.head = null;
@@ -388,7 +657,14 @@ public final class Chapter10 {
         L.head = L_.head;
     }
 
-    // subchapter 10.3
+    /**
+     *
+     * <p><span style="font-variant:small-caps;">Allocate-Object</span> from subchapter 10.3.</p>
+     *
+     * @param L
+     * @param <T>
+     * @return
+     */
     public static <T> int allocateObject(MultipleArrayList<T> L) {
         if (L.free == null) {
             throw new RuntimeException("out of space");
@@ -398,13 +674,26 @@ public final class Chapter10 {
         return x;
     }
 
-    // subchapter 10.3
+    /**
+     *
+     * <p><span style="font-variant:small-caps;">Free-Object</span> from subchapter 10.3.</p>
+     *
+     * @param L
+     * @param x
+     * @param <T>
+     */
     public static <T> void freeObject(MultipleArrayList<T> L, int x) {
         L.next.set(x, L.free);
         L.free = x;
     }
 
-    // solution of 10.3-2
+    /**
+     *
+     * <p><span style="font-variant:small-caps;">Single-Array-Allocate-Object</span> from solution to exercise 10.3-2.</p>
+     *
+     * @param A
+     * @return
+     */
     public static int singleArrayAllocateObject(SingleArrayList A) {
         if (A.free == null) {
             throw new RuntimeException("out of space");
@@ -414,18 +703,38 @@ public final class Chapter10 {
         return i;
     }
 
-    // solution of 10.3-2
+    /**
+     *
+     * <p><span style="font-variant:small-caps;">Single-Array-Free-Object</span> from solution to exercise 10.3-2.</p>
+     *
+     * @param A
+     * @param i
+     */
     public static void singleArrayFreeObject(SingleArrayList A, int i) {
         A.set(i + 1, A.free);
         A.free = i;
     }
 
-    // solution of 10.3-4
+    /**
+     *
+     * <p><span style="font-variant:small-caps;">Compact-List-Allocate-Object</span> from solution to exercise 10.3-4.</p>
+     *
+     * @param L
+     * @param <T>
+     * @return
+     */
     public static <T> int compactListAllocateObject(MultipleArrayList<T> L) {
         return allocateObject(L);
     }
 
-    // solution of 10.3-4
+    /**
+     *
+     * <p><span style="font-variant:small-caps;">Compact-List-Free-Object</span> from solution to exercise 10.3-4.</p>
+     *
+     * @param L
+     * @param x
+     * @param <T>
+     */
     public static <T> void compactListFreeObject(MultipleArrayList<T> L, int x) {
         int n = L.getLength();
         int y;
@@ -449,7 +758,13 @@ public final class Chapter10 {
         freeObject(L, y);
     }
 
-    // solution of 10.3-5
+    /**
+     *
+     * <p><span style="font-variant:small-caps;">Compactify-List</span> from solution to exercise 10.3-5.</p>
+     *
+     * @param L
+     * @param <T>
+     */
     public static <T> void compactifyList(MultipleArrayList<T> L) {
         int m = L.getLength();
         setPrevFields(L, Integer.MAX_VALUE);
@@ -511,7 +826,13 @@ public final class Chapter10 {
         }
     }
 
-    // solution of 10.4-3
+    /**
+     *
+     * <p><span style="font-variant:small-caps;">Iterative-Preorder-Tree-Walk</span> from solution to exercise 10.4-3.</p>
+     *
+     * @param T
+     * @param <T>
+     */
     public static <T> void iterativePreorderTreeWalk(BinaryTree<T> T) {
         if (T.root == null) {
             return;
@@ -530,7 +851,13 @@ public final class Chapter10 {
         }
     }
 
-    // solution of 10.4-4
+    /**
+     *
+     * <p><span style="font-variant:small-caps;">Tree-Walk</span> from solution to exercise 10.4-4.</p>
+     *
+     * @param x
+     * @param <T>
+     */
     public static <T> void treeWalk(MultiaryTree.Node<T> x) {
         if (x != null) {
             System.out.println(x.key);
@@ -547,7 +874,13 @@ public final class Chapter10 {
         return x.p;
     }
 
-    // solution of 10.4-5
+    /**
+     *
+     * <p><span style="font-variant:small-caps;">Stackless-Inorder-Tree-Walk</span> from solution to exercise 10.4-5.</p>
+     *
+     * @param T
+     * @param <T>
+     */
     public static <T> void stacklessInorderTreeWalk(BinaryTree<T> T) {
         BinaryTree.Node<T> prev = null;
         BinaryTree.Node<T> curr = T.root;
@@ -569,12 +902,23 @@ public final class Chapter10 {
         }
     }
 
-    // solution of 10-2(a)
+    /**
+     *
+     * <p>Solution to problem 10-2(a).</p>
+     *
+     * @return
+     */
     public static List<Integer> sortedListMakeMinHeap() {
         return new List<>();
     }
 
-    // solution of 10-2(a)
+    /**
+     *
+     * <p>Solution to problem 10-2(a).</p>
+     *
+     * @param L
+     * @param key
+     */
     public static void sortedListMinHeapInsert(List<Integer> L, int key) {
         List.Node<Integer> x = new List.Node<>(key);
         if (L.head == null) {
@@ -602,7 +946,13 @@ public final class Chapter10 {
         }
     }
 
-    // solution of 10-2(a)
+    /**
+     *
+     * <p>Solution to problem 10-2(a).</p>
+     *
+     * @param L
+     * @return
+     */
     public static int sortedListHeapMinimum(List<Integer> L) {
         if (L.head == null) {
             throw new RuntimeException("heap underflow");
@@ -610,7 +960,13 @@ public final class Chapter10 {
         return L.head.key;
     }
 
-    // solution of 10-2(a)
+    /**
+     *
+     * <p>Solution to problem 10-2(a).</p>
+     *
+     * @param L
+     * @return
+     */
     public static int sortedListHeapExtractMin(List<Integer> L) {
         if (L.head == null) {
             throw new RuntimeException("heap underflow");
@@ -623,12 +979,28 @@ public final class Chapter10 {
         return minimum;
     }
 
-    // solution of 10-2(a)
+    /**
+     *
+     * <p>Solution to problem 10-2(a).</p>
+     *
+     * @param L1
+     * @param L2
+     * @return
+     */
     public static List<Integer> sortedListMinHeapUnion(List<Integer> L1, List<Integer> L2) {
         return Chapter6.mergeSortedLists(new Array<>(L1, L2));
     }
 
-    // problem 10-3
+    /**
+     *
+     * <p><span style="font-variant:small-caps;">Compact-List-Search</span> from solution to problem 10-3.</p>
+     *
+     * @param L
+     * @param n
+     * @param k
+     * @param <T>
+     * @return
+     */
     public static <T extends Comparable> Integer compactListSearch(MultipleArrayList<T> L, int n, T k) {
         Integer i = L.L;
         while (i != null && less(L.key.at(i), k)) {

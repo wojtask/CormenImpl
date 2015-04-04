@@ -10,11 +10,21 @@ import static java.lang.Math.max;
 import static java.lang.Math.sqrt;
 import static pl.kwojtas.cormenimpl.Chapter5.random;
 
+/**
+ * Implements algorithms from Chapter 8.
+ */
 public final class Chapter8 {
 
     private Chapter8() { }
 
-    // subchapter 8.2
+    /**
+     *
+     * <p><span style="font-variant:small-caps;">Counting-Sort</span> from subchapter 8.2.</p>
+     *
+     * @param A
+     * @param B
+     * @param k
+     */
     public static void countingSort(Array<Integer> A, Array<Integer> B, int k) {
         ZeroBasedIndexedArray<Integer> C = ZeroBasedIndexedArray.withLength(k + 1);
         for (int i = 0; i <= k; i++) {
@@ -32,7 +42,14 @@ public final class Chapter8 {
         }
     }
 
-    // exercise 8.2-3
+    /**
+     *
+     * <p>Exercise 8.2-3.</p>
+     *
+     * @param A
+     * @param B
+     * @param k
+     */
     public static void nonStableCountingSort(Array<Integer> A, Array<Integer> B, int k) {
         ZeroBasedIndexedArray<Integer> C = ZeroBasedIndexedArray.withLength(k + 1);
         for (int i = 0; i <= k; i++) {
@@ -50,7 +67,16 @@ public final class Chapter8 {
         }
     }
 
-    // solution of 8.2-4
+    /**
+     *
+     * <p>Solution to exercise 8.2-4.</p>
+     *
+     * @param A
+     * @param k
+     * @param a
+     * @param b
+     * @return
+     */
     public static int countNumbersInRange(Array<Integer> A, int k, int a, int b) {
         ZeroBasedIndexedArray<Integer> C = ZeroBasedIndexedArray.withLength(k + 1);
         for (int i = 0; i <= k; i++) {
@@ -77,7 +103,13 @@ public final class Chapter8 {
         return 0;
     }
 
-    // subchapter 8.3
+    /**
+     *
+     * <p><span style="font-variant:small-caps;">Radix-Sort</span> from subchapter 8.3.</p>
+     *
+     * @param A
+     * @param d
+     */
     public static void radixSort(Array<Integer> A, int d) {
         for (int i = 1; i <= d; i++) {
             stableSortOnDigit(A, i, 10);
@@ -113,14 +145,24 @@ public final class Chapter8 {
         return number % k;
     }
 
-    // solution of 8.3-4
+    /**
+     *
+     * <p>Solution to exercise 8.3-4.</p>
+     *
+     * @param A
+     */
     public static void sortNSquaredNumbers(Array<Integer> A) {
         int n = A.length;
         stableSortOnDigit(A, 1, n);
         stableSortOnDigit(A, 2, n);
     }
 
-    // subchapter 8.4
+    /**
+     *
+     * <p><span style="font-variant:small-caps;">Bucket-Sort</span> from subchapter 8.4.</p>
+     *
+     * @param A
+     */
     public static void bucketSort(Array<Double> A) {
         int n = A.length;
         ZeroBasedIndexedArray<List<Double>> B = ZeroBasedIndexedArray.withLength(n);
@@ -179,7 +221,12 @@ public final class Chapter8 {
         }
     }
 
-    // solution of 8.4-4
+    /**
+     *
+     * <p>Solution to exercise 8.4-4.</p>
+     *
+     * @param points
+     */
     public static void sortUnitCirclePoints(Array<Point2D> points) {
         int n = points.length;
         ZeroBasedIndexedArray<List<Pair<Point2D, Double>>> B = ZeroBasedIndexedArray.withLength(n);
@@ -241,7 +288,12 @@ public final class Chapter8 {
         }
     }
 
-    // solution of 8-2(b)
+    /**
+     *
+     * <p><span style="font-variant:small-caps;">Bitwise-Sort</span> from solution to problem 8-2(b).</p>
+     *
+     * @param A
+     */
     public static void bitwiseSort(Array<Integer> A) {
         int n = A.length;
         int i = 1;
@@ -258,7 +310,13 @@ public final class Chapter8 {
 
     }
 
-    // solution of 8-2(e)
+    /**
+     *
+     * <p><span style="font-variant:small-caps;">Counting-Sort-In-Place</span> from solution to problem 8-2(e).</p>
+     *
+     * @param A
+     * @param k
+     */
     public static void countingSortInPlace(Array<Integer> A, int k) {
         ZeroBasedIndexedArray<Integer> C = ZeroBasedIndexedArray.withLength(k + 1);
         for (int i = 0; i <= k; i++) {
@@ -283,7 +341,12 @@ public final class Chapter8 {
         }
     }
 
-    // solution of 8-3(a)
+    /**
+     *
+     * <p>Solution to problem 8-3(a).</p>
+     *
+     * @param A
+     */
     public static void variousLengthNumbersSort(Array<Integer> A) {
         int j = 0, j_ = 0;
         for (int i = 1; i <= A.length; i++) {
@@ -397,7 +460,13 @@ public final class Chapter8 {
         return length;
     }
 
-    // solution of 8-3(b)
+    /**
+     *
+     * <p>Solution to problem 8-3(b).</p>
+     *
+     * @param A
+     * @param position
+     */
     public static void variousLengthStringsSort(Array<String> A, int position) {
         int n = A.length;
         countingSortByCharacter(A, position);
@@ -445,7 +514,13 @@ public final class Chapter8 {
         A.set(B);
     }
 
-    // solution of 8-4(a)
+    /**
+     *
+     * <p>Solution to problem 8-4(a).</p>
+     *
+     * @param R
+     * @param B
+     */
     public static void jugsGroup(Array<Double> R, Array<Double> B) {
         int n = R.length;
         for (int i = 1; i <= n - 1; i++) {
@@ -457,7 +532,15 @@ public final class Chapter8 {
         }
     }
 
-    // solution of 8-4(c)
+    /**
+     *
+     * <p><span style="font-variant:small-caps;">Jugs-Match</span> from solution to problem 8-4(c).</p>
+     *
+     * @param R
+     * @param B
+     * @param p
+     * @param r
+     */
     public static void jugsMatch(Array<Double> R, Array<Double> B, int p, int r) {
         if (p < r) {
             int q = jugsPartition(R, B, p, r);
@@ -466,6 +549,16 @@ public final class Chapter8 {
         }
     }
 
+    /**
+     *
+     * <p><span style="font-variant:small-caps;">Jugs-Partition</span> from solution to problem 8-4(c).</p>
+     *
+     * @param R
+     * @param B
+     * @param p
+     * @param r
+     * @return
+     */
     private static int jugsPartition(Array<Double> R, Array<Double> B, int p, int r) {
         R.exch(r, random(p, r));
         double x = R.at(r);
@@ -494,7 +587,16 @@ public final class Chapter8 {
         return i + 1;
     }
 
-    // solution of 8-5(d)
+    /**
+     *
+     * <p>Solution to problem 8-5(d).</p>
+     *
+     * @param A
+     * @param k
+     * @param p
+     * @param r
+     * @param <T>
+     */
     public static <T extends Comparable> void kSort(Array<T> A, int k, int p, int r) {
         if (p + k - 1 < r) {
             int q = Chapter7.partition(A, p, r);

@@ -9,26 +9,58 @@ import pl.kwojtas.cormenimpl.util.List;
 import pl.kwojtas.cormenimpl.util.Stack;
 import pl.kwojtas.cormenimpl.util.ZeroBasedIndexedArray;
 
+/**
+ * Implements algorithms and data structures from Chapter 11.
+ */
 public final class Chapter11 {
 
     private Chapter11() { }
 
-    // subchapter 11.1
+    /**
+     *
+     * <p><span style="font-variant:small-caps;">Direct-Address-Search</span> from subchapter 11.1.</p>
+     *
+     * @param T
+     * @param k
+     * @param <T>
+     * @return
+     */
     public static <T> Element<T> directAddressSearch(ZeroBasedIndexedArray<Element<T>> T, int k) {
         return T.at(k);
     }
 
-    // subchapter 11.1
+    /**
+     *
+     * <p><span style="font-variant:small-caps;">Direct-Address-Insert</span> from subchapter 11.1.</p>
+     *
+     * @param T
+     * @param x
+     * @param <T>
+     */
     public static <T> void directAddressInsert(ZeroBasedIndexedArray<Element<T>> T, Element<T> x) {
         T.set(x.key, x);
     }
 
-    // subchapter 11.1
+    /**
+     *
+     * <p><span style="font-variant:small-caps;">Direct-Address-Delete</span> from subchapter 11.1</p>
+     *
+     * @param T
+     * @param x
+     * @param <T>
+     */
     public static <T> void directAddressDelete(ZeroBasedIndexedArray<Element<T>> T, Element<T> x) {
         T.set(x.key, null);
     }
 
-    // solution of 11.1-1
+    /**
+     *
+     * <p>Solution to exercise 11.1-1.</p>
+     *
+     * @param T
+     * @param <T>
+     * @return
+     */
     public static <T> Element<T> directAddressMaximum(ZeroBasedIndexedArray<Element<T>> T) {
         int m = T.length;
         for (int i = m - 1; i >= 0; i--) {
@@ -39,22 +71,49 @@ public final class Chapter11 {
         return null;
     }
 
-    // solution of 11.1-2
+    /**
+     *
+     * <p>Solution to exercise 11.1-2.</p>
+     *
+     * @param V
+     * @param k
+     * @return
+     */
     public static int bitVectorSearch(ZeroBasedIndexedArray<Integer> V, int k) {
         return V.at(k);
     }
 
-    // solution of 11.1-2
+    /**
+     *
+     * <p>Solution to exercise 11.1-2.</p>
+     *
+     * @param V
+     * @param k
+     */
     public static void bitVectorInsert(ZeroBasedIndexedArray<Integer> V, int k) {
         V.set(k, 1);
     }
 
-    // solution of 11.1-2
+    /**
+     *
+     * <p>Solution to exercise 11.1-2.</p>
+     *
+     * @param V
+     * @param k
+     */
     public static void bitVectorDelete(ZeroBasedIndexedArray<Integer> V, int k) {
         V.set(k, 0);
     }
 
-    // solution of 11.1-3
+    /**
+     *
+     * <p>Solution to exercise 11.1-3.</p>
+     *
+     * @param T
+     * @param k
+     * @param <T>
+     * @return
+     */
     public static <T> Element<T> directAddressSearch_(ZeroBasedIndexedArray<List<Element<T>>> T, int k) {
         List<Element<T>> list = T.at(k);
         if (list.head != null) {
@@ -63,13 +122,27 @@ public final class Chapter11 {
         return null;
     }
 
-    // solution of 11.1-3
+    /**
+     *
+     * <p>Solution to exercise 11.1-3.</p>
+     *
+     * @param T
+     * @param x
+     * @param <T>
+     */
     public static <T> void directAddressInsert_(ZeroBasedIndexedArray<List<Element<T>>> T, Element<T> x) {
         List<Element<T>> list = T.at(x.key);
         Chapter10.listInsert(list, new List.Node<>(x));
     }
 
-    // solution of 11.1-3
+    /**
+     *
+     * <p>Solution to exercise 11.1-3.</p>
+     *
+     * @param T
+     * @param x
+     * @param <T>
+     */
     public static <T> void directAddressDelete_(ZeroBasedIndexedArray<List<Element<T>>> T, Element<T> x) {
         List<Element<T>> list = T.at(x.key);
         List.Node<Element<T>> node = Chapter10.listSearch(list, x);
@@ -89,7 +162,15 @@ public final class Chapter11 {
         }
     }
 
-    // solution of 11.1-4
+    /**
+     *
+     * <p>Solution to exercise 11.1-4.</p>
+     *
+     * @param H
+     * @param k
+     * @param <T>
+     * @return
+     */
     public static <T> Element<T> hugeArraySearch(HugeArray<T> H, int k) {
         if (1 <= H.T.at(k) && H.T.at(k) <= H.S.top && H.S.at(H.T.at(k)).key == k) {
             return new Element<>(H.S.at(H.T.at(k)));
@@ -97,13 +178,27 @@ public final class Chapter11 {
         return null;
     }
 
-    // solution of 11.1-4
+    /**
+     *
+     * <p>Solution to exercise 11.1-4.</p>
+     *
+     * @param H
+     * @param x
+     * @param <T>
+     */
     public static <T> void hugeArrayInsert(HugeArray<T> H, Element<T> x) {
         Chapter10.push(H.S, x);
         H.T.set(x.key, H.S.top);
     }
 
-    // solution of 11.1-4
+    /**
+     *
+     * <p>Solution to exercise 11.1-4.</p>
+     *
+     * @param H
+     * @param x
+     * @param <T>
+     */
     public static <T> void hugeArrayDelete(HugeArray<T> H, Element<T> x) {
         int k = x.key;
         Element<T> y = Chapter10.pop(H.S);
@@ -111,13 +206,28 @@ public final class Chapter11 {
         H.T.set(y.key, H.T.at(k));
     }
 
-    // subchapter 11.2
+    /**
+     *
+     * <p><span style="font-variant:small-caps;">Chained-Hash-Insert</span> from subchapter 11.2.</p>
+     *
+     * @param T
+     * @param x
+     * @param <T>
+     */
     public static <T> void chainedHashInsert(ChainedHashTable<T> T, Element<T> x) {
         List<Element<T>> list = T.at(T.h.compute(x.key));
         Chapter10.listInsert(list, new List.Node<>(x));
     }
 
-    // subchapter 11.2
+    /**
+     *
+     * <p><span style="font-variant:small-caps;">Chained-Hash-Search</span> from subchapter 11.2.</p>
+     *
+     * @param T
+     * @param k
+     * @param <T>
+     * @return
+     */
     public static <T> Element<T> chainedHashSearch(ChainedHashTable<T> T, int k) {
         List<Element<T>> list = T.at(T.h.compute(k));
         List.Node<Element<T>> x = list.head;
@@ -130,14 +240,29 @@ public final class Chapter11 {
         return null;
     }
 
-    // subchapter 11.2
+    /**
+     *
+     * <p><span style="font-variant:small-caps;">Chained-Hash-Delete</span> from subchapter 11.2.</p>
+     *
+     * @param T
+     * @param x
+     * @param <T>
+     */
     public static <T> void chainedHashDelete(ChainedHashTable<T> T, Element<T> x) {
         List<Element<T>> list = T.at(T.h.compute(x.key));
         List.Node<Element<T>> node = Chapter10.listSearch(list, x);
         Chapter10.listDelete(list, node);
     }
 
-    // solution of 11.2-4
+    /**
+     *
+     * <p>Solution to exercise 11.2-4.</p>
+     *
+     * @param T
+     * @param x
+     * @param <T>
+     * @return
+     */
     public static <T> int inPlaceChainedHashInsert(HashTableWithFreeList<T> T, Element<T> x) {
         int position = T.h.compute(x.key);
         if (T.at(position).element == null) {
@@ -186,7 +311,15 @@ public final class Chapter11 {
         return position;
     }
 
-    // solution of 11.2-4
+    /**
+     *
+     * <p>Solution to exercise 11.2-4.</p>
+     *
+     * @param T
+     * @param k
+     * @param <T>
+     * @return
+     */
     public static <T> Integer inPlaceChainedHashSearch(HashTableWithFreeList<T> T, int k) {
         Integer position = T.h.compute(k);
         while (position != null && T.at(position).element != null) {
@@ -198,7 +331,14 @@ public final class Chapter11 {
         return null;
     }
 
-    // solution of 11.2-4
+    /**
+     *
+     * <p>Solution to exercise 11.2-4.</p>
+     *
+     * @param T
+     * @param position
+     * @param <T>
+     */
     public static <T> void inPlaceChainedHashDelete(HashTableWithFreeList<T> T, int position) {
         HashTableWithFreeList.Node node = T.at(position);
         if (node.prev != null) {
@@ -216,7 +356,14 @@ public final class Chapter11 {
         T.free = position;
     }
 
-    // subchapter 11.4
+    /**
+     *
+     * <p><span style="font-variant:small-caps;">Hash-Insert</span> from subchapter 11.4.</p>
+     *
+     * @param T
+     * @param k
+     * @return
+     */
     public static int hashInsert(HashTableWithProbing T, int k) {
         int m = T.length;
         int i = 0;
@@ -232,7 +379,14 @@ public final class Chapter11 {
         throw new RuntimeException("hash table overflow");
     }
 
-    // subchapter 11.4
+    /**
+     *
+     * <p><span style="font-variant:small-caps;">Hash-Search</span> from subchapter 11.4.</p>
+     *
+     * @param T
+     * @param k
+     * @return
+     */
     public static Integer hashSearch(HashTableWithProbing T, int k) {
         int m = T.length;
         int i = 0;
@@ -249,7 +403,13 @@ public final class Chapter11 {
 
     public static final Integer DELETED = Integer.MAX_VALUE;
 
-    // solution of 11.4-2
+    /**
+     *
+     * <p><span style="font-variant:small-caps;">Hash-Delete</span> from solution to exercise 11.4-2.</p>
+     *
+     * @param T
+     * @param k
+     */
     public static void hashDelete(HashTableWithProbing T, int k) {
         int m = T.length;
         int i = 0;
@@ -264,7 +424,14 @@ public final class Chapter11 {
         } while (T.at(j) != null && i != m);
     }
 
-    // solution of 11.4-2
+    /**
+     *
+     * <p><span style="font-variant:small-caps;">Hash-Insert'</span> from solution to exercise 11.4-2.</p>
+     *
+     * @param T
+     * @param k
+     * @return
+     */
     public static int hashInsert_(HashTableWithProbing T, int k) {
         int m = T.length;
         int i = 0;
@@ -280,7 +447,15 @@ public final class Chapter11 {
         throw new RuntimeException("hash table overflow");
     }
 
-    // problem 11-3
+    /**
+     *
+     * <p>Problem 11-3.</p>
+     *
+     * @param T
+     * @param k
+     * @param h
+     * @return
+     */
     public static Integer quadraticProbingSearch(ZeroBasedIndexedArray<Integer> T, int k, HashFunction h) {
         int m = T.length;
         int i = h.compute(k);

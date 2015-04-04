@@ -14,22 +14,54 @@ import static pl.kwojtas.cormenimpl.util.Util.ceil;
 import static pl.kwojtas.cormenimpl.util.Util.greater;
 import static pl.kwojtas.cormenimpl.util.Util.less;
 
+/**
+ * Implements algorithms and data structures from Chapter 6.
+ */
 public final class Chapter6 {
 
     private Chapter6() { }
 
+    /**
+     * Returns the parent index in a heap.
+     * <p><span style="font-variant:small-caps;">Parent</span> from subchapter 6.1.</p>
+     *
+     * @param i the index of a node
+     * @return the parent index of the node of index {@code i}
+     */
     private static int parent(int i) {
         return i / 2;
     }
 
+    /**
+     * Returns the left child index in a heap.
+     * <p><span style="font-variant:small-caps;">Left</span> from subchapter 6.1.</p>
+     *
+     * @param i the index of a node
+     * @return the left child index of the node of index {@code i}
+     */
     private static int left(int i) {
         return 2 * i;
     }
 
+    /**
+     * Returns the right child index in a heap.
+     * <p><span style="font-variant:small-caps;">Right</span> from subchapter 6.1.</p>
+     *
+     * @param i the index of a node
+     * @return the right child index of the node of index {@code i}
+     */
     private static int right(int i) {
         return 2 * i + 1;
     }
 
+    /**
+     * Restores the max-heap property.
+     * <p><span style="font-variant:small-caps;">Max-Heapify</span> from subchapter 6.2.</p>
+     *
+     * @param A the {@link Heap} with max-heap property violated at one node
+     * @param i the index of the node in {@code A} the property is violated at
+     * @param <T> the type of elements in {@code A}
+     */
     private static <T extends Comparable> void maxHeapify(Heap<T> A, int i) {
         int l = left(i);
         int r = right(i);
@@ -48,6 +80,14 @@ public final class Chapter6 {
         }
     }
 
+    /**
+     * Constructs a max-heap from an array of elements.
+     * <p><span style="font-variant:small-caps;">Build-Max-Heap</span> from subchapter 6.3.</p>
+     *
+     * @param A the {@link Array} of elements
+     * @param <T> the type of elements in {@code A}
+     * @return the max-heap constructed from elements from {@code A}
+     */
     private static <T extends Comparable> Heap<T> buildMaxHeap(Array<T> A) {
         Heap<T> H = new Heap<>(A);
         H.heapSize = H.length;
@@ -57,7 +97,13 @@ public final class Chapter6 {
         return H;
     }
 
-    // subchapter 6.4
+    /**
+     * Sorts elements using merge sort.
+     * <p><span style="font-variant:small-caps;">Heapsort</span> from subchapter 6.4.</p>
+     *
+     * @param A the {@link Array} of elements to sort
+     * @param <T> the type of elements in {@code A}
+     */
     public static <T extends Comparable> void heapsort(Array<T> A) {
         Heap<T> H = buildMaxHeap(A);
         for (int i = H.length; i >= 2; i--) {
@@ -68,7 +114,14 @@ public final class Chapter6 {
         A.set(H);
     }
 
-    // solution of 6.2-2
+    /**
+     * Restores the min-heap property.
+     * <p><span style="font-variant:small-caps;">Min-Heapify</span> from solution to exercise 6.2-2.</p>
+     *
+     * @param A the {@link Heap} with min-heap property violated at one node
+     * @param i the index of the node in {@code A} the property is violated at
+     * @param <T> the type of elements in {@code A}
+     */
     public static <T extends Comparable> void minHeapify(Heap<T> A, int i) {
         int l = left(i);
         int r = right(i);
@@ -87,7 +140,14 @@ public final class Chapter6 {
         }
     }
 
-    // solution of 6.2-5
+    /**
+     * Restores the max-heap property iteratively.
+     * <p><span style="font-variant:small-caps;">Iterative-Max-Heapify</span> from solution to exercise 6.2-5.</p>
+     *
+     * @param A the {@link Heap} with max-heap property violated at one node
+     * @param i the index of the node in {@code A} the property is violated at
+     * @param <T> the type of elements in {@code A}
+     */
     public static <T extends Comparable> void iterativeMaxHeapify(Heap<T> A, int i) {
         while (true) {
             int l = left(i);
@@ -109,12 +169,25 @@ public final class Chapter6 {
         }
     }
 
-    // subchapter 6.5
+    /**
+     * Returns the largest element in a max-heap.
+     * <p><span style="font-variant:small-caps;">Heap-Maximum</span> from subchapter 6.5.</p>
+     *
+     * @param A the max-heap
+     * @return the largest element in {@code A}
+     */
     public static int heapMaximum(Heap<Integer> A) {
         return A.at(1);
     }
 
-    // subchapter 6.5
+    /**
+     * Removes the largest element from a max-heap.
+     * <p><span style="font-variant:small-caps;">Heap-Extract-Max</span> from subchapter 6.5.</p>
+     *
+     * @param A the max-heap
+     * @return the largest element in {@code A}
+     * @throws RuntimeException if {@code A} is empty
+     */
     public static int heapExtractMax(Heap<Integer> A) {
         if (A.heapSize < 1) {
             throw new RuntimeException("heap underflow");
@@ -126,7 +199,15 @@ public final class Chapter6 {
         return max;
     }
 
-    // subchapter 6.5
+    /**
+     * Increases a key in a max-heap.
+     * <p><span style="font-variant:small-caps;">Heap-Increase-Key</span> from subchapter 6.5.</p>
+     *
+     * @param A the max-heap
+     * @param i the index of the key in {@code A} to be increased
+     * @param key the new key
+     * @throws RuntimeException if {@code key} is smaller than {@code A[i]}
+     */
     public static void heapIncreaseKey(Heap<Integer> A, int i, int key) {
         if (key < A.at(i)) {
             throw new RuntimeException("new key is smaller than current key");
@@ -138,19 +219,38 @@ public final class Chapter6 {
         }
     }
 
-    // subchapter 6.5
+    /**
+     * Inserts a node into a max-heap.
+     * <p><span style="font-variant:small-caps;">Max-Heap-Insert</span> from subchapter 6.5.</p>
+     *
+     * @param A the max-heap
+     * @param key the key of the new node
+     */
     public static void maxHeapInsert(Heap<Integer> A, int key) {
         A.heapSize++;
         A.set(A.heapSize, Integer.MIN_VALUE);
         heapIncreaseKey(A, A.heapSize, key);
     }
 
-    // solution of 6.5-3
+    /**
+     * Returns the smallest element in a min-heap.
+     * <p><span style="font-variant:small-caps;">Heap-Minimum</span> from solution to exercise 6.5-3.</p>
+     *
+     * @param A the min-heap
+     * @return the smallest element in {@code A}
+     */
     public static int heapMinimum(Heap<Integer> A) {
         return A.at(1);
     }
 
-    // solution of 6.5-3
+    /**
+     * Removes the smallest element from a min-heap.
+     * <p><span style="font-variant:small-caps;">Heap-Extract-Min</span> from solution to exercise 6.5-3.</p>
+     *
+     * @param A the min-heap
+     * @return the smallest element in {@code A}
+     * @throws RuntimeException if {@code A} is empty
+     */
     public static int heapExtractMin(Heap<Integer> A) {
         if (A.heapSize < 1) {
             throw new RuntimeException("heap underflow");
@@ -162,7 +262,15 @@ public final class Chapter6 {
         return min;
     }
 
-    // solution of 6.5-3
+    /**
+     * Decreases a key in a min-heap.
+     * <p><span style="font-variant:small-caps;">Heap-Decrease-Key</span> from solution to exercise 6.5-3.</p>
+     *
+     * @param A the min-heap
+     * @param i the index of the key in {@code A} to be decreased
+     * @param key the new key
+     * @throws RuntimeException if {@code key} is larger than {@code A[i]}
+     */
     public static void heapDecreaseKey(Heap<Integer> A, int i, int key) {
         if (key > A.at(i)) {
             throw new RuntimeException("new key is larger than current key");
@@ -174,13 +282,24 @@ public final class Chapter6 {
         }
     }
 
-    // solution of 6.5-3
+    /**
+     * Inserts a node into a min-heap.
+     * <p><span style="font-variant:small-caps;">Min-Heap-Insert</span> from solution to exercise 6.5-3.</p>
+     *
+     * @param A the min-heap
+     * @param key the key of the new node
+     */
     public static void minHeapInsert(Heap<Integer> A, int key) {
         A.heapSize++;
         A.set(A.heapSize, Integer.MAX_VALUE);
         heapDecreaseKey(A, A.heapSize, key);
     }
 
+    /**
+     * Structure for ranked elements.
+     *
+     * @param <T> the type of key
+     */
     public static class KeyWithRank<T> {
         public T key;
         public int rank;
@@ -191,32 +310,71 @@ public final class Chapter6 {
         }
     }
 
+    /**
+     * Priority queue with ranked elements.
+     * Maintains ranks of new elements so that the ranks are unique in the whole priority queue.
+     *
+     * @param <T> the type of keys
+     */
     public static class PriorityQueueWithRanks<T> extends Heap<KeyWithRank<T>> {
         private int currentRank;
 
+        /**
+         * Sets initial length of the priority queue and the current rank to 1.
+         *
+         * @param initialLength initial length of the priority queue
+         */
         public PriorityQueueWithRanks(int initialLength) {
             super(new Array<>(), initialLength);
             currentRank = 1;
         }
 
+        /**
+         * Returns the current rank, then increments it.
+         *
+         * @return the current rank
+         */
         public int getCurrentRank() {
             return currentRank++;
         }
     }
 
-    // solution of 6.5-6
+    /**
+     * Implements <span style="font-variant:small-caps;">Enqueue</span> operation for FIFO queue
+     * using min-priority queue with ranked elements.
+     * <p>Solution to exercise 6.5-6.</p>
+     *
+     * @param priorityQueue the min-priority queue with ranked elements
+     * @param key the key to insert to the queue
+     * @param <T> the type of keys in {@code priorityQueue}
+     */
     public static <T> void enqueueUsingPriorityQueue(PriorityQueueWithRanks<T> priorityQueue, T key) {
         int rank = priorityQueue.getCurrentRank();
         KeyWithRank<T> keyWithRank = new KeyWithRank<>(key, rank);
         minHeapInsertWithRanks(priorityQueue, keyWithRank);
     }
 
+    /**
+     * Inserts an element into a min-priority queue with ranked elements.
+     *
+     * @param priorityQueue the min-priority queue with ranked elements
+     * @param keyWithRank the new ranked element
+     * @param <T> the type of keys in {@code priorityQueue}
+     */
     private static <T> void minHeapInsertWithRanks(PriorityQueueWithRanks<T> priorityQueue, KeyWithRank<T> keyWithRank) {
         priorityQueue.heapSize++;
         priorityQueue.set(priorityQueue.heapSize, new KeyWithRank<>(keyWithRank.key, Integer.MAX_VALUE));
         heapDecreaseRank(priorityQueue, priorityQueue.heapSize, keyWithRank.rank);
     }
 
+    /**
+     * Decreases a rank of an element in a min-priority queue with ranked elements.
+     *
+     * @param priorityQueue the min-priority queue with ranked elements
+     * @param i the index of the key in {@code priorityQueue} which rank will be decreased
+     * @param rank the new rank
+     * @param <T> the type of keys in {@code priorityQueue}
+     */
     private static <T> void heapDecreaseRank(PriorityQueueWithRanks<T> priorityQueue, int i, int rank) {
         priorityQueue.at(i).rank = rank;
         while (i > 1 && priorityQueue.at(parent(i)).rank > priorityQueue.at(i).rank) {
@@ -225,11 +383,26 @@ public final class Chapter6 {
         }
     }
 
-    // solution of 6.5-6
+    /**
+     * Implements <span style="font-variant:small-caps;">Dequeue</span> operation for FIFO queue
+     * using min-priority queue with ranked elements.
+     * <p>Solution to exercise 6.5-6.</p>
+     *
+     * @param priorityQueue the min-priority queue with ranked elements
+     * @param <T> the type of keys in {@code priorityQueue}
+     * @return the key removed from the queue
+     */
     public static <T> T dequeueUsingPriorityQueue(PriorityQueueWithRanks<T> priorityQueue) {
         return heapExtractMinWithRanks(priorityQueue).key;
     }
 
+    /**
+     * Removes the smallest element based on its rank from a min-priority queue with ranked elements.
+     *
+     * @param priorityQueue the min-priority queue with ranked elements
+     * @param <T> the type of keys in {@code priorityQueue}
+     * @return the smallest element based on its rank from {@code priorityQueue}
+     */
     private static <T> KeyWithRank<T> heapExtractMinWithRanks(PriorityQueueWithRanks<T> priorityQueue) {
         KeyWithRank<T> min = priorityQueue.at(1);
         priorityQueue.set(1, priorityQueue.at(priorityQueue.heapSize));
@@ -238,6 +411,13 @@ public final class Chapter6 {
         return min;
     }
 
+    /**
+     * Restores the min-heap property in a min-priority queue with ranked elements.
+     *
+     * @param priorityQueue the min-priority queue with ranked elements
+     * @param i the index of the node in {@code priorityQueue} the property is violated at
+     * @param <T> the type of keys in {@code priorityQueue}
+     */
     private static <T> void minHeapifyWithRanks(PriorityQueueWithRanks<T> priorityQueue, int i) {
         int l = left(i);
         int r = right(i);
@@ -256,19 +436,42 @@ public final class Chapter6 {
         }
     }
 
-    // solution of 6.5-6
+    /**
+     * Implements <span style="font-variant:small-caps;">Push</span> operation for stack
+     * using max-priority queue with ranked elements.
+     * <p>Solution to exercise 6.5-6.</p>
+     *
+     * @param priorityQueue the max-priority queue with ranked elements
+     * @param key the key to insert to the stack
+     * @param <T> the type of keys in {@code priorityQueue}
+     */
     public static <T> void pushUsingPriorityQueue(PriorityQueueWithRanks<T> priorityQueue, T key) {
         int rank = priorityQueue.getCurrentRank();
         KeyWithRank<T> keyWithRank = new KeyWithRank<>(key, rank);
         maxHeapInsertWithRanks(priorityQueue, keyWithRank);
     }
 
+    /**
+     * Inserts an element into a max-priority queue with ranked elements.
+     *
+     * @param priorityQueue the max-priority queue with ranked elements
+     * @param keyWithRank the new ranked element
+     * @param <T> the type of keys in {@code priorityQueue}
+     */
     private static <T> void maxHeapInsertWithRanks(PriorityQueueWithRanks<T> priorityQueue, KeyWithRank<T> keyWithRank) {
         priorityQueue.heapSize++;
         priorityQueue.set(priorityQueue.heapSize, new KeyWithRank<>(keyWithRank.key, Integer.MIN_VALUE));
         heapIncreaseRank(priorityQueue, priorityQueue.heapSize, keyWithRank.rank);
     }
 
+    /**
+     * Increases a rank of an element in a max-priority queue with ranked elements.
+     *
+     * @param priorityQueue the max-priority queue with ranked elements
+     * @param i the index of the key in {@code priorityQueue} which rank will be increased
+     * @param rank the new rank
+     * @param <T> the type of keys in {@code priorityQueue}
+     */
     private static <T> void heapIncreaseRank(PriorityQueueWithRanks<T> priorityQueue, int i, int rank) {
         priorityQueue.at(i).rank = rank;
         while (i > 1 && priorityQueue.at(parent(i)).rank < priorityQueue.at(i).rank) {
@@ -277,11 +480,26 @@ public final class Chapter6 {
         }
     }
 
-    // solution of 6.5-6
+    /**
+     * Implements <span style="font-variant:small-caps;">Pop</span> operation for stack
+     * using max-priority queue with ranked elements.
+     * <p>Solution to exercise 6.5-6.</p>
+     *
+     * @param priorityQueue the max-priority queue with ranked elements
+     * @param <T> the type of keys in {@code priorityQueue}
+     * @return the key removed from the stack
+     */
     public static <T> T popUsingPriorityQueue(PriorityQueueWithRanks<T> priorityQueue) {
         return heapExtractMaxWithRanks(priorityQueue).key;
     }
 
+    /**
+     * Removes the largest element based on its rank from a max-priority queue with ranked elements.
+     *
+     * @param priorityQueue the max-priority queue with ranked elements
+     * @param <T> the type of keys in {@code priorityQueue}
+     * @return the largest element based on its rank from {@code priorityQueue}
+     */
     private static <T> KeyWithRank<T> heapExtractMaxWithRanks(PriorityQueueWithRanks<T> priorityQueue) {
         KeyWithRank<T> max = priorityQueue.at(1);
         priorityQueue.set(1, priorityQueue.at(priorityQueue.heapSize));
@@ -290,6 +508,13 @@ public final class Chapter6 {
         return max;
     }
 
+    /**
+     * Restores the max-heap property in a max-priority queue with ranked elements.
+     *
+     * @param priorityQueue the max-priority queue with ranked elements
+     * @param i the index of the node in {@code priorityQueue} the property is violated at
+     * @param <T> the type of keys in {@code priorityQueue}
+     */
     private static <T> void maxHeapifyWithRanks(PriorityQueueWithRanks<T> priorityQueue, int i) {
         int l = left(i);
         int r = right(i);
@@ -308,7 +533,15 @@ public final class Chapter6 {
         }
     }
 
-    // solution of 6.5-7
+    /**
+     * Removes an element from a max-heap.
+     * <p><span style="font-variant:small-caps;">Max-Heap-Delete</span> from solution to exercise 6.5-7.</p>
+     *
+     * @param A the max-heap
+     * @param i the index of the key in {@code A} to be removed
+     * @param <T> the type of keys in {@code A}
+     * @return the key of the removed element
+     */
     public static <T extends Comparable> T maxHeapDelete(Heap<T> A, int i) {
         A.exch(i, A.heapSize);
         A.heapSize--;
@@ -320,7 +553,13 @@ public final class Chapter6 {
         return A.at(A.heapSize + 1);
     }
 
-    // solution of 6.5-8
+    /**
+     * Merges sorted lists into a single sorted list.
+     * <p>Solution to exercise 6.5-8.</p>
+     *
+     * @param sortedLists an {@link Array} of sorted {@link List}s
+     * @return the merged sorted {@link List}
+     */
     public static List<Integer> mergeSortedLists(Array<List<Integer>> sortedLists) {
         List<Integer> reversedMergedList = new List<>();
         Heap<Pair<Integer, List<Integer>>> minPriorityQueue = Heap.withLength(sortedLists.length);
@@ -347,12 +586,26 @@ public final class Chapter6 {
         return mergedList;
     }
 
+    /**
+     * Inserts a node into a min-heap preserving the information about node's list.
+     *
+     * @param A the min-heap
+     * @param key the key of the new node with the list it belongs to
+     */
     private static void minHeapInsertForMergingLists(Heap<Pair<Integer, List<Integer>>> A, Pair<Integer, List<Integer>> key) {
         A.heapSize++;
         A.set(A.heapSize, new Pair<>(Integer.MAX_VALUE, key.second));
         heapDecreaseKeyForMergingLists(A, A.heapSize, key);
     }
 
+    /**
+     * Decreases a key in a min-heap preserving the information about node's list.
+     *
+     * @param A the min-heap
+     * @param i the index of the key in {@code A} to be decreased
+     * @param key the new key of the node with the list it belongs to
+     * @throws RuntimeException if {@code key} is larger than {@code A[i]}
+     */
     private static void heapDecreaseKeyForMergingLists(
             Heap<Pair<Integer, List<Integer>>> A, int i, Pair<Integer, List<Integer>> key) {
         if (key.first > A.at(i).first) {
@@ -365,6 +618,13 @@ public final class Chapter6 {
         }
     }
 
+    /**
+     * Removes the smallest element from a min-heap preserving the information about node's list.
+     *
+     * @param A the min-heap with keys and information about their source lists
+     * @return the smallest element in {@code A}
+     * @throws RuntimeException if {@code A} is empty
+     */
     private static Pair<Integer, List<Integer>> heapExtractMinForMergingLists(Heap<Pair<Integer, List<Integer>>> A) {
         if (A.heapSize < 1) {
             throw new RuntimeException("heap underflow");
@@ -376,6 +636,12 @@ public final class Chapter6 {
         return min;
     }
 
+    /**
+     * Restores the min-heap property preserving the information about node's list.
+     *
+     * @param A the {@link Heap} with min-heap property violated at one node
+     * @param i the index of the node in {@code A} the property is violated at
+     */
     private static void minHeapifyForMergingLists(Heap<Pair<Integer, List<Integer>>> A, int i) {
         int l = left(i);
         int r = right(i);
@@ -394,7 +660,13 @@ public final class Chapter6 {
         }
     }
 
-    // problem 6-1
+    /**
+     * Constructs a max-heap from an array of elements - alternative method.
+     * <p><span style="font-variant:small-caps;">Build-Max-Heap'</span> from problem 6-1.</p>
+     *
+     * @param A the {@link Array} of elements
+     * @return the max-heap constructed from elements from {@code A}
+     */
     public static Heap<Integer> buildMaxHeap_(Array<Integer> A) {
         Heap<Integer> H = new Heap<>(A);
         H.heapSize = 1;
@@ -404,15 +676,40 @@ public final class Chapter6 {
         return H;
     }
 
+    /**
+     * Returns the parent index in a multiary heap.
+     * <p><span style="font-variant:small-caps;">Multiary-Parent</span> from solution to problem 6.1(a).</p>
+     *
+     * @param d the ary of the heap
+     * @param i the index of a node
+     * @return the parent index of the node of index {@code i}
+     */
     private static int multiaryParent(int d, int i) {
         return ceil(i - 1, d);
     }
 
+    /**
+     * Returns the {@code k}-th child index in a multiary heap.
+     * <p><span style="font-variant:small-caps;">Multiary-Child</span> from solution to problem 6-1(a).</p>
+     *
+     * @param d the ary of the heap ({@code d >= 2})
+     * @param k the child number ({@code 1 <= k <= d})
+     * @param i the index of a node
+     * @return the left child index of the node of index {@code i}
+     */
     private static int multiaryChild(int d, int k, int i) {
         return d * (i - 1) + k + 1;
     }
 
-    // solution of 6-2(c)
+    /**
+     * Removes the largest element from a multiary max-heap.
+     * <p><span style="font-variant:small-caps;">Multiary-Heap-Extract-Max</span> from solution to problem 6-2(c).</p>
+     *
+     * @param A the multiary max-heap
+     * @param d the ary of the max-heap
+     * @return the largest element in {@code A}
+     * @throws RuntimeException if {@code A} is empty
+     */
     public static int multiaryHeapExtractMax(Heap<Integer> A, int d) {
         if (A.heapSize < 1) {
             throw new RuntimeException("heap underflow");
@@ -424,6 +721,14 @@ public final class Chapter6 {
         return max;
     }
 
+    /**
+     * Restores the max-heap property in a multiary max-heap.
+     * <p><span style="font-variant:small-caps;">Multiary-Max-Heapify</span> from solution to problem 6-2(c).</p>
+     *
+     * @param A the {@link Heap} with max-heap property violated at one node
+     * @param d the ary of the max-heap
+     * @param i the index of the node in {@code A} the property is violated at
+     */
     private static void multiaryMaxHeapify(Heap<Integer> A, int d, int i) {
         int largest = i;
         int k = 1;
@@ -441,14 +746,30 @@ public final class Chapter6 {
         }
     }
 
-    // solution of 6-2(d)
+    /**
+     * Inserts a node into a multiary max-heap.
+     * <p><span style="font-variant:small-caps;">Multiary-Max-Heap-Insert</span> from solution to problem 6-2(d).</p>
+     *
+     * @param A the multiary max-heap
+     * @param d the ary of the max-heap
+     * @param key the key of the new node
+     */
     public static void multiaryMaxHeapInsert(Heap<Integer> A, int d, int key) {
         A.heapSize++;
         A.set(A.heapSize, Integer.MIN_VALUE);
         multiaryHeapIncreaseKey(A, d, A.heapSize, key);
     }
 
-    // solution of 6-2(e)
+    /**
+     * Increases a key in a multiary max-heap.
+     * <p><span style="font-variant:small-caps;">Multiary-Heap-Increase-Key</span> from solution to problem 6-2(e).</p>
+     *
+     * @param A the multiary max-heap
+     * @param d the ary of the max-heap
+     * @param i the index of the key in {@code A} to be increased
+     * @param k the new key
+     * @throws RuntimeException if {@code k} is smaller than {@code A[i]}
+     */
     public static void multiaryHeapIncreaseKey(Heap<Integer> A, int d, int i, int k) {
         A.set(i, max(A.at(i), k));
         while (i > 1 && A.at(multiaryParent(d, i)) < A.at(i)) {
@@ -457,6 +778,17 @@ public final class Chapter6 {
         }
     }
 
+    /**
+     * Removes the smallest element from a Young tableau.
+     * <p><span style="font-variant:small-caps;">Young-Extract-Min</span> from solution to problem 6-3(c).</p>
+     *
+     * @param Y the {@link Young} tableau
+     * @param m the height of {@code Y}
+     * @param n the width of {@code Y}
+     * @param i the row index of the current element
+     * @param j the column index of the current element
+     * @return the smallest element in {@code Y}
+     */
     private static int youngExtractMin(Young Y, int m, int n, int i, int j) {
         if (i == m && j == n) {
             int min = Y.at(i, j);
@@ -474,6 +806,14 @@ public final class Chapter6 {
         return youngExtractMin(Y, m, n, i_, j_);
     }
 
+    /**
+     * Restores the Young property in a Young tableau.
+     * <p><span style="font-variant:small-caps;">Youngify</span> from solution to problem 6-3(d).</p>
+     *
+     * @param Y the {@link Young} tableau
+     * @param i the row index of the current element
+     * @param j the column index of the current element
+     */
     private static void youngify(Young Y, int i, int j) {
         int i_ = i, j_ = j;
         if (i > 1 && Y.at(i - 1, j) > Y.at(i_, j_)) {
@@ -490,12 +830,26 @@ public final class Chapter6 {
         }
     }
 
+    /**
+     * Inserts a key into a Young tableau.
+     * <p><span style="font-variant:small-caps;">Young-Insert</span> from solution to problem 6-3(d).</p>
+     *
+     * @param Y the {@link Young} tableau
+     * @param m the height of {@code Y}
+     * @param n the width of {@code Y}
+     * @param key the key to insert
+     */
     private static void youngInsert(Young Y, int m, int n, int key) {
         Y.set(m, n, key);
         youngify(Y, m, n);
     }
 
-    // solution of 6-3(e)
+    /**
+     * Sorts elements using a Young tableau.
+     * <p><span style="font-variant:small-caps;">Young-Sort</span> from solution to problem 6-3(e).</p>
+     *
+     * @param A the {@link Array} of elements to sort
+     */
     public static void youngSort(Array<Integer> A) {
         int n = (int) sqrt(A.length);
         Young Y = new Young(n, n);
@@ -507,7 +861,16 @@ public final class Chapter6 {
         }
     }
 
-    // solution of 6-3(f)
+    /**
+     * Searches for an key in a Young tableau.
+     * <p><span style="font-variant:small-caps;">Young-Search</span> from solution to problem 6-3(f).</p>
+     *
+     * @param Y the {@link Young} tableau
+     * @param m the height of {@code Y}
+     * @param n the width of {@code Y}
+     * @param v the key to find
+     * @return {@code true} if {@code Y} contains {@code v}
+     */
     public static boolean youngSearch(Young Y, int m, int n, int v) {
         int i = 1;
         int j = n;
