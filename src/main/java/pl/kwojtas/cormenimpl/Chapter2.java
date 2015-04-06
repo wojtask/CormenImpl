@@ -255,9 +255,9 @@ public final class Chapter2 {
      * Searches for a sum of two elements in a set.
      * <p><span style="font-variant:small-caps;">Sum-Search</span> from solution to exercise 2.3-7.</p>
      *
-     * @param S the {@link Array} of elements containing elements from the set
+     * @param S the {@link Array} of elements from the set
      * @param x the sum to find
-     * @return {@code true} if the set contains two elements that sum up to {@code x}
+     * @return {@code true} if the set contains two elements that sum up to {@code x}, or {@code false} otherwise
      */
     public static boolean sumSearch(Array<Integer> S, Integer x) {
         int n = S.length;

@@ -340,12 +340,12 @@ public final class Chapter6 {
     }
 
     /**
-     * Implements <span style="font-variant:small-caps;">Enqueue</span> operation for FIFO queue
+     * Implements the FIFO queue operation <span style="font-variant:small-caps;">Enqueue</span>
      * using min-priority queue with ranked elements.
      * <p>Solution to exercise 6.5-6.</p>
      *
      * @param priorityQueue the min-priority queue with ranked elements
-     * @param key the key to insert to the queue
+     * @param key the key to insert to the FIFO queue
      * @param <T> the type of keys in {@code priorityQueue}
      */
     public static <T> void enqueueUsingPriorityQueue(PriorityQueueWithRanks<T> priorityQueue, T key) {
@@ -354,27 +354,12 @@ public final class Chapter6 {
         minHeapInsertWithRanks(priorityQueue, keyWithRank);
     }
 
-    /**
-     * Inserts an element into a min-priority queue with ranked elements.
-     *
-     * @param priorityQueue the min-priority queue with ranked elements
-     * @param keyWithRank the new ranked element
-     * @param <T> the type of keys in {@code priorityQueue}
-     */
     private static <T> void minHeapInsertWithRanks(PriorityQueueWithRanks<T> priorityQueue, KeyWithRank<T> keyWithRank) {
         priorityQueue.heapSize++;
         priorityQueue.set(priorityQueue.heapSize, new KeyWithRank<>(keyWithRank.key, Integer.MAX_VALUE));
         heapDecreaseRank(priorityQueue, priorityQueue.heapSize, keyWithRank.rank);
     }
 
-    /**
-     * Decreases a rank of an element in a min-priority queue with ranked elements.
-     *
-     * @param priorityQueue the min-priority queue with ranked elements
-     * @param i the index of the key in {@code priorityQueue} which rank will be decreased
-     * @param rank the new rank
-     * @param <T> the type of keys in {@code priorityQueue}
-     */
     private static <T> void heapDecreaseRank(PriorityQueueWithRanks<T> priorityQueue, int i, int rank) {
         priorityQueue.at(i).rank = rank;
         while (i > 1 && priorityQueue.at(parent(i)).rank > priorityQueue.at(i).rank) {
@@ -384,25 +369,18 @@ public final class Chapter6 {
     }
 
     /**
-     * Implements <span style="font-variant:small-caps;">Dequeue</span> operation for FIFO queue
+     * Implements the FIFO queue operation <span style="font-variant:small-caps;">Dequeue</span>
      * using min-priority queue with ranked elements.
      * <p>Solution to exercise 6.5-6.</p>
      *
      * @param priorityQueue the min-priority queue with ranked elements
      * @param <T> the type of keys in {@code priorityQueue}
-     * @return the key removed from the queue
+     * @return the key removed from the FIFO queue
      */
     public static <T> T dequeueUsingPriorityQueue(PriorityQueueWithRanks<T> priorityQueue) {
         return heapExtractMinWithRanks(priorityQueue).key;
     }
 
-    /**
-     * Removes the smallest element based on its rank from a min-priority queue with ranked elements.
-     *
-     * @param priorityQueue the min-priority queue with ranked elements
-     * @param <T> the type of keys in {@code priorityQueue}
-     * @return the smallest element based on its rank from {@code priorityQueue}
-     */
     private static <T> KeyWithRank<T> heapExtractMinWithRanks(PriorityQueueWithRanks<T> priorityQueue) {
         KeyWithRank<T> min = priorityQueue.at(1);
         priorityQueue.set(1, priorityQueue.at(priorityQueue.heapSize));
@@ -411,13 +389,6 @@ public final class Chapter6 {
         return min;
     }
 
-    /**
-     * Restores the min-heap property in a min-priority queue with ranked elements.
-     *
-     * @param priorityQueue the min-priority queue with ranked elements
-     * @param i the index of the node in {@code priorityQueue} the property is violated at
-     * @param <T> the type of keys in {@code priorityQueue}
-     */
     private static <T> void minHeapifyWithRanks(PriorityQueueWithRanks<T> priorityQueue, int i) {
         int l = left(i);
         int r = right(i);
@@ -437,7 +408,7 @@ public final class Chapter6 {
     }
 
     /**
-     * Implements <span style="font-variant:small-caps;">Push</span> operation for stack
+     * Implements the stack operation <span style="font-variant:small-caps;">Push</span>
      * using max-priority queue with ranked elements.
      * <p>Solution to exercise 6.5-6.</p>
      *
@@ -451,27 +422,12 @@ public final class Chapter6 {
         maxHeapInsertWithRanks(priorityQueue, keyWithRank);
     }
 
-    /**
-     * Inserts an element into a max-priority queue with ranked elements.
-     *
-     * @param priorityQueue the max-priority queue with ranked elements
-     * @param keyWithRank the new ranked element
-     * @param <T> the type of keys in {@code priorityQueue}
-     */
     private static <T> void maxHeapInsertWithRanks(PriorityQueueWithRanks<T> priorityQueue, KeyWithRank<T> keyWithRank) {
         priorityQueue.heapSize++;
         priorityQueue.set(priorityQueue.heapSize, new KeyWithRank<>(keyWithRank.key, Integer.MIN_VALUE));
         heapIncreaseRank(priorityQueue, priorityQueue.heapSize, keyWithRank.rank);
     }
 
-    /**
-     * Increases a rank of an element in a max-priority queue with ranked elements.
-     *
-     * @param priorityQueue the max-priority queue with ranked elements
-     * @param i the index of the key in {@code priorityQueue} which rank will be increased
-     * @param rank the new rank
-     * @param <T> the type of keys in {@code priorityQueue}
-     */
     private static <T> void heapIncreaseRank(PriorityQueueWithRanks<T> priorityQueue, int i, int rank) {
         priorityQueue.at(i).rank = rank;
         while (i > 1 && priorityQueue.at(parent(i)).rank < priorityQueue.at(i).rank) {
@@ -481,7 +437,7 @@ public final class Chapter6 {
     }
 
     /**
-     * Implements <span style="font-variant:small-caps;">Pop</span> operation for stack
+     * Implements the stack operation <span style="font-variant:small-caps;">Pop</span>
      * using max-priority queue with ranked elements.
      * <p>Solution to exercise 6.5-6.</p>
      *
@@ -493,13 +449,6 @@ public final class Chapter6 {
         return heapExtractMaxWithRanks(priorityQueue).key;
     }
 
-    /**
-     * Removes the largest element based on its rank from a max-priority queue with ranked elements.
-     *
-     * @param priorityQueue the max-priority queue with ranked elements
-     * @param <T> the type of keys in {@code priorityQueue}
-     * @return the largest element based on its rank from {@code priorityQueue}
-     */
     private static <T> KeyWithRank<T> heapExtractMaxWithRanks(PriorityQueueWithRanks<T> priorityQueue) {
         KeyWithRank<T> max = priorityQueue.at(1);
         priorityQueue.set(1, priorityQueue.at(priorityQueue.heapSize));
@@ -508,13 +457,6 @@ public final class Chapter6 {
         return max;
     }
 
-    /**
-     * Restores the max-heap property in a max-priority queue with ranked elements.
-     *
-     * @param priorityQueue the max-priority queue with ranked elements
-     * @param i the index of the node in {@code priorityQueue} the property is violated at
-     * @param <T> the type of keys in {@code priorityQueue}
-     */
     private static <T> void maxHeapifyWithRanks(PriorityQueueWithRanks<T> priorityQueue, int i) {
         int l = left(i);
         int r = right(i);
@@ -534,13 +476,13 @@ public final class Chapter6 {
     }
 
     /**
-     * Removes an element from a max-heap.
+     * Deletes an element from a max-heap.
      * <p><span style="font-variant:small-caps;">Max-Heap-Delete</span> from solution to exercise 6.5-7.</p>
      *
      * @param A the max-heap
-     * @param i the index of the key in {@code A} to be removed
+     * @param i the index of the key in {@code A} to be deleted
      * @param <T> the type of keys in {@code A}
-     * @return the key of the removed element
+     * @return the key of the element deleted from {@code A}
      */
     public static <T extends Comparable> T maxHeapDelete(Heap<T> A, int i) {
         A.exch(i, A.heapSize);
@@ -586,26 +528,12 @@ public final class Chapter6 {
         return mergedList;
     }
 
-    /**
-     * Inserts a node into a min-heap preserving the information about node's list.
-     *
-     * @param A the min-heap
-     * @param key the key of the new node with the list it belongs to
-     */
     private static void minHeapInsertForMergingLists(Heap<Pair<Integer, List<Integer>>> A, Pair<Integer, List<Integer>> key) {
         A.heapSize++;
         A.set(A.heapSize, new Pair<>(Integer.MAX_VALUE, key.second));
         heapDecreaseKeyForMergingLists(A, A.heapSize, key);
     }
 
-    /**
-     * Decreases a key in a min-heap preserving the information about node's list.
-     *
-     * @param A the min-heap
-     * @param i the index of the key in {@code A} to be decreased
-     * @param key the new key of the node with the list it belongs to
-     * @throws RuntimeException if {@code key} is larger than {@code A[i]}
-     */
     private static void heapDecreaseKeyForMergingLists(
             Heap<Pair<Integer, List<Integer>>> A, int i, Pair<Integer, List<Integer>> key) {
         if (key.first > A.at(i).first) {
@@ -618,13 +546,6 @@ public final class Chapter6 {
         }
     }
 
-    /**
-     * Removes the smallest element from a min-heap preserving the information about node's list.
-     *
-     * @param A the min-heap with keys and information about their source lists
-     * @return the smallest element in {@code A}
-     * @throws RuntimeException if {@code A} is empty
-     */
     private static Pair<Integer, List<Integer>> heapExtractMinForMergingLists(Heap<Pair<Integer, List<Integer>>> A) {
         if (A.heapSize < 1) {
             throw new RuntimeException("heap underflow");
@@ -636,12 +557,6 @@ public final class Chapter6 {
         return min;
     }
 
-    /**
-     * Restores the min-heap property preserving the information about node's list.
-     *
-     * @param A the {@link Heap} with min-heap property violated at one node
-     * @param i the index of the node in {@code A} the property is violated at
-     */
     private static void minHeapifyForMergingLists(Heap<Pair<Integer, List<Integer>>> A, int i) {
         int l = left(i);
         int r = right(i);
@@ -869,7 +784,7 @@ public final class Chapter6 {
      * @param m the height of {@code Y}
      * @param n the width of {@code Y}
      * @param v the key to find
-     * @return {@code true} if {@code Y} contains {@code v}
+     * @return {@code true} if {@code Y} contains {@code v}, or {@code false} otherwise
      */
     public static boolean youngSearch(Young Y, int m, int n, int v) {
         int i = 1;

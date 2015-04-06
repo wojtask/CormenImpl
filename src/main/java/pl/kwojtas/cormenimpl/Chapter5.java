@@ -77,15 +77,6 @@ public final class Chapter5 {
         return A;
     }
 
-    /**
-     * Sorts an array using another array as keys.
-     *
-     * @param A the {@link Array} of elements to sort
-     * @param keys the {@link Array} of keys
-     * @param p the index of the beginning of subarray in {@code A} to sort
-     * @param r the index of the end of subarray in {@code A} to sort
-     * @param <T> the type of elements in {@code A}
-     */
     private static <T> void sortUsingExternalKeys(Array<T> A, Array<Integer> keys, int p, int r) {
         if (p < r) {
             int q = (p + r) / 2;
@@ -95,17 +86,6 @@ public final class Chapter5 {
         }
     }
 
-    /**
-     * Merges two sorted subarrays {@code A[p..q]} and {@code A[q + 1..r]} into one sorted array {@code A[p..r]} using another
-     * array as keys.
-     *
-     * @param A the {@link Array} of elements to merge
-     * @param keys the {@link Array} of keys
-     * @param p the index of the beginning of the first subarray in {@code A} to merge
-     * @param q the index of the end of the first subarray in {@code A} to merge
-     * @param r the index of end of the second subarray in {@code A} to merge
-     * @param <T> the type of elements in {@code A}
-     */
     private static <T> void mergeUsingExternalKeys(Array<T> A, Array<Integer> keys, int p, int q, int r) {
         int n1 = q - p + 1;
         int n2 = r - q;
@@ -185,15 +165,6 @@ public final class Chapter5 {
         return A;
     }
 
-    /**
-     * Sorts an array uniformly using another array as keys.
-     *
-     * @param A the {@link Array} of elements to sort
-     * @param keys the {@link Array} of keys
-     * @param p the index of the beginning of subarray in {@code A} to sort
-     * @param r the index of the end of subarray in {@code A} to sort
-     * @param <T> the type of elements in {@code A}
-     */
     private static <T> void sortUniformlyUsingExternalKeys(Array<T> A, Array<Integer> keys, int p, int r) {
         if (p < r) {
             int q = (p + r) / 2;
@@ -203,17 +174,6 @@ public final class Chapter5 {
         }
     }
 
-    /**
-     * Merges two sorted subarrays {@code A[p..q]} and {@code A[q + 1..r]} uniformly into one sorted array {@code A[p..r]}
-     * using another array as keys.
-     *
-     * @param A the {@link Array} of elements to merge
-     * @param keys the {@link Array} of keys
-     * @param p the index of the beginning of the first subarray in {@code A} to merge
-     * @param q the index of the end of the first subarray in {@code A} to merge
-     * @param r the index of end of the second subarray in {@code A} to merge
-     * @param <T> the type of elements in {@code A}
-     */
     private static <T> void mergeUniformlyUsingExternalKeys(Array<T> A, Array<Integer> keys, int p, int q, int r) {
         int n1 = q - p + 1;
         int n2 = r - q;

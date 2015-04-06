@@ -7,7 +7,7 @@ import pl.kwojtas.cormenimpl.util.Element;
 import pl.kwojtas.cormenimpl.util.HashFunction;
 import pl.kwojtas.cormenimpl.util.HashProbingFunction;
 import pl.kwojtas.cormenimpl.util.HashTableWithFreeList;
-import pl.kwojtas.cormenimpl.util.HashTableWithProbing;
+import pl.kwojtas.cormenimpl.util.HashTableWithOpenAddressing;
 import pl.kwojtas.cormenimpl.util.List;
 import pl.kwojtas.cormenimpl.util.ZeroBasedIndexedArray;
 
@@ -510,7 +510,7 @@ public class Chapter11Test {
     @Test
     public void shouldInsertIntoHashTableWithProbing() {
         // given
-        HashTableWithProbing hashTableWithProbing = HashTableWithProbing.withLengthAndHashFunction(5,
+        HashTableWithOpenAddressing hashTableWithOpenAddressing = HashTableWithOpenAddressing.withLengthAndHashFunction(5,
                 new HashProbingFunction() {
                     @Override
                     public int compute(int key, int i) {
@@ -519,21 +519,21 @@ public class Chapter11Test {
                     }
                 }
         );
-        hashTableWithProbing.set(new ZeroBasedIndexedArray<>(35,51,null,38,null));
+        hashTableWithOpenAddressing.set(new ZeroBasedIndexedArray<>(35,51,null,38,null));
         int key = 45;
 
         // when
-        int actualPosition = Chapter11.hashInsert(hashTableWithProbing, key);
+        int actualPosition = Chapter11.hashInsert(hashTableWithOpenAddressing, key);
 
         // then
         assertEquals(2, actualPosition);
-        assertEquals(Integer.valueOf(key), hashTableWithProbing.at(2));
+        assertEquals(Integer.valueOf(key), hashTableWithOpenAddressing.at(2));
     }
 
     @Test(expected = RuntimeException.class)
     public void shouldThrowExceptionWhenInsertingIntoFullHashTableWithProbing() {
         // given
-        HashTableWithProbing hashTableWithProbing = HashTableWithProbing.withLengthAndHashFunction(5,
+        HashTableWithOpenAddressing hashTableWithOpenAddressing = HashTableWithOpenAddressing.withLengthAndHashFunction(5,
                 new HashProbingFunction() {
                     @Override
                     public int compute(int key, int i) {
@@ -542,12 +542,12 @@ public class Chapter11Test {
                     }
                 }
         );
-        hashTableWithProbing.set(new ZeroBasedIndexedArray<>(35,51,45,38,16));
+        hashTableWithOpenAddressing.set(new ZeroBasedIndexedArray<>(35,51,45,38,16));
         int key = 32;
 
         try {
             // when
-            Chapter11.hashInsert(hashTableWithProbing, key);
+            Chapter11.hashInsert(hashTableWithOpenAddressing, key);
         } catch (RuntimeException e) {
             // then
             assertEquals("hash table overflow", e.getMessage());
@@ -558,7 +558,7 @@ public class Chapter11Test {
     @Test
     public void shouldFindElementInHashTableWithProbing() {
         // given
-        HashTableWithProbing hashTableWithProbing = HashTableWithProbing.withLengthAndHashFunction(5,
+        HashTableWithOpenAddressing hashTableWithOpenAddressing = HashTableWithOpenAddressing.withLengthAndHashFunction(5,
                 new HashProbingFunction() {
                     @Override
                     public int compute(int key, int i) {
@@ -567,11 +567,11 @@ public class Chapter11Test {
                     }
                 }
         );
-        hashTableWithProbing.set(new ZeroBasedIndexedArray<>(35,51,45,38,null));
+        hashTableWithOpenAddressing.set(new ZeroBasedIndexedArray<>(35,51,45,38,null));
         int key = 45;
 
         // when
-        Integer actualPosition = Chapter11.hashSearch(hashTableWithProbing, key);
+        Integer actualPosition = Chapter11.hashSearch(hashTableWithOpenAddressing, key);
 
         // then
         assertEquals(Integer.valueOf(2), actualPosition);
@@ -580,7 +580,7 @@ public class Chapter11Test {
     @Test
     public void shouldNotFindNonexistentElementInHashTableWithProbing() {
         // given
-        HashTableWithProbing hashTableWithProbing = HashTableWithProbing.withLengthAndHashFunction(5,
+        HashTableWithOpenAddressing hashTableWithOpenAddressing = HashTableWithOpenAddressing.withLengthAndHashFunction(5,
                 new HashProbingFunction() {
                     @Override
                     public int compute(int key, int i) {
@@ -589,11 +589,11 @@ public class Chapter11Test {
                     }
                 }
         );
-        hashTableWithProbing.set(new ZeroBasedIndexedArray<>(35,51,45,38,null));
+        hashTableWithOpenAddressing.set(new ZeroBasedIndexedArray<>(35,51,45,38,null));
         int key = 26;
 
         // when
-        Integer actualPosition = Chapter11.hashSearch(hashTableWithProbing, key);
+        Integer actualPosition = Chapter11.hashSearch(hashTableWithOpenAddressing, key);
 
         // then
         assertNull(actualPosition);
@@ -602,7 +602,7 @@ public class Chapter11Test {
     @Test
     public void shouldDeleteFromHashTableWithProbing() {
         // given
-        HashTableWithProbing hashTableWithProbing = HashTableWithProbing.withLengthAndHashFunction(5,
+        HashTableWithOpenAddressing hashTableWithOpenAddressing = HashTableWithOpenAddressing.withLengthAndHashFunction(5,
                 new HashProbingFunction() {
                     @Override
                     public int compute(int key, int i) {
@@ -611,20 +611,20 @@ public class Chapter11Test {
                     }
                 }
         );
-        hashTableWithProbing.set(new ZeroBasedIndexedArray<>(35,51,45,38,null));
+        hashTableWithOpenAddressing.set(new ZeroBasedIndexedArray<>(35,51,45,38,null));
         int key = 45;
 
         // when
-        Chapter11.hashDelete(hashTableWithProbing, key);
+        Chapter11.hashDelete(hashTableWithOpenAddressing, key);
 
         // then
-        assertEquals(DELETED, hashTableWithProbing.at(2));
+        assertEquals(DELETED, hashTableWithOpenAddressing.at(2));
     }
 
     @Test
     public void shouldInsertIntoHashTableWithProbingUsingHashInsert_() {
         // given
-        HashTableWithProbing hashTableWithProbing = HashTableWithProbing.withLengthAndHashFunction(5,
+        HashTableWithOpenAddressing hashTableWithOpenAddressing = HashTableWithOpenAddressing.withLengthAndHashFunction(5,
                 new HashProbingFunction() {
                     @Override
                     public int compute(int key, int i) {
@@ -633,21 +633,21 @@ public class Chapter11Test {
                     }
                 }
         );
-        hashTableWithProbing.set(new ZeroBasedIndexedArray<>(35,51,DELETED,38,DELETED));
+        hashTableWithOpenAddressing.set(new ZeroBasedIndexedArray<>(35,51,DELETED,38,DELETED));
         int key = 45;
 
         // when
-        int actualPosition = Chapter11.hashInsert_(hashTableWithProbing, key);
+        int actualPosition = Chapter11.hashInsert_(hashTableWithOpenAddressing, key);
 
         // then
         assertEquals(2, actualPosition);
-        assertEquals(Integer.valueOf(key), hashTableWithProbing.at(2));
+        assertEquals(Integer.valueOf(key), hashTableWithOpenAddressing.at(2));
     }
 
     @Test(expected = RuntimeException.class)
     public void shouldThrowExceptionWhenInsertingIntoFullHashTableWithProbingUsingHashInsert_() {
         // given
-        HashTableWithProbing hashTableWithProbing = HashTableWithProbing.withLengthAndHashFunction(5,
+        HashTableWithOpenAddressing hashTableWithOpenAddressing = HashTableWithOpenAddressing.withLengthAndHashFunction(5,
                 new HashProbingFunction() {
                     @Override
                     public int compute(int key, int i) {
@@ -656,12 +656,12 @@ public class Chapter11Test {
                     }
                 }
         );
-        hashTableWithProbing.set(new ZeroBasedIndexedArray<>(35,51,45,38,16));
+        hashTableWithOpenAddressing.set(new ZeroBasedIndexedArray<>(35,51,45,38,16));
         int key = 32;
 
         try {
             // when
-            Chapter11.hashInsert_(hashTableWithProbing, key);
+            Chapter11.hashInsert_(hashTableWithOpenAddressing, key);
         } catch (RuntimeException e) {
             // then
             assertEquals("hash table overflow", e.getMessage());

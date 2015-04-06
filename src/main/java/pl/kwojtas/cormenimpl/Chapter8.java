@@ -8,7 +8,9 @@ import pl.kwojtas.cormenimpl.util.ZeroBasedIndexedArray;
 
 import static java.lang.Math.max;
 import static java.lang.Math.sqrt;
+import static pl.kwojtas.cormenimpl.Chapter10.listInsert;
 import static pl.kwojtas.cormenimpl.Chapter5.random;
+import static pl.kwojtas.cormenimpl.Chapter7.partition;
 
 /**
  * Implements algorithms from Chapter 8.
@@ -18,12 +20,12 @@ public final class Chapter8 {
     private Chapter8() { }
 
     /**
-     *
+     * Sorts elements using counting sort.
      * <p><span style="font-variant:small-caps;">Counting-Sort</span> from subchapter 8.2.</p>
      *
-     * @param A
-     * @param B
-     * @param k
+     * @param A the {@link Array} of elements to sort
+     * @param B the resulting {@link Array} of sorted elements
+     * @param k the upper bound of elements' values in {@code A}
      */
     public static void countingSort(Array<Integer> A, Array<Integer> B, int k) {
         ZeroBasedIndexedArray<Integer> C = ZeroBasedIndexedArray.withLength(k + 1);
@@ -43,12 +45,12 @@ public final class Chapter8 {
     }
 
     /**
-     *
+     * Sorts elements using an unstable version of counting sort.
      * <p>Exercise 8.2-3.</p>
      *
-     * @param A
-     * @param B
-     * @param k
+     * @param A the {@link Array} of elements to sort
+     * @param B the resulting {@link Array} of sorted elements
+     * @param k the upper bound of elements' values in {@code A}
      */
     public static void nonStableCountingSort(Array<Integer> A, Array<Integer> B, int k) {
         ZeroBasedIndexedArray<Integer> C = ZeroBasedIndexedArray.withLength(k + 1);
@@ -68,14 +70,14 @@ public final class Chapter8 {
     }
 
     /**
-     *
+     * Counts how many numbers in an array fall into an interval.
      * <p>Solution to exercise 8.2-4.</p>
      *
-     * @param A
-     * @param k
-     * @param a
-     * @param b
-     * @return
+     * @param A the {@link Array} of elements
+     * @param k the upper bound of elements' values in {@code A}
+     * @param a the lower bound of the interval
+     * @param b the upper bound of the interval
+     * @return the number of elements from {@code A} that fall into interval {@code [a..b]}
      */
     public static int countNumbersInRange(Array<Integer> A, int k, int a, int b) {
         ZeroBasedIndexedArray<Integer> C = ZeroBasedIndexedArray.withLength(k + 1);
@@ -104,11 +106,11 @@ public final class Chapter8 {
     }
 
     /**
-     *
+     * Sorts elements using radix sort.
      * <p><span style="font-variant:small-caps;">Radix-Sort</span> from subchapter 8.3.</p>
      *
-     * @param A
-     * @param d
+     * @param A the {@link Array} of elements to sort
+     * @param d the upper bound for number of digits of elements in {@code A}
      */
     public static void radixSort(Array<Integer> A, int d) {
         for (int i = 1; i <= d; i++) {
@@ -146,22 +148,22 @@ public final class Chapter8 {
     }
 
     /**
-     *
+     * Sorts {@code n} integers in the range 0 to {#code n^2 - 1}.
      * <p>Solution to exercise 8.3-4.</p>
      *
-     * @param A
+     * @param A the {@link Array} of numbers to sort
      */
-    public static void sortNSquaredNumbers(Array<Integer> A) {
+    public static void lessThanSquareSort(Array<Integer> A) {
         int n = A.length;
         stableSortOnDigit(A, 1, n);
         stableSortOnDigit(A, 2, n);
     }
 
     /**
-     *
+     * Sorts elements using bucket sort.
      * <p><span style="font-variant:small-caps;">Bucket-Sort</span> from subchapter 8.4.</p>
      *
-     * @param A
+     * @param A the {@link Array} of elements to sort (numbers from the interval {@code [0..1)})
      */
     public static void bucketSort(Array<Double> A) {
         int n = A.length;
@@ -171,7 +173,7 @@ public final class Chapter8 {
         }
         for (int i = 1; i <= n; i++) {
             List.Node<Double> x = new List.Node<>(A.at(i));
-            Chapter10.listInsert(B.at((int) (n * A.at(i))), x);
+            listInsert(B.at((int) (n * A.at(i))), x);
         }
         for (int i = 0; i <= n - 1; i++) {
             listInsertionSort(B.at(i));
@@ -222,12 +224,12 @@ public final class Chapter8 {
     }
 
     /**
-     *
+     * Sorts points in the unit circle by distance from the origin.
      * <p>Solution to exercise 8.4-4.</p>
      *
-     * @param points
+     * @param points the {@link Array} of points in the unit circle to sort
      */
-    public static void sortUnitCirclePoints(Array<Point2D> points) {
+    public static void pointsSort(Array<Point2D> points) {
         int n = points.length;
         ZeroBasedIndexedArray<List<Pair<Point2D, Double>>> B = ZeroBasedIndexedArray.withLength(n);
         for (int i = 0; i <= n - 1; i++) {
@@ -237,15 +239,15 @@ public final class Chapter8 {
             double distance = sqrt(points.at(i).x * points.at(i).x + points.at(i).y * points.at(i).y);
             int bucket = (int) (distance * distance * n);
             List.Node<Pair<Point2D, Double>> x = new List.Node<>(new Pair<>(points.at(i), distance));
-            Chapter10.listInsert(B.at(bucket), x);
+            listInsert(B.at(bucket), x);
         }
         for (int i = 0; i <= n - 1; i++) {
-            listInsertionSortUnitCirclePoints(B.at(i));
+            pointsInsertionSort(B.at(i));
         }
-        concatenateListsOfUnitCirclePoints(B, points);
+        concatenatePointsListsToArray(B, points);
     }
 
-    private static void listInsertionSortUnitCirclePoints(List<Pair<Point2D, Double>> L) {
+    private static void pointsInsertionSort(List<Pair<Point2D, Double>> L) {
         if (L.head == null) {
             return;
         }
@@ -275,7 +277,7 @@ public final class Chapter8 {
         }
     }
 
-    private static void concatenateListsOfUnitCirclePoints(
+    private static void concatenatePointsListsToArray(
             ZeroBasedIndexedArray<List<Pair<Point2D, Double>>> B, Array<Point2D> points) {
         int k = 1;
         for (int i = 0; i <= B.length - 1; i++) {
@@ -289,10 +291,10 @@ public final class Chapter8 {
     }
 
     /**
-     *
+     * Sorts bits.
      * <p><span style="font-variant:small-caps;">Bitwise-Sort</span> from solution to problem 8-2(b).</p>
      *
-     * @param A
+     * @param A the {@link Array} of bits to sort
      */
     public static void bitwiseSort(Array<Integer> A) {
         int n = A.length;
@@ -307,15 +309,14 @@ public final class Chapter8 {
                 j--;
             }
         }
-
     }
 
     /**
-     *
+     * Sorts elements in place using counting sort.
      * <p><span style="font-variant:small-caps;">Counting-Sort-In-Place</span> from solution to problem 8-2(e).</p>
      *
-     * @param A
-     * @param k
+     * @param A the {@link Array} of elements to sort
+     * @param k the upper bound of elements' values in {@code A}
      */
     public static void countingSortInPlace(Array<Integer> A, int k) {
         ZeroBasedIndexedArray<Integer> C = ZeroBasedIndexedArray.withLength(k + 1);
@@ -342,12 +343,12 @@ public final class Chapter8 {
     }
 
     /**
-     *
+     * Sorts variable-length numbers.
      * <p>Solution to problem 8-3(a).</p>
      *
-     * @param A
+     * @param A the {@link Array} of numbers to sort
      */
-    public static void variousLengthNumbersSort(Array<Integer> A) {
+    public static void variableLengthIntegersSort(Array<Integer> A) {
         int j = 0, j_ = 0;
         for (int i = 1; i <= A.length; i++) {
             if (A.at(i) < 0) {
@@ -357,7 +358,7 @@ public final class Chapter8 {
             }
         }
         Array<Integer> negative = Array.withLength(j);
-        Array<Integer> nonNegative = Array.withLength(j_);
+        Array<Integer> nonnegative = Array.withLength(j_);
         j = 1;
         j_ = 1;
         for (int i = 1; i <= A.length; i++) {
@@ -365,24 +366,24 @@ public final class Chapter8 {
                 negative.set(j, -A.at(i));
                 j++;
             } else {
-                nonNegative.set(j_, A.at(i));
+                nonnegative.set(j_, A.at(i));
                 j_++;
             }
         }
-        variousLengthNonNegativeNumbersSort(negative);
-        variousLengthNonNegativeNumbersSort(nonNegative);
+        variableLengthNonnegativeNumbersSort(negative);
+        variableLengthNonnegativeNumbersSort(nonnegative);
         j = 1;
         for (int i = negative.length; i >= 1; i--) {
             A.set(j, -negative.at(i));
             j++;
         }
-        for (int i = 1; i <= nonNegative.length; i++) {
-            A.set(j, nonNegative.at(i));
+        for (int i = 1; i <= nonnegative.length; i++) {
+            A.set(j, nonnegative.at(i));
             j++;
         }
     }
 
-    private static void variousLengthNonNegativeNumbersSort(Array<Integer> A) {
+    private static void variableLengthNonnegativeNumbersSort(Array<Integer> A) {
         if (A.length == 0) {
             return;
         }
@@ -390,7 +391,7 @@ public final class Chapter8 {
         for (int i = 1; i <= A.length; i++) {
             maxLength = max(maxLength, getNumberLength(A.at(i)));
         }
-        variousLengthSortByLength(A, maxLength);
+        variableLengthSortByLength(A, maxLength);
         Array<Integer> B = Array.withLength(A.length);
         B.set(1, A.at(1));
         int j = 1;
@@ -429,7 +430,7 @@ public final class Chapter8 {
         }
     }
 
-    private static void variousLengthSortByLength(Array<Integer> A, int k) {
+    private static void variableLengthSortByLength(Array<Integer> A, int k) {
         ZeroBasedIndexedArray<Integer> C = ZeroBasedIndexedArray.withLength(k + 1);
         for (int i = 0; i <= k; i++) {
             C.set(i, 0);
@@ -461,13 +462,13 @@ public final class Chapter8 {
     }
 
     /**
-     *
+     * Sorts variable-length strings.
      * <p>Solution to problem 8-3(b).</p>
      *
-     * @param A
-     * @param position
+     * @param A the {@link Array} of strings to sort
+     * @param position the position by which strings are sorted
      */
-    public static void variousLengthStringsSort(Array<String> A, int position) {
+    public static void variableLengthStringsSort(Array<String> A, int position) {
         int n = A.length;
         countingSortByCharacter(A, position);
         int i = 1;
@@ -484,7 +485,7 @@ public final class Chapter8 {
             for (int k = 1; k <= j - i; k++) {
                 C.set(k, A.at(i + k - 1));
             }
-            variousLengthStringsSort(C, position + 1);
+            variableLengthStringsSort(C, position + 1);
             for (int k = 1; k <= j - i; k++) {
                 A.set(i + k - 1, C.at(k));
             }
@@ -515,11 +516,11 @@ public final class Chapter8 {
     }
 
     /**
-     *
+     * Permutes two arrays so that they are identical to each other by comparing elements only between arrays.
      * <p>Solution to problem 8-4(a).</p>
      *
-     * @param R
-     * @param B
+     * @param R the first {@link Array}
+     * @param B the second {@link Array}
      */
     public static void jugsGroup(Array<Double> R, Array<Double> B) {
         int n = R.length;
@@ -533,13 +534,14 @@ public final class Chapter8 {
     }
 
     /**
-     *
+     * Permutes two arrays so that they are identical to each other by comparing elements only between arrays
+     * - an efficient version.
      * <p><span style="font-variant:small-caps;">Jugs-Match</span> from solution to problem 8-4(c).</p>
      *
-     * @param R
-     * @param B
-     * @param p
-     * @param r
+     * @param R the first {@link Array}
+     * @param B the second {@link Array}
+     * @param p the index of the beginning of subarray in {@code R} and subarray in {@code B} to permute
+     * @param r the index of the end of subarray in {@code R} and subarray in {@code B} to permute
      */
     public static void jugsMatch(Array<Double> R, Array<Double> B, int p, int r) {
         if (p < r) {
@@ -550,14 +552,14 @@ public final class Chapter8 {
     }
 
     /**
-     *
+     * Partitions two arrays around randomly chosen pivot element by comparing elements only between the two arrays.
      * <p><span style="font-variant:small-caps;">Jugs-Partition</span> from solution to problem 8-4(c).</p>
      *
-     * @param R
-     * @param B
-     * @param p
-     * @param r
-     * @return
+     * @param R the first {@link Array} to partition
+     * @param B the second {@link Array} to partition
+     * @param p the index of the beginning of subarray in {@code R} and subarray in {@code B} to partition
+     * @param r the index of the end of subarray in {@code R} and subarray in {@code B} to partition
+     * @return the index of the pivot element after partitioning
      */
     private static int jugsPartition(Array<Double> R, Array<Double> B, int p, int r) {
         R.exch(r, random(p, r));
@@ -588,20 +590,20 @@ public final class Chapter8 {
     }
 
     /**
-     *
+     * Rearranges elements so that they increase on average.
      * <p>Solution to problem 8-5(d).</p>
      *
-     * @param A
-     * @param k
-     * @param p
-     * @param r
-     * @param <T>
+     * @param A the {@link Array} of elements to sort
+     * @param k the number of elements taken for averages
+     * @param p the index of the beginning of subarray in {@code A} to rearrange
+     * @param r the index of the end of subarray in {@code A} to rearrange
+     * @param <T> the type of elements in {@code A}
      */
-    public static <T extends Comparable> void kSort(Array<T> A, int k, int p, int r) {
+    public static <T extends Comparable> void averageSort(Array<T> A, int k, int p, int r) {
         if (p + k - 1 < r) {
-            int q = Chapter7.partition(A, p, r);
-            kSort(A, k, p, q - 1);
-            kSort(A, k, q + 1, r);
+            int q = partition(A, p, r);
+            averageSort(A, k, p, q - 1);
+            averageSort(A, k, q + 1, r);
         }
     }
 

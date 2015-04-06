@@ -248,13 +248,13 @@ public final class Chapter12 {
     }
 
     /**
-     * Removes a node from a binary tree
+     * Deletes a node from a binary tree
      * <p><span style="font-variant:small-caps;">Tree-Delete</span> from subchapter 12.3.</p>
      *
      * @param T the binary tree
-     * @param z the node to remove
+     * @param z the node to delete
      * @param <T> the type of keys in the tree
-     * @return the removed node
+     * @return the node deleted from {@code T}
      */
     public static <T extends Comparable> BinaryTree.Node<T> treeDelete(BinaryTree<T> T, BinaryTree.Node<T> z) {
         BinaryTree.Node<T> y;

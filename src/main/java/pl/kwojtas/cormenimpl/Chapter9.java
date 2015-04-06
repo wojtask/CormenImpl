@@ -9,6 +9,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import static java.lang.Math.abs;
+import static pl.kwojtas.cormenimpl.Chapter2.insertionSort;
 import static pl.kwojtas.cormenimpl.Chapter7.randomizedPartition;
 import static pl.kwojtas.cormenimpl.util.Util.ceil;
 import static pl.kwojtas.cormenimpl.util.Util.greater;
@@ -24,12 +25,12 @@ public final class Chapter9 {
     private Chapter9() { }
 
     /**
-     *
+     * Finds the smallest value in an array.
      * <p><span style="font-variant:small-caps;">Minimum</span> from subchapter 9.1.</p>
      *
-     * @param A
-     * @param <T>
-     * @return
+     * @param A the {@link Array} to look up
+     * @param <T> the type of elements in {@code A}
+     * @return the smallest value in {@code A}
      */
     public static <T extends Comparable> T minimum(Array<T> A) {
         T min = A.at(1);
@@ -42,12 +43,13 @@ public final class Chapter9 {
     }
 
     /**
-     *
+     * Simultaneously finds the smallest value and the largest value in an array.
      * <p>Subchapter 9.1.</p>
      *
-     * @param A
-     * @param <T>
-     * @return
+     * @param A the {@link Array} to look up.
+     * @param <T> the type of elements in {@code A}
+     * @return the pair {@code <p_1, p_2>} such that {@code p_1} is the smallest value in {@code A}
+     * and {@code p_2} is the largest value in {@code A}
      */
     public static <T extends Comparable> Pair<T, T> minimumMaximum(Array<T> A) {
         int n = A.length;
@@ -86,15 +88,15 @@ public final class Chapter9 {
     }
 
     /**
-     *
+     * Finds the {@code i}-th order statistic (the {@code i}-th smallest value) in an array.
      * <p><span style="font-variant:small-caps;">Randomized-Select</span> from subchapter 9.2.</p>
      *
-     * @param A
-     * @param p
-     * @param r
-     * @param i
-     * @param <T>
-     * @return
+     * @param A the {@link Array} to look up
+     * @param p the index of the beginning of subarray in {@code A} to look up
+     * @param r the index of the end of subarray in {@code A} to look up
+     * @param i the number of order statistic to find (1 - the smallest element)
+     * @param <T> the type of elements in {@code A}
+     * @return the {@code i}-th order statistic ({@code i}-th smallest value) in {@code A}
      */
     public static <T extends Comparable> T randomizedSelect(Array<T> A, int p, int r, int i) {
         if (p == r) {
@@ -112,15 +114,15 @@ public final class Chapter9 {
     }
 
     /**
-     *
+     * Finds the {@code i}-th order statistic (the {@code i}-th smallest value) in an array - an iterative version.
      * <p><span style="font-variant:small-caps;">Iterative-Randomized-Select</span> from solution to exercise 9.2-3.</p>
      *
-     * @param A
-     * @param p
-     * @param r
-     * @param i
-     * @param <T>
-     * @return
+     * @param A the {@link Array} to look up
+     * @param p the index of the beginning of subarray in {@code A} to look up
+     * @param r the index of the end of subarray in {@code A} to look up
+     * @param i the number of order statistic to find (1 - the smallest element)
+     * @param <T> the type of elements in {@code A}
+     * @return the {@code i}-th order statistic ({@code i}-th smallest value) in {@code A}
      */
     public static <T extends Comparable> T iterativeRandomizedSelect(Array<T> A, int p, int r, int i) {
         while (p < r) {
@@ -139,15 +141,15 @@ public final class Chapter9 {
     }
 
     /**
-     *
+     * Finds the {@code i}-th order statistic (the {@code i}-th smallest value) in an array - an efficient version.
      * <p>Subchapter 9.3.</p>
      *
-     * @param A
-     * @param p
-     * @param r
-     * @param i
-     * @param <T>
-     * @return
+     * @param A the {@link Array} to look up
+     * @param p the index of the beginning of subarray in {@code A} to look up
+     * @param r the index of the end of subarray in {@code A} to look up
+     * @param i the number of order statistic to find (1 - the smallest element)
+     * @param <T> the type of elements in {@code A}
+     * @return the {@code i}-th order statistic ({@code i}-th smallest value) in {@code A}
      */
     public static <T extends Comparable> T select(Array<T> A, int p, int r, int i) {
         int n = r - p + 1;
@@ -164,7 +166,7 @@ public final class Chapter9 {
         }
         Array<T> medians = Array.withLength(groups.length);
         for (int j = 0; j < groups.length; j++) {
-            Chapter2.insertionSort(groups.at(j));
+            insertionSort(groups.at(j));
             medians.set(j + 1, groups.at(j).at((groups.at(j).length + 1) / 2));
         }
         T x = select(medians, 1, medians.length, (medians.length + 1) / 2);
@@ -196,13 +198,13 @@ public final class Chapter9 {
     }
 
     /**
-     *
+     * Sorts the elements using the optimal version of quicksort.
      * <p>Solution to exercise 9.3-3.</p>
      *
-     * @param A
-     * @param p
-     * @param r
-     * @param <T>
+     * @param A the {@link Array} to sort
+     * @param p the index of the beginning of subarray in {@code A} to sort
+     * @param r the index of the end of subarray in {@code A} to sort
+     * @param <T> the type of elements in {@code A}
      */
     public static <T extends Comparable> void bestCaseQuicksort(Array<T> A, int p, int r) {
         if (p < r) {
@@ -214,15 +216,16 @@ public final class Chapter9 {
     }
 
     /**
-     *
+     * Finds the {@code i}-th order statistic (the {@code i}-th smallest value) in an array
+     * using a subroutine for finding the median of the array.
      * <p>Solution to exercise 9.3-5.</p>
      *
-     * @param A
-     * @param p
-     * @param r
-     * @param i
-     * @param <T>
-     * @return
+     * @param A the {@link Array} to look up
+     * @param p the index of the beginning of subarray in {@code A} to look up
+     * @param r the index of the end of subarray in {@code A} to look up
+     * @param i the number of order statistic to find (1 - the smallest element)
+     * @param <T> the type of elements in {@code A}
+     * @return the {@code i}-th order statistic ({@code i}-th smallest value) in {@code A}
      */
     public static <T extends Comparable> T selectUsingMedianSubroutine(Array<T> A, int p, int r, int i) {
         if (p == r) {
@@ -230,7 +233,7 @@ public final class Chapter9 {
         }
         int q = (p + r) / 2;
         T x = select(A, p, r, q); // black-box median subroutine
-        partitionAround(A, p, r, x); // we need to partition around the median because we could have used other black-box than select
+        partitionAround(A, p, r, x); // we need to explicitly partition around the median because the used subroutine might not do it
         int k = q - p + 1;
         if (i == k) {
             return A.at(q);
@@ -242,15 +245,15 @@ public final class Chapter9 {
     }
 
     /**
-     *
+     * Finds quantiles of a set.
      * <p><span style="font-variant:small-caps;">Quantiles</span> from solution to exercise 9.3-6.</p>
      *
-     * @param A
-     * @param p
-     * @param r
-     * @param k
-     * @param <T>
-     * @return
+     * @param A the {@link Array} of elements for the set
+     * @param p the index of the beginning of subarray in {@code A} to look up
+     * @param r the index of the end of subarray in {@code A} to look up
+     * @param k the order of quantiles to find
+     * @param <T> the type of elements in {@code A}
+     * @return the set of {@code k}-th quantiles of the set represented by {@code A}
      */
     public static <T extends Comparable> Set<T> quantiles(Array<T> A, int p, int r, int k) {
         int n = r - p + 1;
@@ -272,12 +275,12 @@ public final class Chapter9 {
     }
 
     /**
-     *
+     * Finds elements closest to the median of a set.
      * <p><span style="font-variant:small-caps;">Median-Proximity</span> from solution to exercise 9.3-7.</p>
      *
-     * @param S
-     * @param k
-     * @return
+     * @param S the {@link Array} of elements from the set
+     * @param k the proximity of the median to find
+     * @return the set of {@code k} elements closest to the median of {@code S}
      */
     public static Set<Integer> medianProximity(Array<Integer> S, int k) {
         int n = S.length;
@@ -300,17 +303,17 @@ public final class Chapter9 {
     }
 
     /**
-     *
+     * Finds the median of elements in two arrays of equal lengths.
      * <p><span style="font-variant:small-caps;">Two-Arrays-Median</span> from solution to exercise 9.3-8.</p>
      *
-     * @param X
-     * @param pX
-     * @param rX
-     * @param Y
-     * @param pY
-     * @param rY
-     * @param <T>
-     * @return
+     * @param X the first {@link Array}
+     * @param pX the index of the beginning of subarray in {@code X}
+     * @param rX the index of the end of subarray in {@code X}
+     * @param Y the second {@link Array} of length equal to the length of {@code X}
+     * @param pY the index of the beginning of subarray in {@code Y}
+     * @param rY the index of the end of subarray in {@code Y}
+     * @param <T> the type of elements in {@code X} and {@code Y}
+     * @return the median of elements in {@code X} and {@code Y}
      */
     public static <T extends Comparable> T twoArraysMedian(Array<T> X, int pX, int rX, Array<T> Y, int pY, int rY) {
         if (rX - pX <= 1) {
@@ -331,13 +334,13 @@ public final class Chapter9 {
     }
 
     /**
-     *
+     * Finds the weighted median of an array.
      * <p>Solution to problem 9-2(b).</p>
      *
-     * @param A
-     * @param w
-     * @param <T>
-     * @return
+     * @param A the {@link Array} of elements
+     * @param w the {@link Array} of weights of elements from {@code A}, such that {@code w[i]} is the weight of {@code A[i]}
+     * @param <T> the type of elements in {@code A}
+     * @return the weighted median of {@code A} based on weights from {@code w}
      */
     public static <T extends Comparable> T weightedMedianUsingSorting(Array<T> A, Array<Double> w) {
         sortWithWeights(A, w, 1, A.length);
@@ -374,15 +377,15 @@ public final class Chapter9 {
     }
 
     /**
-     *
+     * Finds the weighted median of an array - an efficient version.
      * <p><span style="font-variant:small-caps;">Weighted-Median</span> from solution to problem 9-2(c).</p>
      *
-     * @param A
-     * @param w
-     * @param p
-     * @param r
-     * @param <T>
-     * @return
+     * @param A the {@link Array} of elements
+     * @param w the {@link Array} of weights of elements from {@code A}, such that {@code w[i]} is the weight of {@code A[i]}
+     * @param p the index of the beginning of subarray in {@code A}
+     * @param r the index of the end of subarray in {@code A}
+     * @param <T> the type of elements in {@code A}
+     * @return the weighted median of {@code A} based on weights from {@code w}
      */
     public static <T extends Comparable> T weightedMedian(Array<T> A, Array<Double> w, int p, int r) {
         if (r - p + 1 <= 2) {
@@ -419,12 +422,13 @@ public final class Chapter9 {
     }
 
     /**
-     *
+     * Finds the solution to the 2-dimensional post-office location problem with the Manhattan distance.
      * <p>Solution to problem 9-2(e).</p>
      *
-     * @param A
-     * @param w
-     * @return
+     * @param A the {@link Array} of points in a plane
+     * @param w the {@link Array} of weights of points from {@code A}, such that {@code w[i]} is the weight of {@code A[i]}
+     * @return the point on a plane that minimizes weighted Manhattan distance from points from {@code A}
+     * using weights from {@code w}
      */
     public static Point2D postOfficeLocation2D(Array<Point2D> A, Array<Double> w) {
         int n = A.length;
@@ -440,13 +444,14 @@ public final class Chapter9 {
     }
 
     /**
-     *
+     * Finds the {@code i}-th order statistic (the {@code i}-th smallest value) in an array
+     * - a version optimized for small {@code i}'s.
      * <p>Solution to problem 9-3(a).</p>
      *
-     * @param A
-     * @param i
-     * @param <T>
-     * @return
+     * @param A the {@link Array} to look up
+     * @param i the number of order statistic to find (1 - the smallest element)
+     * @param <T> the type of elements in {@code A}
+     * @return the {@code i}-th order statistic ({@code i}-th smallest value) in {@code A}
      */
     public static <T extends Comparable> T smallOrderSelect(Array<T> A, int i) {
         smallOrderSelect(A, 1, A.length, i);
@@ -501,7 +506,7 @@ public final class Chapter9 {
         }
         Array<T> medians = Array.withLength(groups.length);
         for (int j = 0; j < groups.length; j++) {
-            Chapter2.insertionSort(groups.at(j));
+            insertionSort(groups.at(j));
             medians.set(j + 1, groups.at(j).at((groups.at(j).length + 1) / 2));
         }
         T x = select(medians, 1, medians.length, (medians.length + 1) / 2);

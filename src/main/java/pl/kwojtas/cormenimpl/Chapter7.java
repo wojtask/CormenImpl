@@ -4,6 +4,7 @@ import pl.kwojtas.cormenimpl.util.Array;
 import pl.kwojtas.cormenimpl.util.Interval;
 import pl.kwojtas.cormenimpl.util.Pair;
 
+import static pl.kwojtas.cormenimpl.Chapter2.insertionSort;
 import static pl.kwojtas.cormenimpl.Chapter5.random;
 import static pl.kwojtas.cormenimpl.util.Util.greater;
 import static pl.kwojtas.cormenimpl.util.Util.leq;
@@ -107,20 +108,12 @@ public final class Chapter7 {
         for (int i = p; i <= r; i++) {
             nearlySorted.set(i - p + 1, A.at(i));
         }
-        Chapter2.insertionSort(nearlySorted);
+        insertionSort(nearlySorted);
         for (int i = p; i <= r; i++) {
             A.set(i, nearlySorted.at(i - p + 1));
         }
     }
 
-    /**
-     * Sorts elements using a version of quicksort that stops for short subarrays.
-     * @param A the {@link Array} of elements to sort
-     * @param p the index of the beginning of subarray in {@code A} to sort
-     * @param r the index of the end of subarray in {@code A} to sort
-     * @param k the minimum size of a subarray that should be sorted
-     * @param <T> the type of elements in {@code A}
-     */
     private static <T extends Comparable> void quicksortNearlySorted(Array<T> A, int p, int r, int k) {
         if (r - p + 1 >= k) {
             int q = partition(A, p, r);
@@ -253,7 +246,7 @@ public final class Chapter7 {
         int i2 = random(p, r);
         int i3 = random(p, r);
         Array<T> pivots = new Array<>(A.at(i1), A.at(i2), A.at(i3));
-        Chapter2.insertionSort(pivots);
+        insertionSort(pivots);
         T median = pivots.at(2);
         if (median.equals(A.at(i1))) {
             A.exch(r, i1);

@@ -35,13 +35,6 @@ public final class Chapter4 {
         return missingInteger;
     }
 
-    /**
-     * Extends an array with consecutive integers up to the next power of 2 minus 1.
-     *
-     * @param A the {@code n}-element {@link Array} containing all integers from {@code 0..n} but one
-     * @return the {@code 2^k-1}-element {@link Array} containing all integers from {@code 0..2^k-1} but one,
-     * where {@code 2^k} is the least power of 2 greater than {@code n}
-     */
     private static Array<Integer> extendArrayWithExtraIntegers(Array<Integer> A) {
         int n = A.length;
         while (!isPowerOf2Minus1(n)) {
@@ -57,12 +50,6 @@ public final class Chapter4 {
         return extended;
     }
 
-    /**
-     * Returns {@code true} if a number is one less than a power of 2.
-     *
-     * @param n the number
-     * @return {@code true} if {@code n} is one less than a power of 2
-     */
     private static boolean isPowerOf2Minus1(int n) {
         while (n > 0) {
             if (n % 2 == 0) {
@@ -73,12 +60,6 @@ public final class Chapter4 {
         return true;
     }
 
-    /**
-     * Returns the bit length of an number.
-     *
-     * @param n the number
-     * @return the bit length of {@code n}
-     */
     private static int getBitLength(int n) {
         int bitLength = 0;
         while (n > 0) {
@@ -88,14 +69,6 @@ public final class Chapter4 {
         return bitLength;
     }
 
-    /**
-     * Fetches the {@code j}-th bit of {@code A[i]}.
-     *
-     * @param j the bit number to get (0 - the least significant)
-     * @param A the {@link Array} of numbers
-     * @param i the index of number in {@code A} whose {@code j}-th bit needs to be fetched
-     * @return the {@code j}-th bit of {@code A[i]}
-     */
     private static boolean getBit(int j, Array<Integer> A, int i) {
         return (A.at(i) & (1 << j)) != 0;
     }
@@ -126,13 +99,6 @@ public final class Chapter4 {
         return leftmostMinimaIndexes;
     }
 
-    /**
-     * Returns the leftmost minimum indexes in even rows of a Monge array.
-     *
-     * @param A the {@link Matrix} containing the Monge array
-     * @return the {@link Array} in which the {@code i}-th position is
-     * the leftmost minimum index in the {@code (2i)}-th row of {@code A}
-     */
     private static Array<Integer> mongeLeftmostMinimaIndexesOfEvenRows(Matrix<Double> A) {
         int m = A.rows;
         Array<Array<Double>> oddRows = Array.withLength(m / 2);
@@ -147,15 +113,6 @@ public final class Chapter4 {
         return mongeLeftmostMinimaIndexes(A_);
     }
 
-    /**
-     * Returns the leftmost minimum index in a row of a Monge array.
-     *
-     * @param A the {@link Matrix} containing the Monge array
-     * @param row the row of {@code A}
-     * @param minimumIndexAbove the leftmost minimum index in a row above {@code row}
-     * @param minimumIndexBelow the leftmost minimum index in a row below {@code row}
-     * @return the leftmost minimum index in row {@code row} of {@code A}
-     */
     private static int mongeLeftmostMinimumIndex(Matrix<Double> A, int row, int minimumIndexAbove, int minimumIndexBelow) {
         int leftmostMinimumIndex = minimumIndexAbove;
         double leftmostMinimum = A.at(row, leftmostMinimumIndex);

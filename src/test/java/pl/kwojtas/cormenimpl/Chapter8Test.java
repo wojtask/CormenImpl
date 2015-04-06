@@ -117,13 +117,13 @@ public class Chapter8Test {
     }
 
     @Test
-    public void shouldSortNSquaredNumbers() {
+    public void shouldSortNNumbersLessThanNSquare() {
         // given
         Array<Integer> array = new Array<>(15,56,25,66,23,92,2,45,7,39);
         Array<Integer> original = new Array<>(array);
 
         // when
-        Chapter8.sortNSquaredNumbers(array);
+        Chapter8.lessThanSquareSort(array);
 
         // then
         assertShuffled(original, array);
@@ -145,7 +145,7 @@ public class Chapter8Test {
     }
 
     @Test
-    public void shouldSortUnitCirclePoints() {
+    public void shouldSortPointsInUnitCircle() {
         // given
         Array<Point2D> array = new Array<>(new Point2D(.15,.79),new Point2D(.92,.16),new Point2D(.56,.06),new Point2D(.25,.33),
                 new Point2D(.66,.15),new Point2D(.23,.81),new Point2D(.69,.72),new Point2D(.2,.37),new Point2D(.45,.88),
@@ -154,7 +154,7 @@ public class Chapter8Test {
         Array<Point2D> original = new Array<>(array);
 
         // when
-        Chapter8.sortUnitCirclePoints(array);
+        Chapter8.pointsSort(array);
 
         // then
         assertShuffled(original, array);
@@ -195,14 +195,14 @@ public class Chapter8Test {
     }
 
     @Test
-    public void shouldSortArrayUsingVariousLengthNumbersSort() {
+    public void shouldSortVariableLengthIntegers() {
         // given
         Array<Integer> array =
                 new Array<>(235,-510207,455,0,90199239,317,63534,-102,301,42342352,-100234,-231,-331,-66,1,3002,-1123581321);
         Array<Integer> original = new Array<>(array);
 
         // when
-        Chapter8.variousLengthNumbersSort(array);
+        Chapter8.variableLengthIntegersSort(array);
 
         // then
         assertShuffled(original, array);
@@ -210,14 +210,14 @@ public class Chapter8Test {
     }
 
     @Test
-    public void shouldSortArrayUsingVariousLengthStringsSort() {
+    public void shouldSortVariableLengthStrings() {
         // given
         Array<String> array = new Array<>("lorem","ipsum","dolor","sit","amet","consectetur","adipiscing","elit","sed","do",
                 "eiusmod","tempor","incididunt","ut","labore","et","dolore","magna","aliqua");
         Array<String> original = new Array<>(array);
 
         // when
-        Chapter8.variousLengthStringsSort(array, 1);
+        Chapter8.variableLengthStringsSort(array, 1);
 
         // then
         assertShuffled(original, array);
@@ -263,14 +263,14 @@ public class Chapter8Test {
     }
 
     @Test
-    public void shouldKSortArray() {
+    public void shouldRearrangeArrayByAverages() {
         // given
         Array<Integer> array = new Array<>(5,7,9,2,6,8,6,6,3,1,7,8);
         Array<Integer> original = new Array<>(array);
         int k = 6;
 
         // when
-        Chapter8.kSort(array, k, 1, array.length);
+        Chapter8.averageSort(array, k, 1, array.length);
 
         // then
         assertShuffled(original, array);

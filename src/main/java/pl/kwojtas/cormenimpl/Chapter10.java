@@ -15,6 +15,8 @@ import pl.kwojtas.cormenimpl.util.SinglyLinkedList;
 import pl.kwojtas.cormenimpl.util.SinglyLinkedListWithTail;
 import pl.kwojtas.cormenimpl.util.Stack;
 
+import static pl.kwojtas.cormenimpl.Chapter5.random;
+import static pl.kwojtas.cormenimpl.Chapter6.mergeSortedLists;
 import static pl.kwojtas.cormenimpl.util.Util.greater;
 import static pl.kwojtas.cormenimpl.util.Util.leq;
 import static pl.kwojtas.cormenimpl.util.Util.less;
@@ -27,24 +29,24 @@ public final class Chapter10 {
     private Chapter10() { }
 
     /**
-     *
+     * Checks if a stack is empty.
      * <p><span style="font-variant:small-caps;">Stack-Empty</span> from subchapter 10.1.</p>
      *
-     * @param S
-     * @param <T>
-     * @return
+     * @param S the {@link Stack}
+     * @param <T> the type of elements in {@code S}
+     * @return {@code true} if {@code S} is empty, or {@code false} otherwise
      */
     public static <T> boolean stackEmpty(Stack<T> S) {
         return S.top == 0;
     }
 
     /**
-     *
+     * Inserts an element onto a stack.
      * <p><span style="font-variant:small-caps;">Push</span> from subchapter 10.1.</p>
      *
-     * @param S
-     * @param x
-     * @param <T>
+     * @param S the {@link Stack}
+     * @param x the element to insert
+     * @param <T> the type of elements in {@code S}
      */
     public static <T> void push(Stack<T> S, T x) {
         S.top++;
@@ -52,12 +54,13 @@ public final class Chapter10 {
     }
 
     /**
-     *
+     * Removes an element from a stack.
      * <p><span style="font-variant:small-caps;">Pop</span> from subchapter 10.1.</p>
      *
-     * @param S
-     * @param <T>
-     * @return
+     * @param S the {@link Stack}
+     * @param <T> the type of elements in {@code S}
+     * @return the element removed from {@code S}
+     * @throws RuntimeException if {@code S} is empty
      */
     public static <T> T pop(Stack<T> S) {
         if (stackEmpty(S)) {
@@ -68,12 +71,13 @@ public final class Chapter10 {
     }
 
     /**
-     *
+     * Inserts an element into a queue.
      * <p><span style="font-variant:small-caps;">Enqueue</span> from subchapter 10.1 and solution to exercise 10.1-4.</p>
      *
-     * @param Q
-     * @param x
-     * @param <T>
+     * @param Q the {@link Queue}
+     * @param x the element to insert
+     * @param <T> the type of elements in {@code Q}
+     * @throws RuntimeException if {@code Q} is full
      */
     public static <T> void enqueue(Queue<T> Q, T x) {
         if (Q.head == Q.tail + 1) {
@@ -91,12 +95,13 @@ public final class Chapter10 {
     }
 
     /**
-     *
+     * Removes an element from a queue.
      * <p><span style="font-variant:small-caps;">Dequeue</span> from subchapter 10.1 and solution to exercise 10.1-4.</p>
      *
-     * @param Q
-     * @param <T>
-     * @return
+     * @param Q the {@link Queue}
+     * @param <T> the type of elements in {@code Q}
+     * @return the element removed from {@code Q}
+     * @throws RuntimeException if {@code Q} is empty
      */
     public static <T> T dequeue(Queue<T> Q) {
         if (queueEmpty(Q)) {
@@ -112,12 +117,12 @@ public final class Chapter10 {
     }
 
     /**
-     *
+     * Inserts an element onto the first stack in a "double stack in a single array" implementation.
      * <p>Solution to exercise 10.1-2.</p>
      *
-     * @param A
-     * @param x
-     * @param <T>
+     * @param A the {@link Array} containing two stacks
+     * @param x the element to insert
+     * @param <T> the type of elements in {@code A}
      */
     public static <T> void firstStackPush(DoubleStack<T> A, T x) {
         A.top1++;
@@ -125,12 +130,13 @@ public final class Chapter10 {
     }
 
     /**
-     *
+     * Removes an element from the first stack in a "double stack in a single array" implementation.
      * <p>Solution to exercise 10.1-2.</p>
      *
-     * @param A
-     * @param <T>
-     * @return
+     * @param A the {@link Array} containing two stacks
+     * @param <T> the type of elements in {@code A}
+     * @return the element removed from the first stack
+     * @throws RuntimeException if the first stack is empty
      */
     public static <T> T firstStackPop(DoubleStack<T> A) {
         if (firstStackEmpty(A)) {
@@ -141,24 +147,24 @@ public final class Chapter10 {
     }
 
     /**
-     *
+     * Checks if the first stack is empty in a "double stack in a single array" implementation.
      * <p>Solution to exercise 10.1-2.</p>
      *
-     * @param A
-     * @param <T>
-     * @return
+     * @param A the {@link Array} containing two stacks
+     * @param <T> the type of elements in {@code A}
+     * @return {@code true} if the first stack is empty, or {@code false} otherwise
      */
     public static <T> boolean firstStackEmpty(DoubleStack<T> A) {
         return A.top1 == 0;
     }
 
     /**
-     *
+     * Inserts an element onto the second stack in a "double stack in a single array" implementation.
      * <p>Solution to exercise 10.1-2.</p>
      *
-     * @param A
-     * @param x
-     * @param <T>
+     * @param A the {@link Array} containing two stacks
+     * @param x the element to insert
+     * @param <T> the type of elements in {@code A}
      */
     public static <T> void secondStackPush(DoubleStack<T> A, T x) {
         A.top2--;
@@ -166,12 +172,13 @@ public final class Chapter10 {
     }
 
     /**
-     *
+     * Removes an element from the second stack in a "double stack in a single array" implementation.
      * <p>Solution to exercise 10.1-2.</p>
      *
-     * @param A
-     * @param <T>
-     * @return
+     * @param A the {@link Array} containing two stacks
+     * @param <T> the type of elements in {@code A}
+     * @return the removed element from the second stack
+     * @throws RuntimeException if the second stack is empty
      */
     public static <T> T secondStackPop(DoubleStack<T> A) {
         if (secondStackEmpty(A)) {
@@ -182,36 +189,36 @@ public final class Chapter10 {
     }
 
     /**
-     *
+     * Checks if the second stack is empty in a "double stack in a single array" implementation.
      * <p>Solution to exercise 10.1-2.</p>
      *
-     * @param A
-     * @param <T>
-     * @return
+     * @param A the {@link Array} containing two stacks
+     * @param <T> the type of elements in {@code A}
+     * @return {@code true} if the second stack is empty, or {@code false} otherwise
      */
     public static <T> boolean secondStackEmpty(DoubleStack<T> A) {
         return A.top2 == A.length + 1;
     }
 
     /**
-     *
+     * Checks if a queue is empty.
      * <p><span style="font-variant:small-caps;">Queue-Empty</span> from solution to exercise 10.1-4.</p>
      *
-     * @param Q
-     * @param <T>
-     * @return
+     * @param Q the {@link Queue}
+     * @param <T> the type of elements in {@code Q}
+     * @return {@code true} if {@code Q} is empty, or {@code false} otherwise
      */
     public static <T> boolean queueEmpty(Queue<T> Q) {
         return Q.head == Q.tail;
     }
 
     /**
-     *
+     * Inserts an element at the head of a deque.
      * <p><span style="font-variant:small-caps;">Head-Enqueue</span> from solution to exercise 10.1-5.</p>
      *
-     * @param D
-     * @param x
-     * @param <T>
+     * @param D the {@link Deque}
+     * @param x the element to insert
+     * @param <T> the type of elements in {@code D}
      */
     public static <T> void headEnqueue(Deque<T> D, T x) {
         if (D.head == 1) {
@@ -223,12 +230,12 @@ public final class Chapter10 {
     }
 
     /**
-     *
+     * Removes an element from the head of a deque.
      * <p><span style="font-variant:small-caps;">Head-Dequeue</span> from solution to exercise 10.1-5.</p>
      *
-     * @param D
-     * @param <T>
-     * @return
+     * @param D the {@link Deque}
+     * @param <T> the type of elements in {@code D}
+     * @return the element removed from {@code D}
      */
     public static <T> T headDequeue(Deque<T> D) {
         T x = D.at(D.head);
@@ -241,12 +248,12 @@ public final class Chapter10 {
     }
 
     /**
-     *
+     * Inserts an element at the tail of a deque.
      * <p><span style="font-variant:small-caps;">Tail-Enqueue</span> from solution to exercise 10.1-5.</p>
      *
-     * @param D
-     * @param x
-     * @param <T>
+     * @param D the {@link Deque}
+     * @param x the element to insert
+     * @param <T> the type of elements in {@code D}
      */
     public static <T> void tailEnqueue(Deque<T> D, T x) {
         D.set(D.tail, x);
@@ -258,12 +265,12 @@ public final class Chapter10 {
     }
 
     /**
-     *
+     * Removes an element from the tail of a deque.
      * <p><span style="font-variant:small-caps;">Tail-Dequeue</span> from solution to exercise 10.1-5.</p>
      *
-     * @param D
-     * @param <T>
-     * @return
+     * @param D the {@link Deque}
+     * @param <T> the type of elements in {@code D}
+     * @return the element removed from {@code D}
      */
     public static <T> T tailDequeue(Deque<T> D) {
         if (D.tail == 1) {
@@ -275,26 +282,28 @@ public final class Chapter10 {
     }
 
     /**
-     *
+     * Implements the FIFO queue operation <span style="font-variant:small-caps;">Enqueue</span> using two stacks.
      * <p>Solution to exercise 10.1-6.</p>
      *
-     * @param S1
-     * @param S2
-     * @param x
-     * @param <T>
+     * @param S1 the first {@link Stack}
+     * @param S2 the second {@link Stack}
+     * @param x the element to insert to the queue
+     * @param <T> the type of elements in the queue
      */
+    @SuppressWarnings("unused")
     public static <T> void enqueueOnStacks(Stack<T> S1, Stack<T> S2, T x) {
         push(S1, x);
     }
 
     /**
-     *
+     * Implements the FIFO queue operation <span style="font-variant:small-caps;">Dequeue</span> using two stacks.
      * <p>Solution to exercise 10.1-6.</p>
      *
-     * @param S1
-     * @param S2
-     * @param <T>
-     * @return
+     * @param S1 the first {@link Stack}
+     * @param S2 the second {@link Stack}
+     * @param <T> the type of elements in {@code S1} and {@code S2}
+     * @return the element removed from the queue
+     * @throws RuntimeException if the queue is empty
      */
     public static <T> T dequeueOnStacks(Stack<T> S1, Stack<T> S2) {
         if (stackEmpty(S1)) {
@@ -311,26 +320,28 @@ public final class Chapter10 {
     }
 
     /**
-     *
+     * Implements the stack operation <span style="font-variant:small-caps;">Push</span> using two FIFO queues.
      * <p>Solution to exercise 10.1-7.</p>
      *
-     * @param Q1
-     * @param Q2
-     * @param x
-     * @param <T>
+     * @param Q1 the first {@link Queue}
+     * @param Q2 the second {@link Queue}
+     * @param x the element to insert
+     * @param <T> the type of elements on the stack
      */
+    @SuppressWarnings("unused")
     public static <T> void pushOnQueues(Queue<T> Q1, Queue<T> Q2, T x) {
         enqueue(Q1, x);
     }
 
     /**
-     *
+     * Implements the stack operation <span style="font-variant:small-caps;">Pop</span> using two FIFO queues.
      * <p>Solution to exercise 10.1-7.</p>
      *
-     * @param Q1
-     * @param Q2
-     * @param <T>
-     * @return
+     * @param Q1 the first {@link Queue}
+     * @param Q2 the second {@link Queue}
+     * @param <T> the type of elements on the stack
+     * @return the element removed from the stack
+     * @throws RuntimeException if the stack is empty
      */
     public static <T> T popOnQueues(Queue<T> Q1, Queue<T> Q2) {
         if (queueEmpty(Q1)) {
@@ -350,13 +361,13 @@ public final class Chapter10 {
     }
 
     /**
-     *
+     * Finds an element in a doubly linked list.
      * <p><span style="font-variant:small-caps;">List-Search</span> from subchapter 10.2.</p>
      *
-     * @param L
-     * @param k
-     * @param <T>
-     * @return
+     * @param L the doubly linked {@link List}
+     * @param k the key of the element to find
+     * @param <T> the type of elements in {@code L}
+     * @return the element of key {@code k} in list {@code L}, or {@code null} if {@code L} does not contain such element
      */
     public static <T> List.Node<T> listSearch(List<T> L, T k) {
         List.Node<T> x = L.head;
@@ -367,12 +378,12 @@ public final class Chapter10 {
     }
 
     /**
-     *
+     * Inserts an element into a doubly linked list.
      * <p><span style="font-variant:small-caps;">List-Insert</span> from suchapter 10.2.</p>
      *
-     * @param L
-     * @param x
-     * @param <T>
+     * @param L the doubly linked {@link List}
+     * @param x the element to insert
+     * @param <T> the type of elements in {@code L}
      */
     public static <T> void listInsert(List<T> L, List.Node<T> x) {
         x.next = L.head;
@@ -384,12 +395,12 @@ public final class Chapter10 {
     }
 
     /**
-     *
+     * Removes an element from a doubly linked list.
      * <p><span style="font-variant:small-caps;">List-Delete</span> from subchapter 10.2.</p>
      *
-     * @param L
-     * @param x
-     * @param <T>
+     * @param L the doubly linked {@link List}
+     * @param x the element in {@code L} to remove
+     * @param <T> the type of elements in {@code L}
      */
     public static <T> void listDelete(List<T> L, List.Node<T> x) {
         if (x.prev != null) {
@@ -403,26 +414,27 @@ public final class Chapter10 {
     }
 
     /**
-     *
+     * Removes an element from a doubly linked list with a sentinel.
      * <p><span style="font-variant:small-caps;">List-Delete'</span> from subchapter 10.2.</p>
      *
-     * @param L
-     * @param x
-     * @param <T>
+     * @param L the doubly linked {@link ListWithSentinel}
+     * @param x the element in {@code L} to remove
+     * @param <T> the type of elements in {@code L}
      */
+    @SuppressWarnings("unused")
     public static <T> void listDelete_(ListWithSentinel<T> L, ListWithSentinel.Node<T> x) {
         x.prev.next = x.next;
         x.next.prev = x.prev;
     }
 
     /**
-     *
+     * Searches for an element in a doubly linked list with a sentinel.
      * <p><span style="font-variant:small-caps;">List-Search'</span> from subchapter 10.2.</p>
      *
-     * @param L
-     * @param k
-     * @param <T>
-     * @return
+     * @param L the doubly linked {@link ListWithSentinel}
+     * @param k the key of the element to find
+     * @param <T> the type of elements in {@code L}
+     * @return the element with key {@code k} in {@code L}, or {@code null} if {@code L} does not contain such element
      */
     public static <T> ListWithSentinel.Node<T> listSearch_(ListWithSentinel<T> L, T k) {
         ListWithSentinel.Node<T> x = L.nil.next;
@@ -433,12 +445,12 @@ public final class Chapter10 {
     }
 
     /**
-     *
+     * Inserts an element in a doubly linked list with a sentinel.
      * <p><span style="font-variant:small-caps;">List-Insert'</span> from subchapter 10.2.</p>
      *
-     * @param L
-     * @param x
-     * @param <T>
+     * @param L the doubly linked {@link ListWithSentinel}
+     * @param x the element to insert
+     * @param <T> the type of elements in {@code L}
      */
     public static <T> void listInsert_(ListWithSentinel<T> L, ListWithSentinel.Node<T> x) {
         x.next = L.nil.next;
@@ -448,12 +460,12 @@ public final class Chapter10 {
     }
 
     /**
-     *
+     * Inserts an element in a singly linked list.
      * <p><span style="font-variant:small-caps;">Singly-Linked-List-Insert</span> from solution to exercise 10.2-1.</p>
      *
-     * @param L
-     * @param x
-     * @param <T>
+     * @param L the singly linked list
+     * @param x the element to insert
+     * @param <T> the type of elements in {@code L}
      */
     public static <T> void singlyLinkedListInsert(SinglyLinkedList<T> L, SinglyLinkedList.Node<T> x) {
         x.next = L.head;
@@ -461,12 +473,12 @@ public final class Chapter10 {
     }
 
     /**
-     *
+     * Deletes an element from a singly linked list.
      * <p><span style="font-variant:small-caps;">Singly-Linked-List-Delete</span> from solution to exercise 10.2-1.</p>
      *
-     * @param L
-     * @param x
-     * @param <T>
+     * @param L the singly linked list
+     * @param x the element in {@code L} to delete
+     * @param <T> the type of elements in {@code L}
      */
     public static <T> void singlyLinkedListDelete(SinglyLinkedList<T> L, SinglyLinkedList.Node<T> x) {
         if (x == L.head) {
@@ -481,12 +493,12 @@ public final class Chapter10 {
     }
 
     /**
-     *
+     * Implements the stack operation <span style="font-variant:small-caps;">Push</span> using a singly linked list.
      * <p><span style="font-variant:small-caps;">Singly-Linked-List-Push</span> from solution to exercise 10.2-2.</p>
      *
-     * @param L
-     * @param k
-     * @param <T>
+     * @param L the singly linked list
+     * @param k the key of the element to insert onto the stack
+     * @param <T> the type of elements in {@code L}
      */
     public static <T> void singlyLinkedListPush(SinglyLinkedList<T> L, T k) {
         SinglyLinkedList.Node<T> x = new SinglyLinkedList.Node<>(k);
@@ -494,12 +506,12 @@ public final class Chapter10 {
     }
 
     /**
-     *
+     * Implements the stack operation <span style="font-variant:small-caps;">Pop</span> using a singly linked list.
      * <p><span style="font-variant:small-caps;">Singly-Linked-List-Pop</span> from solution to exercise 10.2-2.</p>
      *
-     * @param L
-     * @param <T>
-     * @return
+     * @param L the singly linked list
+     * @param <T> the type of elements in {@code L}
+     * @return the element removed from the stack
      */
     public static <T> T singlyLinkedListPop(SinglyLinkedList<T> L) {
         if (L.head == null) {
@@ -511,12 +523,12 @@ public final class Chapter10 {
     }
 
     /**
-     *
+     * Implements the FIFO queue operation <span style="font-variant:small-caps;">Enqueue</span> using a singly linked list.
      * <p><span style="font-variant:small-caps;">Singly-Linked-List-Enqueue</span> from solution to exercise 10.2-3.</p>
      *
-     * @param L
-     * @param k
-     * @param <T>
+     * @param L the singly linked list
+     * @param k the key of the element to insert into a FIFO queue
+     * @param <T> the type of elements in {@code L}
      */
     public static <T> void singlyLinkedListEnqueue(SinglyLinkedListWithTail<T> L, T k) {
         SinglyLinkedListWithTail.Node<T> x = new SinglyLinkedList.Node<>(k);
@@ -529,12 +541,13 @@ public final class Chapter10 {
     }
 
     /**
-     *
+     * Implements the FIFO queue operation <span style="font-variant:small-caps;">Dequeue</span> using a singly linked list.
      * <p><span style="font-variant:small-caps;">Singly-Linked-List-Dequeue</span> from solution to exercise 10.2-3.</p>
      *
-     * @param L
-     * @param <T>
-     * @return
+     * @param L the singly linked list
+     * @param <T> the type of elements in {@code L}
+     * @return the element removed from the FIFO queue
+     * @throws RuntimeException if the FIFO queue is empty
      */
     public static <T> T singlyLinkedListDequeue(SinglyLinkedListWithTail<T> L) {
         if (L.head == null) {
@@ -549,12 +562,12 @@ public final class Chapter10 {
     }
 
     /**
-     *
+     * Inserts an element into a singly linked circular list.
      * <p><span style="font-variant:small-caps;">Circular-List-Insert</span> from solution to exercise 10.2-5.</p>
      *
-     * @param L
-     * @param x
-     * @param <T>
+     * @param L the singly linked circular list
+     * @param x the element to insert
+     * @param <T> the type of elements in {@code L}
      */
     public static <T> void circularListInsert(CircularList<T> L, CircularList.Node<T> x) {
         if (L.head == null) {
@@ -566,12 +579,12 @@ public final class Chapter10 {
     }
 
     /**
-     *
+     * Deletes an element from a singly linked circular list.
      * <p><span style="font-variant:small-caps;">Circular-List-Delete</span> from solution to exercise 10.2-5.</p>
      *
-     * @param L
-     * @param x
-     * @param <T>
+     * @param L the singly linked circular list
+     * @param x the element in {@code L} to delete
+     * @param <T> the type of elements in {@code L}
      */
     public static <T> void circularListDelete(CircularList<T> L, CircularList.Node<T> x) {
         CircularList.Node<T> y = L.head;
@@ -589,13 +602,13 @@ public final class Chapter10 {
     }
 
     /**
-     *
+     * Searches for an element in a singly linked circular list.
      * <p><span style="font-variant:small-caps;">Circular-List-Search</span> from solution to exercise 10.2-5.</p>
      *
-     * @param L
-     * @param k
-     * @param <T>
-     * @return
+     * @param L the singly linked circular list
+     * @param k the key of the element to find
+     * @param <T> the type of elements in {@code L}
+     * @return the element with key {@code k} in {@code L}, or {@code null} if {@code L} does not contain such element
      */
     public static <T> CircularList.Node<T> circularListSearch(CircularList<T> L, T k) {
         if (L.head == null) {
@@ -615,13 +628,13 @@ public final class Chapter10 {
     }
 
     /**
-     *
+     * Produces the union of two disjoint sets using singly linked circular lists.
      * <p>Solution to exercise 10.2-6.</p>
      *
-     * @param S1
-     * @param S2
-     * @param <T>
-     * @return
+     * @param S1 the first set
+     * @param S2 the second set, disjoint with {@code S1}
+     * @param <T> the type of elements in {@code S1} and {@code S2}
+     * @return the union of {@code S1} and {@code S2}
      */
     public static <T> CircularList<T> circularListsUnion(CircularList<T> S1, CircularList<T> S2) {
         CircularList<T> S = new CircularList<>();
@@ -640,11 +653,11 @@ public final class Chapter10 {
     }
 
     /**
-     *
+     * Reverses the order of elements in a singly linked list.
      * <p><span style="font-variant:small-caps;">Singly-Linked-List-Reverse</span> from solution to exercise 10.2-7.</p>
      *
-     * @param L
-     * @param <T>
+     * @param L the singly linked list
+     * @param <T> the type of elements in {@code L}
      */
     public static <T> void singlyLinkedListReverse(SinglyLinkedList<T> L) {
         SinglyLinkedList<T> L_ = new SinglyLinkedList<>();
@@ -658,12 +671,13 @@ public final class Chapter10 {
     }
 
     /**
-     *
+     * Allocates an object in the multiple-array representation of a list.
      * <p><span style="font-variant:small-caps;">Allocate-Object</span> from subchapter 10.3.</p>
      *
-     * @param L
-     * @param <T>
-     * @return
+     * @param L the list in the multiple-array representation
+     * @param <T> the type of elements in {@code L}
+     * @return the index of the allocated object in {@code L}
+     * @throws RuntimeException if {@code L} is full
      */
     public static <T> int allocateObject(MultipleArrayList<T> L) {
         if (L.free == null) {
@@ -675,12 +689,12 @@ public final class Chapter10 {
     }
 
     /**
-     *
+     * Frees an object in the multiple-array representation of a list.
      * <p><span style="font-variant:small-caps;">Free-Object</span> from subchapter 10.3.</p>
      *
-     * @param L
-     * @param x
-     * @param <T>
+     * @param L the list in a multiple-array representation
+     * @param x the index of the object in {@code L} to free
+     * @param <T> the type of elements in {@code L}
      */
     public static <T> void freeObject(MultipleArrayList<T> L, int x) {
         L.next.set(x, L.free);
@@ -688,11 +702,12 @@ public final class Chapter10 {
     }
 
     /**
-     *
+     * Allocates an object in the single-array representation of a list.
      * <p><span style="font-variant:small-caps;">Single-Array-Allocate-Object</span> from solution to exercise 10.3-2.</p>
      *
-     * @param A
-     * @return
+     * @param A the list in the single-array representation
+     * @return the index of the allocated object in {@code A}
+     * @throws RuntimeException if {@code A} is full
      */
     public static int singleArrayAllocateObject(SingleArrayList A) {
         if (A.free == null) {
@@ -704,11 +719,11 @@ public final class Chapter10 {
     }
 
     /**
-     *
+     * Frees an object in the single-array representation of a list.
      * <p><span style="font-variant:small-caps;">Single-Array-Free-Object</span> from solution to exercise 10.3-2.</p>
      *
-     * @param A
-     * @param i
+     * @param A the list in the single-array representation
+     * @param i the index of the object in {@code A} to free
      */
     public static void singleArrayFreeObject(SingleArrayList A, int i) {
         A.set(i + 1, A.free);
@@ -716,24 +731,24 @@ public final class Chapter10 {
     }
 
     /**
-     *
+     * Allocates an object in the compact multiple-array representation of a list.
      * <p><span style="font-variant:small-caps;">Compact-List-Allocate-Object</span> from solution to exercise 10.3-4.</p>
      *
-     * @param L
-     * @param <T>
-     * @return
+     * @param L the list in the compact multiple-array representation
+     * @param <T> the type of elements in {@code L}
+     * @return the index of the allocated object in {@code L}
      */
     public static <T> int compactListAllocateObject(MultipleArrayList<T> L) {
         return allocateObject(L);
     }
 
     /**
-     *
+     * Frees an object in the compact multiple-array representation of a list.
      * <p><span style="font-variant:small-caps;">Compact-List-Free-Object</span> from solution to exercise 10.3-4.</p>
      *
-     * @param L
-     * @param x
-     * @param <T>
+     * @param L the list in the compact multiple-array representation
+     * @param x the index of the object in {@code L} to free
+     * @param <T> the type of elements in {@code L}
      */
     public static <T> void compactListFreeObject(MultipleArrayList<T> L, int x) {
         int n = L.getLength();
@@ -759,11 +774,11 @@ public final class Chapter10 {
     }
 
     /**
-     *
+     * Transforms a list in the multiple-array representation into a list in the compact multiple-array representation.
      * <p><span style="font-variant:small-caps;">Compactify-List</span> from solution to exercise 10.3-5.</p>
      *
-     * @param L
-     * @param <T>
+     * @param L the list in the multiple-array representation
+     * @param <T> the type of elements in {@code L}
      */
     public static <T> void compactifyList(MultipleArrayList<T> L) {
         int m = L.getLength();
@@ -827,11 +842,11 @@ public final class Chapter10 {
     }
 
     /**
-     *
+     * Prints out the keys of a binary tree performing inorder tree walk - an iterative version.
      * <p><span style="font-variant:small-caps;">Iterative-Preorder-Tree-Walk</span> from solution to exercise 10.4-3.</p>
      *
-     * @param T
-     * @param <T>
+     * @param T the binary tree
+     * @param <T> the type of elements in {@code T}
      */
     public static <T> void iterativePreorderTreeWalk(BinaryTree<T> T) {
         if (T.root == null) {
@@ -852,11 +867,11 @@ public final class Chapter10 {
     }
 
     /**
-     *
+     * Prints out the keys of an arbitrary rooted tree.
      * <p><span style="font-variant:small-caps;">Tree-Walk</span> from solution to exercise 10.4-4.</p>
      *
-     * @param x
-     * @param <T>
+     * @param x the root of the tree
+     * @param <T> the type of elements in the tree
      */
     public static <T> void treeWalk(MultiaryTree.Node<T> x) {
         if (x != null) {
@@ -875,11 +890,11 @@ public final class Chapter10 {
     }
 
     /**
-     *
+     * Prints out the keys of a binary tree performing inorder tree walk - an iterative version not using a stack.
      * <p><span style="font-variant:small-caps;">Stackless-Inorder-Tree-Walk</span> from solution to exercise 10.4-5.</p>
      *
-     * @param T
-     * @param <T>
+     * @param T the binary tree
+     * @param <T> the type of elements in {@code T}
      */
     public static <T> void stacklessInorderTreeWalk(BinaryTree<T> T) {
         BinaryTree.Node<T> prev = null;
@@ -903,21 +918,23 @@ public final class Chapter10 {
     }
 
     /**
-     *
+     * Implements the mergeable min-heap operation <span style="font-variant:small-caps;">Make-Heap</span>
+     * using a sorted doubly linked list.
      * <p>Solution to problem 10-2(a).</p>
      *
-     * @return
+     * @return the empty mergeable min-heap
      */
     public static List<Integer> sortedListMakeMinHeap() {
         return new List<>();
     }
 
     /**
-     *
+     * Implements the mergeable min-heap operation <span style="font-variant:small-caps;">Insert</span>
+     * using a sorted doubly linked list.
      * <p>Solution to problem 10-2(a).</p>
      *
-     * @param L
-     * @param key
+     * @param L the sorted doubly linked list representing the mergeable min-heap
+     * @param key the key of the element to insert
      */
     public static void sortedListMinHeapInsert(List<Integer> L, int key) {
         List.Node<Integer> x = new List.Node<>(key);
@@ -947,11 +964,13 @@ public final class Chapter10 {
     }
 
     /**
-     *
+     * Implements the mergeable min-heap operation <span style="font-variant:small-caps;">Minimum</span>
+     * using a sorted doubly linked list.
      * <p>Solution to problem 10-2(a).</p>
      *
-     * @param L
-     * @return
+     * @param L the sorted doubly linked list representing the mergeable min-heap
+     * @return the smallest element of the mergeable min-heap
+     * @throws RuntimeException if the mergeable min-heap is empty
      */
     public static int sortedListHeapMinimum(List<Integer> L) {
         if (L.head == null) {
@@ -961,11 +980,13 @@ public final class Chapter10 {
     }
 
     /**
-     *
+     * Implements the mergeable min-heap operation <span style="font-variant:small-caps;">Extract-Min</span>
+     * using a sorted doubly linked list.
      * <p>Solution to problem 10-2(a).</p>
      *
-     * @param L
-     * @return
+     * @param L the sorted doubly linked list representing the mergeable min-heap
+     * @return the smallest element of the mergeable min-heap
+     * @throws RuntimeException if the mergeable min-heap is empty
      */
     public static int sortedListHeapExtractMin(List<Integer> L) {
         if (L.head == null) {
@@ -980,31 +1001,33 @@ public final class Chapter10 {
     }
 
     /**
-     *
+     * Implements the mergeable min-heap operation <span style="font-variant:small-caps;">Union</span>
+     * using a sorted doubly linked list.
      * <p>Solution to problem 10-2(a).</p>
      *
-     * @param L1
-     * @param L2
-     * @return
+     * @param L1 the sorted doubly linked list representing the first mergeable min-heap
+     * @param L2 the sorted doubly linked list representing the second mergeable min-heap
+     * @return the sorted doubly linked list representing the union of {@code L1} and {@code L2}
      */
     public static List<Integer> sortedListMinHeapUnion(List<Integer> L1, List<Integer> L2) {
-        return Chapter6.mergeSortedLists(new Array<>(L1, L2));
+        return mergeSortedLists(new Array<>(L1, L2));
     }
 
     /**
-     *
+     * Searches for an element in a sorted list in the compact multiple-array representation.
      * <p><span style="font-variant:small-caps;">Compact-List-Search</span> from solution to problem 10-3.</p>
      *
-     * @param L
-     * @param n
-     * @param k
-     * @param <T>
-     * @return
+     * @param L the list in the compact multiple-array representation
+     * @param n the number of elements in {@code L}
+     * @param k the key of the element to find
+     * @param <T> the type of elements in {@code L}
+     * @return the index {@code i} of element with key {@code k} in {@code L},
+     *      or {@code null} if {@code L} does not contain such element
      */
     public static <T extends Comparable> Integer compactListSearch(MultipleArrayList<T> L, int n, T k) {
         Integer i = L.L;
         while (i != null && less(L.key.at(i), k)) {
-            int j = Chapter5.random(1, n);
+            int j = random(1, n);
             if (less(L.key.at(i), L.key.at(j)) && leq(L.key.at(j), k)) {
                 i = j;
                 if (L.key.at(i).equals(k)) {
