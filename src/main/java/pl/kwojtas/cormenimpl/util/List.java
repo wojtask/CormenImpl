@@ -1,19 +1,53 @@
 package pl.kwojtas.cormenimpl.util;
 
+/**
+ * Implements a doubly linked list.
+ *
+ * @param <T> the type of elements in the list
+ */
 public class List<T> {
 
+    /**
+     * Implements a doubly linked list's node.
+     *
+     * @param <U> the type of key in the node
+     */
     public static class Node<U> {
+        /**
+         * The key.
+         */
         public U key;
+
+        /**
+         * The previous node.
+         */
         public Node<U> prev;
+
+        /**
+         * The next node.
+         */
         public Node<U> next;
 
+        /**
+         * Creates a node with a given key.
+         *
+         * @param key the key of the new node
+         */
         public Node(U key) {
             this.key = key;
         }
     }
 
+    /**
+     * The head of the list.
+     */
     public Node<T> head;
 
+    /**
+     * Creates a list from given elements.
+     *
+     * @param elements the initial contents of the list
+     */
     @SafeVarargs
     public List(T... elements) {
         if (elements.length == 0) {
@@ -29,6 +63,11 @@ public class List<T> {
         }
     }
 
+    /**
+     * Creates a doubly linked list by copying an existing doubly linked list.
+     *
+     * @param otherList the list to be copied
+     */
     public List(List<T> otherList) {
         if (otherList.head == null) {
             return;
@@ -45,6 +84,11 @@ public class List<T> {
         }
     }
 
+    /**
+     * Returns the number of elements in the list.
+     *
+     * @return the number of elements in the list
+     */
     public int getLength() {
         int length = 0;
         Node<T> x = head;
@@ -55,6 +99,11 @@ public class List<T> {
         return length;
     }
 
+    /**
+     * Transforms the list to the array.
+     *
+     * @return the array containing all the elements in the list
+     */
     public Array<T> toArray() {
         Array<T> array = Array.withLength(getLength());
         Node<T> x = head;

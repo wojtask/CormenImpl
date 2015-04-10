@@ -26,7 +26,7 @@ public final class Chapter11 {
      * Searches for an element in a direct-address table.
      * <p><span style="font-variant:small-caps;">Direct-Address-Search</span> from subchapter 11.1.</p>
      *
-     * @param T the direct-address table to look up
+     * @param T the direct-address table to scan
      * @param k the key of the element to find
      * @param <T> the type of elements' values in {@code T}
      * @return the element of key {@code k} in table {@code T}, or {@code null} if {@code T} does not contain such element
@@ -63,7 +63,7 @@ public final class Chapter11 {
      * Searches for an element with the smallest key in a direct-address table.
      * <p>Solution to exercise 11.1-1.</p>
      *
-     * @param T the direct-address table to look up.
+     * @param T the direct-address table to scan
      * @param <T> the type of elements' values in {@code T}
      * @return the element with the smallest key in {@code T}, or {@code null} if {@code T} does not contain such element
      */
@@ -81,7 +81,7 @@ public final class Chapter11 {
      * Searches for an element in a bit vector.
      * <p>Solution to exercise 11.1-2.</p>
      *
-     * @param V the {@link ZeroBasedIndexedArray} of bits representing the bit vector
+     * @param V the 0-based indexed array of bits representing the bit vector
      * @param k the key of the element to find
      * @return 1, if {@code V} contains element of key {@code k}, 0 otherwise
      */
@@ -93,7 +93,7 @@ public final class Chapter11 {
      * Inserts an element into a bit vector.
      * <p>Solution to exercise 11.1-2.</p>
      *
-     * @param V the {@link ZeroBasedIndexedArray} of bits representing the bit vector
+     * @param V the 0-based indexed array of bits representing the bit vector
      * @param k the key of the element to insert
      */
     public static void bitVectorInsert(ZeroBasedIndexedArray<Integer> V, int k) {
@@ -104,7 +104,7 @@ public final class Chapter11 {
      * Deletes an element from a bit vector.
      * <p>Solution to exercise 11.1-2.</p>
      *
-     * @param V the {@link ZeroBasedIndexedArray} of bits representing the bit vector
+     * @param V the 0-based indexed array of bits representing the bit vector
      * @param k the key of the element to delete
      */
     public static void bitVectorDelete(ZeroBasedIndexedArray<Integer> V, int k) {
@@ -115,7 +115,7 @@ public final class Chapter11 {
      * Searches for an element in a direct-address table that does not require keys of elements to be distinct.
      * <p>Solution to exercise 11.1-3.</p>
      *
-     * @param T the direct-address table to look up
+     * @param T the direct-address table to scan
      * @param k the key of the element to find
      * @param <T> the type of elements' values in {@code T}
      * @return one of the elements of key {@code k} in table {@code T}, or {@code null} if {@code T} does not contain such element
@@ -155,6 +155,11 @@ public final class Chapter11 {
         listDelete(list, node);
     }
 
+    /**
+     * Implements a huge array.
+     *
+     * @param <T> the type of elements in the huge array
+     */
     public static class HugeArray<T> {
         public ZeroBasedIndexedArray<Integer> T;
         public Stack<Element<T>> S;
@@ -172,7 +177,7 @@ public final class Chapter11 {
      * Searches for an element in a dictionary using direct addressing on a huge array.
      * <p>Solution to exercise 11.1-4.</p>
      *
-     * @param H the huge array representing the dictionary to look up
+     * @param H the huge array representing the dictionary to scan
      * @param k the key of the element to find
      * @param <T> the type of elements' values in {@code T}
      * @return the element of key {@code k} in {@code H}, or {@code null} if {@code H} does not contain such element

@@ -58,7 +58,7 @@ public final class Chapter6 {
      * Restores the max-heap property.
      * <p><span style="font-variant:small-caps;">Max-Heapify</span> from subchapter 6.2.</p>
      *
-     * @param A the {@link Heap} with max-heap property violated at one node
+     * @param A the heap with max-heap property violated at one node
      * @param i the index of the node in {@code A} the property is violated at
      * @param <T> the type of elements in {@code A}
      */
@@ -84,7 +84,7 @@ public final class Chapter6 {
      * Constructs a max-heap from an array of elements.
      * <p><span style="font-variant:small-caps;">Build-Max-Heap</span> from subchapter 6.3.</p>
      *
-     * @param A the {@link Array} of elements
+     * @param A the array of elements
      * @param <T> the type of elements in {@code A}
      * @return the max-heap constructed from elements from {@code A}
      */
@@ -101,7 +101,7 @@ public final class Chapter6 {
      * Sorts elements using merge sort.
      * <p><span style="font-variant:small-caps;">Heapsort</span> from subchapter 6.4.</p>
      *
-     * @param A the {@link Array} of elements to sort
+     * @param A the array of elements to sort
      * @param <T> the type of elements in {@code A}
      */
     public static <T extends Comparable> void heapsort(Array<T> A) {
@@ -118,7 +118,7 @@ public final class Chapter6 {
      * Restores the min-heap property.
      * <p><span style="font-variant:small-caps;">Min-Heapify</span> from solution to exercise 6.2-2.</p>
      *
-     * @param A the {@link Heap} with min-heap property violated at one node
+     * @param A the heap with min-heap property violated at one node
      * @param i the index of the node in {@code A} the property is violated at
      * @param <T> the type of elements in {@code A}
      */
@@ -144,7 +144,7 @@ public final class Chapter6 {
      * Restores the max-heap property iteratively.
      * <p><span style="font-variant:small-caps;">Iterative-Max-Heapify</span> from solution to exercise 6.2-5.</p>
      *
-     * @param A the {@link Heap} with max-heap property violated at one node
+     * @param A the heap with max-heap property violated at one node
      * @param i the index of the node in {@code A} the property is violated at
      * @param <T> the type of elements in {@code A}
      */
@@ -340,12 +340,12 @@ public final class Chapter6 {
     }
 
     /**
-     * Implements the FIFO queue operation <span style="font-variant:small-caps;">Enqueue</span>
+     * Implements the queue operation <span style="font-variant:small-caps;">Enqueue</span>
      * using min-priority queue with ranked elements.
      * <p>Solution to exercise 6.5-6.</p>
      *
      * @param priorityQueue the min-priority queue with ranked elements
-     * @param key the key to insert to the FIFO queue
+     * @param key the key to insert to the queue
      * @param <T> the type of keys in {@code priorityQueue}
      */
     public static <T> void enqueueUsingPriorityQueue(PriorityQueueWithRanks<T> priorityQueue, T key) {
@@ -369,13 +369,13 @@ public final class Chapter6 {
     }
 
     /**
-     * Implements the FIFO queue operation <span style="font-variant:small-caps;">Dequeue</span>
+     * Implements the queue operation <span style="font-variant:small-caps;">Dequeue</span>
      * using min-priority queue with ranked elements.
      * <p>Solution to exercise 6.5-6.</p>
      *
      * @param priorityQueue the min-priority queue with ranked elements
      * @param <T> the type of keys in {@code priorityQueue}
-     * @return the key removed from the FIFO queue
+     * @return the key removed from the queue
      */
     public static <T> T dequeueUsingPriorityQueue(PriorityQueueWithRanks<T> priorityQueue) {
         return heapExtractMinWithRanks(priorityQueue).key;
@@ -499,8 +499,8 @@ public final class Chapter6 {
      * Merges sorted lists into a single sorted list.
      * <p>Solution to exercise 6.5-8.</p>
      *
-     * @param sortedLists an {@link Array} of sorted {@link List}s
-     * @return the merged sorted {@link List}
+     * @param sortedLists an array of sorted lists
+     * @return the merged sorted list
      */
     public static List<Integer> mergeSortedLists(Array<List<Integer>> sortedLists) {
         List<Integer> reversedMergedList = new List<>();
@@ -579,7 +579,7 @@ public final class Chapter6 {
      * Constructs a max-heap from an array of elements - alternative method.
      * <p><span style="font-variant:small-caps;">Build-Max-Heap'</span> from problem 6-1.</p>
      *
-     * @param A the {@link Array} of elements
+     * @param A the array of elements
      * @return the max-heap constructed from elements from {@code A}
      */
     public static Heap<Integer> buildMaxHeap_(Array<Integer> A) {
@@ -640,7 +640,7 @@ public final class Chapter6 {
      * Restores the max-heap property in a multiary max-heap.
      * <p><span style="font-variant:small-caps;">Multiary-Max-Heapify</span> from solution to problem 6-2(c).</p>
      *
-     * @param A the {@link Heap} with max-heap property violated at one node
+     * @param A the heap with max-heap property violated at one node
      * @param d the ary of the max-heap
      * @param i the index of the node in {@code A} the property is violated at
      */
@@ -697,7 +697,7 @@ public final class Chapter6 {
      * Removes the smallest element from a Young tableau.
      * <p><span style="font-variant:small-caps;">Young-Extract-Min</span> from solution to problem 6-3(c).</p>
      *
-     * @param Y the {@link Young} tableau
+     * @param Y the Young tableau
      * @param m the height of {@code Y}
      * @param n the width of {@code Y}
      * @param i the row index of the current element
@@ -725,7 +725,7 @@ public final class Chapter6 {
      * Restores the Young property in a Young tableau.
      * <p><span style="font-variant:small-caps;">Youngify</span> from solution to problem 6-3(d).</p>
      *
-     * @param Y the {@link Young} tableau
+     * @param Y the Young tableau
      * @param i the row index of the current element
      * @param j the column index of the current element
      */
@@ -749,7 +749,7 @@ public final class Chapter6 {
      * Inserts a key into a Young tableau.
      * <p><span style="font-variant:small-caps;">Young-Insert</span> from solution to problem 6-3(d).</p>
      *
-     * @param Y the {@link Young} tableau
+     * @param Y the Young tableau
      * @param m the height of {@code Y}
      * @param n the width of {@code Y}
      * @param key the key to insert
@@ -763,7 +763,7 @@ public final class Chapter6 {
      * Sorts elements using a Young tableau.
      * <p><span style="font-variant:small-caps;">Young-Sort</span> from solution to problem 6-3(e).</p>
      *
-     * @param A the {@link Array} of elements to sort
+     * @param A the array of elements to sort
      */
     public static void youngSort(Array<Integer> A) {
         int n = (int) sqrt(A.length);
@@ -780,7 +780,7 @@ public final class Chapter6 {
      * Searches for an key in a Young tableau.
      * <p><span style="font-variant:small-caps;">Young-Search</span> from solution to problem 6-3(f).</p>
      *
-     * @param Y the {@link Young} tableau
+     * @param Y the Young tableau
      * @param m the height of {@code Y}
      * @param n the width of {@code Y}
      * @param v the key to find

@@ -1,20 +1,59 @@
 package pl.kwojtas.cormenimpl.util;
 
+/**
+ * Implements a binary tree.
+ *
+ * @param <T> the type of elements in the binary tree
+ */
 public class BinaryTree<T> {
 
+    /**
+     * Implements a binary tree's node.
+     *
+     * @param <U> the type of key in the node
+     */
     public static class Node<U> {
+
+        /**
+         * The key.
+         */
         public U key;
+
+        /**
+         * The parent node in a binary tree.
+         */
         public Node<U> p;
+
+        /**
+         * The left child node.
+         */
         public Node<U> left;
+
+        /**
+         * The right child node.
+         */
         public Node<U> right;
 
+        /**
+         * Creates a node with a given key.
+         *
+         * @param key the key of the new node
+         */
         public Node(U key) {
             this.key = key;
         }
     }
 
+    /**
+     * The root of the tree.
+     */
     public Node<T> root;
 
+    /**
+     * Returns the number of elements in the tree.
+     *
+     * @return the number of elements in {@code this}
+     */
     public int getSize() {
         return getSize(root);
     }

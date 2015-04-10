@@ -1,9 +1,22 @@
 package pl.kwojtas.cormenimpl.util;
 
+/**
+ * Implements a singly linked list with tail.
+ *
+ * @param <T> the type of elements in the list
+ */
 public class SinglyLinkedListWithTail<T> extends SinglyLinkedList<T> {
 
+    /**
+     * The tail of the list.
+     */
     public SinglyLinkedListWithTail.Node<T> tail;
 
+    /**
+     * Creates a list from given elements.
+     *
+     * @param elements the initial contents of the list
+     */
     @SafeVarargs
     public SinglyLinkedListWithTail(T... elements) {
         if (elements.length == 0) {
@@ -18,6 +31,11 @@ public class SinglyLinkedListWithTail<T> extends SinglyLinkedList<T> {
         }
     }
 
+    /**
+     * Creates a singly linked list with tail by copying an existing singly linked list with tail.
+     *
+     * @param otherList the list to be copied
+     */
     public SinglyLinkedListWithTail(SinglyLinkedList<T> otherList) {
         if (otherList.head == null) {
             return;
@@ -33,6 +51,11 @@ public class SinglyLinkedListWithTail<T> extends SinglyLinkedList<T> {
         }
     }
 
+    /**
+     * Returns the number of elements in the list.
+     *
+     * @return the number of elements in the list
+     */
     public int getLength() {
         int length = 0;
         Node<T> x = head;
@@ -43,6 +66,11 @@ public class SinglyLinkedListWithTail<T> extends SinglyLinkedList<T> {
         return length;
     }
 
+    /**
+     * Transforms the list to the array.
+     *
+     * @return the array containing all the elements in the list
+     */
     public Array<T> toArray() {
         Array<T> array = Array.withLength(getLength());
         Node<T> x = head;

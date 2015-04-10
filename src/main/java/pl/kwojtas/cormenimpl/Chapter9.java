@@ -28,7 +28,7 @@ public final class Chapter9 {
      * Finds the smallest value in an array.
      * <p><span style="font-variant:small-caps;">Minimum</span> from subchapter 9.1.</p>
      *
-     * @param A the {@link Array} to look up
+     * @param A the array to scan
      * @param <T> the type of elements in {@code A}
      * @return the smallest value in {@code A}
      */
@@ -46,10 +46,10 @@ public final class Chapter9 {
      * Simultaneously finds the smallest value and the largest value in an array.
      * <p>Subchapter 9.1.</p>
      *
-     * @param A the {@link Array} to look up.
+     * @param A the array to scan
      * @param <T> the type of elements in {@code A}
-     * @return the pair {@code <p_1, p_2>} such that {@code p_1} is the smallest value in {@code A}
-     * and {@code p_2} is the largest value in {@code A}
+     * @return the pair {@code <a_1, a_2>} such that {@code a_1} is the smallest value in {@code A}
+     * and {@code a_2} is the largest value in {@code A}
      */
     public static <T extends Comparable> Pair<T, T> minimumMaximum(Array<T> A) {
         int n = A.length;
@@ -91,9 +91,9 @@ public final class Chapter9 {
      * Finds the {@code i}-th order statistic (the {@code i}-th smallest value) in an array.
      * <p><span style="font-variant:small-caps;">Randomized-Select</span> from subchapter 9.2.</p>
      *
-     * @param A the {@link Array} to look up
-     * @param p the index of the beginning of subarray in {@code A} to look up
-     * @param r the index of the end of subarray in {@code A} to look up
+     * @param A the array to scan
+     * @param p the index of the beginning of subarray in {@code A} being scanned
+     * @param r the index of the end of subarray in {@code A} being scanned
      * @param i the number of order statistic to find (1 - the smallest element)
      * @param <T> the type of elements in {@code A}
      * @return the {@code i}-th order statistic ({@code i}-th smallest value) in {@code A}
@@ -117,9 +117,9 @@ public final class Chapter9 {
      * Finds the {@code i}-th order statistic (the {@code i}-th smallest value) in an array - an iterative version.
      * <p><span style="font-variant:small-caps;">Iterative-Randomized-Select</span> from solution to exercise 9.2-3.</p>
      *
-     * @param A the {@link Array} to look up
-     * @param p the index of the beginning of subarray in {@code A} to look up
-     * @param r the index of the end of subarray in {@code A} to look up
+     * @param A the array to scan
+     * @param p the index of the beginning of subarray in {@code A} being scanned
+     * @param r the index of the end of subarray in {@code A} being scanned
      * @param i the number of order statistic to find (1 - the smallest element)
      * @param <T> the type of elements in {@code A}
      * @return the {@code i}-th order statistic ({@code i}-th smallest value) in {@code A}
@@ -144,9 +144,9 @@ public final class Chapter9 {
      * Finds the {@code i}-th order statistic (the {@code i}-th smallest value) in an array - an efficient version.
      * <p>Subchapter 9.3.</p>
      *
-     * @param A the {@link Array} to look up
-     * @param p the index of the beginning of subarray in {@code A} to look up
-     * @param r the index of the end of subarray in {@code A} to look up
+     * @param A the array to scan
+     * @param p the index of the beginning of subarray in {@code A} being scanned
+     * @param r the index of the end of subarray in {@code A} being scanned
      * @param i the number of order statistic to find (1 - the smallest element)
      * @param <T> the type of elements in {@code A}
      * @return the {@code i}-th order statistic ({@code i}-th smallest value) in {@code A}
@@ -201,9 +201,9 @@ public final class Chapter9 {
      * Sorts the elements using the optimal version of quicksort.
      * <p>Solution to exercise 9.3-3.</p>
      *
-     * @param A the {@link Array} to sort
-     * @param p the index of the beginning of subarray in {@code A} to sort
-     * @param r the index of the end of subarray in {@code A} to sort
+     * @param A the array to sort
+     * @param p the index of the beginning of subarray in {@code A} being sorted
+     * @param r the index of the end of subarray in {@code A} being sorted
      * @param <T> the type of elements in {@code A}
      */
     public static <T extends Comparable> void bestCaseQuicksort(Array<T> A, int p, int r) {
@@ -220,9 +220,9 @@ public final class Chapter9 {
      * using a subroutine for finding the median of the array.
      * <p>Solution to exercise 9.3-5.</p>
      *
-     * @param A the {@link Array} to look up
-     * @param p the index of the beginning of subarray in {@code A} to look up
-     * @param r the index of the end of subarray in {@code A} to look up
+     * @param A the array to scan
+     * @param p the index of the beginning of subarray in {@code A} being scanned
+     * @param r the index of the end of subarray in {@code A} being scanned
      * @param i the number of order statistic to find (1 - the smallest element)
      * @param <T> the type of elements in {@code A}
      * @return the {@code i}-th order statistic ({@code i}-th smallest value) in {@code A}
@@ -248,9 +248,9 @@ public final class Chapter9 {
      * Finds quantiles of a set.
      * <p><span style="font-variant:small-caps;">Quantiles</span> from solution to exercise 9.3-6.</p>
      *
-     * @param A the {@link Array} of elements for the set
-     * @param p the index of the beginning of subarray in {@code A} to look up
-     * @param r the index of the end of subarray in {@code A} to look up
+     * @param A the array of elements of the set
+     * @param p the index of the beginning of subarray in {@code A} being scanned
+     * @param r the index of the end of subarray in {@code A} being scanned
      * @param k the order of quantiles to find
      * @param <T> the type of elements in {@code A}
      * @return the set of {@code k}-th quantiles of the set represented by {@code A}
@@ -278,7 +278,7 @@ public final class Chapter9 {
      * Finds elements closest to the median of a set.
      * <p><span style="font-variant:small-caps;">Median-Proximity</span> from solution to exercise 9.3-7.</p>
      *
-     * @param S the {@link Array} of elements from the set
+     * @param S the array of elements of the set
      * @param k the proximity of the median to find
      * @return the set of {@code k} elements closest to the median of {@code S}
      */
@@ -306,12 +306,12 @@ public final class Chapter9 {
      * Finds the median of elements in two arrays of equal lengths.
      * <p><span style="font-variant:small-caps;">Two-Arrays-Median</span> from solution to exercise 9.3-8.</p>
      *
-     * @param X the first {@link Array}
-     * @param pX the index of the beginning of subarray in {@code X}
-     * @param rX the index of the end of subarray in {@code X}
-     * @param Y the second {@link Array} of length equal to the length of {@code X}
-     * @param pY the index of the beginning of subarray in {@code Y}
-     * @param rY the index of the end of subarray in {@code Y}
+     * @param X the first array to scan
+     * @param pX the index of the beginning of subarray in {@code X} being scanned
+     * @param rX the index of the end of subarray in {@code X} being scanned
+     * @param Y the second array to scan having the equal length as {@code X}
+     * @param pY the index of the beginning of subarray in {@code Y} being scanned
+     * @param rY the index of the end of subarray in {@code Y} being scanned
      * @param <T> the type of elements in {@code X} and {@code Y}
      * @return the median of elements in {@code X} and {@code Y}
      */
@@ -337,8 +337,8 @@ public final class Chapter9 {
      * Finds the weighted median of an array.
      * <p>Solution to problem 9-2(b).</p>
      *
-     * @param A the {@link Array} of elements
-     * @param w the {@link Array} of weights of elements from {@code A}, such that {@code w[i]} is the weight of {@code A[i]}
+     * @param A the array of elements to scan
+     * @param w the array of weights of elements from {@code A}, such that {@code w[i]} is the weight of {@code A[i]}
      * @param <T> the type of elements in {@code A}
      * @return the weighted median of {@code A} based on weights from {@code w}
      */
@@ -380,10 +380,10 @@ public final class Chapter9 {
      * Finds the weighted median of an array - an efficient version.
      * <p><span style="font-variant:small-caps;">Weighted-Median</span> from solution to problem 9-2(c).</p>
      *
-     * @param A the {@link Array} of elements
-     * @param w the {@link Array} of weights of elements from {@code A}, such that {@code w[i]} is the weight of {@code A[i]}
-     * @param p the index of the beginning of subarray in {@code A}
-     * @param r the index of the end of subarray in {@code A}
+     * @param A the array of elements to scan
+     * @param w the array of weights of elements from {@code A}, such that {@code w[i]} is the weight of {@code A[i]}
+     * @param p the index of the beginning of subarray in {@code A} being scanned
+     * @param r the index of the end of subarray in {@code A} being scanned
      * @param <T> the type of elements in {@code A}
      * @return the weighted median of {@code A} based on weights from {@code w}
      */
@@ -425,8 +425,8 @@ public final class Chapter9 {
      * Finds the solution to the 2-dimensional post-office location problem with the Manhattan distance.
      * <p>Solution to problem 9-2(e).</p>
      *
-     * @param A the {@link Array} of points in a plane
-     * @param w the {@link Array} of weights of points from {@code A}, such that {@code w[i]} is the weight of {@code A[i]}
+     * @param A the array of points in a plane
+     * @param w the array of weights of points from {@code A}, such that {@code w[i]} is the weight of {@code A[i]}
      * @return the point on a plane that minimizes weighted Manhattan distance from points from {@code A}
      * using weights from {@code w}
      */
@@ -448,7 +448,7 @@ public final class Chapter9 {
      * - a version optimized for small {@code i}'s.
      * <p>Solution to problem 9-3(a).</p>
      *
-     * @param A the {@link Array} to look up
+     * @param A the array to scan
      * @param i the number of order statistic to find (1 - the smallest element)
      * @param <T> the type of elements in {@code A}
      * @return the {@code i}-th order statistic ({@code i}-th smallest value) in {@code A}

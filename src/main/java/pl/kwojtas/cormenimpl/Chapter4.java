@@ -14,7 +14,7 @@ public final class Chapter4 {
      * Looks for missing integer in an array.
      * <p>Solution to problem 4-2.</p>
      *
-     * @param A the {@code n}-element {@link Array} containing all integers from {@code 0..n} but one
+     * @param A the {@code n}-element array containing all integers from {@code 0..n} but one
      * @return the missing integer in {@code A}
      */
     public static Integer findMissingInteger(Array<Integer> A) {
@@ -77,8 +77,8 @@ public final class Chapter4 {
      * Returns the leftmost minimum indexes in each row of a Monge array.
      * <p>Solution to problem 4-7(d).</p>
      *
-     * @param A the {@link Matrix} containing the Monge array
-     * @return the {@link Array} in which the {@code i}-th position is
+     * @param A the matrix containing the Monge array
+     * @return the array in which the {@code i}-th position is
      * the leftmost minimum index in the {@code i}-th row of {@code A}
      */
     public static Array<Integer> mongeLeftmostMinimaIndexes(Matrix<Double> A) {

@@ -63,7 +63,7 @@ public final class Chapter5 {
      * Permutes an array by sorting it.
      * <p><span style="font-variant:small-caps;">Permute-By-Sorting</span> from subchapter 5.3.</p>
      *
-     * @param A the {@link Array} of elements to permute
+     * @param A the array of elements to permute
      * @param <T> the type of elements in {@code A}
      * @return the permuted array
      */
@@ -122,7 +122,7 @@ public final class Chapter5 {
      * Permutes an array in place.
      * <p><span style="font-variant:small-caps;">Randomize-In-Place</span> from subchapter 5.3.</p>
      *
-     * @param A the {@link Array} of elements to permute
+     * @param A the array of elements to permute
      * @param <T> the type of elements in {@code A}
      */
     public static <T> void randomizeInPlace(Array<T> A) {
@@ -136,7 +136,7 @@ public final class Chapter5 {
      * Permutes an array in place - alternative version.
      * <p><span style="font-variant:small-caps;">Randomize-In-Place'</span> from solution to exercise 5.3-1.</p>
      *
-     * @param A the {@link Array} of elements to permute
+     * @param A the array of elements to permute
      * @param <T> the type of elements in {@code A}
      */
     public static <T> void randomizeInPlace_(Array<T> A) {
@@ -151,7 +151,7 @@ public final class Chapter5 {
      * Permutes an array uniformly by sorting.
      * <p>Solution to exercise 5.3-6.</p>
      *
-     * @param A the {@link Array} of elements to permute
+     * @param A the array of elements to permute
      * @param <T> the type of elements in {@code A}
      * @return the permuted array
      */
@@ -210,7 +210,7 @@ public final class Chapter5 {
      * Searches for an element in an array by picking array elements at random.
      * <p><span style="font-variant:small-caps;">Random-Search</span> from solution to problem 5-2(a).</p>
      *
-     * @param A the {@link Array} of elements
+     * @param A the array of elements
      * @param x the element to find
      * @param <T> the type of elements in {@code A}
      * @return index {@code i} such that {@code A[i] = v}, or {@code null} if {@code v} does not appear in {@code A}

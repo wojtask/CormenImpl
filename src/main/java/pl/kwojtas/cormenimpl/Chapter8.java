@@ -23,8 +23,8 @@ public final class Chapter8 {
      * Sorts elements using counting sort.
      * <p><span style="font-variant:small-caps;">Counting-Sort</span> from subchapter 8.2.</p>
      *
-     * @param A the {@link Array} of elements to sort
-     * @param B the resulting {@link Array} of sorted elements
+     * @param A the array of elements to sort
+     * @param B the resulting array of sorted elements
      * @param k the upper bound of elements' values in {@code A}
      */
     public static void countingSort(Array<Integer> A, Array<Integer> B, int k) {
@@ -48,8 +48,8 @@ public final class Chapter8 {
      * Sorts elements using an unstable version of counting sort.
      * <p>Exercise 8.2-3.</p>
      *
-     * @param A the {@link Array} of elements to sort
-     * @param B the resulting {@link Array} of sorted elements
+     * @param A the array of elements to sort
+     * @param B the resulting array of sorted elements
      * @param k the upper bound of elements' values in {@code A}
      */
     public static void nonStableCountingSort(Array<Integer> A, Array<Integer> B, int k) {
@@ -73,7 +73,7 @@ public final class Chapter8 {
      * Counts how many numbers in an array fall into an interval.
      * <p>Solution to exercise 8.2-4.</p>
      *
-     * @param A the {@link Array} of elements
+     * @param A the array of elements
      * @param k the upper bound of elements' values in {@code A}
      * @param a the lower bound of the interval
      * @param b the upper bound of the interval
@@ -109,7 +109,7 @@ public final class Chapter8 {
      * Sorts elements using radix sort.
      * <p><span style="font-variant:small-caps;">Radix-Sort</span> from subchapter 8.3.</p>
      *
-     * @param A the {@link Array} of elements to sort
+     * @param A the array of elements to sort
      * @param d the upper bound for number of digits of elements in {@code A}
      */
     public static void radixSort(Array<Integer> A, int d) {
@@ -151,7 +151,7 @@ public final class Chapter8 {
      * Sorts {@code n} integers in the range 0 to {#code n^2 - 1}.
      * <p>Solution to exercise 8.3-4.</p>
      *
-     * @param A the {@link Array} of numbers to sort
+     * @param A the array of numbers to sort
      */
     public static void lessThanSquareSort(Array<Integer> A) {
         int n = A.length;
@@ -163,7 +163,7 @@ public final class Chapter8 {
      * Sorts elements using bucket sort.
      * <p><span style="font-variant:small-caps;">Bucket-Sort</span> from subchapter 8.4.</p>
      *
-     * @param A the {@link Array} of elements to sort (numbers from the interval {@code [0..1)})
+     * @param A the array of elements to sort (numbers from the interval {@code [0..1)})
      */
     public static void bucketSort(Array<Double> A) {
         int n = A.length;
@@ -227,7 +227,7 @@ public final class Chapter8 {
      * Sorts points in the unit circle by distance from the origin.
      * <p>Solution to exercise 8.4-4.</p>
      *
-     * @param points the {@link Array} of points in the unit circle to sort
+     * @param points the array of points in the unit circle to sort
      */
     public static void pointsSort(Array<Point2D> points) {
         int n = points.length;
@@ -294,7 +294,7 @@ public final class Chapter8 {
      * Sorts bits.
      * <p><span style="font-variant:small-caps;">Bitwise-Sort</span> from solution to problem 8-2(b).</p>
      *
-     * @param A the {@link Array} of bits to sort
+     * @param A the array of bits to sort
      */
     public static void bitwiseSort(Array<Integer> A) {
         int n = A.length;
@@ -315,7 +315,7 @@ public final class Chapter8 {
      * Sorts elements in place using counting sort.
      * <p><span style="font-variant:small-caps;">Counting-Sort-In-Place</span> from solution to problem 8-2(e).</p>
      *
-     * @param A the {@link Array} of elements to sort
+     * @param A the array of elements to sort
      * @param k the upper bound of elements' values in {@code A}
      */
     public static void countingSortInPlace(Array<Integer> A, int k) {
@@ -346,7 +346,7 @@ public final class Chapter8 {
      * Sorts variable-length numbers.
      * <p>Solution to problem 8-3(a).</p>
      *
-     * @param A the {@link Array} of numbers to sort
+     * @param A the array of numbers to sort
      */
     public static void variableLengthIntegersSort(Array<Integer> A) {
         int j = 0, j_ = 0;
@@ -465,7 +465,7 @@ public final class Chapter8 {
      * Sorts variable-length strings.
      * <p>Solution to problem 8-3(b).</p>
      *
-     * @param A the {@link Array} of strings to sort
+     * @param A the array of strings to sort
      * @param position the position by which strings are sorted
      */
     public static void variableLengthStringsSort(Array<String> A, int position) {
@@ -519,8 +519,8 @@ public final class Chapter8 {
      * Permutes two arrays so that they are identical to each other by comparing elements only between arrays.
      * <p>Solution to problem 8-4(a).</p>
      *
-     * @param R the first {@link Array}
-     * @param B the second {@link Array}
+     * @param R the first array
+     * @param B the second array
      */
     public static void jugsGroup(Array<Double> R, Array<Double> B) {
         int n = R.length;
@@ -538,10 +538,10 @@ public final class Chapter8 {
      * - an efficient version.
      * <p><span style="font-variant:small-caps;">Jugs-Match</span> from solution to problem 8-4(c).</p>
      *
-     * @param R the first {@link Array}
-     * @param B the second {@link Array}
-     * @param p the index of the beginning of subarray in {@code R} and subarray in {@code B} to permute
-     * @param r the index of the end of subarray in {@code R} and subarray in {@code B} to permute
+     * @param R the first array
+     * @param B the second array
+     * @param p the index of the beginning of subarray in {@code R} and subarray in {@code B} being permuted
+     * @param r the index of the end of subarray in {@code R} and subarray in {@code B} being permuted
      */
     public static void jugsMatch(Array<Double> R, Array<Double> B, int p, int r) {
         if (p < r) {
@@ -555,10 +555,10 @@ public final class Chapter8 {
      * Partitions two arrays around randomly chosen pivot element by comparing elements only between the two arrays.
      * <p><span style="font-variant:small-caps;">Jugs-Partition</span> from solution to problem 8-4(c).</p>
      *
-     * @param R the first {@link Array} to partition
-     * @param B the second {@link Array} to partition
-     * @param p the index of the beginning of subarray in {@code R} and subarray in {@code B} to partition
-     * @param r the index of the end of subarray in {@code R} and subarray in {@code B} to partition
+     * @param R the first array to partition
+     * @param B the second array to partition
+     * @param p the index of the beginning of subarray in {@code R} and subarray in {@code B} being partitioned
+     * @param r the index of the end of subarray in {@code R} and subarray in {@code B} being partitioned
      * @return the index of the pivot element after partitioning
      */
     private static int jugsPartition(Array<Double> R, Array<Double> B, int p, int r) {
@@ -593,10 +593,10 @@ public final class Chapter8 {
      * Rearranges elements so that they increase on average.
      * <p>Solution to problem 8-5(d).</p>
      *
-     * @param A the {@link Array} of elements to sort
+     * @param A the array of elements to sort
      * @param k the number of elements taken for averages
-     * @param p the index of the beginning of subarray in {@code A} to rearrange
-     * @param r the index of the end of subarray in {@code A} to rearrange
+     * @param p the index of the beginning of subarray in {@code A} being rearranged
+     * @param r the index of the end of subarray in {@code A} being rearranged
      * @param <T> the type of elements in {@code A}
      */
     public static <T extends Comparable> void averageSort(Array<T> A, int k, int p, int r) {

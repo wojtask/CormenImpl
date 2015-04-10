@@ -1,7 +1,17 @@
 package pl.kwojtas.cormenimpl.util;
 
+/**
+ * Implements a singly linked circular list.
+ *
+ * @param <T> the type of elements in the list
+ */
 public class CircularList<T> extends SinglyLinkedList<T> {
 
+    /**
+     * Creates a list from given elements.
+     *
+     * @param elements the initial contents of the list
+     */
     @SafeVarargs
     public CircularList(T... elements) {
         if (elements.length == 0) {
@@ -18,6 +28,11 @@ public class CircularList<T> extends SinglyLinkedList<T> {
         }
     }
 
+    /**
+     * Creates a singly linked circular list by copying an existing singly linked circular list.
+     *
+     * @param otherList the list to be copied
+     */
     public CircularList(CircularList<T> otherList) {
         if (otherList.head == null) {
             return;
@@ -35,6 +50,11 @@ public class CircularList<T> extends SinglyLinkedList<T> {
         }
     }
 
+    /**
+     * Returns the number of elements in the list.
+     *
+     * @return the number of elements in the list
+     */
     public int getLength() {
         if (head == null) {
             return 0;
@@ -48,6 +68,11 @@ public class CircularList<T> extends SinglyLinkedList<T> {
         return length;
     }
 
+    /**
+     * Transforms the list to the array.
+     *
+     * @return the array containing all the elements in the list
+     */
     public Array<T> toArray() {
         if (head == null) {
             return new Array<>();

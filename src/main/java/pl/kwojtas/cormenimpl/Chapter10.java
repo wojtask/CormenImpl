@@ -32,7 +32,7 @@ public final class Chapter10 {
      * Checks if a stack is empty.
      * <p><span style="font-variant:small-caps;">Stack-Empty</span> from subchapter 10.1.</p>
      *
-     * @param S the {@link Stack}
+     * @param S the stack
      * @param <T> the type of elements in {@code S}
      * @return {@code true} if {@code S} is empty, or {@code false} otherwise
      */
@@ -44,7 +44,7 @@ public final class Chapter10 {
      * Inserts an element onto a stack.
      * <p><span style="font-variant:small-caps;">Push</span> from subchapter 10.1.</p>
      *
-     * @param S the {@link Stack}
+     * @param S the stack
      * @param x the element to insert
      * @param <T> the type of elements in {@code S}
      */
@@ -57,7 +57,7 @@ public final class Chapter10 {
      * Removes an element from a stack.
      * <p><span style="font-variant:small-caps;">Pop</span> from subchapter 10.1.</p>
      *
-     * @param S the {@link Stack}
+     * @param S the stack
      * @param <T> the type of elements in {@code S}
      * @return the element removed from {@code S}
      * @throws RuntimeException if {@code S} is empty
@@ -74,7 +74,7 @@ public final class Chapter10 {
      * Inserts an element into a queue.
      * <p><span style="font-variant:small-caps;">Enqueue</span> from subchapter 10.1 and solution to exercise 10.1-4.</p>
      *
-     * @param Q the {@link Queue}
+     * @param Q the queue
      * @param x the element to insert
      * @param <T> the type of elements in {@code Q}
      * @throws RuntimeException if {@code Q} is full
@@ -98,7 +98,7 @@ public final class Chapter10 {
      * Removes an element from a queue.
      * <p><span style="font-variant:small-caps;">Dequeue</span> from subchapter 10.1 and solution to exercise 10.1-4.</p>
      *
-     * @param Q the {@link Queue}
+     * @param Q the queue
      * @param <T> the type of elements in {@code Q}
      * @return the element removed from {@code Q}
      * @throws RuntimeException if {@code Q} is empty
@@ -120,7 +120,7 @@ public final class Chapter10 {
      * Inserts an element onto the first stack in a "double stack in a single array" implementation.
      * <p>Solution to exercise 10.1-2.</p>
      *
-     * @param A the {@link Array} containing two stacks
+     * @param A the array containing two stacks
      * @param x the element to insert
      * @param <T> the type of elements in {@code A}
      */
@@ -133,7 +133,7 @@ public final class Chapter10 {
      * Removes an element from the first stack in a "double stack in a single array" implementation.
      * <p>Solution to exercise 10.1-2.</p>
      *
-     * @param A the {@link Array} containing two stacks
+     * @param A the array containing two stacks
      * @param <T> the type of elements in {@code A}
      * @return the element removed from the first stack
      * @throws RuntimeException if the first stack is empty
@@ -150,7 +150,7 @@ public final class Chapter10 {
      * Checks if the first stack is empty in a "double stack in a single array" implementation.
      * <p>Solution to exercise 10.1-2.</p>
      *
-     * @param A the {@link Array} containing two stacks
+     * @param A the array containing two stacks
      * @param <T> the type of elements in {@code A}
      * @return {@code true} if the first stack is empty, or {@code false} otherwise
      */
@@ -162,7 +162,7 @@ public final class Chapter10 {
      * Inserts an element onto the second stack in a "double stack in a single array" implementation.
      * <p>Solution to exercise 10.1-2.</p>
      *
-     * @param A the {@link Array} containing two stacks
+     * @param A the array containing two stacks
      * @param x the element to insert
      * @param <T> the type of elements in {@code A}
      */
@@ -175,7 +175,7 @@ public final class Chapter10 {
      * Removes an element from the second stack in a "double stack in a single array" implementation.
      * <p>Solution to exercise 10.1-2.</p>
      *
-     * @param A the {@link Array} containing two stacks
+     * @param A the array containing two stacks
      * @param <T> the type of elements in {@code A}
      * @return the removed element from the second stack
      * @throws RuntimeException if the second stack is empty
@@ -192,7 +192,7 @@ public final class Chapter10 {
      * Checks if the second stack is empty in a "double stack in a single array" implementation.
      * <p>Solution to exercise 10.1-2.</p>
      *
-     * @param A the {@link Array} containing two stacks
+     * @param A the array containing two stacks
      * @param <T> the type of elements in {@code A}
      * @return {@code true} if the second stack is empty, or {@code false} otherwise
      */
@@ -204,7 +204,7 @@ public final class Chapter10 {
      * Checks if a queue is empty.
      * <p><span style="font-variant:small-caps;">Queue-Empty</span> from solution to exercise 10.1-4.</p>
      *
-     * @param Q the {@link Queue}
+     * @param Q the queue
      * @param <T> the type of elements in {@code Q}
      * @return {@code true} if {@code Q} is empty, or {@code false} otherwise
      */
@@ -216,7 +216,7 @@ public final class Chapter10 {
      * Inserts an element at the head of a deque.
      * <p><span style="font-variant:small-caps;">Head-Enqueue</span> from solution to exercise 10.1-5.</p>
      *
-     * @param D the {@link Deque}
+     * @param D the deque
      * @param x the element to insert
      * @param <T> the type of elements in {@code D}
      */
@@ -233,7 +233,7 @@ public final class Chapter10 {
      * Removes an element from the head of a deque.
      * <p><span style="font-variant:small-caps;">Head-Dequeue</span> from solution to exercise 10.1-5.</p>
      *
-     * @param D the {@link Deque}
+     * @param D the deque
      * @param <T> the type of elements in {@code D}
      * @return the element removed from {@code D}
      */
@@ -251,7 +251,7 @@ public final class Chapter10 {
      * Inserts an element at the tail of a deque.
      * <p><span style="font-variant:small-caps;">Tail-Enqueue</span> from solution to exercise 10.1-5.</p>
      *
-     * @param D the {@link Deque}
+     * @param D the deque
      * @param x the element to insert
      * @param <T> the type of elements in {@code D}
      */
@@ -268,7 +268,7 @@ public final class Chapter10 {
      * Removes an element from the tail of a deque.
      * <p><span style="font-variant:small-caps;">Tail-Dequeue</span> from solution to exercise 10.1-5.</p>
      *
-     * @param D the {@link Deque}
+     * @param D the deque
      * @param <T> the type of elements in {@code D}
      * @return the element removed from {@code D}
      */
@@ -282,11 +282,11 @@ public final class Chapter10 {
     }
 
     /**
-     * Implements the FIFO queue operation <span style="font-variant:small-caps;">Enqueue</span> using two stacks.
+     * Implements the queue operation <span style="font-variant:small-caps;">Enqueue</span> using two stacks.
      * <p>Solution to exercise 10.1-6.</p>
      *
-     * @param S1 the first {@link Stack}
-     * @param S2 the second {@link Stack}
+     * @param S1 the first stack
+     * @param S2 the second stack
      * @param x the element to insert to the queue
      * @param <T> the type of elements in the queue
      */
@@ -296,11 +296,11 @@ public final class Chapter10 {
     }
 
     /**
-     * Implements the FIFO queue operation <span style="font-variant:small-caps;">Dequeue</span> using two stacks.
+     * Implements the queue operation <span style="font-variant:small-caps;">Dequeue</span> using two stacks.
      * <p>Solution to exercise 10.1-6.</p>
      *
-     * @param S1 the first {@link Stack}
-     * @param S2 the second {@link Stack}
+     * @param S1 the first stack
+     * @param S2 the second stack
      * @param <T> the type of elements in {@code S1} and {@code S2}
      * @return the element removed from the queue
      * @throws RuntimeException if the queue is empty
@@ -320,11 +320,11 @@ public final class Chapter10 {
     }
 
     /**
-     * Implements the stack operation <span style="font-variant:small-caps;">Push</span> using two FIFO queues.
+     * Implements the stack operation <span style="font-variant:small-caps;">Push</span> using two queues.
      * <p>Solution to exercise 10.1-7.</p>
      *
-     * @param Q1 the first {@link Queue}
-     * @param Q2 the second {@link Queue}
+     * @param Q1 the first queue
+     * @param Q2 the second queue
      * @param x the element to insert
      * @param <T> the type of elements on the stack
      */
@@ -334,11 +334,11 @@ public final class Chapter10 {
     }
 
     /**
-     * Implements the stack operation <span style="font-variant:small-caps;">Pop</span> using two FIFO queues.
+     * Implements the stack operation <span style="font-variant:small-caps;">Pop</span> using two queues.
      * <p>Solution to exercise 10.1-7.</p>
      *
-     * @param Q1 the first {@link Queue}
-     * @param Q2 the second {@link Queue}
+     * @param Q1 the first queue
+     * @param Q2 the second queue
      * @param <T> the type of elements on the stack
      * @return the element removed from the stack
      * @throws RuntimeException if the stack is empty
@@ -364,7 +364,7 @@ public final class Chapter10 {
      * Finds an element in a doubly linked list.
      * <p><span style="font-variant:small-caps;">List-Search</span> from subchapter 10.2.</p>
      *
-     * @param L the doubly linked {@link List}
+     * @param L the doubly linked list
      * @param k the key of the element to find
      * @param <T> the type of elements in {@code L}
      * @return the element of key {@code k} in list {@code L}, or {@code null} if {@code L} does not contain such element
@@ -381,7 +381,7 @@ public final class Chapter10 {
      * Inserts an element into a doubly linked list.
      * <p><span style="font-variant:small-caps;">List-Insert</span> from suchapter 10.2.</p>
      *
-     * @param L the doubly linked {@link List}
+     * @param L the doubly linked list
      * @param x the element to insert
      * @param <T> the type of elements in {@code L}
      */
@@ -398,7 +398,7 @@ public final class Chapter10 {
      * Removes an element from a doubly linked list.
      * <p><span style="font-variant:small-caps;">List-Delete</span> from subchapter 10.2.</p>
      *
-     * @param L the doubly linked {@link List}
+     * @param L the doubly linked list
      * @param x the element in {@code L} to remove
      * @param <T> the type of elements in {@code L}
      */
@@ -417,7 +417,7 @@ public final class Chapter10 {
      * Removes an element from a doubly linked list with a sentinel.
      * <p><span style="font-variant:small-caps;">List-Delete'</span> from subchapter 10.2.</p>
      *
-     * @param L the doubly linked {@link ListWithSentinel}
+     * @param L the doubly linked list with a sentinel
      * @param x the element in {@code L} to remove
      * @param <T> the type of elements in {@code L}
      */
@@ -431,7 +431,7 @@ public final class Chapter10 {
      * Searches for an element in a doubly linked list with a sentinel.
      * <p><span style="font-variant:small-caps;">List-Search'</span> from subchapter 10.2.</p>
      *
-     * @param L the doubly linked {@link ListWithSentinel}
+     * @param L the doubly linked list with a sentinel
      * @param k the key of the element to find
      * @param <T> the type of elements in {@code L}
      * @return the element with key {@code k} in {@code L}, or {@code null} if {@code L} does not contain such element
@@ -448,7 +448,7 @@ public final class Chapter10 {
      * Inserts an element in a doubly linked list with a sentinel.
      * <p><span style="font-variant:small-caps;">List-Insert'</span> from subchapter 10.2.</p>
      *
-     * @param L the doubly linked {@link ListWithSentinel}
+     * @param L the doubly linked list with a sentinel
      * @param x the element to insert
      * @param <T> the type of elements in {@code L}
      */
@@ -523,11 +523,11 @@ public final class Chapter10 {
     }
 
     /**
-     * Implements the FIFO queue operation <span style="font-variant:small-caps;">Enqueue</span> using a singly linked list.
+     * Implements the queue operation <span style="font-variant:small-caps;">Enqueue</span> using a singly linked list.
      * <p><span style="font-variant:small-caps;">Singly-Linked-List-Enqueue</span> from solution to exercise 10.2-3.</p>
      *
      * @param L the singly linked list
-     * @param k the key of the element to insert into a FIFO queue
+     * @param k the key of the element to insert into a queue
      * @param <T> the type of elements in {@code L}
      */
     public static <T> void singlyLinkedListEnqueue(SinglyLinkedListWithTail<T> L, T k) {
@@ -541,13 +541,13 @@ public final class Chapter10 {
     }
 
     /**
-     * Implements the FIFO queue operation <span style="font-variant:small-caps;">Dequeue</span> using a singly linked list.
+     * Implements the queue operation <span style="font-variant:small-caps;">Dequeue</span> using a singly linked list.
      * <p><span style="font-variant:small-caps;">Singly-Linked-List-Dequeue</span> from solution to exercise 10.2-3.</p>
      *
      * @param L the singly linked list
      * @param <T> the type of elements in {@code L}
-     * @return the element removed from the FIFO queue
-     * @throws RuntimeException if the FIFO queue is empty
+     * @return the element removed from the queue
+     * @throws RuntimeException if the queue is empty
      */
     public static <T> T singlyLinkedListDequeue(SinglyLinkedListWithTail<T> L) {
         if (L.head == null) {

@@ -21,9 +21,9 @@ public final class Chapter7 {
      * Sorts elements using quicksort.
      * <p><span style="font-variant:small-caps;">Quicksort</span> from subchapter 7.1.</p>
      *
-     * @param A the {@link Array} of elements to sort
-     * @param p the index of the beginning of subarray in {@code A} to sort
-     * @param r the index of the end of subarray in {@code A} to sort
+     * @param A the array of elements to sort
+     * @param p the index of the beginning of subarray in {@code A} being sorted
+     * @param r the index of the end of subarray in {@code A} being sorted
      * @param <T> the type of elements in {@code A}
      */
     public static <T extends Comparable> void quicksort(Array<T> A, int p, int r) {
@@ -39,9 +39,9 @@ public final class Chapter7 {
      * less than or equal to the pivot element, and the second subarray will contain elements greater than the pivot element.
      * <p><span style="font-variant:small-caps;">Partition</span> from subchapter 7.1</p>
      *
-     * @param A the {@link Array} of elements to partition
-     * @param p the index of the beginning of subarray in {@code A} to partition
-     * @param r the index of the end of subarray in {@code A} to partition and the index of the pivot element
+     * @param A the array of elements to partition
+     * @param p the index of the beginning of subarray in {@code A} being partitioned
+     * @param r the index of the end of subarray in {@code A} being partitioned and the index of the pivot element
      * @param <T> the type of elements in {@code A}
      * @return the index of the pivot element after partitioning
      */
@@ -63,9 +63,9 @@ public final class Chapter7 {
      * less than or equal to the pivot element, and the second subarray will contain elements greater than the pivot element.
      * <p><span style="font-variant:small-caps;">Randomized-Partition</span> from subchapter 7.3.</p>
      *
-     * @param A the {@link Array} of elements to partition
-     * @param p the index of the beginning of subarray in {@code A} to partition
-     * @param r the index of the end of subarray in {@code A} to partition
+     * @param A the array of elements to partition
+     * @param p the index of the beginning of subarray in {@code A} being partitioned
+     * @param r the index of the end of subarray in {@code A} being partitioned
      * @param <T> the type of elements in {@code A}
      * @return the index of the pivot element after partitioning
      */
@@ -79,9 +79,9 @@ public final class Chapter7 {
      * Sorts elements using quicksort with randomized partition.
      * <p><span style="font-variant:small-caps;">Randomized-Quicksort</span> from subchapter 7.3.</p>
      *
-     * @param A the {@link Array} of elements to sort
-     * @param p the index of the beginning of subarray in {@code A} to sort
-     * @param r the index of the end of subarray in {@code A} to sort
+     * @param A the array of elements to sort
+     * @param p the index of the beginning of subarray in {@code A} being sorted
+     * @param r the index of the end of subarray in {@code A} being sorted
      * @param <T> the type of elements in {@code A}
      */
     public static <T extends Comparable> void randomizedQuicksort(Array<T> A, int p, int r) {
@@ -96,9 +96,9 @@ public final class Chapter7 {
      * Sorts elements in a nearly sorted array. Uses quicksort to sort long subarrays and insertion sort to sort short subarrays.
      * <p>Exercise 7.4-5.</p>
      *
-     * @param A the {@link Array} of elements to sort
-     * @param p the index of the beginning of subarray in {@code A} to sort
-     * @param r the index of the end of subarray in {@code A} to sort
+     * @param A the array of elements to sort
+     * @param p the index of the beginning of subarray in {@code A} being sorted
+     * @param r the index of the end of subarray in {@code A} being sorted
      * @param k the minimum size of a subarray that should be sorted using quicksort
      * @param <T> the type of elements in {@code A}
      */
@@ -126,9 +126,9 @@ public final class Chapter7 {
      * The original version of partition procedure.
      * <p><span style="font-variant:small-caps;">Hoare-Partition</span> from problem 7-1.</p>
      *
-     * @param A the {@link Array} of elements to partition
-     * @param p the index of the beginning of subarray in {@code A} to partition
-     * @param r the index of the end of subarray in {@code A} to partition
+     * @param A the array of elements to partition
+     * @param p the index of the beginning of subarray in {@code A} being partitioned
+     * @param r the index of the end of subarray in {@code A} being partitioned
      * @param <T> the type of elements in {@code A}
      * @return the index of the pivot element after partitioning
      */
@@ -155,9 +155,9 @@ public final class Chapter7 {
      * The original version of quicksort.
      * <p><span style="font-variant:small-caps;">Hoare-Quicksort</span> from solution to problem 7-1(e).</p>
      *
-     * @param A the {@link Array} of elements to sort
-     * @param p the index of the beginning of subarray in {@code A} to sort
-     * @param r the index of the end of subarray in {@code A} to sort
+     * @param A the array of elements to sort
+     * @param p the index of the beginning of subarray in {@code A} being sorted
+     * @param r the index of the end of subarray in {@code A} being sorted
      * @param <T> the type of elements in {@code A}
      */
     public static <T extends Comparable> void hoareQuicksort(Array<T> A, int p, int r) {
@@ -172,9 +172,9 @@ public final class Chapter7 {
      * Sorts elements inefficiently.
      * <p><span style="font-variant:small-caps;">Stooge-Sort</span> from problem 7-3.</p>
      *
-     * @param A the {@link Array} of elements to sort
-     * @param i the index of the beginning of subarray in {@code A} to sort
-     * @param j the index of the end of subarray in {@code A} to sort
+     * @param A the array of elements to sort
+     * @param i the index of the beginning of subarray in {@code A} being sorted
+     * @param j the index of the end of subarray in {@code A} being sorted
      * @param <T> the type of elements in {@code A}
      */
     public static <T extends Comparable> void stoogeSort(Array<T> A, int i, int j) {
@@ -194,9 +194,9 @@ public final class Chapter7 {
      * Sorts elements using a version of quicksort that simulates tail recursion.
      * <p><span style="font-variant:small-caps;">Quicksort'</span> from problem 7-4.</p>
      *
-     * @param A the {@link Array} of elements to sort
-     * @param p the index of the beginning of subarray in {@code A} to sort
-     * @param r the index of the end of subarray in {@code A} to sort
+     * @param A the array of elements to sort
+     * @param p the index of the beginning of subarray in {@code A} being sorted
+     * @param r the index of the end of subarray in {@code A} being sorted
      * @param <T> the type of elements in {@code A}
      */
     public static <T extends Comparable> void quicksort_(Array<T> A, int p, int r) {
@@ -211,9 +211,9 @@ public final class Chapter7 {
      * Sorts elements using a version of quicksort that uses recursion stack of at most logarithmic depth.
      * <p><span style="font-variant:small-caps;">Quicksort''</span> from solution to problem 7-4(c).</p>
      *
-     * @param A the {@link Array} of elements to sort
-     * @param p the index of the beginning of subarray in {@code A} to sort
-     * @param r the index of the end of subarray in {@code A} to sort
+     * @param A the array of elements to sort
+     * @param p the index of the beginning of subarray in {@code A} being sorted
+     * @param r the index of the end of subarray in {@code A} being sorted
      * @param <T> the type of elements in {@code A}
      */
     public static <T extends Comparable> void quicksort__(Array<T> A, int p, int r) {
@@ -235,9 +235,9 @@ public final class Chapter7 {
      * and the second subarray will contain elements greater than the pivot element.
      * <p>Problem 7-5.</p>
      *
-     * @param A the {@link Array} of elements to partition
-     * @param p the index of the beginning of subarray in {@code A} to partition
-     * @param r the index of the end of subarray in {@code A} to partition
+     * @param A the array of elements to partition
+     * @param p the index of the beginning of subarray in {@code A} being partitioned
+     * @param r the index of the end of subarray in {@code A} being partitioned
      * @param <T> the type of elements in {@code A}
      * @return the index of the pivot element after partitioning
      */
@@ -259,12 +259,13 @@ public final class Chapter7 {
     }
 
     /**
-     * Sorts intervals.
+     * Fuzzy-sorts an array of intervals. Produces a permutation {@code i_1, i_2, ..., i_n} of the intervals
+     * such that there exist {@code c_j} from {@code [a_i_j, b_i_j]} satisfying {@code c_1 <= c_2 <= ... <= c_n}.
      * <p><span style="font-variant:small-caps;">Fuzzy-Sort</span> from solution to problem 7-6(a).</p>
      *
-     * @param A the {@link Array} of intervals to sort
-     * @param p the index of the beginning of subarray in {@code A} to sort
-     * @param r the index of the end of subarray in {@code A} to sort
+     * @param A the array of intervals to sort
+     * @param p the index of the beginning of subarray in {@code A} being sorted
+     * @param r the index of the end of subarray in {@code A} being sorted
      */
     public static void fuzzySort(Array<Interval> A, int p, int r) {
         if (p < r) {
@@ -275,13 +276,16 @@ public final class Chapter7 {
     }
 
     /**
-     * Partitions intervals.
+     * Partitions an array of intervals into three subarrays around randomly chosen pivot interval.
+     * The first subarray will contain intervals laying entirely to the left from the pivot interval,
+     * the second subarray will contain intervals overlapping with the pivot interval,
+     * and the third subarray will contain intervals laying entirely to the right from the pivot interval.
      * <p><span style="font-variant:small-caps;">Fuzzy-Partition</span> from solution to problem 7-6(a).</p>
      *
-     * @param A the {@link Array} of intervals to partition
-     * @param p the index of the beginning of subarray in {@code A} to partition
-     * @param r the index of the end of subarray in {@code A} to partition
-     * @return
+     * @param A the array of intervals to partition
+     * @param p the index of the beginning of subarray in {@code A} being partitioned
+     * @param r the index of the end of subarray in {@code A} being partitioned
+     * @return the pair of indexes bounding the part of {@code A} containing intervals overlapping with the pivot interval
      */
     private static Pair<Integer, Integer> fuzzyPartition(Array<Interval> A, int p, int r) {
         A.exch(r, random(p, r));

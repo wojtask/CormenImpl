@@ -1,7 +1,16 @@
 package pl.kwojtas.cormenimpl.util;
 
+/**
+ * Implements a Young tableau.
+ */
 public class Young extends Matrix<Integer> {
 
+    /**
+     * Creates an empty Young tableau of given dimensions.
+     *
+     * @param rows the rows number of the Young tableau
+     * @param columns the columns number of the Young tableau
+     */
     public Young(int rows, int columns) {
         super(matrixOfInfinities(rows, columns));
     }
@@ -17,6 +26,11 @@ public class Young extends Matrix<Integer> {
         return infinities;
     }
 
+    /**
+     * Creates a Young tableau from given arrays representing rows.
+     *
+     * @param rows the initial rows of the Young tableau
+     */
     @SafeVarargs
     public Young(Array<Integer>... rows) {
         super(rows);
