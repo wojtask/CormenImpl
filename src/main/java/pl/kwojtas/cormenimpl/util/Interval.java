@@ -6,20 +6,20 @@ package pl.kwojtas.cormenimpl.util;
 public class Interval {
 
     /**
-     * The beginning of the interval.
+     * The lower bound of the interval.
      */
     public double a;
 
     /**
-     * The end of the interval.
+     * The upper bound of the interval.
      */
     public double b;
 
     /**
-     * Creates an interval from given beginning and end.
+     * Creates an interval from a given lower bound and upper bound.
      *
-     * @param a the beginning of the new interval
-     * @param b the end of the new interval
+     * @param a the lower bound of the new interval
+     * @param b the upper bound of the new interval
      */
     public Interval(double a, double b) {
         this.a = a;

@@ -69,9 +69,9 @@ public class CircularList<T> extends SinglyLinkedList<T> {
     }
 
     /**
-     * Transforms the list to the array.
+     * Transforms the list to an array.
      *
-     * @return the array containing all the elements in the list
+     * @return an array containing all the elements in the list
      */
     public Array<T> toArray() {
         if (head == null) {

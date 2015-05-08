@@ -1,16 +1,16 @@
 package pl.kwojtas.cormenimpl.util;
 
 /**
- * Implements an arbitrary rooted tree using the "left-child, right-sibling representation".
+ * Implements an arbitrary rooted tree using the left-child, right-sibling representation.
  *
  * @param <T> the type of elements in the arbitrary rooted tree
  */
 public class MultiaryTree<T> {
 
     /**
-     * Implements an arbitrary rooted tree's node using the "left-child, right-sibling representation".
+     * Implements an arbitrary rooted tree's node using the left-child, right-sibling representation.
      *
-     * @param <U> the type of key in the node
+     * @param <U> the type of the node's key
      */
     public static class Node<U> {
 

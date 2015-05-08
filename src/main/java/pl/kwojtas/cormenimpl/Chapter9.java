@@ -25,12 +25,12 @@ public final class Chapter9 {
     private Chapter9() { }
 
     /**
-     * Finds the smallest value in an array.
+     * Finds the smallest element in an array.
      * <p><span style="font-variant:small-caps;">Minimum</span> from subchapter 9.1.</p>
      *
      * @param A the array to scan
      * @param <T> the type of elements in {@code A}
-     * @return the smallest value in {@code A}
+     * @return the smallest element in {@code A}
      */
     public static <T extends Comparable> T minimum(Array<T> A) {
         T min = A.at(1);
@@ -43,13 +43,13 @@ public final class Chapter9 {
     }
 
     /**
-     * Simultaneously finds the smallest value and the largest value in an array.
+     * Simultaneously finds the smallest element and the largest element in an array.
      * <p>Subchapter 9.1.</p>
      *
      * @param A the array to scan
      * @param <T> the type of elements in {@code A}
-     * @return the pair {@code <a_1, a_2>} such that {@code a_1} is the smallest value in {@code A}
-     * and {@code a_2} is the largest value in {@code A}
+     * @return the pair <tt>(a<sub>1</sub>, a<sub>2</sub>)</tt> such that <tt>a<sub>1</sub></tt>
+     * is the smallest element in {@code A} and <tt>a<sub>2</sub></tt> is the largest element in {@code A}
      */
     public static <T extends Comparable> Pair<T, T> minimumMaximum(Array<T> A) {
         int n = A.length;
@@ -88,7 +88,7 @@ public final class Chapter9 {
     }
 
     /**
-     * Finds the {@code i}-th order statistic (the {@code i}-th smallest value) in an array.
+     * Finds the {@code i}-th order statistic (the {@code i}-th smallest element) in an array.
      * <p><span style="font-variant:small-caps;">Randomized-Select</span> from subchapter 9.2.</p>
      *
      * @param A the array to scan
@@ -96,7 +96,7 @@ public final class Chapter9 {
      * @param r the index of the end of subarray in {@code A} being scanned
      * @param i the number of order statistic to find (1 - the smallest element)
      * @param <T> the type of elements in {@code A}
-     * @return the {@code i}-th order statistic ({@code i}-th smallest value) in {@code A}
+     * @return the {@code i}-th order statistic ({@code i}-th smallest element) in {@code A}
      */
     public static <T extends Comparable> T randomizedSelect(Array<T> A, int p, int r, int i) {
         if (p == r) {
@@ -114,7 +114,7 @@ public final class Chapter9 {
     }
 
     /**
-     * Finds the {@code i}-th order statistic (the {@code i}-th smallest value) in an array - an iterative version.
+     * Finds the {@code i}-th order statistic (the {@code i}-th smallest element) in an array - an iterative version.
      * <p><span style="font-variant:small-caps;">Iterative-Randomized-Select</span> from solution to exercise 9.2-3.</p>
      *
      * @param A the array to scan
@@ -122,7 +122,7 @@ public final class Chapter9 {
      * @param r the index of the end of subarray in {@code A} being scanned
      * @param i the number of order statistic to find (1 - the smallest element)
      * @param <T> the type of elements in {@code A}
-     * @return the {@code i}-th order statistic ({@code i}-th smallest value) in {@code A}
+     * @return the {@code i}-th order statistic (the {@code i}-th smallest element) in {@code A}
      */
     public static <T extends Comparable> T iterativeRandomizedSelect(Array<T> A, int p, int r, int i) {
         while (p < r) {
@@ -141,7 +141,7 @@ public final class Chapter9 {
     }
 
     /**
-     * Finds the {@code i}-th order statistic (the {@code i}-th smallest value) in an array - an efficient version.
+     * Finds the {@code i}-th order statistic (the {@code i}-th smallest element) in an array - an efficient version.
      * <p>Subchapter 9.3.</p>
      *
      * @param A the array to scan
@@ -149,7 +149,7 @@ public final class Chapter9 {
      * @param r the index of the end of subarray in {@code A} being scanned
      * @param i the number of order statistic to find (1 - the smallest element)
      * @param <T> the type of elements in {@code A}
-     * @return the {@code i}-th order statistic ({@code i}-th smallest value) in {@code A}
+     * @return the {@code i}-th order statistic (the {@code i}-th smallest element) in {@code A}
      */
     public static <T extends Comparable> T select(Array<T> A, int p, int r, int i) {
         int n = r - p + 1;
@@ -198,10 +198,10 @@ public final class Chapter9 {
     }
 
     /**
-     * Sorts the elements using the optimal version of quicksort.
+     * Sorts elements using the optimal version of quicksort.
      * <p>Solution to exercise 9.3-3.</p>
      *
-     * @param A the array to sort
+     * @param A the array of elements to sort
      * @param p the index of the beginning of subarray in {@code A} being sorted
      * @param r the index of the end of subarray in {@code A} being sorted
      * @param <T> the type of elements in {@code A}
@@ -216,7 +216,7 @@ public final class Chapter9 {
     }
 
     /**
-     * Finds the {@code i}-th order statistic (the {@code i}-th smallest value) in an array
+     * Finds the {@code i}-th order statistic (the {@code i}-th smallest element) in an array
      * using a subroutine for finding the median of the array.
      * <p>Solution to exercise 9.3-5.</p>
      *
@@ -225,7 +225,7 @@ public final class Chapter9 {
      * @param r the index of the end of subarray in {@code A} being scanned
      * @param i the number of order statistic to find (1 - the smallest element)
      * @param <T> the type of elements in {@code A}
-     * @return the {@code i}-th order statistic ({@code i}-th smallest value) in {@code A}
+     * @return the {@code i}-th order statistic (the {@code i}-th smallest element) in {@code A}
      */
     public static <T extends Comparable> T selectUsingMedianSubroutine(Array<T> A, int p, int r, int i) {
         if (p == r) {
@@ -248,7 +248,7 @@ public final class Chapter9 {
      * Finds quantiles of a set.
      * <p><span style="font-variant:small-caps;">Quantiles</span> from solution to exercise 9.3-6.</p>
      *
-     * @param A the array of elements of the set
+     * @param A the array containing elements of the set
      * @param p the index of the beginning of subarray in {@code A} being scanned
      * @param r the index of the end of subarray in {@code A} being scanned
      * @param k the order of quantiles to find
@@ -278,8 +278,8 @@ public final class Chapter9 {
      * Finds elements closest to the median of a set.
      * <p><span style="font-variant:small-caps;">Median-Proximity</span> from solution to exercise 9.3-7.</p>
      *
-     * @param S the array of elements of the set
-     * @param k the proximity of the median to find
+     * @param S the array containing elements of the set
+     * @param k the proximity of the median
      * @return the set of {@code k} elements closest to the median of {@code S}
      */
     public static Set<Integer> medianProximity(Array<Integer> S, int k) {
@@ -425,9 +425,9 @@ public final class Chapter9 {
      * Finds the solution to the 2-dimensional post-office location problem with the Manhattan distance.
      * <p>Solution to problem 9-2(e).</p>
      *
-     * @param A the array of points in a plane
+     * @param A the array of points in a 2-dimensional space
      * @param w the array of weights of points from {@code A}, such that {@code w[i]} is the weight of {@code A[i]}
-     * @return the point on a plane that minimizes weighted Manhattan distance from points from {@code A}
+     * @return the point in the 2-dimensional space that minimizes weighted Manhattan distance from points from {@code A}
      * using weights from {@code w}
      */
     public static Point2D postOfficeLocation2D(Array<Point2D> A, Array<Double> w) {
@@ -444,14 +444,14 @@ public final class Chapter9 {
     }
 
     /**
-     * Finds the {@code i}-th order statistic (the {@code i}-th smallest value) in an array
+     * Finds the {@code i}-th order statistic (the {@code i}-th smallest element) in an array
      * - a version optimized for small {@code i}'s.
      * <p>Solution to problem 9-3(a).</p>
      *
      * @param A the array to scan
      * @param i the number of order statistic to find (1 - the smallest element)
      * @param <T> the type of elements in {@code A}
-     * @return the {@code i}-th order statistic ({@code i}-th smallest value) in {@code A}
+     * @return the {@code i}-th order statistic (the {@code i}-th smallest element) in {@code A}
      */
     public static <T extends Comparable> T smallOrderSelect(Array<T> A, int i) {
         smallOrderSelect(A, 1, A.length, i);

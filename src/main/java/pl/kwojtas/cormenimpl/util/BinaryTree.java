@@ -10,7 +10,7 @@ public class BinaryTree<T> {
     /**
      * Implements a binary tree's node.
      *
-     * @param <U> the type of key in the node
+     * @param <U> the type of the node's key
      */
     public static class Node<U> {
 
@@ -20,7 +20,7 @@ public class BinaryTree<T> {
         public U key;
 
         /**
-         * The parent node in a binary tree.
+         * The parent node.
          */
         public Node<U> p;
 
@@ -52,7 +52,7 @@ public class BinaryTree<T> {
     /**
      * Returns the number of elements in the tree.
      *
-     * @return the number of elements in {@code this}
+     * @return the number of elements in the tree
      */
     public int getSize() {
         return getSize(root);

@@ -8,8 +8,8 @@ public class Young extends Matrix<Integer> {
     /**
      * Creates an empty Young tableau of given dimensions.
      *
-     * @param rows the rows number of the Young tableau
-     * @param columns the columns number of the Young tableau
+     * @param rows the number of rows of the Young tableau
+     * @param columns the number of columns of the Young tableau
      */
     public Young(int rows, int columns) {
         super(matrixOfInfinities(rows, columns));

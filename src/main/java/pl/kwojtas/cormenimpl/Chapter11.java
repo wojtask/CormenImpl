@@ -83,7 +83,7 @@ public final class Chapter11 {
      *
      * @param V the 0-based indexed array of bits representing the bit vector
      * @param k the key of the element to find
-     * @return 1, if {@code V} contains element of key {@code k}, 0 otherwise
+     * @return 1 if {@code V} contains element of key {@code k}, 0 otherwise
      */
     public static int bitVectorSearch(ZeroBasedIndexedArray<Integer> V, int k) {
         return V.at(k);
@@ -161,9 +161,23 @@ public final class Chapter11 {
      * @param <T> the type of elements in the huge array
      */
     public static class HugeArray<T> {
+
+        /**
+         * The array containing indexes of elements in stack {@code S}.
+         */
         public ZeroBasedIndexedArray<Integer> T;
+
+        /**
+         * The auxiliary stack containing the elements of the huge array.
+         */
         public Stack<Element<T>> S;
 
+        /**
+         * Creates a huge array with a given size and stack capacity.
+         *
+         * @param size the size of the new huge array
+         * @param capacity the capacity of the auxiliary stack of the new huge array
+         */
         public HugeArray(int size, int capacity) {
             T = ZeroBasedIndexedArray.withLength(size);
             for (int i = 0; i <= size - 1; i++) {
@@ -179,7 +193,7 @@ public final class Chapter11 {
      *
      * @param H the huge array representing the dictionary to scan
      * @param k the key of the element to find
-     * @param <T> the type of elements' values in {@code T}
+     * @param <T> the type of elements' values in {@code H}
      * @return the element of key {@code k} in {@code H}, or {@code null} if {@code H} does not contain such element
      */
     public static <T> Element<T> hugeArraySearch(HugeArray<T> H, int k) {
@@ -323,7 +337,7 @@ public final class Chapter11 {
     }
 
     /**
-     * Searches for an element in a hash table using an in-place chaining for collision resolution
+     * Searches for an element in a hash table using an in-place chaining for collision resolution.
      * <p>Solution to exercise 11.2-4.</p>
      *
      * @param T the hash table using an in-place chaining for collision resolution
@@ -397,7 +411,7 @@ public final class Chapter11 {
      *
      * @param T the hash table using open addressing
      * @param k the key of the element to find
-     * @return the element of key {code k}, or {@code null} if {@code T} does not contain such element
+     * @return the element of key {@code k}, or {@code null} if {@code T} does not contain such element
      */
     public static Integer hashSearch(HashTableWithOpenAddressing T, int k) {
         int m = T.length;
@@ -437,7 +451,7 @@ public final class Chapter11 {
     }
 
     /**
-     * Inserts an element into a hash table using open addressing - alternative version.
+     * Inserts an element into a hash table using open addressing - an alternative version.
      * <p><span style="font-variant:small-caps;">Hash-Insert'</span> from solution to exercise 11.4-2.</p>
      *
      * @param T the hash table using open addressing

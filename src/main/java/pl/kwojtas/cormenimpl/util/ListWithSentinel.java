@@ -10,7 +10,7 @@ public class ListWithSentinel<T> {
     /**
      * Implements a doubly linked list's node.
      *
-     * @param <U> the type of key in the node
+     * @param <U> the type of the node's key
      */
     public static class Node<U> {
 
@@ -68,7 +68,7 @@ public class ListWithSentinel<T> {
     }
 
     /**
-     * Creates a doubly linked list wit a sentinel by copying an existing doubly linked list with a sentinel.
+     * Creates a doubly linked list with a sentinel by copying an existing doubly linked list with a sentinel.
      *
      * @param otherList the list to be copied
      */
@@ -104,7 +104,7 @@ public class ListWithSentinel<T> {
     }
 
     /**
-     * Transforms the list to the array.
+     * Transforms the list to an array.
      *
      * @return the array containing all the elements in the list
      */

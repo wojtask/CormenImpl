@@ -13,7 +13,7 @@ public class SinglyLinkedListWithTail<T> extends SinglyLinkedList<T> {
     public SinglyLinkedListWithTail.Node<T> tail;
 
     /**
-     * Creates a list from given elements.
+     * Creates a list with tail from given elements.
      *
      * @param elements the initial contents of the list
      */
@@ -67,7 +67,7 @@ public class SinglyLinkedListWithTail<T> extends SinglyLinkedList<T> {
     }
 
     /**
-     * Transforms the list to the array.
+     * Transforms the list to an array.
      *
      * @return the array containing all the elements in the list
      */

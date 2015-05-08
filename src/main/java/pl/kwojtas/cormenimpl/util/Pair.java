@@ -19,7 +19,7 @@ public class Pair<T1, T2> {
     public T2 second;
 
     /**
-     * Creates an ordered pair from the two elements.
+     * Creates an ordered pair from given elements.
      *
      * @param first the first element
      * @param second the second element

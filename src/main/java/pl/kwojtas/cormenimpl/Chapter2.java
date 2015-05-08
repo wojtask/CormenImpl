@@ -77,7 +77,7 @@ public final class Chapter2 {
      *
      * @param A the {@code n}-element array containing bits of integer {@code a} from the least to the most significant
      * @param B the {@code n}-element array containing bits of integer {@code b} from the least to the most significant
-     * @return the {@code (n + 1)}-element array containing bits of {@code a + b} from the least to the most significant
+     * @return the {@code (n + 1)}-element array containing bits of integer {@code a + b} from the least to the most significant
      */
     public static Array<Integer> binaryAdd(Array<Integer> A, Array<Integer> B) {
         int n = A.length;
@@ -117,7 +117,7 @@ public final class Chapter2 {
      * Merges two sorted subarrays {@code A[p..q]} and {@code A[q + 1..r]} into one sorted array {@code A[p..r]}.
      * <p><span style="font-variant:small-caps;">Merge</span> from subchapter 2.3.</p>
      *
-     * @param A the array of elements containing subarrays to merge
+     * @param A the array containing subarrays to merge
      * @param p the index of the beginning of the first subarray in {@code A} being merged
      * @param q the index of the end of the first subarray in {@code A} being merged
      * @param r the index of end of the second subarray in {@code A} being merged
@@ -201,13 +201,13 @@ public final class Chapter2 {
     }
 
     /**
-     * Searches for an element in an array using recursive binary search.
+     * Searches for an element in an array using recursive version of binary search.
      * <p><span style="font-variant:small-caps;">Recursive-Binary-Search</span> from solution to exercise 2.3-5.</p>
      *
      * @param A the array to scan
      * @param v the element to find
-     * @param low the index of the beginning of the subarray in {@code A} to search in
-     * @param high the index of the end of the subarray in {@code A} to search in
+     * @param low the index of the beginning of the subarray in {@code A} being scanned
+     * @param high the index of the end of the subarray in {@code A} being scanned
      * @param <T> the type of elements in {@code A}
      * @return index {@code i} such that {@code A[i] = v}, or {@code null} if {@code v} does not appear in {@code A}
      */
@@ -226,7 +226,7 @@ public final class Chapter2 {
     }
 
     /**
-     * Searches for an element in an array using iterative binary search.
+     * Searches for an element in an array using iterative version of binary search.
      * <p><span style="font-variant:small-caps;">Iterative-Binary-Search</span> from solution to exercise 2.3-5.</p>
      *
      * @param A the array to scan
@@ -255,7 +255,7 @@ public final class Chapter2 {
      * Searches for a sum of two elements in a set.
      * <p><span style="font-variant:small-caps;">Sum-Search</span> from solution to exercise 2.3-7.</p>
      *
-     * @param S the array of elements of the set
+     * @param S the array containing elements of the set
      * @param x the sum to find
      * @return {@code true} if the set contains two elements that sum up to {@code x}, or {@code false} otherwise
      */
@@ -306,7 +306,7 @@ public final class Chapter2 {
     }
 
     /**
-     * Evaluates the value of a polynomial for a given argument using naive method.
+     * Evaluates the value of a polynomial for a given argument using the naive method.
      * <p>Solution to problem 2-3(b).</p>
      *
      * @param A the 0-based indexed array containing coefficients of the polynomial from the least to the most significant
@@ -330,9 +330,9 @@ public final class Chapter2 {
      * Counts inversions in an array.
      * <p><span style="font-variant:small-caps;">Count-Inversions</span> from solution to problem 2-4(d).</p>
      *
-     * @param A the array of elements
-     * @param p the index of the beginning of subarray in {@code A} to count inversions in
-     * @param r the index of the end of subarray in {@code A} to count inversions in
+     * @param A the array of elements to count inversions in
+     * @param p the index of the beginning of subarray in {@code A} that inversions are being counted in
+     * @param r the index of the end of subarray in {@code A} that inversions are being counted in
      * @return the number of inversions in {@code A}
      */
     public static int countInversions(Array<Integer> A, int p, int r) {

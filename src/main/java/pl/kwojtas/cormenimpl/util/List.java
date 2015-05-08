@@ -10,9 +10,10 @@ public class List<T> {
     /**
      * Implements a doubly linked list's node.
      *
-     * @param <U> the type of key in the node
+     * @param <U> the type of the node's key
      */
     public static class Node<U> {
+
         /**
          * The key.
          */
@@ -100,7 +101,7 @@ public class List<T> {
     }
 
     /**
-     * Transforms the list to the array.
+     * Transforms the list to an array.
      *
      * @return the array containing all the elements in the list
      */

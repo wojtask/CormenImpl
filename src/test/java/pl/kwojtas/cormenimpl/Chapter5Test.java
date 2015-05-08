@@ -25,6 +25,17 @@ public class Chapter5Test {
     }
 
     @Test
+    public void shouldFlipACoinUsingUnbiasedRandom() {
+        // given
+
+        // when
+        int pickedNumber = Chapter5.unbiasedRandom();
+
+        // then
+        assertTrue(pickedNumber == 0 || pickedNumber == 1);
+    }
+
+    @Test
     public void shouldPermuteArrayBySorting() {
         // given
         Array<Integer> array = new Array<>(5,7,9,2,6,8,6,6,3,1,7,8);

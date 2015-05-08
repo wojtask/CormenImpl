@@ -15,17 +15,17 @@ public class HashTableWithFreeList<T> extends ZeroBasedIndexedArray<HashTableWit
     public static class Node<U> {
 
         /**
-         * The element containing a key and a satellite data.
+         * The element containing a key and satellite data.
          */
         public Element<U> element;
 
         /**
-         * The previous node.
+         * The index of the previous node.
          */
         public Integer prev;
 
         /**
-         * The next node.
+         * The index of the next node.
          */
         public Integer next;
 
@@ -36,7 +36,7 @@ public class HashTableWithFreeList<T> extends ZeroBasedIndexedArray<HashTableWit
     }
 
     /**
-     * The index of the head of the free list.
+     * The index of the the free list's head.
      */
     public Integer free;
 
@@ -56,12 +56,12 @@ public class HashTableWithFreeList<T> extends ZeroBasedIndexedArray<HashTableWit
     }
 
     /**
-     * Creates an empty hash table of a given length of the underlying array and with a given hash function.
+     * Creates an empty hash table with an underlying array of a given length and with a given hash function.
      *
      * @param length the length of the underlying array
      * @param h the hash function of the new hash table
      * @param <T> the type of elements in the new hash table
-     * @return the empty hash table with underlying array of length {@code length} and with hash function {@code h}
+     * @return the empty hash table with an underlying array of length {@code length} and with hash function {@code h}
      */
     public static <T> HashTableWithFreeList<T> withLengthAndHashFunction(int length, HashFunction h) {
         return new HashTableWithFreeList<>(length, h);

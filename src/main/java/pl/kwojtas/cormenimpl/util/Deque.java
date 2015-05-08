@@ -8,12 +8,12 @@ package pl.kwojtas.cormenimpl.util;
 public class Deque<T> extends Array<T> {
 
     /**
-     * The index of the head element.
+     * The index of the head.
      */
     public int head;
 
     /**
-     * The index of the next element after the tail element.
+     * The index of the element after the tail.
      */
     public int tail;
 
@@ -24,11 +24,11 @@ public class Deque<T> extends Array<T> {
     }
 
     /**
-     * Creates an empty deque of a given length of the underlying array.
+     * Creates an empty deque with an underlying array of a given length.
      *
      * @param length the length of the underlying array
      * @param <T> the type of elements in the new deque
-     * @return the empty deque with underlying array of length {@code length}
+     * @return the empty deque with an underlying array of length {@code length}
      */
     public static <T> Deque<T> withLength(int length) {
         return new Deque<>(Array.withLength(length));

@@ -86,7 +86,7 @@ public final class Chapter6 {
      *
      * @param A the array of elements
      * @param <T> the type of elements in {@code A}
-     * @return the max-heap constructed from elements from {@code A}
+     * @return a max-heap constructed from elements from {@code A}
      */
     private static <T extends Comparable> Heap<T> buildMaxHeap(Array<T> A) {
         Heap<T> H = new Heap<>(A);
@@ -98,7 +98,7 @@ public final class Chapter6 {
     }
 
     /**
-     * Sorts elements using merge sort.
+     * Sorts elements using heap sort.
      * <p><span style="font-variant:small-caps;">Heapsort</span> from subchapter 6.4.</p>
      *
      * @param A the array of elements to sort
@@ -296,14 +296,27 @@ public final class Chapter6 {
     }
 
     /**
-     * Structure for ranked elements.
+     * Implements a ranked element.
      *
      * @param <T> the type of key
      */
     public static class KeyWithRank<T> {
+        /**
+         * The key of the element.
+         */
         public T key;
+
+        /**
+         * The rank of the element.
+         */
         public int rank;
 
+        /**
+         * Creates a ranked element with a given key and rank.
+         *
+         * @param key the key of the new element
+         * @param rank the rank of the new element
+         */
         public KeyWithRank(T key, int rank) {
             this.key = key;
             this.rank = rank;
@@ -311,10 +324,10 @@ public final class Chapter6 {
     }
 
     /**
-     * Priority queue with ranked elements.
-     * Maintains ranks of new elements so that the ranks are unique in the whole priority queue.
+     * Implements a priority queue with ranked elements.
+     * Maintains a global rank and sets it to new elements so that ranks of elements are unique in this priority queue.
      *
-     * @param <T> the type of keys
+     * @param <T> the type of keys in the priority queue
      */
     public static class PriorityQueueWithRanks<T> extends Heap<KeyWithRank<T>> {
         private int currentRank;
@@ -322,7 +335,7 @@ public final class Chapter6 {
         /**
          * Sets initial length of the priority queue and the current rank to 1.
          *
-         * @param initialLength initial length of the priority queue
+         * @param initialLength an initial length of the priority queue
          */
         public PriorityQueueWithRanks(int initialLength) {
             super(new Array<>(), initialLength);
@@ -580,7 +593,7 @@ public final class Chapter6 {
      * <p><span style="font-variant:small-caps;">Build-Max-Heap'</span> from problem 6-1.</p>
      *
      * @param A the array of elements
-     * @return the max-heap constructed from elements from {@code A}
+     * @return a max-heap constructed from elements from {@code A}
      */
     public static Heap<Integer> buildMaxHeap_(Array<Integer> A) {
         Heap<Integer> H = new Heap<>(A);
@@ -595,7 +608,7 @@ public final class Chapter6 {
      * Returns the parent index in a multiary heap.
      * <p><span style="font-variant:small-caps;">Multiary-Parent</span> from solution to problem 6.1(a).</p>
      *
-     * @param d the ary of the heap
+     * @param d the arity of the heap
      * @param i the index of a node
      * @return the parent index of the node of index {@code i}
      */
@@ -607,7 +620,7 @@ public final class Chapter6 {
      * Returns the {@code k}-th child index in a multiary heap.
      * <p><span style="font-variant:small-caps;">Multiary-Child</span> from solution to problem 6-1(a).</p>
      *
-     * @param d the ary of the heap ({@code d >= 2})
+     * @param d the arity of the heap ({@code d >= 2})
      * @param k the child number ({@code 1 <= k <= d})
      * @param i the index of a node
      * @return the left child index of the node of index {@code i}
@@ -621,7 +634,7 @@ public final class Chapter6 {
      * <p><span style="font-variant:small-caps;">Multiary-Heap-Extract-Max</span> from solution to problem 6-2(c).</p>
      *
      * @param A the multiary max-heap
-     * @param d the ary of the max-heap
+     * @param d the arity of {@code A}
      * @return the largest element in {@code A}
      * @throws RuntimeException if {@code A} is empty
      */
@@ -641,7 +654,7 @@ public final class Chapter6 {
      * <p><span style="font-variant:small-caps;">Multiary-Max-Heapify</span> from solution to problem 6-2(c).</p>
      *
      * @param A the heap with max-heap property violated at one node
-     * @param d the ary of the max-heap
+     * @param d the arity of the {@code A}
      * @param i the index of the node in {@code A} the property is violated at
      */
     private static void multiaryMaxHeapify(Heap<Integer> A, int d, int i) {
@@ -666,7 +679,7 @@ public final class Chapter6 {
      * <p><span style="font-variant:small-caps;">Multiary-Max-Heap-Insert</span> from solution to problem 6-2(d).</p>
      *
      * @param A the multiary max-heap
-     * @param d the ary of the max-heap
+     * @param d the arity of {@code A}
      * @param key the key of the new node
      */
     public static void multiaryMaxHeapInsert(Heap<Integer> A, int d, int key) {
@@ -680,7 +693,7 @@ public final class Chapter6 {
      * <p><span style="font-variant:small-caps;">Multiary-Heap-Increase-Key</span> from solution to problem 6-2(e).</p>
      *
      * @param A the multiary max-heap
-     * @param d the ary of the max-heap
+     * @param d the arity of {@code A}
      * @param i the index of the key in {@code A} to be increased
      * @param k the new key
      * @throws RuntimeException if {@code k} is smaller than {@code A[i]}
@@ -698,8 +711,8 @@ public final class Chapter6 {
      * <p><span style="font-variant:small-caps;">Young-Extract-Min</span> from solution to problem 6-3(c).</p>
      *
      * @param Y the Young tableau
-     * @param m the height of {@code Y}
-     * @param n the width of {@code Y}
+     * @param m the number of rows in {@code Y}
+     * @param n the number of columns in {@code Y}
      * @param i the row index of the current element
      * @param j the column index of the current element
      * @return the smallest element in {@code Y}
@@ -750,8 +763,8 @@ public final class Chapter6 {
      * <p><span style="font-variant:small-caps;">Young-Insert</span> from solution to problem 6-3(d).</p>
      *
      * @param Y the Young tableau
-     * @param m the height of {@code Y}
-     * @param n the width of {@code Y}
+     * @param m the number of rows in {@code Y}
+     * @param n the number of columns in {@code Y}
      * @param key the key to insert
      */
     private static void youngInsert(Young Y, int m, int n, int key) {
@@ -777,12 +790,12 @@ public final class Chapter6 {
     }
 
     /**
-     * Searches for an key in a Young tableau.
+     * Searches for a key in a Young tableau.
      * <p><span style="font-variant:small-caps;">Young-Search</span> from solution to problem 6-3(f).</p>
      *
      * @param Y the Young tableau
-     * @param m the height of {@code Y}
-     * @param n the width of {@code Y}
+     * @param m the number of rows in {@code Y}
+     * @param n the number of columns in {@code Y}
      * @param v the key to find
      * @return {@code true} if {@code Y} contains {@code v}, or {@code false} otherwise
      */

@@ -2,7 +2,6 @@ package pl.kwojtas.cormenimpl;
 
 import org.junit.Test;
 import pl.kwojtas.cormenimpl.util.Array;
-import pl.kwojtas.cormenimpl.util.Matrix;
 
 import java.util.Comparator;
 
@@ -39,7 +38,7 @@ public class Chapter4Test {
     @Test
     public void shouldGetLeftmostMinimaIndexesOfMongeArray() {
         // given
-        Matrix<Double> matrix = new Matrix<>(
+        Array<Array<Double>> mongeArray = new Array<>(
                 new Array<>(10.0,17.0,13.0,28.0,23.0),
                 new Array<>(17.0,22.0,16.0,29.0,23.0),
                 new Array<>(24.0,28.0,22.0,34.0,24.0),
@@ -48,22 +47,23 @@ public class Chapter4Test {
                 new Array<>(36.0,33.0,19.0,21.0, 6.0),
                 new Array<>(75.0,66.0,51.0,53.0,34.0)
         );
-        Matrix<Double> original = new Matrix<>(matrix);
+        Array<Array<Double>> original = new Array<>(mongeArray);
 
         // when
-        Array<Integer> actualLeftmostMinimaIndexes = Chapter4.mongeLeftmostMinimaIndexes(matrix);
+        Array<Integer> actualLeftmostMinimaIndexes = Chapter4.mongeLeftmostMinimaIndexes(mongeArray);
 
         // then
         assertNotNull(actualLeftmostMinimaIndexes);
         assertMinimaIndexes(original, actualLeftmostMinimaIndexes);
     }
 
-    private void assertMinimaIndexes(Matrix<Double> originalMatrix, Array<Integer> actualLeftmostMinimaIndexes) {
+    private void assertMinimaIndexes(Array<Array<Double>> originalMongeArray, Array<Integer> actualLeftmostMinimaIndexes) {
+        int columns = originalMongeArray.at(1).length;
         for (int i = 1; i <= actualLeftmostMinimaIndexes.length; i++) {
             int actualLeftmostMinimumIndex = actualLeftmostMinimaIndexes.at(i);
-            assertTrue(1 <= actualLeftmostMinimumIndex && actualLeftmostMinimumIndex <= originalMatrix.columns);
+            assertTrue(1 <= actualLeftmostMinimumIndex && actualLeftmostMinimumIndex <= columns);
             for (int j = 1; j <= actualLeftmostMinimumIndex - 1; j++) {
-                assertTrue(originalMatrix.at(i, actualLeftmostMinimumIndex) < originalMatrix.at(i, j));
+                assertTrue(originalMongeArray.at(i).at(actualLeftmostMinimumIndex) < originalMongeArray.at(i).at(j));
             }
         }
     }

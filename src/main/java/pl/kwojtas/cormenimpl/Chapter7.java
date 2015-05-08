@@ -259,8 +259,10 @@ public final class Chapter7 {
     }
 
     /**
-     * Fuzzy-sorts an array of intervals. Produces a permutation {@code i_1, i_2, ..., i_n} of the intervals
-     * such that there exist {@code c_j} from {@code [a_i_j, b_i_j]} satisfying {@code c_1 <= c_2 <= ... <= c_n}.
+     * Fuzzy-sorts an array of intervals. Produces a permutation <tt>i<sub>1</sub></tt>, <tt>i<sub>2</sub></tt>, ...,
+     * <tt>i<sub>n</sub></tt> of the intervals such that there exist <tt>c<sub>j</sub></tt> from
+     * <tt>[a<sub>i<sub>j</sub></sub>, b<sub>i<sub>j</sub></sub>]</tt> satisfying
+     * <tt>c<sub>1</sub> &lt;= c<sub>2</sub> &lt;= ... &lt;= c<sub>n</sub></tt>.
      * <p><span style="font-variant:small-caps;">Fuzzy-Sort</span> from solution to problem 7-6(a).</p>
      *
      * @param A the array of intervals to sort

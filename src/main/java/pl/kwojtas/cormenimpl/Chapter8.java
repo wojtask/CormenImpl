@@ -45,7 +45,7 @@ public final class Chapter8 {
     }
 
     /**
-     * Sorts elements using an unstable version of counting sort.
+     * Sorts elements using a non stable version of counting sort.
      * <p>Exercise 8.2-3.</p>
      *
      * @param A the array of elements to sort
@@ -77,7 +77,7 @@ public final class Chapter8 {
      * @param k the upper bound of elements' values in {@code A}
      * @param a the lower bound of the interval
      * @param b the upper bound of the interval
-     * @return the number of elements from {@code A} that fall into interval {@code [a..b]}
+     * @return the number of elements from {@code A} that fall into interval {@code a..b}
      */
     public static int countNumbersInRange(Array<Integer> A, int k, int a, int b) {
         ZeroBasedIndexedArray<Integer> C = ZeroBasedIndexedArray.withLength(k + 1);
@@ -148,7 +148,7 @@ public final class Chapter8 {
     }
 
     /**
-     * Sorts {@code n} integers in the range 0 to {#code n^2 - 1}.
+     * Sorts <tt>n</tt> integers from interval <tt>0..n<sup>2</sup> - 1</tt>.
      * <p>Solution to exercise 8.3-4.</p>
      *
      * @param A the array of numbers to sort
@@ -163,7 +163,7 @@ public final class Chapter8 {
      * Sorts elements using bucket sort.
      * <p><span style="font-variant:small-caps;">Bucket-Sort</span> from subchapter 8.4.</p>
      *
-     * @param A the array of elements to sort (numbers from the interval {@code [0..1)})
+     * @param A the array of elements to sort (numbers from the interval <tt>[0..1)</tt>)
      */
     public static void bucketSort(Array<Double> A) {
         int n = A.length;
@@ -291,7 +291,7 @@ public final class Chapter8 {
     }
 
     /**
-     * Sorts bits.
+     * Sorts an array of bits.
      * <p><span style="font-variant:small-caps;">Bitwise-Sort</span> from solution to problem 8-2(b).</p>
      *
      * @param A the array of bits to sort
@@ -516,7 +516,7 @@ public final class Chapter8 {
     }
 
     /**
-     * Permutes two arrays so that they are identical to each other by comparing elements only between arrays.
+     * Permutes two arrays so that they are identical to each other, by comparing elements only between arrays.
      * <p>Solution to problem 8-4(a).</p>
      *
      * @param R the first array
@@ -534,7 +534,7 @@ public final class Chapter8 {
     }
 
     /**
-     * Permutes two arrays so that they are identical to each other by comparing elements only between arrays
+     * Permutes two arrays so that they are identical to each other, by comparing elements only between arrays
      * - an efficient version.
      * <p><span style="font-variant:small-caps;">Jugs-Match</span> from solution to problem 8-4(c).</p>
      *

@@ -12,7 +12,7 @@ public final class Chapter12 {
     private Chapter12() { }
 
     /**
-     * Prints out the keys of a binary tree performing inorder tree walk.
+     * Prints out keys of a binary tree performing inorder tree walk.
      * <p><span style="font-variant:small-caps;">Inorder-Tree-Walk</span> from subchapter 12.1.</p>
      *
      * @param x the root of the tree to print out
@@ -27,7 +27,7 @@ public final class Chapter12 {
     }
 
     /**
-     * Prints out the keys of a binary tree performing preorder tree walk.
+     * Prints out keys of a binary tree performing preorder tree walk.
      * <p><span style="font-variant:small-caps;">Preorder-Tree-Walk</span> from solution to exercise 12.1-4.</p>
      *
      * @param x the root of the tree to print out
@@ -42,7 +42,7 @@ public final class Chapter12 {
     }
 
     /**
-     * Prints out the keys of a binary tree performing postorder tree walk.
+     * Prints out keys of a binary tree performing postorder tree walk.
      * <p><span style="font-variant:small-caps;">Postorder-Tree-Walk</span> from solution to exercise 12.1-4.</p>
      *
      * @param x the root of the tree to print out
@@ -63,7 +63,7 @@ public final class Chapter12 {
      * @param x the root of the tree
      * @param k the key to find
      * @param <T> the type of keys in the tree
-     * @return the node of key {@code k} in the tree, or {@code null} if the tree does not contain such node
+     * @return the node with key {@code k} in the tree, or {@code null} if the tree does not contain such node
      */
     public static <T extends Comparable> BinaryTree.Node<T> treeSearch(BinaryTree.Node<T> x, T k) {
         if (x == null || k.equals(x.key)) {
@@ -83,7 +83,7 @@ public final class Chapter12 {
      * @param x the root of the tree
      * @param k the key to find
      * @param <T> the type of keys in the tree
-     * @return the node of key {@code k} in the tree, or {@code null} if the tree does not contain such node
+     * @return the node with key {@code k} in the tree, or {@code null} if the tree does not contain such node
      */
     public static <T extends Comparable> BinaryTree.Node<T> iterativeTreeSearch(BinaryTree.Node<T> x, T k) {
         while (x != null && !k.equals(x.key)) {
@@ -102,7 +102,7 @@ public final class Chapter12 {
      *
      * @param x the root of the tree
      * @param <T> the type of keys in the tree
-     * @return the node with the smallest key in a binary tree
+     * @return the node with the smallest key in the tree
      */
     public static <T> BinaryTree.Node<T> treeMinimum(BinaryTree.Node<T> x) {
         while (x.left != null) {
@@ -117,7 +117,7 @@ public final class Chapter12 {
      *
      * @param x the root of the tree
      * @param <T> the type of keys in the tree
-     * @return the node with the largest key in a binary tree
+     * @return the node with the largest key in the tree
      */
     public static <T> BinaryTree.Node<T> treeMaximum(BinaryTree.Node<T> x) {
         while (x.right != null) {
@@ -147,12 +147,12 @@ public final class Chapter12 {
     }
 
     /**
-     * Returns the node with the smallest key in a non-empty binary tree - recursive version.
+     * Returns the node with the smallest key in a non-empty binary tree - a recursive version.
      * <p><span style="font-variant:small-caps;">Recursive-Tree-Minimum</span> from solution to exercise 12.2-2.</p>
      *
      * @param x the root of the tree
      * @param <T> the type of keys in the tree
-     * @return the node with the smallest key in a binary tree
+     * @return the node with the smallest key in the tree
      */
     public static <T extends Comparable> BinaryTree.Node<T> recursiveTreeMinimum(BinaryTree.Node<T> x) {
         if (x.left != null) {
@@ -162,12 +162,12 @@ public final class Chapter12 {
     }
 
     /**
-     * Returns the node with the largest key in a non-empty binary tree - recursive version.
+     * Returns the node with the largest key in a non-empty binary tree - a recursive version.
      * <p><span style="font-variant:small-caps;">Recursive-Tree-Maximum</span> from solution to exercise 12.2-2.</p>
      *
      * @param x the root of the tree
      * @param <T> the type of keys in the tree
-     * @return the node with the largest key in a binary tree
+     * @return the node with the largest key in the tree
      */
     public static <T extends Comparable> BinaryTree.Node<T> recursiveTreeMaximum(BinaryTree.Node<T> x) {
         if (x.right != null) {
@@ -197,7 +197,7 @@ public final class Chapter12 {
     }
 
     /**
-     * Prints out the keys of a binary tree performing inorder tree walk - iterative version.
+     * Prints out keys of a binary tree performing inorder tree walk - iterative version.
      * <p>Exercise 12.2-7.</p>
      *
      * @param T the binary tree
@@ -253,7 +253,7 @@ public final class Chapter12 {
      *
      * @param T the binary tree
      * @param z the node to delete
-     * @param <T> the type of keys in the tree
+     * @param <T> the type of keys in {@code T}
      * @return the node deleted from {@code T}
      */
     public static <T extends Comparable> BinaryTree.Node<T> treeDelete(BinaryTree<T> T, BinaryTree.Node<T> z) {
@@ -288,13 +288,13 @@ public final class Chapter12 {
     }
 
     /**
-     * Inserts a node into a binary tree - recursive version.
+     * Inserts a node into a binary tree - a recursive version.
      * <p><span style="font-variant:small-caps;">Recursive-Tree-Insert</span> from solution to exercise 12.3-1.</p>
      *
      * @param T the binary tree
-     * @param x the root of the tree
+     * @param x the root of tree {@code T}
      * @param z the node to insert
-     * @param <T> the type of keys in the tree
+     * @param <T> the type of keys in {@code T}
      */
     public static <T extends Comparable> void recursiveTreeInsert(BinaryTree<T> T, BinaryTree.Node<T> x, BinaryTree.Node<T> z) {
         if (x == null) {

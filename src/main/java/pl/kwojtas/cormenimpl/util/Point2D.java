@@ -1,7 +1,7 @@
 package pl.kwojtas.cormenimpl.util;
 
 /**
- * Implements a point in 2-dimensional space.
+ * Implements a point in a 2-dimensional space.
  */
 public class Point2D {
 

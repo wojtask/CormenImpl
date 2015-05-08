@@ -1,7 +1,7 @@
 package pl.kwojtas.cormenimpl.util;
 
 /**
- * Implements a generic element - a structure with a key and a satellite data.
+ * Implements a generic element - a structure with a key and satellite data.
  *
  * @param <T> the type of satellite data
  */
@@ -18,7 +18,7 @@ public class Element<T> {
     public T data;
 
     /**
-     * Creates an element from a given key and a satellite data.
+     * Creates an element from a given key and satellite data.
      *
      * @param key the key of the new element
      * @param data the satellite data of the new element

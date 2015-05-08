@@ -16,11 +16,11 @@ public final class Chapter5 {
     private Chapter5() { }
 
     /**
-     * Returns random number from {@code a..b}.
+     * Returns random number from interval {@code a..b}.
      * <p><span style="font-variant:small-caps;">Random</span> from solution to exercise 5.1-2.</p>
      *
-     * @param a the lower bound
-     * @param b the upper bound
+     * @param a the lower bound of the interval
+     * @param b the upper bound of the interval
      * @return random number from {@code a..b}
      */
     public static int random(int a, int b) {
@@ -36,7 +36,7 @@ public final class Chapter5 {
     }
 
     /**
-     * Flips a fair coin.
+     * Flips a fair coin using subroutine that flips an unfair coin.
      * <p><span style="font-variant:small-caps;">Unbiased-Random</span> from solution to exercise 5.1-3.</p>
      *
      * @return {@code 0} with probability {@code 1/2} and {@code 1} with probability {@code 1/2}
@@ -65,7 +65,7 @@ public final class Chapter5 {
      *
      * @param A the array of elements to permute
      * @param <T> the type of elements in {@code A}
-     * @return the permuted array
+     * @return a permutation of {@code A}
      */
     public static <T> Array<T> permuteBySorting(Array<T> A) {
         int n = A.length;
@@ -133,7 +133,7 @@ public final class Chapter5 {
     }
 
     /**
-     * Permutes an array in place - alternative version.
+     * Permutes an array in place - an alternative version.
      * <p><span style="font-variant:small-caps;">Randomize-In-Place'</span> from solution to exercise 5.3-1.</p>
      *
      * @param A the array of elements to permute
@@ -153,7 +153,7 @@ public final class Chapter5 {
      *
      * @param A the array of elements to permute
      * @param <T> the type of elements in {@code A}
-     * @return the permuted array
+     * @return a permutation of {@code A}
      */
     public static <T> Array<T> permuteUniformlyBySorting(Array<T> A) {
         int n = A.length;
@@ -207,10 +207,10 @@ public final class Chapter5 {
     }
 
     /**
-     * Searches for an element in an array by picking array elements at random.
+     * Searches for an element in an array by picking elements at random.
      * <p><span style="font-variant:small-caps;">Random-Search</span> from solution to problem 5-2(a).</p>
      *
-     * @param A the array of elements
+     * @param A the array to scan
      * @param x the element to find
      * @param <T> the type of elements in {@code A}
      * @return index {@code i} such that {@code A[i] = v}, or {@code null} if {@code v} does not appear in {@code A}

@@ -8,12 +8,12 @@ package pl.kwojtas.cormenimpl.util;
 public class Queue<T> extends Array<T> {
 
     /**
-     * The index of the head element.
+     * The index of the head.
      */
     public int head;
 
     /**
-     * The index of the next element after the tail element.
+     * The index of the element after the tail.
      */
     public int tail;
 
@@ -24,11 +24,11 @@ public class Queue<T> extends Array<T> {
     }
 
     /**
-     * Creates an empty queue of a given length of the underlying array.
+     * Creates an empty queue with an underlying array of a given length.
      *
      * @param length the length of the underlying array
      * @param <T> the type of elements in the new queue
-     * @return the empty queue with underlying array of length {@code length}
+     * @return the empty queue with an underlying array of length {@code length}
      */
     public static <T> Queue<T> withLength(int length) {
         return new Queue<>(Array.withLength(length));

@@ -41,7 +41,7 @@ public final class Chapter10 {
     }
 
     /**
-     * Inserts an element onto a stack.
+     * Inserts an element on the top of a stack.
      * <p><span style="font-variant:small-caps;">Push</span> from subchapter 10.1.</p>
      *
      * @param S the stack
@@ -54,12 +54,12 @@ public final class Chapter10 {
     }
 
     /**
-     * Removes an element from a stack.
+     * Deletes the element from the top of a stack.
      * <p><span style="font-variant:small-caps;">Pop</span> from subchapter 10.1.</p>
      *
      * @param S the stack
      * @param <T> the type of elements in {@code S}
-     * @return the element removed from {@code S}
+     * @return the element deleted from the top of {@code S}
      * @throws RuntimeException if {@code S} is empty
      */
     public static <T> T pop(Stack<T> S) {
@@ -71,7 +71,7 @@ public final class Chapter10 {
     }
 
     /**
-     * Inserts an element into a queue.
+     * Inserts an element at the tail of a queue.
      * <p><span style="font-variant:small-caps;">Enqueue</span> from subchapter 10.1 and solution to exercise 10.1-4.</p>
      *
      * @param Q the queue
@@ -95,12 +95,12 @@ public final class Chapter10 {
     }
 
     /**
-     * Removes an element from a queue.
+     * Deletes the element from the head of a queue.
      * <p><span style="font-variant:small-caps;">Dequeue</span> from subchapter 10.1 and solution to exercise 10.1-4.</p>
      *
      * @param Q the queue
      * @param <T> the type of elements in {@code Q}
-     * @return the element removed from {@code Q}
+     * @return the element deleted from the head of {@code Q}
      * @throws RuntimeException if {@code Q} is empty
      */
     public static <T> T dequeue(Queue<T> Q) {
@@ -117,7 +117,7 @@ public final class Chapter10 {
     }
 
     /**
-     * Inserts an element onto the first stack in a "double stack in a single array" implementation.
+     * Inserts an element on the top of the first stack in a "double stack in a single array" implementation.
      * <p>Solution to exercise 10.1-2.</p>
      *
      * @param A the array containing two stacks
@@ -130,12 +130,12 @@ public final class Chapter10 {
     }
 
     /**
-     * Removes an element from the first stack in a "double stack in a single array" implementation.
+     * Deletes the element from the top of the first stack in a "double stack in a single array" implementation.
      * <p>Solution to exercise 10.1-2.</p>
      *
      * @param A the array containing two stacks
      * @param <T> the type of elements in {@code A}
-     * @return the element removed from the first stack
+     * @return the element deleted from the top of the first stack
      * @throws RuntimeException if the first stack is empty
      */
     public static <T> T firstStackPop(DoubleStack<T> A) {
@@ -159,7 +159,7 @@ public final class Chapter10 {
     }
 
     /**
-     * Inserts an element onto the second stack in a "double stack in a single array" implementation.
+     * Inserts an element on the top of the second stack in a "double stack in a single array" implementation.
      * <p>Solution to exercise 10.1-2.</p>
      *
      * @param A the array containing two stacks
@@ -172,12 +172,12 @@ public final class Chapter10 {
     }
 
     /**
-     * Removes an element from the second stack in a "double stack in a single array" implementation.
+     * Deletes the element from the top of the second stack in a "double stack in a single array" implementation.
      * <p>Solution to exercise 10.1-2.</p>
      *
      * @param A the array containing two stacks
      * @param <T> the type of elements in {@code A}
-     * @return the removed element from the second stack
+     * @return the deleted element from the top of the second stack
      * @throws RuntimeException if the second stack is empty
      */
     public static <T> T secondStackPop(DoubleStack<T> A) {
@@ -230,12 +230,12 @@ public final class Chapter10 {
     }
 
     /**
-     * Removes an element from the head of a deque.
+     * Deletes the element from the head of a deque.
      * <p><span style="font-variant:small-caps;">Head-Dequeue</span> from solution to exercise 10.1-5.</p>
      *
      * @param D the deque
      * @param <T> the type of elements in {@code D}
-     * @return the element removed from {@code D}
+     * @return the element removed from the head of {@code D}
      */
     public static <T> T headDequeue(Deque<T> D) {
         T x = D.at(D.head);
@@ -265,12 +265,12 @@ public final class Chapter10 {
     }
 
     /**
-     * Removes an element from the tail of a deque.
+     * Deletes the element from the tail of a deque.
      * <p><span style="font-variant:small-caps;">Tail-Dequeue</span> from solution to exercise 10.1-5.</p>
      *
      * @param D the deque
      * @param <T> the type of elements in {@code D}
-     * @return the element removed from {@code D}
+     * @return the element deleted from the tail of {@code D}
      */
     public static <T> T tailDequeue(Deque<T> D) {
         if (D.tail == 1) {
@@ -290,8 +290,7 @@ public final class Chapter10 {
      * @param x the element to insert to the queue
      * @param <T> the type of elements in the queue
      */
-    @SuppressWarnings("unused")
-    public static <T> void enqueueOnStacks(Stack<T> S1, Stack<T> S2, T x) {
+    public static <T> void enqueueOnStacks(Stack<T> S1, @SuppressWarnings("unused") Stack<T> S2, T x) {
         push(S1, x);
     }
 
@@ -302,7 +301,7 @@ public final class Chapter10 {
      * @param S1 the first stack
      * @param S2 the second stack
      * @param <T> the type of elements in {@code S1} and {@code S2}
-     * @return the element removed from the queue
+     * @return the element deleted from the queue
      * @throws RuntimeException if the queue is empty
      */
     public static <T> T dequeueOnStacks(Stack<T> S1, Stack<T> S2) {
@@ -328,8 +327,7 @@ public final class Chapter10 {
      * @param x the element to insert
      * @param <T> the type of elements on the stack
      */
-    @SuppressWarnings("unused")
-    public static <T> void pushOnQueues(Queue<T> Q1, Queue<T> Q2, T x) {
+    public static <T> void pushOnQueues(Queue<T> Q1, @SuppressWarnings("unused") Queue<T> Q2, T x) {
         enqueue(Q1, x);
     }
 
@@ -340,7 +338,7 @@ public final class Chapter10 {
      * @param Q1 the first queue
      * @param Q2 the second queue
      * @param <T> the type of elements on the stack
-     * @return the element removed from the stack
+     * @return the element deleted from the stack
      * @throws RuntimeException if the stack is empty
      */
     public static <T> T popOnQueues(Queue<T> Q1, Queue<T> Q2) {
@@ -379,7 +377,7 @@ public final class Chapter10 {
 
     /**
      * Inserts an element into a doubly linked list.
-     * <p><span style="font-variant:small-caps;">List-Insert</span> from suchapter 10.2.</p>
+     * <p><span style="font-variant:small-caps;">List-Insert</span> from subchapter 10.2.</p>
      *
      * @param L the doubly linked list
      * @param x the element to insert
@@ -395,11 +393,11 @@ public final class Chapter10 {
     }
 
     /**
-     * Removes an element from a doubly linked list.
+     * Deletes an element from a doubly linked list.
      * <p><span style="font-variant:small-caps;">List-Delete</span> from subchapter 10.2.</p>
      *
      * @param L the doubly linked list
-     * @param x the element in {@code L} to remove
+     * @param x the element in {@code L} to delete
      * @param <T> the type of elements in {@code L}
      */
     public static <T> void listDelete(List<T> L, List.Node<T> x) {
@@ -414,15 +412,14 @@ public final class Chapter10 {
     }
 
     /**
-     * Removes an element from a doubly linked list with a sentinel.
+     * Deletes an element from a doubly linked list with a sentinel.
      * <p><span style="font-variant:small-caps;">List-Delete'</span> from subchapter 10.2.</p>
      *
      * @param L the doubly linked list with a sentinel
-     * @param x the element in {@code L} to remove
+     * @param x the element in {@code L} to delete
      * @param <T> the type of elements in {@code L}
      */
-    @SuppressWarnings("unused")
-    public static <T> void listDelete_(ListWithSentinel<T> L, ListWithSentinel.Node<T> x) {
+    public static <T> void listDelete_(@SuppressWarnings("unused") ListWithSentinel<T> L, ListWithSentinel.Node<T> x) {
         x.prev.next = x.next;
         x.next.prev = x.prev;
     }
@@ -445,7 +442,7 @@ public final class Chapter10 {
     }
 
     /**
-     * Inserts an element in a doubly linked list with a sentinel.
+     * Inserts an element at the head of a doubly linked list with a sentinel.
      * <p><span style="font-variant:small-caps;">List-Insert'</span> from subchapter 10.2.</p>
      *
      * @param L the doubly linked list with a sentinel
@@ -460,7 +457,7 @@ public final class Chapter10 {
     }
 
     /**
-     * Inserts an element in a singly linked list.
+     * Inserts an element at the head of a singly linked list.
      * <p><span style="font-variant:small-caps;">Singly-Linked-List-Insert</span> from solution to exercise 10.2-1.</p>
      *
      * @param L the singly linked list
@@ -511,7 +508,7 @@ public final class Chapter10 {
      *
      * @param L the singly linked list
      * @param <T> the type of elements in {@code L}
-     * @return the element removed from the stack
+     * @return the element deleted from the stack
      */
     public static <T> T singlyLinkedListPop(SinglyLinkedList<T> L) {
         if (L.head == null) {
@@ -546,7 +543,7 @@ public final class Chapter10 {
      *
      * @param L the singly linked list
      * @param <T> the type of elements in {@code L}
-     * @return the element removed from the queue
+     * @return the element deleted from the queue
      * @throws RuntimeException if the queue is empty
      */
     public static <T> T singlyLinkedListDequeue(SinglyLinkedListWithTail<T> L) {
@@ -562,7 +559,7 @@ public final class Chapter10 {
     }
 
     /**
-     * Inserts an element into a singly linked circular list.
+     * Inserts an element at the head of a singly linked circular list.
      * <p><span style="font-variant:small-caps;">Circular-List-Insert</span> from solution to exercise 10.2-5.</p>
      *
      * @param L the singly linked circular list
@@ -842,7 +839,7 @@ public final class Chapter10 {
     }
 
     /**
-     * Prints out the keys of a binary tree performing inorder tree walk - an iterative version.
+     * Prints out keys of a binary tree performing inorder tree walk - an iterative version.
      * <p><span style="font-variant:small-caps;">Iterative-Preorder-Tree-Walk</span> from solution to exercise 10.4-3.</p>
      *
      * @param T the binary tree
@@ -867,7 +864,7 @@ public final class Chapter10 {
     }
 
     /**
-     * Prints out the keys of an arbitrary rooted tree.
+     * Prints out keys of an arbitrary rooted tree.
      * <p><span style="font-variant:small-caps;">Tree-Walk</span> from solution to exercise 10.4-4.</p>
      *
      * @param x the root of the tree
@@ -890,7 +887,7 @@ public final class Chapter10 {
     }
 
     /**
-     * Prints out the keys of a binary tree performing inorder tree walk - an iterative version not using a stack.
+     * Prints out keys of a binary tree performing inorder tree walk - an iterative version not using a stack.
      * <p><span style="font-variant:small-caps;">Stackless-Inorder-Tree-Walk</span> from solution to exercise 10.4-5.</p>
      *
      * @param T the binary tree
