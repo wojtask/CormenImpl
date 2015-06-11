@@ -5,6 +5,9 @@ import pl.kwojtas.cormenimpl.util.Array;
 import pl.kwojtas.cormenimpl.util.Pair;
 import pl.kwojtas.cormenimpl.util.Point2D;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Modifier;
 import java.util.Set;
 
 import static java.lang.Math.abs;
@@ -18,6 +21,14 @@ import static pl.kwojtas.cormenimpl.TestUtil.assertSorted;
 import static pl.kwojtas.cormenimpl.TestUtil.sortArray;
 
 public class Chapter9Test {
+
+    @Test
+    public void shouldHavePrivateConstructor() throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
+        Constructor<Chapter9> constructor = Chapter9.class.getDeclaredConstructor();
+        assertTrue(Modifier.isPrivate(constructor.getModifiers()));
+        constructor.setAccessible(true);
+        constructor.newInstance();
+    }
 
     @Test
     public void shouldFindMinimum() {

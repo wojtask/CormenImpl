@@ -2,16 +2,17 @@ package pl.kwojtas.cormenimpl;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import pl.kwojtas.cormenimpl.util.BinaryTree;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Modifier;
 
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.*;
 
 public class Chapter12Test {
 
@@ -54,6 +55,14 @@ public class Chapter12Test {
         x6.right = x7;
         x7.p = x6;
         return tree;
+    }
+
+    @Test
+    public void shouldHavePrivateConstructor() throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
+        Constructor<Chapter12> constructor = Chapter12.class.getDeclaredConstructor();
+        assertTrue(Modifier.isPrivate(constructor.getModifiers()));
+        constructor.setAccessible(true);
+        constructor.newInstance();
     }
 
     @Test
@@ -240,6 +249,19 @@ public class Chapter12Test {
     }
 
     @Test
+    public void shouldNotFindNonexistingSuccessorInTree() {
+        // given
+        BinaryTree<Integer> tree = getExemplaryBinaryTree();
+        BinaryTree.Node<Integer> node = tree.root.right.right.right; // a node with maximum value in the tree
+
+        // when
+        BinaryTree.Node<Integer> actualSuccessor = Chapter12.treeSuccessor(node);
+
+        // then
+        assertNull(actualSuccessor);
+    }
+
+    @Test
     public void shouldFindTreeMinimumUsingRecursiveTreeMinimum() {
         // given
         BinaryTree<Integer> tree = getExemplaryBinaryTree();
@@ -283,6 +305,22 @@ public class Chapter12Test {
         // then
         assertNotNull(actualPredecessor);
         assertEquals(Integer.valueOf(10), actualPredecessor.key);
+        while (actualPredecessor != tree.root) {
+            actualPredecessor = actualPredecessor.p;
+        }
+    }
+
+    @Test
+    public void shouldFindPredecessorInTreeForNodeWithLeftChild() {
+        // given
+        BinaryTree<Integer> tree = getExemplaryBinaryTree();
+
+        // when
+        BinaryTree.Node<Integer> actualPredecessor = Chapter12.treePredecessor(tree.root);
+
+        // then
+        assertNotNull(actualPredecessor);
+        assertEquals(Integer.valueOf(4), actualPredecessor.key);
         while (actualPredecessor != tree.root) {
             actualPredecessor = actualPredecessor.p;
         }
@@ -351,6 +389,26 @@ public class Chapter12Test {
     }
 
     @Test
+    public void shouldInsertNodeToNonemptyTree2() {
+        // given
+        BinaryTree<Integer> tree = getExemplaryBinaryTree();
+        BinaryTree.Node<Integer> nodeToInsert = new BinaryTree.Node<>(18);
+
+        // when
+        Chapter12.treeInsert(tree, nodeToInsert);
+
+        // then
+        assertEquals(Integer.valueOf(18), nodeToInsert.key);
+        assertNull(nodeToInsert.left);
+        assertNull(nodeToInsert.right);
+        assertEquals(nodeToInsert, nodeToInsert.p.left); // for the particular tree the new node will be left son of its parent
+        assertEquals(Integer.valueOf(19), nodeToInsert.p.key); // and its parent will be the node of key = 11
+        while (nodeToInsert != tree.root) {
+            nodeToInsert = nodeToInsert.p;
+        }
+    }
+
+    @Test
     public void shouldDeleteLeafFromTree() {
         // given
         BinaryTree<Integer> tree = getExemplaryBinaryTree();
@@ -371,11 +429,11 @@ public class Chapter12Test {
         int exampleTreeSize = tree.getSize();
 
         // when
-        Chapter12.treeDelete(tree, tree.root.right.right); // a node with one child (child's key = 20)
+        Chapter12.treeDelete(tree, tree.root.left); // a node with one child
 
         // then
-        assertNotNull(tree.root.right.right);
-        assertEquals(Integer.valueOf(20), tree.root.right.right.key);
+        assertNotNull(tree.root.left);
+        assertEquals(Integer.valueOf(1), tree.root.left.key);
         assertEquals(exampleTreeSize - 1, tree.getSize());
     }
 
@@ -392,6 +450,19 @@ public class Chapter12Test {
         assertNotNull(tree.root.right);
         assertEquals(Integer.valueOf(19), tree.root.right.key);
         assertEquals(exampleTreeSize - 1, tree.getSize());
+    }
+
+    @Test
+    public void shouldDeleteRootFromTree() {
+        // given
+        BinaryTree<Integer> tree = new BinaryTree<>();
+        tree.root = new BinaryTree.Node<>(10);
+
+        // when
+        Chapter12.treeDelete(tree, tree.root);
+
+        // then
+        assertNull(tree.root);
     }
 
     @Test
@@ -426,6 +497,26 @@ public class Chapter12Test {
         assertNull(nodeToInsert.right);
         assertEquals(nodeToInsert, nodeToInsert.p.right); // for the particular tree the new node will be right son of its parent
         assertEquals(Integer.valueOf(11), nodeToInsert.p.key); // and its parent will be the node of key = 11
+        while (nodeToInsert != tree.root) {
+            nodeToInsert = nodeToInsert.p;
+        }
+    }
+
+    @Test
+    public void shouldInsertNodeToNonemptyTreeUsingRecursiveTreeInsert2() {
+        // given
+        BinaryTree<Integer> tree = getExemplaryBinaryTree();
+        BinaryTree.Node<Integer> nodeToInsert = new BinaryTree.Node<>(18);
+
+        // when
+        Chapter12.recursiveTreeInsert(tree, tree.root, nodeToInsert);
+
+        // then
+        assertEquals(Integer.valueOf(18), nodeToInsert.key);
+        assertNull(nodeToInsert.left);
+        assertNull(nodeToInsert.right);
+        assertEquals(nodeToInsert, nodeToInsert.p.left); // for the particular tree the new node will be left son of its parent
+        assertEquals(Integer.valueOf(19), nodeToInsert.p.key); // and its parent will be the node of key = 19
         while (nodeToInsert != tree.root) {
             nodeToInsert = nodeToInsert.p;
         }

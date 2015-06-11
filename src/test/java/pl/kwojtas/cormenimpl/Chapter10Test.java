@@ -21,6 +21,9 @@ import pl.kwojtas.cormenimpl.util.Stack;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Modifier;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
@@ -47,6 +50,14 @@ public class Chapter10Test {
 
     private String[] splitOutContent() {
         return outContent.toString().split(System.getProperty("line.separator"));
+    }
+
+    @Test
+    public void shouldHavePrivateConstructor() throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
+        Constructor<Chapter10> constructor = Chapter10.class.getDeclaredConstructor();
+        assertTrue(Modifier.isPrivate(constructor.getModifiers()));
+        constructor.setAccessible(true);
+        constructor.newInstance();
     }
 
     @Test
@@ -886,6 +897,20 @@ public class Chapter10Test {
     }
 
     @Test
+    public void shouldInsertIntoEmptyQueueOnSinglyLinkedListWithTail() {
+        // given
+        SinglyLinkedListWithTail<Integer> list = new SinglyLinkedListWithTail<>();
+        int keyToInsert = 3;
+
+        // when
+        Chapter10.singlyLinkedListEnqueue(list, keyToInsert);
+
+        // then
+        assertNull(list.head.next);
+        assertEquals(Integer.valueOf(keyToInsert), list.head.key);
+    }
+
+    @Test
     public void shouldDeleteFromQueueOnSinglyLinkedListWithTail() {
         // given
         SinglyLinkedListWithTail<Integer> list = new SinglyLinkedListWithTail<>(5,7,9,2,6,1,6,6,3,1,7,8);
@@ -903,6 +928,20 @@ public class Chapter10Test {
         for (int i = 1; i <= listArray.length; i++) {
             assertEquals(originalArray.at(i + 1), listArray.at(i));
         }
+    }
+
+    @Test
+    public void shouldDeleteTheOnlyElementFromQueueOnSinglyLinkedListWithTail() {
+        // given
+        SinglyLinkedListWithTail<Integer> list = new SinglyLinkedListWithTail<>(5);
+        int expectedElement = 5;
+
+        // when
+        Integer actualElement = Chapter10.singlyLinkedListDequeue(list);
+
+        // then
+        assertEquals(Integer.valueOf(expectedElement), actualElement);
+        assertNull(list.head);
     }
 
     @Test(expected = RuntimeException.class)
@@ -942,6 +981,20 @@ public class Chapter10Test {
     }
 
     @Test
+    public void shouldInsertOntoEmptyCircularList() {
+        // given
+        CircularList<Integer> list = new CircularList<>();
+        int keyToInsert = 3;
+
+        // when
+        Chapter10.circularListInsert(list, new CircularList.Node<>(keyToInsert));
+
+        // then
+        assertEquals(Integer.valueOf(keyToInsert), list.head.key);
+        assertEquals(list.head, list.head.next);
+    }
+
+    @Test
     public void shouldDeleteFromCircularList() {
         // given
         CircularList<Integer> list = new CircularList<>(5,7,9,2,6,1,6,6,3,1,7,8);
@@ -954,6 +1007,34 @@ public class Chapter10Test {
 
         // then
         assertElementDeletedFromList(keyToDelete, list.toArray(), original.toArray());
+    }
+
+    @Test
+    public void shouldDeleteHeadFromCircularList() {
+        // given
+        CircularList<Integer> list = new CircularList<>(5,7,9,2,6,1,6,6,3,1,7,8);
+        CircularList<Integer> original = new CircularList<>(list);
+        int keyToDelete = 5;
+        CircularList.Node<Integer> nodeToDelete = list.head;
+
+        // when
+        Chapter10.circularListDelete(list, nodeToDelete);
+
+        // then
+        assertElementDeletedFromList(keyToDelete, list.toArray(), original.toArray());
+    }
+
+    @Test
+    public void shouldDeleteHeadFromCircularListWithOneElement() {
+        // given
+        CircularList<Integer> list = new CircularList<>(5);
+        CircularList.Node<Integer> nodeToDelete = list.head;
+
+        // when
+        Chapter10.circularListDelete(list, nodeToDelete);
+
+        // then
+        assertNull(list.head);
     }
 
     @Test
@@ -971,9 +1052,36 @@ public class Chapter10Test {
     }
 
     @Test
+    public void shouldFindKeyInCircularListHead() {
+        // given
+        CircularList<Integer> list = new CircularList<>(5,7,9,2,6,1,6,6,3,1,7,8);
+        int keyToFind = 5;
+
+        // when
+        CircularList.Node<Integer> actualNode = Chapter10.circularListSearch(list, keyToFind);
+
+        // then
+        assertNotNull(actualNode);
+        assertEquals(Integer.valueOf(keyToFind), actualNode.key);
+    }
+
+    @Test
     public void shouldNotFindNonexistentKeyOnCircularList() {
         // given
         CircularList<Integer> list = new CircularList<>(5,7,9,2,6,1,6,6,3,1,7,8);
+        int keyToFind = 4;
+
+        // when
+        CircularList.Node<Integer> actualNode = Chapter10.circularListSearch(list, keyToFind);
+
+        // then
+        assertNull(actualNode);
+    }
+
+    @Test
+    public void shouldNotFindKeyOnEmptyCircularList() {
+        // given
+        CircularList<Integer> list = new CircularList<>();
         int keyToFind = 4;
 
         // when
@@ -1004,6 +1112,19 @@ public class Chapter10Test {
             expectedMergedArray.set(originalArray1.length + i, originalArray2.at(i));
         }
         assertShuffled(expectedMergedArray, actualMergedArray);
+    }
+
+    @Test
+    public void shouldUnionEmptyCircularLists() {
+        // given
+        CircularList<Integer> list1 = new CircularList<>();
+        CircularList<Integer> list2 = new CircularList<>();
+
+        // when
+        CircularList<Integer> actualMergedLists = Chapter10.circularListsUnion(list1, list2);
+
+        // then
+        assertNull(actualMergedLists.head);
     }
 
     @Test
@@ -1182,6 +1303,46 @@ public class Chapter10Test {
         assertEquals(Integer.valueOf(4), multipleArrayList.next.at(3));
         assertEquals("ccc", multipleArrayList.key.at(1));
         assertNull(multipleArrayList.next.at(1));
+    }
+
+    @Test
+    public void shouldFreeObjectAtTheEndOfCompactList() {
+        // given
+        MultipleArrayList<String> multipleArrayList = new MultipleArrayList<>();
+        multipleArrayList.key  = new Array<>("aaa","bbb","ccc","ddd","eee");
+        multipleArrayList.next = new Array<>(3,1,null,5,null);
+        multipleArrayList.prev = new Array<>(2,null,1,null,null);
+        multipleArrayList.L = 2;
+        multipleArrayList.free = 4;
+
+        // when
+        Chapter10.compactListFreeObject(multipleArrayList, 3);
+
+        // then
+        assertEquals(Integer.valueOf(3), multipleArrayList.free);
+        assertEquals(Integer.valueOf(4), multipleArrayList.next.at(3));
+        assertNull(multipleArrayList.next.at(1));
+    }
+
+    @Test
+    public void shouldFreeObjectOnFullCompactList() {
+        // given
+        MultipleArrayList<String> multipleArrayList = new MultipleArrayList<>();
+        multipleArrayList.key  = new Array<>("aaa","bbb","ccc","ddd","eee");
+        multipleArrayList.next = new Array<>(4,1,null,3,2);
+        multipleArrayList.prev = new Array<>(2,5,4,1,null);
+        multipleArrayList.L = 5;
+        multipleArrayList.free = null;
+
+        // when
+        Chapter10.compactListFreeObject(multipleArrayList, 3);
+
+        // then
+        assertEquals(Integer.valueOf(5), multipleArrayList.free);
+        assertNull(multipleArrayList.next.at(5));
+        assertEquals(Integer.valueOf(3), multipleArrayList.L);
+        assertEquals("eee", multipleArrayList.key.at(3));
+        assertEquals(Integer.valueOf(2), multipleArrayList.next.at(3));
     }
 
     @Test
@@ -1394,6 +1555,36 @@ public class Chapter10Test {
         // then
         assertEquals(expectedMinimum, actualMinimum);
         assertArrayEquals(original.toArray(), sortedList.toArray());
+    }
+
+    @Test(expected = RuntimeException.class)
+    public void shouldThrowExceptionWhenGettingMinimumFromHeapOnSortedLists() {
+        // given
+        List<Integer> sortedList = new List<>();
+
+        try {
+            // when
+            Chapter10.sortedListHeapMinimum(sortedList);
+        } catch (RuntimeException e) {
+            // then
+            assertEquals("heap underflow", e.getMessage());
+            throw e;
+        }
+    }
+
+    @Test(expected = RuntimeException.class)
+    public void shouldThrowExceptionWhenExtractingMinimumFromHeapOnSortedLists() {
+        // given
+        List<Integer> sortedList = new List<>();
+
+        try {
+            // when
+            Chapter10.sortedListHeapExtractMin(sortedList);
+        } catch (RuntimeException e) {
+            // then
+            assertEquals("heap underflow", e.getMessage());
+            throw e;
+        }
     }
 
     @Test

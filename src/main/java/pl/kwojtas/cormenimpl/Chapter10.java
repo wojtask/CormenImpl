@@ -1012,7 +1012,7 @@ public final class Chapter10 {
 
     /**
      * Searches for an element in a sorted list in the compact multiple-array representation.
-     * <p><span style="font-variant:small-caps;">Compact-List-Search</span> from solution to problem 10-3.</p>
+     * <p><span style="font-variant:small-caps;">Compact-List-Search</span> from problem 10-3.</p>
      *
      * @param L the list in the compact multiple-array representation
      * @param n the number of elements in {@code L}

@@ -258,7 +258,7 @@ public final class Chapter12 {
      */
     public static <T extends Comparable> BinaryTree.Node<T> treeDelete(BinaryTree<T> T, BinaryTree.Node<T> z) {
         BinaryTree.Node<T> y;
-        if (z.left == null && z.right == null) {
+        if (z.left == null || z.right == null) {
             y = z;
         } else {
             y = treeSuccessor(z);

@@ -11,11 +11,23 @@ import pl.kwojtas.cormenimpl.util.HashTableWithOpenAddressing;
 import pl.kwojtas.cormenimpl.util.List;
 import pl.kwojtas.cormenimpl.util.ZeroBasedIndexedArray;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Modifier;
+
 import static junit.framework.TestCase.assertNull;
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 import static pl.kwojtas.cormenimpl.Chapter11.DELETED;
 
 public class Chapter11Test {
+
+    @Test
+    public void shouldHavePrivateConstructor() throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
+        Constructor<Chapter11> constructor = Chapter11.class.getDeclaredConstructor();
+        assertTrue(Modifier.isPrivate(constructor.getModifiers()));
+        constructor.setAccessible(true);
+        constructor.newInstance();
+    }
 
     private ZeroBasedIndexedArray<Element<String>> getExemplaryDirectAddressTable() {
         ZeroBasedIndexedArray<Element<String>> directAddressTable = ZeroBasedIndexedArray.withLength(5);
@@ -91,6 +103,18 @@ public class Chapter11Test {
         // then
         assertEquals(expectedMaximum.key, actualMaximum.key);
         assertEquals(expectedMaximum.data, actualMaximum.data);
+    }
+
+    @Test
+    public void shouldNotFindMaximumInEmptyDirectAddressTable() {
+        // given
+        ZeroBasedIndexedArray<Element<String>> directAddressTable = ZeroBasedIndexedArray.withLength(5);
+
+        // when
+        Element<String> actualMaximum = Chapter11.directAddressMaximum(directAddressTable);
+
+        // then
+        assertNull(actualMaximum);
     }
 
     @Test
@@ -622,6 +646,30 @@ public class Chapter11Test {
     }
 
     @Test
+    public void shouldNotDeleteNonexistentElementFromHashTableWithProbing() {
+        // given
+        HashTableWithOpenAddressing hashTableWithOpenAddressing = HashTableWithOpenAddressing.withLengthAndHashFunction(5,
+                new HashProbingFunction() {
+                    @Override
+                    public int compute(int key, int i) {
+                        int primaryHashValue = key % 5;
+                        return (primaryHashValue + i) % 5;
+                    }
+                }
+        );
+        hashTableWithOpenAddressing.set(new ZeroBasedIndexedArray<>(35,51,45,38,3));
+        int key = 23;
+
+        // when
+        Chapter11.hashDelete(hashTableWithOpenAddressing, key);
+
+        // then
+        for (int i = 0; i <= hashTableWithOpenAddressing.length - 1; i++) {
+            assertNotEquals(DELETED, hashTableWithOpenAddressing.at(i));
+        }
+    }
+
+    @Test
     public void shouldInsertIntoHashTableWithProbingUsingHashInsert_() {
         // given
         HashTableWithOpenAddressing hashTableWithOpenAddressing = HashTableWithOpenAddressing.withLengthAndHashFunction(5,
@@ -692,6 +740,25 @@ public class Chapter11Test {
     public void shouldNotFindNonexistentElementUsingQuadraticProbing() {
         // given
         ZeroBasedIndexedArray<Integer> hashTable = new ZeroBasedIndexedArray<>(24,null,34,35,51,null,27,null);
+        HashFunction h = new HashFunction() {
+            @Override
+            public int compute(int key) {
+                return key % hashTable.length;
+            }
+        };
+        int key = 43;
+
+        // when
+        Integer actualPosition = Chapter11.quadraticProbingSearch(hashTable, key, h);
+
+        // then
+        assertNull(actualPosition);
+    }
+
+    @Test
+    public void shouldNotFindNonexistentElementInFullHashTableUsingQuadraticProbing() {
+        // given
+        ZeroBasedIndexedArray<Integer> hashTable = new ZeroBasedIndexedArray<>(24,9,34,35,51,13,27,20);
         HashFunction h = new HashFunction() {
             @Override
             public int compute(int key) {

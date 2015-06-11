@@ -8,6 +8,10 @@ import pl.kwojtas.cormenimpl.util.Heap;
 import pl.kwojtas.cormenimpl.util.List;
 import pl.kwojtas.cormenimpl.util.Young;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Modifier;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -17,6 +21,14 @@ import static pl.kwojtas.cormenimpl.TestUtil.assertSorted;
 import static pl.kwojtas.cormenimpl.util.Util.ceil;
 
 public class Chapter6Test {
+
+    @Test
+    public void shouldHavePrivateConstructor() throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
+        Constructor<Chapter6> constructor = Chapter6.class.getDeclaredConstructor();
+        assertTrue(Modifier.isPrivate(constructor.getModifiers()));
+        constructor.setAccessible(true);
+        constructor.newInstance();
+    }
 
     @Test
     public void shouldSortArrayUsingHeapsort() {

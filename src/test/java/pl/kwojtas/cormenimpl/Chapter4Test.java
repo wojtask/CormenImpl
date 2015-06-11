@@ -3,6 +3,9 @@ package pl.kwojtas.cormenimpl;
 import org.junit.Test;
 import pl.kwojtas.cormenimpl.util.Array;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Modifier;
 import java.util.Comparator;
 
 import static org.junit.Assert.assertEquals;
@@ -11,6 +14,14 @@ import static org.junit.Assert.assertTrue;
 import static pl.kwojtas.cormenimpl.TestUtil.sortArray;
 
 public class Chapter4Test {
+
+    @Test
+    public void shouldHavePrivateConstructor() throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
+        Constructor<Chapter4> constructor = Chapter4.class.getDeclaredConstructor();
+        assertTrue(Modifier.isPrivate(constructor.getModifiers()));
+        constructor.setAccessible(true);
+        constructor.newInstance();
+    }
 
     @Test
     public void shouldFindMissingInteger() {
