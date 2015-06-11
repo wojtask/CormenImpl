@@ -321,8 +321,8 @@ public class Chapter6Test {
     @Test
     public void shouldEnqueueUsingPriorityQueue() {
         // given
-        PriorityQueueWithRanks<String> priorityQueueWithRanks = getExemplaryPriorityQueueWithRanks();
-        String newKey = "xyz";
+        PriorityQueueWithRanks<String> priorityQueueWithRanks = getExemplaryMinPriorityQueueWithRanks();
+        String newKey = "jjj";
         int currentRank = 10;
 
         // when
@@ -334,7 +334,7 @@ public class Chapter6Test {
         assertEquals(currentRank, priorityQueueWithRanks.at(currentRank).rank);
     }
 
-    private PriorityQueueWithRanks<String> getExemplaryPriorityQueueWithRanks() {
+    private PriorityQueueWithRanks<String> getExemplaryMinPriorityQueueWithRanks() {
         PriorityQueueWithRanks<String> priorityQueueWithRanks = new PriorityQueueWithRanks<>(12);
         priorityQueueWithRanks.set(1, new KeyWithRank<>("aaa", priorityQueueWithRanks.getCurrentRank()));
         priorityQueueWithRanks.set(3, new KeyWithRank<>("bbb", priorityQueueWithRanks.getCurrentRank()));
@@ -352,7 +352,7 @@ public class Chapter6Test {
     @Test
     public void shouldDequeueUsingPriorityQueue() {
         // given
-        PriorityQueueWithRanks<String> priorityQueueWithRanks = getExemplaryPriorityQueueWithRanks();
+        PriorityQueueWithRanks<String> priorityQueueWithRanks = getExemplaryMinPriorityQueueWithRanks();
         String expectedDeletedElement = "aaa";
         int currentRank = 10;
 
@@ -367,8 +367,8 @@ public class Chapter6Test {
     @Test
     public void shouldPushUsingPriorityQueue() {
         // given
-        PriorityQueueWithRanks<String> priorityQueueWithRanks = getExemplaryPriorityQueueWithRanks();
-        String newKey = "xyz";
+        PriorityQueueWithRanks<String> priorityQueueWithRanks = getExemplaryMaxPriorityQueueWithRanks();
+        String newKey = "jjj";
         int currentRank = 10;
 
         // when
@@ -380,11 +380,26 @@ public class Chapter6Test {
         assertEquals(currentRank, priorityQueueWithRanks.at(1).rank);
     }
 
+    private PriorityQueueWithRanks<String> getExemplaryMaxPriorityQueueWithRanks() {
+        PriorityQueueWithRanks<String> priorityQueueWithRanks = new PriorityQueueWithRanks<>(12);
+        priorityQueueWithRanks.set(7, new KeyWithRank<>("aaa", priorityQueueWithRanks.getCurrentRank()));
+        priorityQueueWithRanks.set(4, new KeyWithRank<>("bbb", priorityQueueWithRanks.getCurrentRank()));
+        priorityQueueWithRanks.set(9, new KeyWithRank<>("ccc", priorityQueueWithRanks.getCurrentRank()));
+        priorityQueueWithRanks.set(8, new KeyWithRank<>("ddd", priorityQueueWithRanks.getCurrentRank()));
+        priorityQueueWithRanks.set(5, new KeyWithRank<>("eee", priorityQueueWithRanks.getCurrentRank()));
+        priorityQueueWithRanks.set(2, new KeyWithRank<>("fff", priorityQueueWithRanks.getCurrentRank()));
+        priorityQueueWithRanks.set(6, new KeyWithRank<>("ggg", priorityQueueWithRanks.getCurrentRank()));
+        priorityQueueWithRanks.set(3, new KeyWithRank<>("hhh", priorityQueueWithRanks.getCurrentRank()));
+        priorityQueueWithRanks.set(1, new KeyWithRank<>("iii", priorityQueueWithRanks.getCurrentRank()));
+        priorityQueueWithRanks.heapSize = 9;
+        return priorityQueueWithRanks;
+    }
+
     @Test
     public void shouldPopUsingPriorityQueue() {
         // given
-        PriorityQueueWithRanks<String> priorityQueueWithRanks = getExemplaryPriorityQueueWithRanks();
-        String expectedDeletedElement = "aaa";
+        PriorityQueueWithRanks<String> priorityQueueWithRanks = getExemplaryMaxPriorityQueueWithRanks();
+        String expectedDeletedElement = "iii";
         int currentRank = 10;
 
         // when

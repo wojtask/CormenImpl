@@ -369,16 +369,7 @@ public final class Chapter6 {
 
     private static <T> void minHeapInsertWithRanks(PriorityQueueWithRanks<T> priorityQueue, KeyWithRank<T> keyWithRank) {
         priorityQueue.heapSize++;
-        priorityQueue.set(priorityQueue.heapSize, new KeyWithRank<>(keyWithRank.key, Integer.MAX_VALUE));
-        heapDecreaseRank(priorityQueue, priorityQueue.heapSize, keyWithRank.rank);
-    }
-
-    private static <T> void heapDecreaseRank(PriorityQueueWithRanks<T> priorityQueue, int i, int rank) {
-        priorityQueue.at(i).rank = rank;
-        while (i > 1 && priorityQueue.at(parent(i)).rank > priorityQueue.at(i).rank) {
-            priorityQueue.exch(i, parent(i));
-            i = parent(i);
-        }
+        priorityQueue.set(priorityQueue.heapSize, keyWithRank);
     }
 
     /**
@@ -549,9 +540,6 @@ public final class Chapter6 {
 
     private static void heapDecreaseKeyForMergingLists(
             Heap<Pair<Integer, List<Integer>>> A, int i, Pair<Integer, List<Integer>> key) {
-        if (key.first > A.at(i).first) {
-            throw new RuntimeException("new key is larger than current key");
-        }
         A.set(i, key);
         while (i > 1 && A.at(parent(i)).first > A.at(i).first) {
             A.exch(i, parent(i));
@@ -560,9 +548,6 @@ public final class Chapter6 {
     }
 
     private static Pair<Integer, List<Integer>> heapExtractMinForMergingLists(Heap<Pair<Integer, List<Integer>>> A) {
-        if (A.heapSize < 1) {
-            throw new RuntimeException("heap underflow");
-        }
         Pair<Integer, List<Integer>> min = A.at(1);
         A.set(1, A.at(A.heapSize));
         A.heapSize--;
