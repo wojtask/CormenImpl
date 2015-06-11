@@ -4,6 +4,7 @@ import pl.kwojtas.cormenimpl.util.Array;
 import pl.kwojtas.cormenimpl.util.Heap;
 import pl.kwojtas.cormenimpl.util.List;
 import pl.kwojtas.cormenimpl.util.Pair;
+import pl.kwojtas.cormenimpl.util.PriorityQueueWithRanks;
 import pl.kwojtas.cormenimpl.util.Young;
 
 import static java.lang.Math.max;
@@ -296,63 +297,6 @@ public final class Chapter6 {
     }
 
     /**
-     * Implements a ranked element.
-     *
-     * @param <T> the type of key
-     */
-    public static class KeyWithRank<T> {
-        /**
-         * The key of the element.
-         */
-        public T key;
-
-        /**
-         * The rank of the element.
-         */
-        public int rank;
-
-        /**
-         * Creates a ranked element with a given key and rank.
-         *
-         * @param key the key of the new element
-         * @param rank the rank of the new element
-         */
-        public KeyWithRank(T key, int rank) {
-            this.key = key;
-            this.rank = rank;
-        }
-    }
-
-    /**
-     * Implements a priority queue with ranked elements.
-     * Maintains a global rank and sets it to new elements so that ranks of elements are unique in this priority queue.
-     *
-     * @param <T> the type of keys in the priority queue
-     */
-    public static class PriorityQueueWithRanks<T> extends Heap<KeyWithRank<T>> {
-        private int currentRank;
-
-        /**
-         * Sets initial length of the priority queue and the current rank to 1.
-         *
-         * @param initialLength an initial length of the priority queue
-         */
-        public PriorityQueueWithRanks(int initialLength) {
-            super(new Array<>(), initialLength);
-            currentRank = 1;
-        }
-
-        /**
-         * Returns the current rank, then increments it.
-         *
-         * @return the current rank
-         */
-        public int getCurrentRank() {
-            return currentRank++;
-        }
-    }
-
-    /**
      * Implements the queue operation <span style="font-variant:small-caps;">Enqueue</span>
      * using min-priority queue with ranked elements.
      * <p>Solution to exercise 6.5-6.</p>
@@ -363,11 +307,11 @@ public final class Chapter6 {
      */
     public static <T> void enqueueUsingPriorityQueue(PriorityQueueWithRanks<T> priorityQueue, T key) {
         int rank = priorityQueue.getCurrentRank();
-        KeyWithRank<T> keyWithRank = new KeyWithRank<>(key, rank);
+        PriorityQueueWithRanks.KeyWithRank<T> keyWithRank = new PriorityQueueWithRanks.KeyWithRank<>(key, rank);
         minHeapInsertWithRanks(priorityQueue, keyWithRank);
     }
 
-    private static <T> void minHeapInsertWithRanks(PriorityQueueWithRanks<T> priorityQueue, KeyWithRank<T> keyWithRank) {
+    private static <T> void minHeapInsertWithRanks(PriorityQueueWithRanks<T> priorityQueue, PriorityQueueWithRanks.KeyWithRank<T> keyWithRank) {
         priorityQueue.heapSize++;
         priorityQueue.set(priorityQueue.heapSize, keyWithRank);
     }
@@ -385,8 +329,8 @@ public final class Chapter6 {
         return heapExtractMinWithRanks(priorityQueue).key;
     }
 
-    private static <T> KeyWithRank<T> heapExtractMinWithRanks(PriorityQueueWithRanks<T> priorityQueue) {
-        KeyWithRank<T> min = priorityQueue.at(1);
+    private static <T> PriorityQueueWithRanks.KeyWithRank<T> heapExtractMinWithRanks(PriorityQueueWithRanks<T> priorityQueue) {
+        PriorityQueueWithRanks.KeyWithRank<T> min = priorityQueue.at(1);
         priorityQueue.set(1, priorityQueue.at(priorityQueue.heapSize));
         priorityQueue.heapSize--;
         minHeapifyWithRanks(priorityQueue, 1);
@@ -422,13 +366,13 @@ public final class Chapter6 {
      */
     public static <T> void pushUsingPriorityQueue(PriorityQueueWithRanks<T> priorityQueue, T key) {
         int rank = priorityQueue.getCurrentRank();
-        KeyWithRank<T> keyWithRank = new KeyWithRank<>(key, rank);
+        PriorityQueueWithRanks.KeyWithRank<T> keyWithRank = new PriorityQueueWithRanks.KeyWithRank<>(key, rank);
         maxHeapInsertWithRanks(priorityQueue, keyWithRank);
     }
 
-    private static <T> void maxHeapInsertWithRanks(PriorityQueueWithRanks<T> priorityQueue, KeyWithRank<T> keyWithRank) {
+    private static <T> void maxHeapInsertWithRanks(PriorityQueueWithRanks<T> priorityQueue, PriorityQueueWithRanks.KeyWithRank<T> keyWithRank) {
         priorityQueue.heapSize++;
-        priorityQueue.set(priorityQueue.heapSize, new KeyWithRank<>(keyWithRank.key, Integer.MIN_VALUE));
+        priorityQueue.set(priorityQueue.heapSize, new PriorityQueueWithRanks.KeyWithRank<>(keyWithRank.key, Integer.MIN_VALUE));
         heapIncreaseRank(priorityQueue, priorityQueue.heapSize, keyWithRank.rank);
     }
 
@@ -453,8 +397,8 @@ public final class Chapter6 {
         return heapExtractMaxWithRanks(priorityQueue).key;
     }
 
-    private static <T> KeyWithRank<T> heapExtractMaxWithRanks(PriorityQueueWithRanks<T> priorityQueue) {
-        KeyWithRank<T> max = priorityQueue.at(1);
+    private static <T> PriorityQueueWithRanks.KeyWithRank<T> heapExtractMaxWithRanks(PriorityQueueWithRanks<T> priorityQueue) {
+        PriorityQueueWithRanks.KeyWithRank<T> max = priorityQueue.at(1);
         priorityQueue.set(1, priorityQueue.at(priorityQueue.heapSize));
         priorityQueue.heapSize--;
         maxHeapifyWithRanks(priorityQueue, 1);

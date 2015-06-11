@@ -1,11 +1,11 @@
 package pl.kwojtas.cormenimpl;
 
 import org.junit.Test;
-import pl.kwojtas.cormenimpl.Chapter6.KeyWithRank;
-import pl.kwojtas.cormenimpl.Chapter6.PriorityQueueWithRanks;
 import pl.kwojtas.cormenimpl.util.Array;
 import pl.kwojtas.cormenimpl.util.Heap;
 import pl.kwojtas.cormenimpl.util.List;
+import pl.kwojtas.cormenimpl.util.PriorityQueueWithRanks;
+import pl.kwojtas.cormenimpl.util.PriorityQueueWithRanks.KeyWithRank;
 import pl.kwojtas.cormenimpl.util.Young;
 
 import java.lang.reflect.Constructor;

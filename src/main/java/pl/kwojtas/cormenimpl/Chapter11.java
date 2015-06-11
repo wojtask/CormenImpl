@@ -5,8 +5,8 @@ import pl.kwojtas.cormenimpl.util.Element;
 import pl.kwojtas.cormenimpl.util.HashFunction;
 import pl.kwojtas.cormenimpl.util.HashTableWithFreeList;
 import pl.kwojtas.cormenimpl.util.HashTableWithOpenAddressing;
+import pl.kwojtas.cormenimpl.util.HugeArray;
 import pl.kwojtas.cormenimpl.util.List;
-import pl.kwojtas.cormenimpl.util.Stack;
 import pl.kwojtas.cormenimpl.util.ZeroBasedIndexedArray;
 
 import static pl.kwojtas.cormenimpl.Chapter10.listDelete;
@@ -153,38 +153,6 @@ public final class Chapter11 {
         List<Element<T>> list = T.at(x.key);
         List.Node<Element<T>> node = listSearch(list, x);
         listDelete(list, node);
-    }
-
-    /**
-     * Implements a huge array.
-     *
-     * @param <T> the type of elements in the huge array
-     */
-    public static class HugeArray<T> {
-
-        /**
-         * The array containing indexes of elements in stack {@code S}.
-         */
-        public ZeroBasedIndexedArray<Integer> T;
-
-        /**
-         * The auxiliary stack containing the elements of the huge array.
-         */
-        public Stack<Element<T>> S;
-
-        /**
-         * Creates a huge array with a given size and stack capacity.
-         *
-         * @param size the size of the new huge array
-         * @param capacity the capacity of the auxiliary stack of the new huge array
-         */
-        public HugeArray(int size, int capacity) {
-            T = ZeroBasedIndexedArray.withLength(size);
-            for (int i = 0; i <= size - 1; i++) {
-                T.set(i, 0); // initializing T as it contains nulls; the initializer can be anything nonnull
-            }
-            S = Stack.withLength(capacity);
-        }
     }
 
     /**
