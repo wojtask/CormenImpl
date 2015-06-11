@@ -1,9 +1,6 @@
 package pl.kwojtas.cormenimpl;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 import pl.kwojtas.cormenimpl.util.Array;
 import pl.kwojtas.cormenimpl.util.BinaryTree;
 import pl.kwojtas.cormenimpl.util.CircularList;
@@ -1305,6 +1302,7 @@ public class Chapter10Test {
         assertNull(multipleArrayList.next.at(1));
     }
 
+    @Ignore
     @Test
     public void shouldFreeObjectAtTheEndOfCompactList() {
         // given
