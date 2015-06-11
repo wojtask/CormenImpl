@@ -305,26 +305,6 @@ public final class Chapter11 {
     }
 
     /**
-     * Searches for an element in a hash table using an in-place chaining for collision resolution.
-     * <p>Solution to exercise 11.2-4.</p>
-     *
-     * @param T the hash table using an in-place chaining for collision resolution
-     * @param k the key of the element to find
-     * @param <T> the type of elements' values in {@code T}
-     * @return the element of key {@code k} in {@code T}, or {@code null} if {@code T} does not contain such element
-     */
-    public static <T> Integer inPlaceChainedHashSearch(HashTableWithFreeList<T> T, int k) {
-        Integer position = T.h.compute(k);
-        while (position != null && T.at(position).element != null) {
-            if (T.at(position).element.key == k) {
-                return position;
-            }
-            position = T.at(position).next;
-        }
-        return null;
-    }
-
-    /**
      * Deletes an element from a hash table using an in-place chaining for collision resolution.
      * <p>Solution to exercise 11.2-4.</p>
      *
@@ -347,6 +327,26 @@ public final class Chapter11 {
             T.at(T.free).prev = position;
         }
         T.free = position;
+    }
+
+    /**
+     * Searches for an element in a hash table using an in-place chaining for collision resolution.
+     * <p>Solution to exercise 11.2-4.</p>
+     *
+     * @param T the hash table using an in-place chaining for collision resolution
+     * @param k the key of the element to find
+     * @param <T> the type of elements' values in {@code T}
+     * @return the element of key {@code k} in {@code T}, or {@code null} if {@code T} does not contain such element
+     */
+    public static <T> Integer inPlaceChainedHashSearch(HashTableWithFreeList<T> T, int k) {
+        Integer position = T.h.compute(k);
+        while (position != null && T.at(position).element != null) {
+            if (T.at(position).element.key == k) {
+                return position;
+            }
+            position = T.at(position).next;
+        }
+        return null;
     }
 
     /**

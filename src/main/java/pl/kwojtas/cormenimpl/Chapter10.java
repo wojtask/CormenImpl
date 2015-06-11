@@ -878,7 +878,15 @@ public final class Chapter10 {
         }
     }
 
-    private static <T> BinaryTree.Node<T> stacklessInorderVisit(BinaryTree.Node<T> x) {
+    /**
+     * Visits a node of a tree during stackless inorder tree walk by printing out its key.
+     * <p><span style="font-variant:small-caps;">Stackless-Inorder-Visit</span> from solution to exercise 10.4-5.</p>
+     *
+     * @param x the node of the tree to visit
+     * @param <T> the type of elements in the tree
+     * @return the next node of the tree to visit according to inorder, or {@code null} if no such node exists
+     */
+    static <T> BinaryTree.Node<T> stacklessInorderVisit(BinaryTree.Node<T> x) {
         System.out.println(x.key);
         if (x.right != null) {
             return x.right;

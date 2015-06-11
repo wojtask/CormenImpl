@@ -29,7 +29,7 @@ public final class Chapter6 {
      * @param i the index of a node
      * @return the parent index of the node of index {@code i}
      */
-    private static int parent(int i) {
+    static int parent(int i) {
         return i / 2;
     }
 
@@ -40,7 +40,7 @@ public final class Chapter6 {
      * @param i the index of a node
      * @return the left child index of the node of index {@code i}
      */
-    private static int left(int i) {
+    static int left(int i) {
         return 2 * i;
     }
 
@@ -51,7 +51,7 @@ public final class Chapter6 {
      * @param i the index of a node
      * @return the right child index of the node of index {@code i}
      */
-    private static int right(int i) {
+    static int right(int i) {
         return 2 * i + 1;
     }
 
@@ -63,7 +63,7 @@ public final class Chapter6 {
      * @param i the index of the node in {@code A} the property is violated at
      * @param <T> the type of elements in {@code A}
      */
-    private static <T extends Comparable> void maxHeapify(Heap<T> A, int i) {
+    static <T extends Comparable> void maxHeapify(Heap<T> A, int i) {
         int l = left(i);
         int r = right(i);
         int largest;
@@ -89,7 +89,7 @@ public final class Chapter6 {
      * @param <T> the type of elements in {@code A}
      * @return a max-heap constructed from elements from {@code A}
      */
-    private static <T extends Comparable> Heap<T> buildMaxHeap(Array<T> A) {
+    static <T extends Comparable> Heap<T> buildMaxHeap(Array<T> A) {
         Heap<T> H = new Heap<>(A);
         H.heapSize = H.length;
         for (int i = H.length / 2; i >= 1; i--) {
@@ -541,7 +541,7 @@ public final class Chapter6 {
      * @param i the index of a node
      * @return the parent index of the node of index {@code i}
      */
-    private static int multiaryParent(int d, int i) {
+    static int multiaryParent(int d, int i) {
         return ceil(i - 1, d);
     }
 
@@ -554,7 +554,7 @@ public final class Chapter6 {
      * @param i the index of a node
      * @return the left child index of the node of index {@code i}
      */
-    private static int multiaryChild(int d, int k, int i) {
+    static int multiaryChild(int d, int k, int i) {
         return d * (i - 1) + k + 1;
     }
 
@@ -586,7 +586,7 @@ public final class Chapter6 {
      * @param d the arity of the {@code A}
      * @param i the index of the node in {@code A} the property is violated at
      */
-    private static void multiaryMaxHeapify(Heap<Integer> A, int d, int i) {
+    static void multiaryMaxHeapify(Heap<Integer> A, int d, int i) {
         int largest = i;
         int k = 1;
         int child = multiaryChild(d, 1, i);
@@ -646,7 +646,7 @@ public final class Chapter6 {
      * @param j the column index of the current element
      * @return the smallest element in {@code Y}
      */
-    private static int youngExtractMin(Young Y, int m, int n, int i, int j) {
+    static int youngExtractMin(Young Y, int m, int n, int i, int j) {
         if (i == m && j == n) {
             int min = Y.at(i, j);
             Y.set(i, j, Integer.MAX_VALUE);
@@ -671,7 +671,7 @@ public final class Chapter6 {
      * @param i the row index of the current element
      * @param j the column index of the current element
      */
-    private static void youngify(Young Y, int i, int j) {
+    static void youngify(Young Y, int i, int j) {
         int i_ = i, j_ = j;
         if (i > 1 && Y.at(i - 1, j) > Y.at(i_, j_)) {
             i_ = i - 1;
@@ -696,7 +696,7 @@ public final class Chapter6 {
      * @param n the number of columns in {@code Y}
      * @param key the key to insert
      */
-    private static void youngInsert(Young Y, int m, int n, int key) {
+    static void youngInsert(Young Y, int m, int n, int key) {
         Y.set(m, n, key);
         youngify(Y, m, n);
     }

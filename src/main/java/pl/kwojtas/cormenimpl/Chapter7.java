@@ -45,7 +45,7 @@ public final class Chapter7 {
      * @param <T> the type of elements in {@code A}
      * @return the index of the pivot element after partitioning
      */
-    public static <T extends Comparable> int partition(Array<T> A, int p, int r) {
+    static <T extends Comparable> int partition(Array<T> A, int p, int r) {
         T x = A.at(r);
         int i = p - 1;
         for (int j = p; j <= r - 1; j++) {
@@ -69,7 +69,7 @@ public final class Chapter7 {
      * @param <T> the type of elements in {@code A}
      * @return the index of the pivot element after partitioning
      */
-    public static <T extends Comparable> int randomizedPartition(Array<T> A, int p, int r) {
+    static <T extends Comparable> int randomizedPartition(Array<T> A, int p, int r) {
         int i = random(p, r);
         A.exch(r, i);
         return partition(A, p, r);
@@ -132,7 +132,7 @@ public final class Chapter7 {
      * @param <T> the type of elements in {@code A}
      * @return the index of the pivot element after partitioning
      */
-    private static <T extends Comparable> int hoarePartition(Array<T> A, int p, int r) {
+    static <T extends Comparable> int hoarePartition(Array<T> A, int p, int r) {
         T x = A.at(p);
         int i = p - 1;
         int j = r + 1;
@@ -289,7 +289,7 @@ public final class Chapter7 {
      * @param r the index of the end of subarray in {@code A} being partitioned
      * @return the pair of indexes bounding the part of {@code A} containing intervals overlapping with the pivot interval
      */
-    private static Pair<Integer, Integer> fuzzyPartition(Array<Interval> A, int p, int r) {
+    static Pair<Integer, Integer> fuzzyPartition(Array<Interval> A, int p, int r) {
         A.exch(r, random(p, r));
         double x = A.at(r).a;
         int i = p - 1;

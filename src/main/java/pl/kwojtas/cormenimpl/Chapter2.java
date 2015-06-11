@@ -122,7 +122,7 @@ public final class Chapter2 {
      * @param q the index of the end of the first subarray in {@code A} being merged
      * @param r the index of end of the second subarray in {@code A} being merged
      */
-    private static void merge(Array<Integer> A, int p, int q, int r) {
+    static void merge(Array<Integer> A, int p, int q, int r) {
         int n1 = q - p + 1;
         int n2 = r - q;
         Array<Integer> L = Array.withLength(n1 + 1);
@@ -356,7 +356,7 @@ public final class Chapter2 {
      * @param q the index of the end of the first subarray in {@code A} being merged
      * @param r the index of end of the second subarray in {@code A} being merged
      */
-    private static int mergeInversions(Array<Integer> A, int p, int q, int r) {
+    static int mergeInversions(Array<Integer> A, int p, int q, int r) {
         int n1 = q - p + 1;
         int n2 = r - q;
         Array<Integer> L = Array.withLength(n1 + 1);

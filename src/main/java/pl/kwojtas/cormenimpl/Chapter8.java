@@ -561,7 +561,7 @@ public final class Chapter8 {
      * @param r the index of the end of subarray in {@code R} and subarray in {@code B} being partitioned
      * @return the index of the pivot element after partitioning
      */
-    private static int jugsPartition(Array<Double> R, Array<Double> B, int p, int r) {
+    static int jugsPartition(Array<Double> R, Array<Double> B, int p, int r) {
         R.exch(r, random(p, r));
         double x = R.at(r);
         int i = p;

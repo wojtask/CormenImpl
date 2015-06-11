@@ -52,10 +52,11 @@ public final class Chapter5 {
 
     /**
      * Flips an unfair coin.
+     * <p><span style="font-variant:small-caps;">Biased-Random</span> from exercise 5.1-3.</p>
      *
      * @return {@code 0} with probability {@code 1 - p} and {@code 1} with probability {@code p}
      */
-    private static int biasedRandom() {
+    static int biasedRandom() {
         return RANDOM.nextDouble() <= UNFAIR_COIN_PROBABILITY ? 1 : 0;
     }
 
