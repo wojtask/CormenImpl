@@ -14,6 +14,7 @@ import pl.kwojtas.cormenimpl.util.SingleArrayList;
 import pl.kwojtas.cormenimpl.util.SinglyLinkedList;
 import pl.kwojtas.cormenimpl.util.SinglyLinkedListWithTail;
 import pl.kwojtas.cormenimpl.util.Stack;
+import pl.kwojtas.cormenimpl.util.XorLinkedList;
 
 import static pl.kwojtas.cormenimpl.Chapter5.random;
 import static pl.kwojtas.cormenimpl.Chapter6.mergeSortedLists;
@@ -665,6 +666,90 @@ public final class Chapter10 {
             singlyLinkedListInsert(L_, x);
         }
         L.head = L_.head;
+    }
+
+    /**
+     * Finds an element in a XOR linked list.
+     * <p><span style="font-variant:small-caps;">Xor-Linked-List-Search</span> from solution to exercise 10.2-8.</p>
+     *
+     * @param L the XOR linked list
+     * @param k the key of the element to find
+     * @param <T> the type of elements in {@code L}
+     * @return the element of key {@code k} in list {@code L}, or {@code null} if {@code L} does not contain such element
+     */
+    public static <T> XorLinkedList.Node<T> xorLinkedListSearch(XorLinkedList<T> L, T k) {
+        XorLinkedList.Node<T> x = L.head;
+        XorLinkedList.Node<T> y = null;
+        while (x != null && !x.key.equals(k)) {
+            XorLinkedList.Node<T> z = L.byAddress(x.np ^ (y != null ? y.address : 0));
+            y = x;
+            x = z;
+        }
+        return x;
+    }
+
+    /**
+     * Inserts an element at the head of a XOR linked list.
+     * <p><span style="font-variant:small-caps;">Xor-Linked-List-Insert</span> from solution to exercise 10.2-8.</p>
+     *
+     * @param L the XOR linked list
+     * @param x the element to insert
+     * @param <T> the type of elements in {@code L}
+     */
+    public static <T> void xorLinkedListInsert(XorLinkedList<T> L, XorLinkedList.Node<T> x) {
+        x.np = L.head != null ? L.head.address : 0;
+        if (L.head != null) {
+            L.head.np ^= x.address;
+        }
+        L.head = x;
+        if (L.tail == null) {
+            L.tail = x;
+        }
+    }
+
+    /**
+     * Deletes an element from a XOR linked list.
+     * <p><span style="font-variant:small-caps;">Xor-Linked-List-Delete</span> from solution to exercise 10.2-8.</p>
+     *
+     * @param L the XOR linked list
+     * @param x the element in {@code L} to delete
+     * @param <T> the type of elements in {@code L}
+     */
+    public static <T> void xorLinkedListDelete(XorLinkedList<T> L, XorLinkedList.Node<T> x) {
+        XorLinkedList.Node<T> x_ = L.head;
+        XorLinkedList.Node<T> y = null;
+        XorLinkedList.Node<T> z;
+        while (x_ != x) {
+            z = L.byAddress(x_.np ^ (y != null ? y.address : 0));
+            y = x_;
+            x_ = z;
+        }
+        z = L.byAddress(x.np ^ (y != null ? y.address : 0));
+        if (y != null) {
+            y.np ^= x.address ^ (z != null ? z.address : 0);
+        }
+        if (z != null) {
+            z.np ^= x.address ^ (y != null ? y.address : 0);
+        }
+        if (x == L.head) {
+            L.head = z;
+        }
+        if (x == L.tail) {
+            L.tail = y;
+        }
+    }
+
+    /**
+     * Reverses a XOR linked list.
+     * <p><span style="font-variant:small-caps;">Xor-Linked-List-Reverse</span> from solution to exercise 10.2-8.</p>
+     *
+     * @param L the XOR linked list
+     * @param <T> the type of elements in {@code L}
+     */
+    public static <T> void xorLinkedListReverse(XorLinkedList<T> L) {
+        XorLinkedList.Node<T> x = L.head;
+        L.head = L.tail;
+        L.tail = x;
     }
 
     /**

@@ -19,6 +19,7 @@ import pl.kwojtas.cormenimpl.util.SingleArrayList;
 import pl.kwojtas.cormenimpl.util.SinglyLinkedList;
 import pl.kwojtas.cormenimpl.util.SinglyLinkedListWithTail;
 import pl.kwojtas.cormenimpl.util.Stack;
+import pl.kwojtas.cormenimpl.util.XorLinkedList;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
@@ -714,7 +715,7 @@ public class Chapter10Test {
         assertElementDeletedFromList(keyToDelete, list.toArray(), original.toArray());
     }
 
-    private void assertElementDeletedFromList(int deletedKey, Array<Integer> listArray, Array<Integer> originalArray) {
+    private <T> void assertElementDeletedFromList(T deletedKey, Array<T> listArray, Array<T> originalArray) {
         assertEquals(originalArray.length - 1, listArray.length);
         int i = 0;
         boolean elementsEqual = true;
@@ -722,7 +723,11 @@ public class Chapter10Test {
             i++;
             elementsEqual = listArray.at(i).equals(originalArray.at(i));
         }
-        assertEquals(Integer.valueOf(deletedKey), originalArray.at(i));
+        if (elementsEqual) {
+            assertEquals(deletedKey, originalArray.at(i + 1));
+            return;
+        }
+        assertEquals(deletedKey, originalArray.at(i));
         while (i <= listArray.length) {
             assertEquals(listArray.at(i), originalArray.at(i + 1));
             i++;
@@ -787,9 +792,9 @@ public class Chapter10Test {
         assertElementInsertedIntoBeginningOfList(keyToInsert, listArray, originalArray);
     }
 
-    private void assertElementInsertedIntoBeginningOfList(int keyToInsert, Array<Integer> listArray, Array<Integer> originalArray) {
+    private <T> void assertElementInsertedIntoBeginningOfList(T keyToInsert, Array<T> listArray, Array<T> originalArray) {
         assertEquals(originalArray.length + 1, listArray.length);
-        assertEquals(Integer.valueOf(keyToInsert), listArray.at(1));
+        assertEquals(keyToInsert, listArray.at(1));
         for (int i = 2; i <= listArray.length; i++) {
             assertEquals(originalArray.at(i - 1), listArray.at(i));
         }
@@ -1140,6 +1145,127 @@ public class Chapter10Test {
         // then
         Array<Integer> listArray = list.toArray();
         Array<Integer> originalArray = original.toArray();
+        assertEquals(originalArray.length, listArray.length);
+        int n = listArray.length;
+        for (int i = 1; i <= n; i++) {
+            assertEquals(originalArray.at(i), listArray.at(n - i + 1));
+        }
+    }
+
+    @Test
+    public void shouldFindElementInXorLinkedList() {
+        // given
+        XorLinkedList<String> xorLinkedList = getExemplaryXorLinkedList();
+        String key = "ccc";
+
+        // when
+        XorLinkedList.Node<String> actualFound = Chapter10.xorLinkedListSearch(xorLinkedList, key);
+
+        // then
+        assertEquals(key, actualFound.key);
+    }
+
+    private XorLinkedList<String> getExemplaryXorLinkedList() {
+        XorLinkedList<String> xorLinkedList = new XorLinkedList<>();
+        XorLinkedList.Node<String> x1 = xorLinkedList.registerNode("aaa");
+        XorLinkedList.Node<String> x2 = xorLinkedList.registerNode("bbb");
+        XorLinkedList.Node<String> x3 = xorLinkedList.registerNode("ccc");
+        XorLinkedList.Node<String> x4 = xorLinkedList.registerNode("ddd");
+        x1.np = x2.address;
+        x2.np = x1.address ^ x3.address;
+        x3.np = x2.address ^ x4.address;
+        x4.np = x3.address;
+        xorLinkedList.head = x1;
+        xorLinkedList.tail = x4;
+        return xorLinkedList;
+    }
+
+    @Test
+    public void shouldNotFindNonexistingElementInXorLinkedList() {
+        // given
+        XorLinkedList<String> xorLinkedList = getExemplaryXorLinkedList();
+        String key = "xyz";
+
+        // when
+        XorLinkedList.Node<String> actualFound = Chapter10.xorLinkedListSearch(xorLinkedList, key);
+
+        // then
+        assertNull(actualFound);
+    }
+
+    @Test
+    public void shouldInsertElementToEmptyXorLinkedList() {
+        // given
+        XorLinkedList<String> xorLinkedList = new XorLinkedList<>();
+        XorLinkedList.Node<String> nodeToInsert = xorLinkedList.registerNode("xyz");
+
+        // when
+        Chapter10.xorLinkedListInsert(xorLinkedList, nodeToInsert);
+
+        // then
+        assertEquals(nodeToInsert, xorLinkedList.head);
+        assertEquals(nodeToInsert, xorLinkedList.tail);
+        assertEquals(0, nodeToInsert.np);
+    }
+
+    @Test
+    public void shouldInsertElementToNonemptyXorLinkedList() {
+        // given
+        XorLinkedList<String> xorLinkedList = getExemplaryXorLinkedList();
+        XorLinkedList<String> original = new XorLinkedList<>(xorLinkedList);
+        String keyToInsert = "xyz";
+        XorLinkedList.Node<String> nodeToInsert = xorLinkedList.registerNode(keyToInsert);
+
+        // when
+        Chapter10.xorLinkedListInsert(xorLinkedList, nodeToInsert);
+
+        // then
+        Array<String> listArray = xorLinkedList.toArray();
+        Array<String> originalArray = original.toArray();
+        assertElementInsertedIntoBeginningOfList(keyToInsert, listArray, originalArray);
+    }
+
+    @Test
+    public void shouldDeleteFromBeginningOfXorLinkedList() {
+        // given
+        XorLinkedList<String> xorLinkedList = getExemplaryXorLinkedList();
+        XorLinkedList<String> original = new XorLinkedList<>(xorLinkedList);
+        String keyToDelete = xorLinkedList.head.key;
+
+        // when
+        Chapter10.xorLinkedListDelete(xorLinkedList, xorLinkedList.head);
+
+        // then
+        assertElementDeletedFromList(keyToDelete, xorLinkedList.toArray(), original.toArray());
+    }
+
+    @Test
+    public void shouldDeleteFromEndOfXorLinkedList() {
+        // given
+        XorLinkedList<String> xorLinkedList = getExemplaryXorLinkedList();
+        XorLinkedList<String> original = new XorLinkedList<>(xorLinkedList);
+        XorLinkedList.Node<String> nodeToDelete = xorLinkedList.tail;
+        String keyToDelete = xorLinkedList.tail.key;
+
+        // when
+        Chapter10.xorLinkedListDelete(xorLinkedList, nodeToDelete);
+
+        // then
+        assertElementDeletedFromList(keyToDelete, xorLinkedList.toArray(), original.toArray());
+    }
+
+    @Test
+    public void shouldReverseXorLinkedList() {
+        // given
+        XorLinkedList<String> xorLinkedList = getExemplaryXorLinkedList();
+        XorLinkedList<String> original = new XorLinkedList<>(xorLinkedList);
+
+        // when
+        Chapter10.xorLinkedListReverse(xorLinkedList);
+
+        // then
+        Array<String> listArray = xorLinkedList.toArray();
+        Array<String> originalArray = original.toArray();
         assertEquals(originalArray.length, listArray.length);
         int n = listArray.length;
         for (int i = 1; i <= n; i++) {
