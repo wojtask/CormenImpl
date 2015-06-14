@@ -3,8 +3,10 @@ package pl.kwojtas.cormenimpl;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
 import pl.kwojtas.cormenimpl.util.Array;
 import pl.kwojtas.cormenimpl.util.BinaryTree;
 import pl.kwojtas.cormenimpl.util.CircularList;
@@ -33,9 +35,13 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+import static org.powermock.api.mockito.PowerMockito.mockStatic;
+import static org.powermock.api.mockito.PowerMockito.when;
 import static pl.kwojtas.cormenimpl.TestUtil.assertArrayEquals;
 import static pl.kwojtas.cormenimpl.TestUtil.assertShuffled;
 
+@RunWith(PowerMockRunner.class)
+@PrepareForTest({ Chapter5.class })
 public class Chapter10Test {
 
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
@@ -701,12 +707,27 @@ public class Chapter10Test {
     }
 
     @Test
-    public void shouldDeleteFromList() {
+     public void shouldDeleteElementInTheMiddleOfList() {
         // given
         List<Integer> list = new List<>(5,7,9,2,6,1,6,6,3,1,7,8);
         List<Integer> original = new List<>(list);
         int keyToDelete = 6;
         List.Node<Integer> nodeToDelete = list.head.next.next.next.next; // first element on the list with key = 6
+
+        // when
+        Chapter10.listDelete(list, nodeToDelete);
+
+        // then
+        assertElementDeletedFromList(keyToDelete, list.toArray(), original.toArray());
+    }
+
+    @Test
+    public void shouldDeleteHeadFromList() {
+        // given
+        List<Integer> list = new List<>(5,7,9,2,6,1,6,6,3,1,7,8);
+        List<Integer> original = new List<>(list);
+        int keyToDelete = 5;
+        List.Node<Integer> nodeToDelete = list.head;
 
         // when
         Chapter10.listDelete(list, nodeToDelete);
@@ -1380,23 +1401,42 @@ public class Chapter10Test {
     public void shouldAllocateObjectOnCompactList() {
         // given
         MultipleArrayList<String> multipleArrayList = new MultipleArrayList<>();
+        multipleArrayList.key  = new Array<>("aaa","bbb","ccc","ddd","eee");
         multipleArrayList.next = new Array<>(3,1,null,5,null);
         multipleArrayList.prev = new Array<>(2,null,1,null,null);
         multipleArrayList.L = 2;
         multipleArrayList.free = 4;
+        MultipleArrayList<String> original = new MultipleArrayList<>(multipleArrayList);
 
         // when
         int actualNewPosition = Chapter10.compactListAllocateObject(multipleArrayList);
 
         // then
         assertEquals(4, actualNewPosition);
-        assertEquals(Integer.valueOf(5), multipleArrayList.free);
+        assertCompactList(multipleArrayList);
+        assertArrayEquals(original.toArray(), multipleArrayList.toArray());
+        assertEquals(original.getFreeListLength() - 1, multipleArrayList.getFreeListLength());
+    }
+
+    private void assertCompactList(MultipleArrayList<String> multipleArrayList) {
+        int listLength = multipleArrayList.getLength();
+        Integer x = multipleArrayList.L;
+        while (x != null) {
+            assertTrue(x <= listLength);
+            x = multipleArrayList.next.at(x);
+        }
+        x = multipleArrayList.free;
+        while (x != null) {
+            assertTrue(x > listLength);
+            x = multipleArrayList.next.at(x);
+        }
     }
 
     @Test(expected = RuntimeException.class)
     public void shouldNotAllocateObjectOnFullCompactList() {
         // given
         MultipleArrayList<String> multipleArrayList = new MultipleArrayList<>();
+        multipleArrayList.key  = new Array<>("aaa","bbb","ccc","ddd","eee");
         multipleArrayList.next = new Array<>(3,1,5,null,4);
         multipleArrayList.prev = new Array<>(2,null,1,null,null);
         multipleArrayList.L = 2;
@@ -1421,18 +1461,20 @@ public class Chapter10Test {
         multipleArrayList.prev = new Array<>(2,null,1,null,null);
         multipleArrayList.L = 2;
         multipleArrayList.free = 4;
+        MultipleArrayList<String> originalList = new MultipleArrayList<>(multipleArrayList);
+        int elementIndexToFree = 1;
+        String keyToDelete = "aaa";
+        int freeListLength = multipleArrayList.getFreeListLength();
 
         // when
-        Chapter10.compactListFreeObject(multipleArrayList, 1);
+        Chapter10.compactListFreeObject(multipleArrayList, elementIndexToFree);
 
         // then
-        assertEquals(Integer.valueOf(3), multipleArrayList.free);
-        assertEquals(Integer.valueOf(4), multipleArrayList.next.at(3));
-        assertEquals("ccc", multipleArrayList.key.at(1));
-        assertNull(multipleArrayList.next.at(1));
+        assertCompactList(multipleArrayList);
+        assertElementDeletedFromList(keyToDelete, multipleArrayList.toArray(), originalList.toArray());
+        assertEquals(freeListLength + 1, multipleArrayList.getFreeListLength());
     }
 
-    @Ignore
     @Test
     public void shouldFreeObjectAtTheEndOfCompactList() {
         // given
@@ -1442,14 +1484,18 @@ public class Chapter10Test {
         multipleArrayList.prev = new Array<>(2,null,1,null,null);
         multipleArrayList.L = 2;
         multipleArrayList.free = 4;
+        MultipleArrayList<String> originalList = new MultipleArrayList<>(multipleArrayList);
+        int elementIndexToFree = 3;
+        String keyToDelete = "ccc";
+        int freeListLength = multipleArrayList.getFreeListLength();
 
         // when
-        Chapter10.compactListFreeObject(multipleArrayList, 3);
+        Chapter10.compactListFreeObject(multipleArrayList, elementIndexToFree);
 
         // then
-        assertEquals(Integer.valueOf(3), multipleArrayList.free);
-        assertEquals(Integer.valueOf(4), multipleArrayList.next.at(3));
-        assertNull(multipleArrayList.next.at(1));
+        assertCompactList(multipleArrayList);
+        assertElementDeletedFromList(keyToDelete, multipleArrayList.toArray(), originalList.toArray());
+        assertEquals(freeListLength + 1, multipleArrayList.getFreeListLength());
     }
 
     @Test
@@ -1461,43 +1507,56 @@ public class Chapter10Test {
         multipleArrayList.prev = new Array<>(2,5,4,1,null);
         multipleArrayList.L = 5;
         multipleArrayList.free = null;
+        MultipleArrayList<String> originalList = new MultipleArrayList<>(multipleArrayList);
+        int elementIndexToFree = 3;
+        String keyToDelete = "ccc";
+        int freeListLength = multipleArrayList.getFreeListLength();
 
         // when
-        Chapter10.compactListFreeObject(multipleArrayList, 3);
+        Chapter10.compactListFreeObject(multipleArrayList, elementIndexToFree);
 
         // then
-        assertEquals(Integer.valueOf(5), multipleArrayList.free);
-        assertNull(multipleArrayList.next.at(5));
-        assertEquals(Integer.valueOf(3), multipleArrayList.L);
-        assertEquals("eee", multipleArrayList.key.at(3));
-        assertEquals(Integer.valueOf(2), multipleArrayList.next.at(3));
+        assertCompactList(multipleArrayList);
+        assertElementDeletedFromList(keyToDelete, multipleArrayList.toArray(), originalList.toArray());
+        assertEquals(freeListLength + 1, multipleArrayList.getFreeListLength());
     }
 
     @Test
-    public void shouldCompactifyList() {
+    public void shouldCompactifyNonemptyList() {
         // given
         MultipleArrayList<String> multipleArrayList = new MultipleArrayList<>();
-        multipleArrayList.next = new Array<>(9,8,null,1,2,5,null,10,7,3);
-        multipleArrayList.prev = new Array<>(4,5,10,null,6,null,9,2,1,8);
+        multipleArrayList.next = new Array<>(9,8,null,1,2,null,5,10,6,3);
+        multipleArrayList.prev = new Array<>(4,5,10,null,7,9,null,2,1,8);
         multipleArrayList.key = Array.withLength(10);
-        multipleArrayList.L = 6;
+        multipleArrayList.L = 7;
+        multipleArrayList.free = 4;
+        int listLength = 6;
+
+        // when
+        Chapter10.compactifyList(multipleArrayList);
+
+        // then
+        assertCompactList(multipleArrayList);
+        assertEquals(listLength, multipleArrayList.getLength());
+        assertEquals(10 - listLength, multipleArrayList.getFreeListLength());
+    }
+
+    @Test
+    public void shouldCompactifyEmptyList() {
+        // given
+        MultipleArrayList<String> multipleArrayList = new MultipleArrayList<>();
+        multipleArrayList.next = new Array<>(3,1,5,2,null);
+        multipleArrayList.prev = new Array<>(null,null,null,null,null);
+        multipleArrayList.key = Array.withLength(5);
+        multipleArrayList.L = null;
         multipleArrayList.free = 4;
 
         // when
         Chapter10.compactifyList(multipleArrayList);
 
         // then
-        int m = multipleArrayList.getLength();
-        Integer x = multipleArrayList.L;
-        while (x != null) {
-            assertTrue(x <= m);
-            x = multipleArrayList.next.at(x);
-        }
-        x = multipleArrayList.free;
-        while (x != null) {
-            assertTrue(x > m);
-            x = multipleArrayList.next.at(x);
-        }
+        assertNull(multipleArrayList.L);
+        assertEquals(5, multipleArrayList.getFreeListLength());
     }
 
     @Test
@@ -1629,6 +1688,20 @@ public class Chapter10Test {
     }
 
     @Test
+    public void shouldInsertToEmptyHeapOnSortedLists() {
+        // given
+        List<Integer> sortedList = new List<>();
+        int key = 12;
+        List<Integer> expectedAfterInsertion = new List<>(12);
+
+        // when
+        Chapter10.sortedListMinHeapInsert(sortedList, key);
+
+        // then
+        assertArrayEquals(expectedAfterInsertion.toArray(), sortedList.toArray());
+    }
+
+    @Test
     public void shouldInsertAtTheBeginningOfHeapOnSortedLists() {
         // given
         List<Integer> sortedList = new List<>(2,4,8,8,13,14,15);
@@ -1753,6 +1826,25 @@ public class Chapter10Test {
         multipleArrayList.key  = new Array<>("ddd","aaa","fff","bbb","ccc","eee",null,null,null,null);
         multipleArrayList.L = 2;
         multipleArrayList.free = 7;
+
+        // when
+        Integer actualFoundPosition = Chapter10.compactListSearch(multipleArrayList, 6, "eee");
+
+        // then
+        assertEquals(Integer.valueOf(6), actualFoundPosition);
+    }
+
+    @Test
+    public void shouldFindElementAfterJumpingOnItInCompactList() {
+        // given
+        MultipleArrayList<String> multipleArrayList = new MultipleArrayList<>();
+        multipleArrayList.next = new Array<>(6,4,null,5,1,3,8,9,10,11);
+        multipleArrayList.prev = new Array<>(5,null,6,2,4,1,null,null,null,null);
+        multipleArrayList.key  = new Array<>("ddd","aaa","fff","bbb","ccc","eee",null,null,null,null);
+        multipleArrayList.L = 2;
+        multipleArrayList.free = 7;
+        mockStatic(Chapter5.class);
+        when(Chapter5.random(1, 6)).thenReturn(6);
 
         // when
         Integer actualFoundPosition = Chapter10.compactListSearch(multipleArrayList, 6, "eee");

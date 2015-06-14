@@ -33,6 +33,26 @@ public class MultipleArrayList<T> {
     public Integer free;
 
     /**
+     * Creates an empty doubly linked list using the multiple-array representation.
+     */
+    public MultipleArrayList() {
+    }
+
+    /**
+     * Creates a doubly linked list using the multiple-array representation
+     * by copying an existing doubly linked list using the multiple-array representation.
+     *
+     * @param otherList the list to be copied
+     */
+    public MultipleArrayList(MultipleArrayList<T> otherList) {
+        next = new Array<>(otherList.next);
+        key = new Array<>(otherList.key);
+        prev = new Array<>(otherList.prev);
+        L = otherList.L;
+        free = otherList.free;
+    }
+
+    /**
      * Returns the number of elements in the list.
      *
      * @return the number of elements in the list
@@ -45,6 +65,38 @@ public class MultipleArrayList<T> {
             x = next.at(x);
         }
         return length;
+    }
+
+    /**
+     * Returns the number of elements in the free list.
+     *
+     * @return the number of elements in the free list
+     */
+    public int getFreeListLength() {
+        int length = 0;
+        Integer x = free;
+        while (x != null) {
+            length++;
+            x = next.at(x);
+        }
+        return length;
+    }
+
+    /**
+     * Transforms the list to an array.
+     *
+     * @return the array containing all the elements in the list
+     */
+    public Array<T> toArray() {
+        Array<T> array = Array.withLength(getLength());
+        Integer x = L;
+        int i = 1;
+        while (x != null) {
+            array.set(i, key.at(x));
+            i++;
+            x = next.at(x);
+        }
+        return array;
     }
 
 }

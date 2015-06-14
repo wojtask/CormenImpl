@@ -840,15 +840,23 @@ public final class Chapter10 {
         } else {
             y = L.free - 1;
         }
+        if (L.next.at(x) != null) {
+            L.prev.set(L.next.at(x), L.prev.at(x));
+        }
+        if (L.prev.at(x) != null) {
+            L.next.set(L.prev.at(x), L.next.at(x));
+        }
+        if (x != y) {
+            if (L.next.at(y) != null) {
+                L.prev.set(L.next.at(y), x);
+            }
+            if (L.prev.at(y) != null) {
+                L.next.set(L.prev.at(y), x);
+            }
+        }
         L.key.set(x, L.key.at(y));
         L.next.set(x, L.next.at(y));
         L.prev.set(x, L.prev.at(y));
-        if (L.next.at(y) != null && L.next.at(y) != x) {
-            L.prev.set(L.next.at(y), x);
-        }
-        if (L.prev.at(y) != null && L.prev.at(y) != x) {
-            L.next.set(L.prev.at(y), x);
-        }
         if (L.L.equals(y)) {
             L.L = x;
         }
@@ -989,7 +997,7 @@ public final class Chapter10 {
     public static <T> void stacklessInorderTreeWalk(BinaryTree<T> T) {
         BinaryTree.Node<T> prev = null;
         BinaryTree.Node<T> curr = T.root;
-        BinaryTree.Node<T> next = null;
+        BinaryTree.Node<T> next;
         while (curr != null) {
             if (prev == curr.p) {
                 if (curr.left != null) {

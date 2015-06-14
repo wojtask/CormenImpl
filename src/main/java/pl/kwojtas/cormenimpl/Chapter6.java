@@ -9,8 +9,6 @@ import pl.kwojtas.cormenimpl.util.Young;
 
 import static java.lang.Math.max;
 import static java.lang.Math.sqrt;
-import static pl.kwojtas.cormenimpl.Chapter10.listDelete;
-import static pl.kwojtas.cormenimpl.Chapter10.listInsert;
 import static pl.kwojtas.cormenimpl.util.Util.ceil;
 import static pl.kwojtas.cormenimpl.util.Util.greater;
 import static pl.kwojtas.cormenimpl.util.Util.less;
