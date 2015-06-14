@@ -451,7 +451,7 @@ public final class Chapter6 {
      * @return the merged sorted list
      */
     public static List<Integer> mergeSortedLists(Array<List<Integer>> sortedLists) {
-        List<Integer> reversedMergedList = new List<>();
+        List<Integer> mergedList = new List<>();
         Heap<Pair<Integer, List<Integer>>> minPriorityQueue = Heap.withLength(sortedLists.length);
         for (int i = 1; i <= sortedLists.length; i++) {
             if (sortedLists.at(i).head != null) {
@@ -459,19 +459,19 @@ public final class Chapter6 {
                 sortedLists.at(i).head = sortedLists.at(i).head.next;
             }
         }
+        List.Node<Integer> tail = null;
         while (minPriorityQueue.heapSize > 0) {
             Pair<Integer, List<Integer>> min = heapExtractMinForMergingLists(minPriorityQueue);
-            listInsert(reversedMergedList, new List.Node<>(min.first));
+            List.Node<Integer> newNode = new List.Node<>(min.first);
+            if (mergedList.head == null) {
+                mergedList.head = tail = newNode;
+            } else {
+                tail = tail.next = newNode;
+            }
             if (min.second.head != null) {
                 minHeapInsertForMergingLists(minPriorityQueue, new Pair<>(min.second.head.key, min.second));
                 min.second.head = min.second.head.next;
             }
-        }
-        List<Integer> mergedList = new List<>();
-        while (reversedMergedList.head != null) {
-            List.Node<Integer> x = reversedMergedList.head;
-            listDelete(reversedMergedList, reversedMergedList.head);
-            listInsert(mergedList, x);
         }
         return mergedList;
     }

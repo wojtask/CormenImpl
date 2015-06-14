@@ -43,7 +43,7 @@ public class XorLinkedList<T> {
     private Map<Integer, Node<T>> addressToNode;
 
     /**
-     * Creates a new XOR list's node and registers it in addressToNode map.
+     * Creates a new XOR list's node and registers it in the address-to-node map.
      * The address of the new node is a unique random number from <tt>1..2<sup>31</sup> - 1</tt>
      *
      * @param key the key of the new node
