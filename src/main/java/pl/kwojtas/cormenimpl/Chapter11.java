@@ -292,9 +292,6 @@ public final class Chapter11 {
             throw new RuntimeException("overflow");
         }
         HashTableWithFreeList.Node<T> node = T.at(position);
-        if (node.prev != null) {
-            T.at(node.prev).next = node.next;
-        }
         if (node.next != null) {
             T.at(node.next).prev = node.prev;
         }

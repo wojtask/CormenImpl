@@ -1,6 +1,4 @@
-*.class
-
-**/target
-**/*.iml
-**/.idea
-**/javadoc
+*.iml
+.idea/
+target/
+javadoc/

@@ -1818,7 +1818,7 @@ public class Chapter10Test {
     }
 
     @Test
-    public void shouldFindElementInCompactList() {
+    public void shouldFindElementAfterJumpsInCompactList() {
         // given
         MultipleArrayList<String> multipleArrayList = new MultipleArrayList<>();
         multipleArrayList.next = new Array<>(6,4,null,5,1,3,8,9,10,11);
@@ -1826,6 +1826,8 @@ public class Chapter10Test {
         multipleArrayList.key  = new Array<>("ddd","aaa","fff","bbb","ccc","eee",null,null,null,null);
         multipleArrayList.L = 2;
         multipleArrayList.free = 7;
+        mockStatic(Chapter5.class);
+        when(Chapter5.random(1, 6)).thenReturn(3, 1);
 
         // when
         Integer actualFoundPosition = Chapter10.compactListSearch(multipleArrayList, 6, "eee");
@@ -1835,7 +1837,7 @@ public class Chapter10Test {
     }
 
     @Test
-    public void shouldFindElementAfterJumpingOnItInCompactList() {
+    public void shouldFindElementByJumpingOnItInCompactList() {
         // given
         MultipleArrayList<String> multipleArrayList = new MultipleArrayList<>();
         multipleArrayList.next = new Array<>(6,4,null,5,1,3,8,9,10,11);

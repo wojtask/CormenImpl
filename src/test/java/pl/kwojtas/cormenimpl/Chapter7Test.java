@@ -1,6 +1,9 @@
 package pl.kwojtas.cormenimpl;
 
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
 import pl.kwojtas.cormenimpl.util.Array;
 import pl.kwojtas.cormenimpl.util.Interval;
 
@@ -9,9 +12,13 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Modifier;
 
 import static org.junit.Assert.assertTrue;
+import static org.powermock.api.mockito.PowerMockito.mockStatic;
+import static org.powermock.api.mockito.PowerMockito.when;
 import static pl.kwojtas.cormenimpl.TestUtil.assertShuffled;
 import static pl.kwojtas.cormenimpl.TestUtil.assertSorted;
 
+@RunWith(PowerMockRunner.class)
+@PrepareForTest({ Chapter5.class })
 public class Chapter7Test {
 
     @Test
@@ -122,10 +129,46 @@ public class Chapter7Test {
     }
 
     @Test
-    public void shouldPartitionArrayUsingMedianOf3Partition() {
+    public void shouldPartitionArrayUsingMedianOf3PartitionAsFirstPickedElement() {
         // given
         Array<Integer> array = new Array<>(5,7,9,2,6,8,6,6,3,1,7,8);
         Array<Integer> original = new Array<>(array);
+        mockStatic(Chapter5.class);
+        when(Chapter5.random(1, array.length)).thenReturn(7, 2, 10);
+
+        // when
+        int pivotIndex = Chapter7.medianOf3Partition(array, 1, array.length);
+
+        // then
+        assertShuffled(original, array);
+        assertTrue(2 <= pivotIndex && pivotIndex <= array.length - 1);
+        assertArrayPartitioned(array, pivotIndex);
+    }
+
+    @Test
+    public void shouldPartitionArrayUsingMedianOf3PartitionAsSecondPickedElement() {
+        // given
+        Array<Integer> array = new Array<>(5,7,9,2,6,8,6,6,3,1,7,8);
+        Array<Integer> original = new Array<>(array);
+        mockStatic(Chapter5.class);
+        when(Chapter5.random(1, array.length)).thenReturn(2, 7, 10);
+
+        // when
+        int pivotIndex = Chapter7.medianOf3Partition(array, 1, array.length);
+
+        // then
+        assertShuffled(original, array);
+        assertTrue(2 <= pivotIndex && pivotIndex <= array.length - 1);
+        assertArrayPartitioned(array, pivotIndex);
+    }
+
+    @Test
+    public void shouldPartitionArrayUsingMedianOf3PartitionAsThirdPickedElement() {
+        // given
+        Array<Integer> array = new Array<>(5,7,9,2,6,8,6,6,3,1,7,8);
+        Array<Integer> original = new Array<>(array);
+        mockStatic(Chapter5.class);
+        when(Chapter5.random(1, array.length)).thenReturn(10, 2, 7);
 
         // when
         int pivotIndex = Chapter7.medianOf3Partition(array, 1, array.length);
