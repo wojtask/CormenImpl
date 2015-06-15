@@ -56,7 +56,7 @@ public class Chapter8Test {
     }
 
     @Test
-    public void shouldCountNumbersInRangeBeingOutsideArray() {
+    public void shouldCountNumbersInRangeBeingEntirelyOutsideArray() {
         // given
         Array<Integer> array = new Array<>(6,0,2,0,1,3,4,6,1,3,2);
         Array<Integer> original = new Array<>(array);
@@ -72,7 +72,7 @@ public class Chapter8Test {
     }
 
     @Test
-    public void shouldCountNumbersInRangeBeingInsideArray() {
+    public void shouldCountNumbersInRangeBeingEntirelyInsideArray() {
         // given
         Array<Integer> array = new Array<>(6,0,2,0,1,3,4,6,1,3,2);
         Array<Integer> original = new Array<>(array);
@@ -88,13 +88,45 @@ public class Chapter8Test {
     }
 
     @Test
-    public void shouldCountNumbersInRangeIntersectingWithArray() {
+    public void shouldCountNumbersInRangeWithLowerBoundOutsideArray() {
         // given
         Array<Integer> array = new Array<>(6,0,2,0,1,3,4,6,1,3,2);
         Array<Integer> original = new Array<>(array);
         int boundary = 6;
         int a = -2;
         int b = 3;
+
+        // when
+        int actualInRange = Chapter8.countNumbersInRange(array, boundary, a, b);
+
+        // then
+        assertElementsInRange(original, a, b, actualInRange);
+    }
+
+    @Test
+    public void shouldCountNumbersInRangeWithUpperBoundOutsideArray() {
+        // given
+        Array<Integer> array = new Array<>(6,0,2,0,1,3,4,6,1,3,2);
+        Array<Integer> original = new Array<>(array);
+        int boundary = 6;
+        int a = 3;
+        int b = 12;
+
+        // when
+        int actualInRange = Chapter8.countNumbersInRange(array, boundary, a, b);
+
+        // then
+        assertElementsInRange(original, a, b, actualInRange);
+    }
+
+    @Test
+    public void shouldCountNumbersInRangeWithBoundsOutsideArray() {
+        // given
+        Array<Integer> array = new Array<>(6,0,2,0,1,3,4,6,1,3,2);
+        Array<Integer> original = new Array<>(array);
+        int boundary = 6;
+        int a = -4;
+        int b = 16;
 
         // when
         int actualInRange = Chapter8.countNumbersInRange(array, boundary, a, b);
@@ -145,7 +177,7 @@ public class Chapter8Test {
     @Test
     public void shouldSortArrayUsingBucketSort() {
         // given
-        Array<Double> array = new Array<>(.15,.92,.56,.25,.66,.23,.9,.2,.45,.7,.39,.99,.3,.01,.33,.91);
+        Array<Double> array = new Array<>(.15,.92,.56,.25,.66,.23,.9,.2,.45,.7,.39,.99,.3,.01,.33,.91,.65,.33,.21,.67,.16,.22);
         Array<Double> original = new Array<>(array);
 
         // when
@@ -211,6 +243,21 @@ public class Chapter8Test {
         // given
         Array<Integer> array =
                 new Array<>(235,-510207,455,0,90199239,317,63534,-102,301,42342352,-100234,-231,-331,-66,1,3002,-1123581321);
+        Array<Integer> original = new Array<>(array);
+
+        // when
+        Chapter8.variableLengthIntegersSort(array);
+
+        // then
+        assertShuffled(original, array);
+        assertSorted(array);
+    }
+
+    @Test
+    public void shouldSortVariableLengthNonnegativeIntegers() {
+        // given
+        Array<Integer> array =
+                new Array<>(44456,23,86734563,222414667,3,235,5666642,3425,80033,234252566,11,900,559311146,1123451255,3,2341);
         Array<Integer> original = new Array<>(array);
 
         // when
