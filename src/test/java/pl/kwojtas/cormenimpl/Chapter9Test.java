@@ -1,6 +1,9 @@
 package pl.kwojtas.cormenimpl;
 
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
 import pl.kwojtas.cormenimpl.util.Array;
 import pl.kwojtas.cormenimpl.util.Pair;
 import pl.kwojtas.cormenimpl.util.Point2D;
@@ -16,10 +19,14 @@ import static java.lang.Math.min;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
+import static org.powermock.api.mockito.PowerMockito.mockStatic;
+import static org.powermock.api.mockito.PowerMockito.when;
 import static pl.kwojtas.cormenimpl.TestUtil.assertShuffled;
 import static pl.kwojtas.cormenimpl.TestUtil.assertSorted;
 import static pl.kwojtas.cormenimpl.TestUtil.sortArray;
 
+@RunWith(PowerMockRunner.class)
+@PrepareForTest({ Chapter5.class })
 public class Chapter9Test {
 
     @Test
@@ -46,7 +53,7 @@ public class Chapter9Test {
     }
 
     @Test
-    public void shouldFindMinimumAndMaximum() {
+    public void shouldFindMinimumAndMaximumForArrayOfEvenSize() {
         // given
         Array<Integer> array = new Array<>(5,7,9,2,6,8,6,6,3,1,7,8);
         Array<Integer> original = new Array<>(array);
@@ -63,11 +70,65 @@ public class Chapter9Test {
     }
 
     @Test
-    public void shouldFindOrderStatisticUsingRandomizedSelect() {
+    public void shouldFindMinimumAndMaximumForArrayOfEvenSize2() {
+        // given
+        Array<Integer> array = new Array<>(7,5,2,9,6,8,6,6,3,1,7,8);
+        Array<Integer> original = new Array<>(array);
+
+        // when
+        Pair<Integer, Integer> actualMinimumMaximum = Chapter9.minimumMaximum(array);
+
+        // then
+        assertNotNull(actualMinimumMaximum);
+        for (int i = 1; i <= original.length; i++) {
+            assertTrue(actualMinimumMaximum.first <= original.at(i));
+            assertTrue(actualMinimumMaximum.second >= original.at(i));
+        }
+    }
+
+    @Test
+    public void shouldFindMinimumAndMaximumForArrayOfOddSize() {
+        // given
+        Array<Integer> array = new Array<>(3,5,2,6,6,5,1,8,9,4,7,4,2);
+        Array<Integer> original = new Array<>(array);
+
+        // when
+        Pair<Integer, Integer> actualMinimumMaximum = Chapter9.minimumMaximum(array);
+
+        // then
+        assertNotNull(actualMinimumMaximum);
+        for (int i = 1; i <= original.length; i++) {
+            assertTrue(actualMinimumMaximum.first <= original.at(i));
+            assertTrue(actualMinimumMaximum.second >= original.at(i));
+        }
+    }
+
+    @Test
+    public void shouldFindOrderStatisticUsingRandomizedSelectAtTheFirstRecursionLevel() {
+        // given
+        Array<Integer> array = new Array<>(5,7,9,2,6,8,6,6,3,1,7,8);
+        Array<Integer> original = new Array<>(array);
+        int order = 4;
+        mockStatic(Chapter5.class);
+        when(Chapter5.random(1, array.length)).thenReturn(1);
+
+        // when
+        int actualOrderStatistic = Chapter9.randomizedSelect(array, 1, array.length, order);
+
+        // then
+        assertOrderStatistic(original, order, actualOrderStatistic);
+    }
+
+    @Test
+    public void shouldFindOrderStatisticUsingRandomizedSelectByCallingItRecursively() {
         // given
         Array<Integer> array = new Array<>(5,7,9,2,6,8,6,6,3,1,7,8);
         Array<Integer> original = new Array<>(array);
         int order = 8;
+        mockStatic(Chapter5.class);
+        when(Chapter5.random(1, array.length)).thenReturn(5);
+        when(Chapter5.random(8, array.length)).thenReturn(10);
+        when(Chapter5.random(8, 10)).thenReturn(8);
 
         // when
         int actualOrderStatistic = Chapter9.randomizedSelect(array, 1, array.length, order);
@@ -91,11 +152,31 @@ public class Chapter9Test {
     }
 
     @Test
-    public void shouldFindOrderStatisticUsingIterativeRandomizedSelect() {
+    public void shouldFindOrderStatisticUsingIterativeRandomizedSelectAtTheFirstAttempt() {
+        // given
+        Array<Integer> array = new Array<>(5,7,9,2,6,8,6,6,3,1,7,8);
+        Array<Integer> original = new Array<>(array);
+        int order = 4;
+        mockStatic(Chapter5.class);
+        when(Chapter5.random(1, array.length)).thenReturn(1);
+
+        // when
+        int actualOrderStatistic = Chapter9.iterativeRandomizedSelect(array, 1, array.length, order);
+
+        // then
+        assertOrderStatistic(original, order, actualOrderStatistic);
+    }
+
+    @Test
+    public void shouldFindOrderStatisticUsingIterativeRandomizedSelectByDividingArray() {
         // given
         Array<Integer> array = new Array<>(5,7,9,2,6,8,6,6,3,1,7,8);
         Array<Integer> original = new Array<>(array);
         int order = 8;
+        mockStatic(Chapter5.class);
+        when(Chapter5.random(1, array.length)).thenReturn(5);
+        when(Chapter5.random(8, array.length)).thenReturn(10);
+        when(Chapter5.random(8, 10)).thenReturn(8);
 
         // when
         int actualOrderStatistic = Chapter9.iterativeRandomizedSelect(array, 1, array.length, order);
@@ -109,7 +190,7 @@ public class Chapter9Test {
         // given
         Array<Integer> array = new Array<>(5,7,9,2,6,8,6,6,3,1,7,8);
         Array<Integer> original = new Array<>(array);
-        int order = 8;
+        int order = 7;
 
         // when
         int actualOrderStatistic = Chapter9.select(array, 1, array.length, order);
@@ -133,7 +214,49 @@ public class Chapter9Test {
     }
 
     @Test
+    public void shouldFindOrderStatisticUsingSelectUsingMedianSubroutineInSingleElementArray() {
+        // given
+        Array<Integer> array = new Array<>(5);
+        Array<Integer> original = new Array<>(array);
+        int order = 1;
+
+        // when
+        int actualOrderStatistic = Chapter9.selectUsingMedianSubroutine(array, 1, 1, order);
+
+        // then
+        assertOrderStatistic(original, order, actualOrderStatistic);
+    }
+
+    @Test
     public void shouldFindOrderStatisticUsingSelectUsingMedianSubroutine() {
+        // given
+        Array<Integer> array = new Array<>(5,7,9,2,6,8,6,6,3,1,7,8);
+        Array<Integer> original = new Array<>(array);
+        int order = 6;
+
+        // when
+        int actualOrderStatistic = Chapter9.selectUsingMedianSubroutine(array, 1, array.length, order);
+
+        // then
+        assertOrderStatistic(original, order, actualOrderStatistic);
+    }
+
+    @Test
+    public void shouldFindOrderStatisticUsingSelectUsingMedianSubroutine2() {
+        // given
+        Array<Integer> array = new Array<>(5,7,9,2,6,8,6,6,3,1,7,8);
+        Array<Integer> original = new Array<>(array);
+        int order = 4;
+
+        // when
+        int actualOrderStatistic = Chapter9.selectUsingMedianSubroutine(array, 1, array.length, order);
+
+        // then
+        assertOrderStatistic(original, order, actualOrderStatistic);
+    }
+
+    @Test
+    public void shouldFindOrderStatisticUsingSelectUsingMedianSubroutine3() {
         // given
         Array<Integer> array = new Array<>(5,7,9,2,6,8,6,6,3,1,7,8);
         Array<Integer> original = new Array<>(array);
@@ -255,7 +378,7 @@ public class Chapter9Test {
         // given
         Array<Integer> array = new Array<>(5,0,15,17,4,2,6,16,3,1);
         Array<Integer> original = new Array<>(array);
-        int proximitySize = 6;
+        int proximitySize = 4;
 
         // when
         Set<Integer> actualMedianProximity = Chapter9.medianProximity(array, proximitySize);
@@ -276,10 +399,25 @@ public class Chapter9Test {
     }
 
     @Test
+    public void shouldFindMedianOfTwoArraysOfOneElementEach() {
+        // given
+        Array<Integer> array1 = new Array<>(1);
+        Array<Integer> array2 = new Array<>(2);
+        Array<Integer> original1 = new Array<>(array1);
+        Array<Integer> original2 = new Array<>(array2);
+
+        // when
+        int actualMedian = Chapter9.twoArraysMedian(array1, 1, 1, array2, 1, 1);
+
+        // then
+        assertMedianOfTwoArrays(original1, original2, actualMedian);
+    }
+
+    @Test
     public void shouldFindMedianOfTwoArrays() {
         // given
         Array<Integer> array1 = new Array<>(1,2,3,5,6,6,6,7,7,8,8,9);
-        Array<Integer> array2 = new Array<>(2,4,4,5,5,6,6,6,8,8,9,9);
+        Array<Integer> array2 = new Array<>(1,1,5,6,7,8,8,8,9,9,9,9);
         Array<Integer> original1 = new Array<>(array1);
         Array<Integer> original2 = new Array<>(array2);
 
@@ -333,6 +471,21 @@ public class Chapter9Test {
     }
 
     @Test
+    public void shouldFindWeightedMedianInSingleElementArray() {
+        // given
+        Array<Integer> array = new Array<>(6);
+        Array<Double> weights = new Array<>(1.0);
+        Array<Integer> originalArray = new Array<>(array);
+        Array<Double> originalWeights = new Array<>(weights);
+
+        // when
+        double actualWeightedMedian = Chapter9.weightedMedian(array, weights, 1, 1);
+
+        // then
+        assertWeightedMedian(originalArray, originalWeights, actualWeightedMedian);
+    }
+
+    @Test
     public void shouldFindWeightedMedian() {
         // given
         Array<Integer> array = new Array<>(0,1,2,3,4,5,6,7,8,9);
@@ -382,6 +535,34 @@ public class Chapter9Test {
         Array<Integer> array = new Array<>(5,12,1,0,13,12,0,10,9,1,4,3,16,15,19,6,11,20,2);
         Array<Integer> original = new Array<>(array);
         int order = 3;
+
+        // when
+        int actualOrderStatistic = Chapter9.smallOrderSelect(array, order);
+
+        // then
+        assertOrderStatistic(original, order, actualOrderStatistic);
+    }
+
+    @Test
+    public void shouldFindOrderStatisticUsingSmallOrderSelect2() {
+        // given
+        Array<Integer> array = new Array<>(5,12,1,0,13,12,0,10,9,1,4,3,16,15,19,6,11,20,2);
+        Array<Integer> original = new Array<>(array);
+        int order = 7;
+
+        // when
+        int actualOrderStatistic = Chapter9.smallOrderSelect(array, order);
+
+        // then
+        assertOrderStatistic(original, order, actualOrderStatistic);
+    }
+
+    @Test
+    public void shouldFindOrderStatisticUsingSmallOrderSelectInSingleElementArray() {
+        // given
+        Array<Integer> array = new Array<>(44);
+        Array<Integer> original = new Array<>(array);
+        int order = 1;
 
         // when
         int actualOrderStatistic = Chapter9.smallOrderSelect(array, order);
