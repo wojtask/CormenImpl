@@ -22,13 +22,14 @@ import static pl.kwojtas.cormenimpl.util.Util.min;
  */
 public final class Chapter9 {
 
-    private Chapter9() { }
+    private Chapter9() {
+    }
 
     /**
      * Finds the smallest element in an array.
      * <p><span style="font-variant:small-caps;">Minimum</span> from subchapter 9.1.</p>
      *
-     * @param A the array to scan
+     * @param A   the array to scan
      * @param <T> the type of elements in {@code A}
      * @return the smallest element in {@code A}
      */
@@ -46,7 +47,7 @@ public final class Chapter9 {
      * Simultaneously finds the smallest element and the largest element in an array.
      * <p>Subchapter 9.1.</p>
      *
-     * @param A the array to scan
+     * @param A   the array to scan
      * @param <T> the type of elements in {@code A}
      * @return the pair <tt>(a<sub>1</sub>, a<sub>2</sub>)</tt> such that <tt>a<sub>1</sub></tt>
      * is the smallest element in {@code A} and <tt>a<sub>2</sub></tt> is the largest element in {@code A}
@@ -91,10 +92,10 @@ public final class Chapter9 {
      * Finds the {@code i}-th order statistic (the {@code i}-th smallest element) in an array.
      * <p><span style="font-variant:small-caps;">Randomized-Select</span> from subchapter 9.2.</p>
      *
-     * @param A the array to scan
-     * @param p the index of the beginning of subarray in {@code A} being scanned
-     * @param r the index of the end of subarray in {@code A} being scanned
-     * @param i the number of order statistic to find (1 - the smallest element)
+     * @param A   the array to scan
+     * @param p   the index of the beginning of subarray in {@code A} being scanned
+     * @param r   the index of the end of subarray in {@code A} being scanned
+     * @param i   the number of order statistic to find (1 - the smallest element)
      * @param <T> the type of elements in {@code A}
      * @return the {@code i}-th order statistic ({@code i}-th smallest element) in {@code A}
      */
@@ -117,10 +118,10 @@ public final class Chapter9 {
      * Finds the {@code i}-th order statistic (the {@code i}-th smallest element) in an array - an iterative version.
      * <p><span style="font-variant:small-caps;">Iterative-Randomized-Select</span> from solution to exercise 9.2-3.</p>
      *
-     * @param A the array to scan
-     * @param p the index of the beginning of subarray in {@code A} being scanned
-     * @param r the index of the end of subarray in {@code A} being scanned
-     * @param i the number of order statistic to find (1 - the smallest element)
+     * @param A   the array to scan
+     * @param p   the index of the beginning of subarray in {@code A} being scanned
+     * @param r   the index of the end of subarray in {@code A} being scanned
+     * @param i   the number of order statistic to find (1 - the smallest element)
      * @param <T> the type of elements in {@code A}
      * @return the {@code i}-th order statistic (the {@code i}-th smallest element) in {@code A}
      */
@@ -144,10 +145,10 @@ public final class Chapter9 {
      * Finds the {@code i}-th order statistic (the {@code i}-th smallest element) in an array - an efficient version.
      * <p>Subchapter 9.3.</p>
      *
-     * @param A the array to scan
-     * @param p the index of the beginning of subarray in {@code A} being scanned
-     * @param r the index of the end of subarray in {@code A} being scanned
-     * @param i the number of order statistic to find (1 - the smallest element)
+     * @param A   the array to scan
+     * @param p   the index of the beginning of subarray in {@code A} being scanned
+     * @param r   the index of the end of subarray in {@code A} being scanned
+     * @param i   the number of order statistic to find (1 - the smallest element)
      * @param <T> the type of elements in {@code A}
      * @return the {@code i}-th order statistic (the {@code i}-th smallest element) in {@code A}
      */
@@ -201,9 +202,9 @@ public final class Chapter9 {
      * Sorts elements using the optimal version of quicksort.
      * <p>Solution to exercise 9.3-3.</p>
      *
-     * @param A the array of elements to sort
-     * @param p the index of the beginning of subarray in {@code A} being sorted
-     * @param r the index of the end of subarray in {@code A} being sorted
+     * @param A   the array of elements to sort
+     * @param p   the index of the beginning of subarray in {@code A} being sorted
+     * @param r   the index of the end of subarray in {@code A} being sorted
      * @param <T> the type of elements in {@code A}
      */
     public static <T extends Comparable> void bestCaseQuicksort(Array<T> A, int p, int r) {
@@ -220,10 +221,10 @@ public final class Chapter9 {
      * using a subroutine for finding the median of the array.
      * <p>Solution to exercise 9.3-5.</p>
      *
-     * @param A the array to scan
-     * @param p the index of the beginning of subarray in {@code A} being scanned
-     * @param r the index of the end of subarray in {@code A} being scanned
-     * @param i the number of order statistic to find (1 - the smallest element)
+     * @param A   the array to scan
+     * @param p   the index of the beginning of subarray in {@code A} being scanned
+     * @param r   the index of the end of subarray in {@code A} being scanned
+     * @param i   the number of order statistic to find (1 - the smallest element)
      * @param <T> the type of elements in {@code A}
      * @return the {@code i}-th order statistic (the {@code i}-th smallest element) in {@code A}
      */
@@ -248,10 +249,10 @@ public final class Chapter9 {
      * Finds quantiles of a set.
      * <p><span style="font-variant:small-caps;">Quantiles</span> from solution to exercise 9.3-6.</p>
      *
-     * @param A the array containing elements of the set
-     * @param p the index of the beginning of subarray in {@code A} being scanned
-     * @param r the index of the end of subarray in {@code A} being scanned
-     * @param k the order of quantiles to find
+     * @param A   the array containing elements of the set
+     * @param p   the index of the beginning of subarray in {@code A} being scanned
+     * @param r   the index of the end of subarray in {@code A} being scanned
+     * @param k   the order of quantiles to find
      * @param <T> the type of elements in {@code A}
      * @return the set of {@code k}-th quantiles of the set represented by {@code A}
      */
@@ -260,8 +261,8 @@ public final class Chapter9 {
         if (k == 1) {
             return new HashSet<>();
         }
-        int q1 = (int)(p + (k / 2) * (1.0 * n / k));
-        int q2 = (int)(p + ceil(k, 2) * (1.0 * n / k));
+        int q1 = (int) (p + (k / 2) * (1.0 * n / k));
+        int q2 = (int) (p + ceil(k, 2) * (1.0 * n / k));
         select(A, p, r, q1 - p + 1);
         if (q1 != q2) {
             select(A, q1 + 1, r, q2 - q1);
@@ -306,12 +307,12 @@ public final class Chapter9 {
      * Finds the median of elements in two arrays of equal lengths.
      * <p><span style="font-variant:small-caps;">Two-Arrays-Median</span> from solution to exercise 9.3-8.</p>
      *
-     * @param X the first array to scan
-     * @param pX the index of the beginning of subarray in {@code X} being scanned
-     * @param rX the index of the end of subarray in {@code X} being scanned
-     * @param Y the second array to scan having the equal length as {@code X}
-     * @param pY the index of the beginning of subarray in {@code Y} being scanned
-     * @param rY the index of the end of subarray in {@code Y} being scanned
+     * @param X   the first array to scan
+     * @param pX  the index of the beginning of subarray in {@code X} being scanned
+     * @param rX  the index of the end of subarray in {@code X} being scanned
+     * @param Y   the second array to scan having the equal length as {@code X}
+     * @param pY  the index of the beginning of subarray in {@code Y} being scanned
+     * @param rY  the index of the end of subarray in {@code Y} being scanned
      * @param <T> the type of elements in {@code X} and {@code Y}
      * @return the median of elements in {@code X} and {@code Y}
      */
@@ -337,8 +338,8 @@ public final class Chapter9 {
      * Finds the weighted median of an array.
      * <p>Solution to problem 9-2(b).</p>
      *
-     * @param A the array of elements to scan
-     * @param w the array of weights of elements from {@code A}, such that {@code w[i]} is the weight of {@code A[i]}
+     * @param A   the array of elements to scan
+     * @param w   the array of weights of elements from {@code A}, such that {@code w[i]} is the weight of {@code A[i]}
      * @param <T> the type of elements in {@code A}
      * @return the weighted median of {@code A} based on weights from {@code w}
      */
@@ -380,10 +381,10 @@ public final class Chapter9 {
      * Finds the weighted median of an array - an efficient version.
      * <p><span style="font-variant:small-caps;">Weighted-Median</span> from solution to problem 9-2(c).</p>
      *
-     * @param A the array of elements to scan
-     * @param w the array of weights of elements from {@code A}, such that {@code w[i]} is the weight of {@code A[i]}
-     * @param p the index of the beginning of subarray in {@code A} being scanned
-     * @param r the index of the end of subarray in {@code A} being scanned
+     * @param A   the array of elements to scan
+     * @param w   the array of weights of elements from {@code A}, such that {@code w[i]} is the weight of {@code A[i]}
+     * @param p   the index of the beginning of subarray in {@code A} being scanned
+     * @param r   the index of the end of subarray in {@code A} being scanned
      * @param <T> the type of elements in {@code A}
      * @return the weighted median of {@code A} based on weights from {@code w}
      */
@@ -448,8 +449,8 @@ public final class Chapter9 {
      * - a version optimized for small {@code i}'s.
      * <p>Solution to problem 9-3(a).</p>
      *
-     * @param A the array to scan
-     * @param i the number of order statistic to find (1 - the smallest element)
+     * @param A   the array to scan
+     * @param i   the number of order statistic to find (1 - the smallest element)
      * @param <T> the type of elements in {@code A}
      * @return the {@code i}-th order statistic (the {@code i}-th smallest element) in {@code A}
      */

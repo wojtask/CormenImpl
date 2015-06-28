@@ -15,6 +15,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Modifier;
 
+import static junit.framework.Assert.assertNotNull;
 import static junit.framework.TestCase.assertNull;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
@@ -122,7 +123,7 @@ public class Chapter11Test {
     @Test
     public void shouldFindElementInBitVector() {
         // given
-        ZeroBasedIndexedArray<Integer> bitVector = new ZeroBasedIndexedArray<>(1,1,0,1,0);
+        ZeroBasedIndexedArray<Integer> bitVector = new ZeroBasedIndexedArray<>(1, 1, 0, 1, 0);
         int key = 3;
 
         // when
@@ -135,7 +136,7 @@ public class Chapter11Test {
     @Test
     public void shouldNotFindNonexistentElementInBitVector() {
         // given
-        ZeroBasedIndexedArray<Integer> bitVector = new ZeroBasedIndexedArray<>(1,1,0,1,0);
+        ZeroBasedIndexedArray<Integer> bitVector = new ZeroBasedIndexedArray<>(1, 1, 0, 1, 0);
         int key = 2;
 
         // when
@@ -148,7 +149,7 @@ public class Chapter11Test {
     @Test
     public void shouldInsertIntoBitVector() {
         // given
-        ZeroBasedIndexedArray<Integer> bitVector = new ZeroBasedIndexedArray<>(1,1,0,1,0);
+        ZeroBasedIndexedArray<Integer> bitVector = new ZeroBasedIndexedArray<>(1, 1, 0, 1, 0);
         int key = 4;
 
         // when
@@ -161,7 +162,7 @@ public class Chapter11Test {
     @Test
     public void shouldDeleteFromBitVector() {
         // given
-        ZeroBasedIndexedArray<Integer> bitVector = new ZeroBasedIndexedArray<>(1,1,0,1,0);
+        ZeroBasedIndexedArray<Integer> bitVector = new ZeroBasedIndexedArray<>(1, 1, 0, 1, 0);
         int key = 1;
 
         // when
@@ -545,7 +546,7 @@ public class Chapter11Test {
                     }
                 }
         );
-        hashTableWithOpenAddressing.set(new ZeroBasedIndexedArray<>(35,51,null,38,null));
+        hashTableWithOpenAddressing.set(new ZeroBasedIndexedArray<>(35, 51, null, 38, null));
         int key = 45;
 
         // when
@@ -568,7 +569,7 @@ public class Chapter11Test {
                     }
                 }
         );
-        hashTableWithOpenAddressing.set(new ZeroBasedIndexedArray<>(35,51,45,38,16));
+        hashTableWithOpenAddressing.set(new ZeroBasedIndexedArray<>(35, 51, 45, 38, 16));
         int key = 32;
 
         try {
@@ -593,7 +594,7 @@ public class Chapter11Test {
                     }
                 }
         );
-        hashTableWithOpenAddressing.set(new ZeroBasedIndexedArray<>(35,51,45,38,null));
+        hashTableWithOpenAddressing.set(new ZeroBasedIndexedArray<>(35, 51, 45, 38, null));
         int key = 45;
 
         // when
@@ -615,7 +616,7 @@ public class Chapter11Test {
                     }
                 }
         );
-        hashTableWithOpenAddressing.set(new ZeroBasedIndexedArray<>(35,51,45,38,null));
+        hashTableWithOpenAddressing.set(new ZeroBasedIndexedArray<>(35, 51, 45, 38, null));
         int key = 26;
 
         // when
@@ -637,7 +638,7 @@ public class Chapter11Test {
                     }
                 }
         );
-        hashTableWithOpenAddressing.set(new ZeroBasedIndexedArray<>(35,51,45,38,null));
+        hashTableWithOpenAddressing.set(new ZeroBasedIndexedArray<>(35, 51, 45, 38, null));
         int key = 45;
 
         // when
@@ -659,7 +660,7 @@ public class Chapter11Test {
                     }
                 }
         );
-        hashTableWithOpenAddressing.set(new ZeroBasedIndexedArray<>(35,51,45,38,3));
+        hashTableWithOpenAddressing.set(new ZeroBasedIndexedArray<>(35, 51, 45, 38, 3));
         int key = 23;
 
         // when
@@ -683,7 +684,7 @@ public class Chapter11Test {
                     }
                 }
         );
-        hashTableWithOpenAddressing.set(new ZeroBasedIndexedArray<>(35,51,DELETED,38,DELETED));
+        hashTableWithOpenAddressing.set(new ZeroBasedIndexedArray<>(35, 51, DELETED, 38, DELETED));
         int key = 45;
 
         // when
@@ -706,7 +707,7 @@ public class Chapter11Test {
                     }
                 }
         );
-        hashTableWithOpenAddressing.set(new ZeroBasedIndexedArray<>(35,51,45,38,16));
+        hashTableWithOpenAddressing.set(new ZeroBasedIndexedArray<>(35, 51, 45, 38, 16));
         int key = 32;
 
         try {
@@ -722,7 +723,7 @@ public class Chapter11Test {
     @Test
     public void shouldFindElementUsingQuadraticProbing() {
         // given
-        ZeroBasedIndexedArray<Integer> hashTable = new ZeroBasedIndexedArray<>(24,null,34,35,51,null,27,null);
+        ZeroBasedIndexedArray<Integer> hashTable = new ZeroBasedIndexedArray<>(24, null, 34, 35, 51, null, 27, null);
         HashFunction h = new HashFunction() {
             @Override
             public int compute(int key) {
@@ -741,7 +742,7 @@ public class Chapter11Test {
     @Test
     public void shouldNotFindNonexistentElementUsingQuadraticProbing() {
         // given
-        ZeroBasedIndexedArray<Integer> hashTable = new ZeroBasedIndexedArray<>(24,null,34,35,51,null,27,null);
+        ZeroBasedIndexedArray<Integer> hashTable = new ZeroBasedIndexedArray<>(24, null, 34, 35, 51, null, 27, null);
         HashFunction h = new HashFunction() {
             @Override
             public int compute(int key) {
@@ -760,7 +761,7 @@ public class Chapter11Test {
     @Test
     public void shouldNotFindNonexistentElementInFullHashTableUsingQuadraticProbing() {
         // given
-        ZeroBasedIndexedArray<Integer> hashTable = new ZeroBasedIndexedArray<>(24,9,34,35,51,13,27,20);
+        ZeroBasedIndexedArray<Integer> hashTable = new ZeroBasedIndexedArray<>(24, 9, 34, 35, 51, 13, 27, 20);
         HashFunction h = new HashFunction() {
             @Override
             public int compute(int key) {

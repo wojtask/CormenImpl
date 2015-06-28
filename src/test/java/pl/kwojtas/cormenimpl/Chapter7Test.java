@@ -18,7 +18,7 @@ import static pl.kwojtas.cormenimpl.TestUtil.assertShuffled;
 import static pl.kwojtas.cormenimpl.TestUtil.assertSorted;
 
 @RunWith(PowerMockRunner.class)
-@PrepareForTest({ Chapter5.class })
+@PrepareForTest({Chapter5.class})
 public class Chapter7Test {
 
     @Test
@@ -32,7 +32,7 @@ public class Chapter7Test {
     @Test
     public void shouldSortArrayUsingQuicksort() {
         // given
-        Array<Integer> array = new Array<>(5,7,9,2,6,8,6,6,3,1,7,8);
+        Array<Integer> array = new Array<>(5, 7, 9, 2, 6, 8, 6, 6, 3, 1, 7, 8);
         Array<Integer> original = new Array<>(array);
 
         // when
@@ -46,7 +46,7 @@ public class Chapter7Test {
     @Test
     public void shouldSortArrayUsingRandomizedQuicksort() {
         // given
-        Array<Integer> array = new Array<>(5,7,9,2,6,8,6,6,3,1,7,8);
+        Array<Integer> array = new Array<>(5, 7, 9, 2, 6, 8, 6, 6, 3, 1, 7, 8);
         Array<Integer> original = new Array<>(array);
 
         // when
@@ -60,7 +60,7 @@ public class Chapter7Test {
     @Test
     public void shouldSortArrayUsingQuicksortWithInsertionSortForSmallArrays() {
         // given
-        Array<Integer> array = new Array<>(5,7,9,2,6,8,6,6,3,1,7,8);
+        Array<Integer> array = new Array<>(5, 7, 9, 2, 6, 8, 6, 6, 3, 1, 7, 8);
         Array<Integer> original = new Array<>(array);
         int threshold = 2;
 
@@ -75,7 +75,7 @@ public class Chapter7Test {
     @Test
     public void shouldSortArrayUsingHoareQuicksort() {
         // given
-        Array<Integer> array = new Array<>(5,7,9,2,6,8,6,6,3,1,7,8);
+        Array<Integer> array = new Array<>(5, 7, 9, 2, 6, 8, 6, 6, 3, 1, 7, 8);
         Array<Integer> original = new Array<>(array);
 
         // when
@@ -89,7 +89,7 @@ public class Chapter7Test {
     @Test
     public void shouldSortArrayUsingStoogeSort() {
         // given
-        Array<Integer> array = new Array<>(5,7,9,2,6,8,6,6,3,1,7,8);
+        Array<Integer> array = new Array<>(5, 7, 9, 2, 6, 8, 6, 6, 3, 1, 7, 8);
         Array<Integer> original = new Array<>(array);
 
         // when
@@ -103,7 +103,7 @@ public class Chapter7Test {
     @Test
     public void shouldSortArrayUsingQuicksort_() {
         // given
-        Array<Integer> array = new Array<>(5,7,9,2,6,8,6,6,3,1,7,8);
+        Array<Integer> array = new Array<>(5, 7, 9, 2, 6, 8, 6, 6, 3, 1, 7, 8);
         Array<Integer> original = new Array<>(array);
 
         // when
@@ -117,7 +117,7 @@ public class Chapter7Test {
     @Test
     public void shouldSortArrayUsingQuicksort__() {
         // given
-        Array<Integer> array = new Array<>(5,7,9,2,6,8,6,6,3,1,7,8);
+        Array<Integer> array = new Array<>(5, 7, 9, 2, 6, 8, 6, 6, 3, 1, 7, 8);
         Array<Integer> original = new Array<>(array);
 
         // when
@@ -131,7 +131,7 @@ public class Chapter7Test {
     @Test
     public void shouldPartitionArrayUsingMedianOf3PartitionAsFirstPickedElement() {
         // given
-        Array<Integer> array = new Array<>(5,7,9,2,6,8,6,6,3,1,7,8);
+        Array<Integer> array = new Array<>(5, 7, 9, 2, 6, 8, 6, 6, 3, 1, 7, 8);
         Array<Integer> original = new Array<>(array);
         mockStatic(Chapter5.class);
         when(Chapter5.random(1, array.length)).thenReturn(7, 2, 10);
@@ -148,7 +148,7 @@ public class Chapter7Test {
     @Test
     public void shouldPartitionArrayUsingMedianOf3PartitionAsSecondPickedElement() {
         // given
-        Array<Integer> array = new Array<>(5,7,9,2,6,8,6,6,3,1,7,8);
+        Array<Integer> array = new Array<>(5, 7, 9, 2, 6, 8, 6, 6, 3, 1, 7, 8);
         Array<Integer> original = new Array<>(array);
         mockStatic(Chapter5.class);
         when(Chapter5.random(1, array.length)).thenReturn(2, 7, 10);
@@ -165,7 +165,7 @@ public class Chapter7Test {
     @Test
     public void shouldPartitionArrayUsingMedianOf3PartitionAsThirdPickedElement() {
         // given
-        Array<Integer> array = new Array<>(5,7,9,2,6,8,6,6,3,1,7,8);
+        Array<Integer> array = new Array<>(5, 7, 9, 2, 6, 8, 6, 6, 3, 1, 7, 8);
         Array<Integer> original = new Array<>(array);
         mockStatic(Chapter5.class);
         when(Chapter5.random(1, array.length)).thenReturn(10, 2, 7);
@@ -192,12 +192,12 @@ public class Chapter7Test {
     public void shouldSortIntervalsUsingFuzzySort() {
         // given
         Array<Interval> intervals = new Array<>(
-                new Interval(5.0,7.0),
-                new Interval(2.0,9.0),
-                new Interval(6.0,8.0),
-                new Interval(6.0,6.0),
-                new Interval(1.0,3.0),
-                new Interval(7.0,8.0)
+                new Interval(5.0, 7.0),
+                new Interval(2.0, 9.0),
+                new Interval(6.0, 8.0),
+                new Interval(6.0, 6.0),
+                new Interval(1.0, 3.0),
+                new Interval(7.0, 8.0)
         );
         Array<Interval> original = new Array<>(intervals);
 

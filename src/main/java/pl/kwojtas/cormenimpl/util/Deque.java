@@ -27,7 +27,7 @@ public class Deque<T> extends Array<T> {
      * Creates an empty deque with an underlying array of a given length.
      *
      * @param length the length of the underlying array
-     * @param <T> the type of elements in the new deque
+     * @param <T>    the type of elements in the new deque
      * @return the empty deque with an underlying array of length {@code length}
      */
     public static <T> Deque<T> withLength(int length) {

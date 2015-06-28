@@ -32,7 +32,8 @@ public class HashTableWithFreeList<T> extends ZeroBasedIndexedArray<HashTableWit
         /**
          * Creates an empty node with no previous node and no next node.
          */
-        public Node() { }
+        public Node() {
+        }
     }
 
     /**
@@ -59,8 +60,8 @@ public class HashTableWithFreeList<T> extends ZeroBasedIndexedArray<HashTableWit
      * Creates an empty hash table with an underlying array of a given length and with a given hash function.
      *
      * @param length the length of the underlying array
-     * @param h the hash function of the new hash table
-     * @param <T> the type of elements in the new hash table
+     * @param h      the hash function of the new hash table
+     * @param <T>    the type of elements in the new hash table
      * @return the empty hash table with an underlying array of length {@code length} and with hash function {@code h}
      */
     public static <T> HashTableWithFreeList<T> withLengthAndHashFunction(int length, HashFunction h) {

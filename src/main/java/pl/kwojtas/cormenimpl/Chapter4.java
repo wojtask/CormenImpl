@@ -7,7 +7,8 @@ import pl.kwojtas.cormenimpl.util.Array;
  */
 public final class Chapter4 {
 
-    private Chapter4() { }
+    private Chapter4() {
+    }
 
     /**
      * Searches for the missing integer in an array.
@@ -73,31 +74,31 @@ public final class Chapter4 {
     }
 
     /**
-     * Returns the leftmost minimum indexes in each row of a Monge array.
+     * Returns the leftmost minimum indices in each row of a Monge array.
      * <p>Solution to problem 4-7(d).</p>
      *
      * @param A the Monge array
      * @return the array containing at the {@code i}-th position the leftmost minimum index in the {@code i}-th row of {@code A}
      */
-    public static Array<Integer> mongeLeftmostMinimaIndexes(Array<Array<Double>> A) {
+    public static Array<Integer> mongeLeftmostMinimaIndices(Array<Array<Double>> A) {
         int m = A.length;
         int n = A.at(1).length;
-        Array<Integer> leftmostMinimaIndexes = Array.withLength(m);
+        Array<Integer> leftmostMinimaIndices = Array.withLength(m);
         if (m >= 2) {
-            Array<Integer> leftmostMinimaIndexesOfEvenRows = mongeLeftmostMinimaIndexesOfEvenRows(A);
+            Array<Integer> leftmostMinimaIndicesOfEvenRows = mongeLeftmostMinimaIndicesOfEvenRows(A);
             for (int i = 2; i <= m; i += 2) {
-                leftmostMinimaIndexes.set(i, leftmostMinimaIndexesOfEvenRows.at(i / 2));
+                leftmostMinimaIndices.set(i, leftmostMinimaIndicesOfEvenRows.at(i / 2));
             }
         }
         for (int i = 1; i <= m; i += 2) {
-            int minimumIndexAbove = i > 1 ? leftmostMinimaIndexes.at(i - 1) : 1;
-            int minimumIndexBelow = i < m ? leftmostMinimaIndexes.at(i + 1) : n;
-            leftmostMinimaIndexes.set(i, mongeLeftmostMinimumIndex(A, i, minimumIndexAbove, minimumIndexBelow));
+            int minimumIndexAbove = i > 1 ? leftmostMinimaIndices.at(i - 1) : 1;
+            int minimumIndexBelow = i < m ? leftmostMinimaIndices.at(i + 1) : n;
+            leftmostMinimaIndices.set(i, mongeLeftmostMinimumIndex(A, i, minimumIndexAbove, minimumIndexBelow));
         }
-        return leftmostMinimaIndexes;
+        return leftmostMinimaIndices;
     }
 
-    private static Array<Integer> mongeLeftmostMinimaIndexesOfEvenRows(Array<Array<Double>> A) {
+    private static Array<Integer> mongeLeftmostMinimaIndicesOfEvenRows(Array<Array<Double>> A) {
         int m = A.length;
         Array<Array<Double>> oddRows = Array.withLength(m / 2);
         for (int i = 2; i <= m; i += 2) {
@@ -108,7 +109,7 @@ public final class Chapter4 {
             }
         }
         Array<Array<Double>> A_ = new Array<>(oddRows);
-        return mongeLeftmostMinimaIndexes(A_);
+        return mongeLeftmostMinimaIndices(A_);
     }
 
     private static int mongeLeftmostMinimumIndex(Array<Array<Double>> A, int row, int minimumIndexAbove, int minimumIndexBelow) {

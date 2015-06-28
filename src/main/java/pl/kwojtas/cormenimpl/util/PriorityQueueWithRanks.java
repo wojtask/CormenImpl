@@ -28,7 +28,7 @@ public class PriorityQueueWithRanks<T> extends Heap<PriorityQueueWithRanks.KeyWi
         /**
          * Creates a ranked element with a given key and rank.
          *
-         * @param key the key of the new element
+         * @param key  the key of the new element
          * @param rank the rank of the new element
          */
         public KeyWithRank(T key, int rank) {
@@ -43,7 +43,7 @@ public class PriorityQueueWithRanks<T> extends Heap<PriorityQueueWithRanks.KeyWi
     private int currentRank;
 
     /**
-     * Sets initial length of the priority queue and the current rank to 1.
+     * Creates an empty priority queue with ranks of a given initial length and sets the current rank to 1.
      *
      * @param initialLength an initial length of the priority queue
      */
@@ -60,4 +60,5 @@ public class PriorityQueueWithRanks<T> extends Heap<PriorityQueueWithRanks.KeyWi
     public int getCurrentRank() {
         return currentRank++;
     }
+
 }

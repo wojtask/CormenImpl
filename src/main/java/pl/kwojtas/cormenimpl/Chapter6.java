@@ -18,7 +18,8 @@ import static pl.kwojtas.cormenimpl.util.Util.less;
  */
 public final class Chapter6 {
 
-    private Chapter6() { }
+    private Chapter6() {
+    }
 
     /**
      * Returns the parent index in a heap.
@@ -57,8 +58,8 @@ public final class Chapter6 {
      * Restores the max-heap property.
      * <p><span style="font-variant:small-caps;">Max-Heapify</span> from subchapter 6.2.</p>
      *
-     * @param A the heap with max-heap property violated at one node
-     * @param i the index of the node in {@code A} the property is violated at
+     * @param A   the heap with max-heap property violated at one node
+     * @param i   the index of the node in {@code A} the property is violated at
      * @param <T> the type of elements in {@code A}
      */
     static <T extends Comparable> void maxHeapify(Heap<T> A, int i) {
@@ -83,7 +84,7 @@ public final class Chapter6 {
      * Constructs a max-heap from an array of elements.
      * <p><span style="font-variant:small-caps;">Build-Max-Heap</span> from subchapter 6.3.</p>
      *
-     * @param A the array of elements
+     * @param A   the array of elements
      * @param <T> the type of elements in {@code A}
      * @return a max-heap constructed from elements from {@code A}
      */
@@ -100,7 +101,7 @@ public final class Chapter6 {
      * Sorts elements using heap sort.
      * <p><span style="font-variant:small-caps;">Heapsort</span> from subchapter 6.4.</p>
      *
-     * @param A the array of elements to sort
+     * @param A   the array of elements to sort
      * @param <T> the type of elements in {@code A}
      */
     public static <T extends Comparable> void heapsort(Array<T> A) {
@@ -117,8 +118,8 @@ public final class Chapter6 {
      * Restores the min-heap property.
      * <p><span style="font-variant:small-caps;">Min-Heapify</span> from solution to exercise 6.2-2.</p>
      *
-     * @param A the heap with min-heap property violated at one node
-     * @param i the index of the node in {@code A} the property is violated at
+     * @param A   the heap with min-heap property violated at one node
+     * @param i   the index of the node in {@code A} the property is violated at
      * @param <T> the type of elements in {@code A}
      */
     public static <T extends Comparable> void minHeapify(Heap<T> A, int i) {
@@ -143,8 +144,8 @@ public final class Chapter6 {
      * Restores the max-heap property iteratively.
      * <p><span style="font-variant:small-caps;">Iterative-Max-Heapify</span> from solution to exercise 6.2-5.</p>
      *
-     * @param A the heap with max-heap property violated at one node
-     * @param i the index of the node in {@code A} the property is violated at
+     * @param A   the heap with max-heap property violated at one node
+     * @param i   the index of the node in {@code A} the property is violated at
      * @param <T> the type of elements in {@code A}
      */
     public static <T extends Comparable> void iterativeMaxHeapify(Heap<T> A, int i) {
@@ -202,8 +203,8 @@ public final class Chapter6 {
      * Increases a key in a max-heap.
      * <p><span style="font-variant:small-caps;">Heap-Increase-Key</span> from subchapter 6.5.</p>
      *
-     * @param A the max-heap
-     * @param i the index of the key in {@code A} to be increased
+     * @param A   the max-heap
+     * @param i   the index of the key in {@code A} to be increased
      * @param key the new key
      * @throws RuntimeException if {@code key} is smaller than {@code A[i]}
      */
@@ -222,7 +223,7 @@ public final class Chapter6 {
      * Inserts a node into a max-heap.
      * <p><span style="font-variant:small-caps;">Max-Heap-Insert</span> from subchapter 6.5.</p>
      *
-     * @param A the max-heap
+     * @param A   the max-heap
      * @param key the key of the new node
      */
     public static void maxHeapInsert(Heap<Integer> A, int key) {
@@ -265,8 +266,8 @@ public final class Chapter6 {
      * Decreases a key in a min-heap.
      * <p><span style="font-variant:small-caps;">Heap-Decrease-Key</span> from solution to exercise 6.5-3.</p>
      *
-     * @param A the min-heap
-     * @param i the index of the key in {@code A} to be decreased
+     * @param A   the min-heap
+     * @param i   the index of the key in {@code A} to be decreased
      * @param key the new key
      * @throws RuntimeException if {@code key} is larger than {@code A[i]}
      */
@@ -285,7 +286,7 @@ public final class Chapter6 {
      * Inserts a node into a min-heap.
      * <p><span style="font-variant:small-caps;">Min-Heap-Insert</span> from solution to exercise 6.5-3.</p>
      *
-     * @param A the min-heap
+     * @param A   the min-heap
      * @param key the key of the new node
      */
     public static void minHeapInsert(Heap<Integer> A, int key) {
@@ -300,8 +301,8 @@ public final class Chapter6 {
      * <p>Solution to exercise 6.5-6.</p>
      *
      * @param priorityQueue the min-priority queue with ranked elements
-     * @param key the key to insert to the queue
-     * @param <T> the type of keys in {@code priorityQueue}
+     * @param key           the key to insert to the queue
+     * @param <T>           the type of keys in {@code priorityQueue}
      */
     public static <T> void enqueueUsingPriorityQueue(PriorityQueueWithRanks<T> priorityQueue, T key) {
         int rank = priorityQueue.getCurrentRank();
@@ -320,7 +321,7 @@ public final class Chapter6 {
      * <p>Solution to exercise 6.5-6.</p>
      *
      * @param priorityQueue the min-priority queue with ranked elements
-     * @param <T> the type of keys in {@code priorityQueue}
+     * @param <T>           the type of keys in {@code priorityQueue}
      * @return the key removed from the queue
      */
     public static <T> T dequeueUsingPriorityQueue(PriorityQueueWithRanks<T> priorityQueue) {
@@ -359,8 +360,8 @@ public final class Chapter6 {
      * <p>Solution to exercise 6.5-6.</p>
      *
      * @param priorityQueue the max-priority queue with ranked elements
-     * @param key the key to insert to the stack
-     * @param <T> the type of keys in {@code priorityQueue}
+     * @param key           the key to insert to the stack
+     * @param <T>           the type of keys in {@code priorityQueue}
      */
     public static <T> void pushUsingPriorityQueue(PriorityQueueWithRanks<T> priorityQueue, T key) {
         int rank = priorityQueue.getCurrentRank();
@@ -388,7 +389,7 @@ public final class Chapter6 {
      * <p>Solution to exercise 6.5-6.</p>
      *
      * @param priorityQueue the max-priority queue with ranked elements
-     * @param <T> the type of keys in {@code priorityQueue}
+     * @param <T>           the type of keys in {@code priorityQueue}
      * @return the key removed from the stack
      */
     public static <T> T popUsingPriorityQueue(PriorityQueueWithRanks<T> priorityQueue) {
@@ -425,8 +426,8 @@ public final class Chapter6 {
      * Deletes an element from a max-heap.
      * <p><span style="font-variant:small-caps;">Max-Heap-Delete</span> from solution to exercise 6.5-7.</p>
      *
-     * @param A the max-heap
-     * @param i the index of the key in {@code A} to be deleted
+     * @param A   the max-heap
+     * @param i   the index of the key in {@code A} to be deleted
      * @param <T> the type of keys in {@code A}
      * @return the key of the element deleted from {@code A}
      */
@@ -605,8 +606,8 @@ public final class Chapter6 {
      * Inserts a node into a multiary max-heap.
      * <p><span style="font-variant:small-caps;">Multiary-Max-Heap-Insert</span> from solution to problem 6-2(d).</p>
      *
-     * @param A the multiary max-heap
-     * @param d the arity of {@code A}
+     * @param A   the multiary max-heap
+     * @param d   the arity of {@code A}
      * @param key the key of the new node
      */
     public static void multiaryMaxHeapInsert(Heap<Integer> A, int d, int key) {
@@ -689,9 +690,9 @@ public final class Chapter6 {
      * Inserts a key into a Young tableau.
      * <p><span style="font-variant:small-caps;">Young-Insert</span> from solution to problem 6-3(d).</p>
      *
-     * @param Y the Young tableau
-     * @param m the number of rows in {@code Y}
-     * @param n the number of columns in {@code Y}
+     * @param Y   the Young tableau
+     * @param m   the number of rows in {@code Y}
+     * @param n   the number of columns in {@code Y}
      * @param key the key to insert
      */
     static void youngInsert(Young Y, int m, int n, int key) {

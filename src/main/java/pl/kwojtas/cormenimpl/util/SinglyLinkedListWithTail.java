@@ -36,7 +36,7 @@ public class SinglyLinkedListWithTail<T> extends SinglyLinkedList<T> {
      *
      * @param otherList the list to be copied
      */
-    public SinglyLinkedListWithTail(SinglyLinkedList<T> otherList) {
+    public SinglyLinkedListWithTail(SinglyLinkedListWithTail<T> otherList) {
         if (otherList.head == null) {
             return;
         }
@@ -49,38 +49,6 @@ public class SinglyLinkedListWithTail<T> extends SinglyLinkedList<T> {
             x = y;
             z = z.next;
         }
-    }
-
-    /**
-     * Returns the number of elements in the list.
-     *
-     * @return the number of elements in the list
-     */
-    public int getLength() {
-        int length = 0;
-        Node<T> x = head;
-        while (x != null) {
-            length++;
-            x = x.next;
-        }
-        return length;
-    }
-
-    /**
-     * Transforms the list to an array.
-     *
-     * @return the array containing all the elements in the list
-     */
-    public Array<T> toArray() {
-        Array<T> array = Array.withLength(getLength());
-        Node<T> x = head;
-        int i = 1;
-        while (x != null) {
-            array.set(i, x.key);
-            i++;
-            x = x.next;
-        }
-        return array;
     }
 
 }

@@ -8,7 +8,7 @@ package pl.kwojtas.cormenimpl.util;
 public class HugeArray<T> {
 
     /**
-     * The array containing indexes of elements in stack {@code S}.
+     * The array containing indices of elements in stack {@code S}.
      */
     public ZeroBasedIndexedArray<Integer> T;
 
@@ -20,7 +20,7 @@ public class HugeArray<T> {
     /**
      * Creates a huge array with a given size and stack capacity.
      *
-     * @param size the size of the new huge array
+     * @param size     the size of the new huge array
      * @param capacity the capacity of the auxiliary stack of the new huge array
      */
     public HugeArray(int size, int capacity) {
@@ -30,4 +30,5 @@ public class HugeArray<T> {
         }
         S = Stack.withLength(capacity);
     }
+
 }

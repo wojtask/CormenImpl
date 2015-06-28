@@ -50,7 +50,7 @@ public class Chapter5Test {
     @Test
     public void shouldPermuteArrayBySorting() {
         // given
-        Array<Integer> array = new Array<>(5,7,9,2,6,8,6,6,3,1,7,8);
+        Array<Integer> array = new Array<>(5, 7, 9, 2, 6, 8, 6, 6, 3, 1, 7, 8);
         Array<Integer> original = new Array<>(array);
 
         // when
@@ -63,7 +63,7 @@ public class Chapter5Test {
     @Test
     public void shouldRandomizeArrayInPlace() {
         // given
-        Array<Integer> array = new Array<>(5,7,9,2,6,8,6,6,3,1,7,8);
+        Array<Integer> array = new Array<>(5, 7, 9, 2, 6, 8, 6, 6, 3, 1, 7, 8);
         Array<Integer> original = new Array<>(array);
 
         // when
@@ -76,7 +76,7 @@ public class Chapter5Test {
     @Test
     public void shouldRandomizeArrayInPlaceUsingAlternativeMethod() {
         // given
-        Array<Integer> array = new Array<>(5,7,9,2,6,8,6,6,3,1,7,8);
+        Array<Integer> array = new Array<>(5, 7, 9, 2, 6, 8, 6, 6, 3, 1, 7, 8);
         Array<Integer> original = new Array<>(array);
 
         // when
@@ -89,7 +89,7 @@ public class Chapter5Test {
     @Test
     public void shouldPermuteArrayUniformlyBySorting() {
         // given
-        Array<Integer> array = new Array<>(5,7,9,2,6,8,6,6,3,1,7,8);
+        Array<Integer> array = new Array<>(5, 7, 9, 2, 6, 8, 6, 6, 3, 1, 7, 8);
         Array<Integer> original = new Array<>(array);
 
         // when
@@ -102,7 +102,7 @@ public class Chapter5Test {
     @Test
     public void shouldFindKeyUsingRandomSearch() {
         // given
-        Array<Integer> array = new Array<>(5,7,9,2,6,8,6,6,3,1,7,8);
+        Array<Integer> array = new Array<>(5, 7, 9, 2, 6, 8, 6, 6, 3, 1, 7, 8);
         Array<Integer> original = new Array<>(array);
         int key = 6;
 
@@ -118,7 +118,7 @@ public class Chapter5Test {
     @Test
     public void shouldNotFindNonexistentKeyUsingRandomSearch() {
         // given
-        Array<Integer> array = new Array<>(5,7,9,2,6,8,6,6,3,1,7,8);
+        Array<Integer> array = new Array<>(5, 7, 9, 2, 6, 8, 6, 6, 3, 1, 7, 8);
         int key = 4;
 
         // when

@@ -26,7 +26,7 @@ public class Chapter4Test {
     @Test
     public void shouldFindMissingInteger() {
         // given
-        Array<Integer> array = new Array<>(12,1,6,11,4,3,0,10,13,8,5,2,9);
+        Array<Integer> array = new Array<>(12, 1, 6, 11, 4, 3, 0, 10, 13, 8, 5, 2, 9);
         Array<Integer> original = new Array<>(array);
 
         // when
@@ -47,31 +47,31 @@ public class Chapter4Test {
     }
 
     @Test
-    public void shouldGetLeftmostMinimaIndexesOfMongeArray() {
+    public void shouldGetLeftmostMinimaIndicesOfMongeArray() {
         // given
         Array<Array<Double>> mongeArray = new Array<>(
-                new Array<>(10.0,17.0,13.0,28.0,23.0),
-                new Array<>(17.0,22.0,16.0,29.0,23.0),
-                new Array<>(24.0,28.0,22.0,34.0,24.0),
-                new Array<>(11.0,13.0, 6.0,17.0, 7.0),
-                new Array<>(45.0,44.0,32.0,37.0,23.0),
-                new Array<>(36.0,33.0,19.0,21.0, 6.0),
-                new Array<>(75.0,66.0,51.0,53.0,34.0)
+                new Array<>(10.0, 17.0, 13.0, 28.0, 23.0),
+                new Array<>(17.0, 22.0, 16.0, 29.0, 23.0),
+                new Array<>(24.0, 28.0, 22.0, 34.0, 24.0),
+                new Array<>(11.0, 13.0, 6.0, 17.0, 7.0),
+                new Array<>(45.0, 44.0, 32.0, 37.0, 23.0),
+                new Array<>(36.0, 33.0, 19.0, 21.0, 6.0),
+                new Array<>(75.0, 66.0, 51.0, 53.0, 34.0)
         );
         Array<Array<Double>> original = new Array<>(mongeArray);
 
         // when
-        Array<Integer> actualLeftmostMinimaIndexes = Chapter4.mongeLeftmostMinimaIndexes(mongeArray);
+        Array<Integer> actualLeftmostMinimaIndices = Chapter4.mongeLeftmostMinimaIndices(mongeArray);
 
         // then
-        assertNotNull(actualLeftmostMinimaIndexes);
-        assertMinimaIndexes(original, actualLeftmostMinimaIndexes);
+        assertNotNull(actualLeftmostMinimaIndices);
+        assertMinimaIndices(original, actualLeftmostMinimaIndices);
     }
 
-    private void assertMinimaIndexes(Array<Array<Double>> originalMongeArray, Array<Integer> actualLeftmostMinimaIndexes) {
+    private void assertMinimaIndices(Array<Array<Double>> originalMongeArray, Array<Integer> actualLeftmostMinimaIndices) {
         int columns = originalMongeArray.at(1).length;
-        for (int i = 1; i <= actualLeftmostMinimaIndexes.length; i++) {
-            int actualLeftmostMinimumIndex = actualLeftmostMinimaIndexes.at(i);
+        for (int i = 1; i <= actualLeftmostMinimaIndices.length; i++) {
+            int actualLeftmostMinimumIndex = actualLeftmostMinimaIndices.at(i);
             assertTrue(1 <= actualLeftmostMinimumIndex && actualLeftmostMinimumIndex <= columns);
             for (int j = 1; j <= actualLeftmostMinimumIndex - 1; j++) {
                 assertTrue(originalMongeArray.at(i).at(actualLeftmostMinimumIndex) < originalMongeArray.at(i).at(j));

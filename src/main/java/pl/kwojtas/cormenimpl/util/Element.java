@@ -20,7 +20,7 @@ public class Element<T> {
     /**
      * Creates an element from a given key and satellite data.
      *
-     * @param key the key of the new element
+     * @param key  the key of the new element
      * @param data the satellite data of the new element
      */
     public Element(int key, T data) {
@@ -37,4 +37,5 @@ public class Element<T> {
         this.key = otherElement.key;
         this.data = otherElement.data;
     }
+
 }

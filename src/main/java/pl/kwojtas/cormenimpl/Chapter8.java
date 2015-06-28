@@ -17,7 +17,8 @@ import static pl.kwojtas.cormenimpl.Chapter7.partition;
  */
 public final class Chapter8 {
 
-    private Chapter8() { }
+    private Chapter8() {
+    }
 
     /**
      * Sorts elements using counting sort.
@@ -465,7 +466,7 @@ public final class Chapter8 {
      * Sorts variable-length strings.
      * <p>Solution to problem 8-3(b).</p>
      *
-     * @param A the array of strings to sort
+     * @param A        the array of strings to sort
      * @param position the position by which strings are sorted
      */
     public static void variableLengthStringsSort(Array<String> A, int position) {
@@ -498,7 +499,7 @@ public final class Chapter8 {
         for (int i = 0; i <= 127; i++) {
             C.set(i, 0);
         }
-        position--; // move to 0-based indexes
+        position--; // move to 0-based indices
         for (int j = 1; j <= A.length; j++) {
             C.set(Character.getNumericValue(A.at(j).charAt(position)),
                     C.at(Character.getNumericValue(A.at(j).charAt(position))) + 1);
@@ -593,10 +594,10 @@ public final class Chapter8 {
      * Rearranges elements so that they increase on average.
      * <p>Solution to problem 8-5(d).</p>
      *
-     * @param A the array of elements to sort
-     * @param k the number of elements taken for averages
-     * @param p the index of the beginning of subarray in {@code A} being rearranged
-     * @param r the index of the end of subarray in {@code A} being rearranged
+     * @param A   the array of elements to sort
+     * @param k   the number of elements taken for averages
+     * @param p   the index of the beginning of subarray in {@code A} being rearranged
+     * @param r   the index of the end of subarray in {@code A} being rearranged
      * @param <T> the type of elements in {@code A}
      */
     public static <T extends Comparable> void averageSort(Array<T> A, int k, int p, int r) {

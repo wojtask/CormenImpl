@@ -89,12 +89,12 @@ public class Chapter12Test {
 
         // then
         String[] actualOutput = splitOutContent();
-        String[] expectedOutput = new String[]{"1","4","10","11","14","19","20"};
+        String[] expectedOutput = new String[]{"1", "4", "10", "11", "14", "19", "20"};
         assertArrayEquals(expectedOutput, actualOutput);
     }
 
     @Test
-     public void shouldPrintOutEmptyTreeInPreorder() {
+    public void shouldPrintOutEmptyTreeInPreorder() {
         // given
 
         // when
@@ -114,7 +114,7 @@ public class Chapter12Test {
 
         // then
         String[] actualOutput = splitOutContent();
-        String[] expectedOutput = new String[]{"10","4","1","14","11","19","20"};
+        String[] expectedOutput = new String[]{"10", "4", "1", "14", "11", "19", "20"};
         assertArrayEquals(expectedOutput, actualOutput);
     }
 
@@ -139,7 +139,7 @@ public class Chapter12Test {
 
         // then
         String[] actualOutput = splitOutContent();
-        String[] expectedOutput = new String[]{"1","4","11","20","19","14","10"};
+        String[] expectedOutput = new String[]{"1", "4", "11", "20", "19", "14", "10"};
         assertArrayEquals(expectedOutput, actualOutput);
     }
 
@@ -350,7 +350,7 @@ public class Chapter12Test {
 
         // then
         String[] actualOutput = splitOutContent();
-        String[] expectedOutput = new String[]{"1","4","10","11","14","19","20"};
+        String[] expectedOutput = new String[]{"1", "4", "10", "11", "14", "19", "20"};
         assertArrayEquals(expectedOutput, actualOutput);
     }
 

@@ -8,7 +8,7 @@ package pl.kwojtas.cormenimpl.util;
 public class MultipleArrayList<T> {
 
     /**
-     * The array of indexes of next elements.
+     * The array of indices of next elements.
      */
     public Array<Integer> next;
 
@@ -18,7 +18,7 @@ public class MultipleArrayList<T> {
     public Array<T> key;
 
     /**
-     * The array of indexes of previous elements.
+     * The array of indices of previous elements.
      */
     public Array<Integer> prev;
 
@@ -33,9 +33,20 @@ public class MultipleArrayList<T> {
     public Integer free;
 
     /**
-     * Creates an empty doubly linked list using the multiple-array representation.
+     * Creates a doubly linked list using the multiple-array representation from given arrays and pointer indices.
+     *
+     * @param next the array of indices of next elements in the new list
+     * @param key  the array of keys in the new list
+     * @param prev the array of indices of previous elements in the new list
+     * @param L    the index of the head of the new list
+     * @param free the index of the head of the free list in the new list
      */
-    public MultipleArrayList() {
+    public MultipleArrayList(Array<Integer> next, Array<T> key, Array<Integer> prev, Integer L, Integer free) {
+        this.next = next;
+        this.key = key;
+        this.prev = prev;
+        this.L = L;
+        this.free = free;
     }
 
     /**

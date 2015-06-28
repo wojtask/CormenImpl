@@ -29,7 +29,7 @@ public class Array<T> {
      * Creates an array of a given length.
      *
      * @param length the length of the new array
-     * @param <T> the type of elements in the new array
+     * @param <T>    the type of elements in the new array
      * @return the array of length {@code length} filled with {@code null}s
      */
     public static <T> Array<T> withLength(int length) {
@@ -63,7 +63,7 @@ public class Array<T> {
      * Sets an element at a given position.
      *
      * @param position the position of the element to set
-     * @param element the new element
+     * @param element  the new element
      * @throws RuntimeException if {@code position < 1} or {@code position > length}
      */
     public void set(int position, T element) {

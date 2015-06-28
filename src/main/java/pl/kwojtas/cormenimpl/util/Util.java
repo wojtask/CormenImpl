@@ -7,6 +7,9 @@ import java.util.Random;
  */
 public class Util {
 
+    private Util() {
+    }
+
     private static Random rand = new Random(System.currentTimeMillis());
 
     /**
@@ -56,8 +59,8 @@ public class Util {
     /**
      * Returns the minimum of two values.
      *
-     * @param a the first value
-     * @param b the second value
+     * @param a   the first value
+     * @param b   the second value
      * @param <T> the type of the values
      * @return the minimum of {@code a} and {@code b}
      */
@@ -68,8 +71,8 @@ public class Util {
     /**
      * Returns the maximum of two values.
      *
-     * @param a the first value
-     * @param b the second value
+     * @param a   the first value
+     * @param b   the second value
      * @param <T> the type of the values
      * @return the maximum of {@code a} and {@code b}
      */

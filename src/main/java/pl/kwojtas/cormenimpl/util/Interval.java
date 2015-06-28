@@ -20,8 +20,12 @@ public class Interval {
      *
      * @param a the lower bound of the new interval
      * @param b the upper bound of the new interval
+     * @throws RuntimeException if {@code a > b}
      */
     public Interval(double a, double b) {
+        if (a > b) {
+            throw new RuntimeException("Lower bound greater than upper bound");
+        }
         this.a = a;
         this.b = b;
     }

@@ -41,7 +41,7 @@ import static pl.kwojtas.cormenimpl.TestUtil.assertArrayEquals;
 import static pl.kwojtas.cormenimpl.TestUtil.assertShuffled;
 
 @RunWith(PowerMockRunner.class)
-@PrepareForTest({ Chapter5.class })
+@PrepareForTest({Chapter5.class})
 public class Chapter10Test {
 
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
@@ -110,7 +110,7 @@ public class Chapter10Test {
     }
 
     @Test
-     public void shouldDeleteFromStack() {
+    public void shouldDeleteFromStack() {
         // given
         Stack<String> stack = Stack.withLength(6);
         stack.set(4, "xyz");
@@ -666,7 +666,7 @@ public class Chapter10Test {
     @Test
     public void shouldFindKeyOnList() {
         // given
-        List<Integer> list = new List<>(5,7,9,2,6,1,6,6,3,1,7,8);
+        List<Integer> list = new List<>(5, 7, 9, 2, 6, 1, 6, 6, 3, 1, 7, 8);
         int keyToFind = 6;
 
         // when
@@ -680,7 +680,7 @@ public class Chapter10Test {
     @Test
     public void shouldNotFindNonexistentKeyOnList() {
         // given
-        List<Integer> list = new List<>(5,7,9,2,6,1,6,6,3,1,7,8);
+        List<Integer> list = new List<>(5, 7, 9, 2, 6, 1, 6, 6, 3, 1, 7, 8);
         int keyToFind = 4;
 
         // when
@@ -693,7 +693,7 @@ public class Chapter10Test {
     @Test
     public void shouldInsertOntoList() {
         // given
-        List<Integer> list = new List<>(5,7,9,2,6,1,6,6,3,1,7,8);
+        List<Integer> list = new List<>(5, 7, 9, 2, 6, 1, 6, 6, 3, 1, 7, 8);
         List<Integer> original = new List<>(list);
         int keyToInsert = 3;
 
@@ -707,9 +707,9 @@ public class Chapter10Test {
     }
 
     @Test
-     public void shouldDeleteElementInTheMiddleOfList() {
+    public void shouldDeleteElementInTheMiddleOfList() {
         // given
-        List<Integer> list = new List<>(5,7,9,2,6,1,6,6,3,1,7,8);
+        List<Integer> list = new List<>(5, 7, 9, 2, 6, 1, 6, 6, 3, 1, 7, 8);
         List<Integer> original = new List<>(list);
         int keyToDelete = 6;
         List.Node<Integer> nodeToDelete = list.head.next.next.next.next; // first element on the list with key = 6
@@ -724,7 +724,7 @@ public class Chapter10Test {
     @Test
     public void shouldDeleteHeadFromList() {
         // given
-        List<Integer> list = new List<>(5,7,9,2,6,1,6,6,3,1,7,8);
+        List<Integer> list = new List<>(5, 7, 9, 2, 6, 1, 6, 6, 3, 1, 7, 8);
         List<Integer> original = new List<>(list);
         int keyToDelete = 5;
         List.Node<Integer> nodeToDelete = list.head;
@@ -758,7 +758,7 @@ public class Chapter10Test {
     @Test
     public void shouldDeleteFromListWithSentinel() {
         // given
-        ListWithSentinel<Integer> list = new ListWithSentinel<>(5,7,9,2,6,1,6,6,3,1,7,8);
+        ListWithSentinel<Integer> list = new ListWithSentinel<>(5, 7, 9, 2, 6, 1, 6, 6, 3, 1, 7, 8);
         ListWithSentinel<Integer> original = new ListWithSentinel<>(list);
         int keyToDelete = 2;
         ListWithSentinel.Node<Integer> nodeToDelete = list.nil.next.next.next.next; // element with key = 2
@@ -773,7 +773,7 @@ public class Chapter10Test {
     @Test
     public void shouldFindKeyOnListWithSentinel() {
         // given
-        ListWithSentinel<Integer> list = new ListWithSentinel<>(5,7,9,2,6,1,6,6,3,1,7,8);
+        ListWithSentinel<Integer> list = new ListWithSentinel<>(5, 7, 9, 2, 6, 1, 6, 6, 3, 1, 7, 8);
         int keyToFind = 6;
 
         // when
@@ -787,7 +787,7 @@ public class Chapter10Test {
     @Test
     public void shouldNotFindNonexistentKeyOnListWithSentinel() {
         // given
-        ListWithSentinel<Integer> list = new ListWithSentinel<>(5,7,9,2,6,1,6,6,3,1,7,8);
+        ListWithSentinel<Integer> list = new ListWithSentinel<>(5, 7, 9, 2, 6, 1, 6, 6, 3, 1, 7, 8);
         int keyToFind = 4;
 
         // when
@@ -800,7 +800,7 @@ public class Chapter10Test {
     @Test
     public void shouldInsertOntoListWithSentinel() {
         // given
-        ListWithSentinel<Integer> list = new ListWithSentinel<>(5,7,9,2,6,1,6,6,3,1,7,8);
+        ListWithSentinel<Integer> list = new ListWithSentinel<>(5, 7, 9, 2, 6, 1, 6, 6, 3, 1, 7, 8);
         ListWithSentinel<Integer> original = new ListWithSentinel<>(list);
         int keyToInsert = 3;
 
@@ -824,7 +824,7 @@ public class Chapter10Test {
     @Test
     public void shouldInsertOntoSinglyLinkedList() {
         // given
-        SinglyLinkedList<Integer> list = new SinglyLinkedList<>(5,7,9,2,6,1,6,6,3,1,7,8);
+        SinglyLinkedList<Integer> list = new SinglyLinkedList<>(5, 7, 9, 2, 6, 1, 6, 6, 3, 1, 7, 8);
         SinglyLinkedList<Integer> original = new SinglyLinkedList<>(list);
         int keyToInsert = 3;
 
@@ -840,7 +840,7 @@ public class Chapter10Test {
     @Test
     public void shouldDeleteFromSinglyLinkedList() {
         // given
-        SinglyLinkedList<Integer> list = new SinglyLinkedList<>(5,7,9,2,6,1,6,6,3,1,7,8);
+        SinglyLinkedList<Integer> list = new SinglyLinkedList<>(5, 7, 9, 2, 6, 1, 6, 6, 3, 1, 7, 8);
         SinglyLinkedList<Integer> original = new SinglyLinkedList<>(list);
         int keyToDelete = 6;
         SinglyLinkedList.Node<Integer> nodeToDelete = list.head.next.next.next.next; // first element on the list with key = 6
@@ -855,7 +855,7 @@ public class Chapter10Test {
     @Test
     public void shouldInsertIntoStackOnSinglyLinkedList() {
         // given
-        SinglyLinkedList<Integer> list = new SinglyLinkedList<>(5,7,9,2,6,1,6,6,3,1,7,8);
+        SinglyLinkedList<Integer> list = new SinglyLinkedList<>(5, 7, 9, 2, 6, 1, 6, 6, 3, 1, 7, 8);
         SinglyLinkedList<Integer> original = new SinglyLinkedList<>(list);
         int keyToInsert = 3;
 
@@ -871,7 +871,7 @@ public class Chapter10Test {
     @Test
     public void shouldDeleteFromStackOnSinglyLinkedList() {
         // given
-        SinglyLinkedList<Integer> list = new SinglyLinkedList<>(5,7,9,2,6,1,6,6,3,1,7,8);
+        SinglyLinkedList<Integer> list = new SinglyLinkedList<>(5, 7, 9, 2, 6, 1, 6, 6, 3, 1, 7, 8);
         SinglyLinkedList<Integer> original = new SinglyLinkedList<>(list);
         int expectedElement = 5;
 
@@ -906,7 +906,7 @@ public class Chapter10Test {
     @Test
     public void shouldInsertIntoQueueOnSinglyLinkedListWithTail() {
         // given
-        SinglyLinkedListWithTail<Integer> list = new SinglyLinkedListWithTail<>(5,7,9,2,6,1,6,6,3,1,7,8);
+        SinglyLinkedListWithTail<Integer> list = new SinglyLinkedListWithTail<>(5, 7, 9, 2, 6, 1, 6, 6, 3, 1, 7, 8);
         SinglyLinkedListWithTail<Integer> original = new SinglyLinkedListWithTail<>(list);
         int keyToInsert = 3;
 
@@ -940,7 +940,7 @@ public class Chapter10Test {
     @Test
     public void shouldDeleteFromQueueOnSinglyLinkedListWithTail() {
         // given
-        SinglyLinkedListWithTail<Integer> list = new SinglyLinkedListWithTail<>(5,7,9,2,6,1,6,6,3,1,7,8);
+        SinglyLinkedListWithTail<Integer> list = new SinglyLinkedListWithTail<>(5, 7, 9, 2, 6, 1, 6, 6, 3, 1, 7, 8);
         SinglyLinkedListWithTail<Integer> original = new SinglyLinkedListWithTail<>(list);
         int expectedElement = 5;
 
@@ -989,7 +989,7 @@ public class Chapter10Test {
     @Test
     public void shouldInsertOntoCircularList() {
         // given
-        CircularList<Integer> list = new CircularList<>(5,7,9,2,6,1,6,6,3,1,7,8);
+        CircularList<Integer> list = new CircularList<>(5, 7, 9, 2, 6, 1, 6, 6, 3, 1, 7, 8);
         CircularList<Integer> original = new CircularList<>(list);
         int keyToInsert = 3;
 
@@ -1024,7 +1024,7 @@ public class Chapter10Test {
     @Test
     public void shouldDeleteFromCircularList() {
         // given
-        CircularList<Integer> list = new CircularList<>(5,7,9,2,6,1,6,6,3,1,7,8);
+        CircularList<Integer> list = new CircularList<>(5, 7, 9, 2, 6, 1, 6, 6, 3, 1, 7, 8);
         CircularList<Integer> original = new CircularList<>(list);
         int keyToDelete = 6;
         CircularList.Node<Integer> nodeToDelete = list.head.next.next.next.next; // first element on the list with key = 6
@@ -1039,7 +1039,7 @@ public class Chapter10Test {
     @Test
     public void shouldDeleteHeadFromCircularList() {
         // given
-        CircularList<Integer> list = new CircularList<>(5,7,9,2,6,1,6,6,3,1,7,8);
+        CircularList<Integer> list = new CircularList<>(5, 7, 9, 2, 6, 1, 6, 6, 3, 1, 7, 8);
         CircularList<Integer> original = new CircularList<>(list);
         int keyToDelete = 5;
         CircularList.Node<Integer> nodeToDelete = list.head;
@@ -1067,7 +1067,7 @@ public class Chapter10Test {
     @Test
     public void shouldFindKeyOnCircularList() {
         // given
-        CircularList<Integer> list = new CircularList<>(5,7,9,2,6,1,6,6,3,1,7,8);
+        CircularList<Integer> list = new CircularList<>(5, 7, 9, 2, 6, 1, 6, 6, 3, 1, 7, 8);
         int keyToFind = 6;
 
         // when
@@ -1081,7 +1081,7 @@ public class Chapter10Test {
     @Test
     public void shouldFindKeyInCircularListHead() {
         // given
-        CircularList<Integer> list = new CircularList<>(5,7,9,2,6,1,6,6,3,1,7,8);
+        CircularList<Integer> list = new CircularList<>(5, 7, 9, 2, 6, 1, 6, 6, 3, 1, 7, 8);
         int keyToFind = 5;
 
         // when
@@ -1095,7 +1095,7 @@ public class Chapter10Test {
     @Test
     public void shouldNotFindNonexistentKeyOnCircularList() {
         // given
-        CircularList<Integer> list = new CircularList<>(5,7,9,2,6,1,6,6,3,1,7,8);
+        CircularList<Integer> list = new CircularList<>(5, 7, 9, 2, 6, 1, 6, 6, 3, 1, 7, 8);
         int keyToFind = 4;
 
         // when
@@ -1121,8 +1121,8 @@ public class Chapter10Test {
     @Test
     public void shouldUnionCircularLists() {
         // given
-        CircularList<Integer> list1 = new CircularList<>(12,44,26,20,67,4,21,66,35,51,13);
-        CircularList<Integer> list2 = new CircularList<>(55,23,2,74,30,47);
+        CircularList<Integer> list1 = new CircularList<>(12, 44, 26, 20, 67, 4, 21, 66, 35, 51, 13);
+        CircularList<Integer> list2 = new CircularList<>(55, 23, 2, 74, 30, 47);
         Array<Integer> originalArray1 = list1.toArray();
         Array<Integer> originalArray2 = list2.toArray();
 
@@ -1157,7 +1157,7 @@ public class Chapter10Test {
     @Test
     public void shouldReverseSinglyLinkedList() {
         // given
-        SinglyLinkedList<Integer> list = new SinglyLinkedList<>(5,7,9,2,6,1,6,6,3,1,7,8);
+        SinglyLinkedList<Integer> list = new SinglyLinkedList<>(5, 7, 9, 2, 6, 1, 6, 6, 3, 1, 7, 8);
         SinglyLinkedList<Integer> original = new SinglyLinkedList<>(list);
 
         // when
@@ -1297,11 +1297,13 @@ public class Chapter10Test {
     @Test
     public void shouldAllocateObjectOnMultipleArrayList() {
         // given
-        MultipleArrayList<String> multipleArrayList = new MultipleArrayList<>();
-        multipleArrayList.next = new Array<>(4,1,null,null,3);
-        multipleArrayList.prev = new Array<>(2,null,5,1,null);
-        multipleArrayList.L = 2;
-        multipleArrayList.free = 5;
+        MultipleArrayList<String> multipleArrayList = new MultipleArrayList<>(
+                new Array<>(4, 1, null, null, 3),
+                null,
+                new Array<>(2, null, 5, 1, null),
+                2,
+                5
+        );
 
         // when
         int actualNewPosition = Chapter10.allocateObject(multipleArrayList);
@@ -1314,11 +1316,13 @@ public class Chapter10Test {
     @Test(expected = RuntimeException.class)
     public void shouldNotAllocateObjectOnFullMultipleArrayList() {
         // given
-        MultipleArrayList<String> multipleArrayList = new MultipleArrayList<>();
-        multipleArrayList.next = new Array<>(4,1,null,5,3);
-        multipleArrayList.prev = new Array<>(2,null,5,1,4);
-        multipleArrayList.L = 2;
-        multipleArrayList.free = null;
+        MultipleArrayList<String> multipleArrayList = new MultipleArrayList<>(
+                new Array<>(4, 1, null, 5, 3),
+                null,
+                new Array<>(2, null, 5, 1, 4),
+                2,
+                null
+        );
 
         try {
             // when
@@ -1333,11 +1337,13 @@ public class Chapter10Test {
     @Test
     public void shouldFreeObjectOnMultipleArrayList() {
         // given
-        MultipleArrayList<String> multipleArrayList = new MultipleArrayList<>();
-        multipleArrayList.next = new Array<>(4,1,null,null,3);
-        multipleArrayList.prev = new Array<>(2,null,5,1,null);
-        multipleArrayList.L = 2;
-        multipleArrayList.free = 5;
+        MultipleArrayList<String> multipleArrayList = new MultipleArrayList<>(
+                new Array<>(4, 1, null, null, 3),
+                null,
+                new Array<>(2, null, 5, 1, null),
+                2,
+                5
+        );
 
         // when
         Chapter10.freeObject(multipleArrayList, 1);
@@ -1350,10 +1356,11 @@ public class Chapter10Test {
     @Test
     public void shouldAllocateObjectOnSingleArrayList() {
         // given
-        SingleArrayList singleArrayList = new SingleArrayList();
-        singleArrayList.set(new Array<>(100,10,4,200,1,null,300,null,13,400,null,1,500,7,null));
-        singleArrayList.L = 4;
-        singleArrayList.free = 13;
+        SingleArrayList singleArrayList = new SingleArrayList(
+                new Array<>(100, 10, 4, 200, 1, null, 300, null, 13, 400, null, 1, 500, 7, null),
+                4,
+                13
+        );
 
         // when
         int actualNewPosition = Chapter10.singleArrayAllocateObject(singleArrayList);
@@ -1366,10 +1373,11 @@ public class Chapter10Test {
     @Test(expected = RuntimeException.class)
     public void shouldNotAllocateObjectOnFullSingleArrayList() {
         // given
-        SingleArrayList singleArrayList = new SingleArrayList();
-        singleArrayList.set(new Array<>(100,10,4,200,1,null,300,null,13,400,13,1,500,7,10));
-        singleArrayList.L = 4;
-        singleArrayList.free = null;
+        SingleArrayList singleArrayList = new SingleArrayList(
+                new Array<>(100, 10, 4, 200, 1, null, 300, null, 13, 400, 13, 1, 500, 7, 10),
+                4,
+                null
+        );
 
         try {
             // when
@@ -1384,10 +1392,11 @@ public class Chapter10Test {
     @Test
     public void shouldFreeObjectOnSingleArrayList() {
         // given
-        SingleArrayList singleArrayList = new SingleArrayList();
-        singleArrayList.set(new Array<>(100,10,4,200,1,null,300,null,13,400,null,1,500,7,null));
-        singleArrayList.L = 4;
-        singleArrayList.free = 13;
+        SingleArrayList singleArrayList = new SingleArrayList(
+                new Array<>(100, 10, 4, 200, 1, null, 300, null, 13, 400, null, 1, 500, 7, null),
+                4,
+                13
+        );
 
         // when
         Chapter10.singleArrayFreeObject(singleArrayList, 1);
@@ -1400,12 +1409,13 @@ public class Chapter10Test {
     @Test
     public void shouldAllocateObjectOnCompactList() {
         // given
-        MultipleArrayList<String> multipleArrayList = new MultipleArrayList<>();
-        multipleArrayList.key  = new Array<>("aaa","bbb","ccc","ddd","eee");
-        multipleArrayList.next = new Array<>(3,1,null,5,null);
-        multipleArrayList.prev = new Array<>(2,null,1,null,null);
-        multipleArrayList.L = 2;
-        multipleArrayList.free = 4;
+        MultipleArrayList<String> multipleArrayList = new MultipleArrayList<>(
+                new Array<>(3, 1, null, 5, null),
+                new Array<>("aaa", "bbb", "ccc", "ddd", "eee"),
+                new Array<>(2, null, 1, null, null),
+                2,
+                4
+        );
         MultipleArrayList<String> original = new MultipleArrayList<>(multipleArrayList);
 
         // when
@@ -1435,12 +1445,13 @@ public class Chapter10Test {
     @Test(expected = RuntimeException.class)
     public void shouldNotAllocateObjectOnFullCompactList() {
         // given
-        MultipleArrayList<String> multipleArrayList = new MultipleArrayList<>();
-        multipleArrayList.key  = new Array<>("aaa","bbb","ccc","ddd","eee");
-        multipleArrayList.next = new Array<>(3,1,5,null,4);
-        multipleArrayList.prev = new Array<>(2,null,1,null,null);
-        multipleArrayList.L = 2;
-        multipleArrayList.free = null;
+        MultipleArrayList<String> multipleArrayList = new MultipleArrayList<>(
+                new Array<>(3, 1, 5, null, 4),
+                new Array<>("aaa", "bbb", "ccc", "ddd", "eee"),
+                new Array<>(2, null, 1, null, null),
+                2,
+                null
+        );
 
         try {
             // when
@@ -1455,12 +1466,13 @@ public class Chapter10Test {
     @Test
     public void shouldFreeObjectOnCompactList() {
         // given
-        MultipleArrayList<String> multipleArrayList = new MultipleArrayList<>();
-        multipleArrayList.key  = new Array<>("aaa","bbb","ccc","ddd","eee");
-        multipleArrayList.next = new Array<>(3,1,null,5,null);
-        multipleArrayList.prev = new Array<>(2,null,1,null,null);
-        multipleArrayList.L = 2;
-        multipleArrayList.free = 4;
+        MultipleArrayList<String> multipleArrayList = new MultipleArrayList<>(
+                new Array<>(3, 1, null, 5, null),
+                new Array<>("aaa", "bbb", "ccc", "ddd", "eee"),
+                new Array<>(2, null, 1, null, null),
+                2,
+                4
+        );
         MultipleArrayList<String> originalList = new MultipleArrayList<>(multipleArrayList);
         int elementIndexToFree = 1;
         String keyToDelete = "aaa";
@@ -1478,12 +1490,13 @@ public class Chapter10Test {
     @Test
     public void shouldFreeObjectAtTheEndOfCompactList() {
         // given
-        MultipleArrayList<String> multipleArrayList = new MultipleArrayList<>();
-        multipleArrayList.key  = new Array<>("aaa","bbb","ccc","ddd","eee");
-        multipleArrayList.next = new Array<>(3,1,null,5,null);
-        multipleArrayList.prev = new Array<>(2,null,1,null,null);
-        multipleArrayList.L = 2;
-        multipleArrayList.free = 4;
+        MultipleArrayList<String> multipleArrayList = new MultipleArrayList<>(
+                new Array<>(3, 1, null, 5, null),
+                new Array<>("aaa", "bbb", "ccc", "ddd", "eee"),
+                new Array<>(2, null, 1, null, null),
+                2,
+                4
+        );
         MultipleArrayList<String> originalList = new MultipleArrayList<>(multipleArrayList);
         int elementIndexToFree = 3;
         String keyToDelete = "ccc";
@@ -1501,12 +1514,13 @@ public class Chapter10Test {
     @Test
     public void shouldFreeObjectOnFullCompactList() {
         // given
-        MultipleArrayList<String> multipleArrayList = new MultipleArrayList<>();
-        multipleArrayList.key  = new Array<>("aaa","bbb","ccc","ddd","eee");
-        multipleArrayList.next = new Array<>(4,1,null,3,2);
-        multipleArrayList.prev = new Array<>(2,5,4,1,null);
-        multipleArrayList.L = 5;
-        multipleArrayList.free = null;
+        MultipleArrayList<String> multipleArrayList = new MultipleArrayList<>(
+                new Array<>(4, 1, null, 3, 2),
+                new Array<>("aaa", "bbb", "ccc", "ddd", "eee"),
+                new Array<>(2, 5, 4, 1, null),
+                5,
+                null
+        );
         MultipleArrayList<String> originalList = new MultipleArrayList<>(multipleArrayList);
         int elementIndexToFree = 3;
         String keyToDelete = "ccc";
@@ -1524,12 +1538,13 @@ public class Chapter10Test {
     @Test
     public void shouldCompactifyNonemptyList() {
         // given
-        MultipleArrayList<String> multipleArrayList = new MultipleArrayList<>();
-        multipleArrayList.next = new Array<>(9,8,null,1,2,null,5,10,6,3);
-        multipleArrayList.prev = new Array<>(4,5,10,null,7,9,null,2,1,8);
-        multipleArrayList.key = Array.withLength(10);
-        multipleArrayList.L = 7;
-        multipleArrayList.free = 4;
+        MultipleArrayList<String> multipleArrayList = new MultipleArrayList<>(
+                new Array<>(9, 8, null, 1, 2, null, 5, 10, 6, 3),
+                Array.withLength(10),
+                new Array<>(4, 5, 10, null, 7, 9, null, 2, 1, 8),
+                7,
+                4
+        );
         int listLength = 6;
 
         // when
@@ -1544,12 +1559,13 @@ public class Chapter10Test {
     @Test
     public void shouldCompactifyEmptyList() {
         // given
-        MultipleArrayList<String> multipleArrayList = new MultipleArrayList<>();
-        multipleArrayList.next = new Array<>(3,1,5,2,null);
-        multipleArrayList.prev = new Array<>(null,null,null,null,null);
-        multipleArrayList.key = Array.withLength(5);
-        multipleArrayList.L = null;
-        multipleArrayList.free = 4;
+        MultipleArrayList<String> multipleArrayList = new MultipleArrayList<>(
+                new Array<>(3, 1, 5, 2, null),
+                Array.withLength(5),
+                new Array<>(null, null, null, null, null),
+                null,
+                4
+        );
 
         // when
         Chapter10.compactifyList(multipleArrayList);
@@ -1582,17 +1598,25 @@ public class Chapter10Test {
         BinaryTree.Node<Integer> x6 = new BinaryTree.Node<>(19);
         BinaryTree.Node<Integer> x7 = new BinaryTree.Node<>(20);
         tree.root = x1;
-        x1.left = x2; x2.p = x1; x1.right = x3; x3.p = x1;
-        x2.left = x4; x4.p = x2;
-        x3.left = x5; x5.p = x3; x3.right = x6; x6.p = x3;
-        x6.right = x7; x7.p = x6;
+        x1.left = x2;
+        x2.p = x1;
+        x1.right = x3;
+        x3.p = x1;
+        x2.left = x4;
+        x4.p = x2;
+        x3.left = x5;
+        x5.p = x3;
+        x3.right = x6;
+        x6.p = x3;
+        x6.right = x7;
+        x7.p = x6;
 
         // when
         Chapter10.iterativePreorderTreeWalk(tree);
 
         // then
         String[] actualOutput = splitOutContent();
-        String[] expectedOutput = new String[]{"10","4","1","14","11","19","20"};
+        String[] expectedOutput = new String[]{"10", "4", "1", "14", "11", "19", "20"};
         assertArrayEquals(expectedOutput, actualOutput);
     }
 
@@ -1622,20 +1646,31 @@ public class Chapter10Test {
         MultiaryTree.Node<Integer> x9 = new MultiaryTree.Node<>(9);
         MultiaryTree.Node<Integer> x10 = new MultiaryTree.Node<>(10);
         tree.root = x1;
-        x1.leftChild = x2; x2.p = x1;
-        x2.leftChild = x5; x5.p = x2; x2.rightSibling = x3; x3.p = x1;
-        x3.rightSibling = x4; x4.p = x1;
-        x4.leftChild = x8; x8.p = x4;
-        x5.rightSibling = x6; x6.p = x2;
-        x6.leftChild = x10; x10.p = x6; x6.rightSibling = x7; x7.p = x2;
-        x8.rightSibling = x9; x9.p = x4;
+        x1.leftChild = x2;
+        x2.p = x1;
+        x2.leftChild = x5;
+        x5.p = x2;
+        x2.rightSibling = x3;
+        x3.p = x1;
+        x3.rightSibling = x4;
+        x4.p = x1;
+        x4.leftChild = x8;
+        x8.p = x4;
+        x5.rightSibling = x6;
+        x6.p = x2;
+        x6.leftChild = x10;
+        x10.p = x6;
+        x6.rightSibling = x7;
+        x7.p = x2;
+        x8.rightSibling = x9;
+        x9.p = x4;
 
         // when
         Chapter10.treeWalk(tree.root);
 
         // then
         String[] actualOutput = splitOutContent();
-        String[] expectedOutput = new String[]{"1","2","5","6","10","7","3","4","8","9"};
+        String[] expectedOutput = new String[]{"1", "2", "5", "6", "10", "7", "3", "4", "8", "9"};
         assertArrayEquals(expectedOutput, actualOutput);
     }
 
@@ -1662,17 +1697,25 @@ public class Chapter10Test {
         BinaryTree.Node<Integer> x6 = new BinaryTree.Node<>(19);
         BinaryTree.Node<Integer> x7 = new BinaryTree.Node<>(20);
         tree.root = x1;
-        x1.left = x2; x2.p = x1; x1.right = x3; x3.p = x1;
-        x2.left = x4; x4.p = x2;
-        x3.left = x5; x5.p = x3; x3.right = x6; x6.p = x3;
-        x6.right = x7; x7.p = x6;
+        x1.left = x2;
+        x2.p = x1;
+        x1.right = x3;
+        x3.p = x1;
+        x2.left = x4;
+        x4.p = x2;
+        x3.left = x5;
+        x5.p = x3;
+        x3.right = x6;
+        x6.p = x3;
+        x6.right = x7;
+        x7.p = x6;
 
         // when
         Chapter10.stacklessInorderTreeWalk(tree);
 
         // then
         String[] actualOutput = splitOutContent();
-        String[] expectedOutput = new String[]{"1","4","10","11","14","19","20"};
+        String[] expectedOutput = new String[]{"1", "4", "10", "11", "14", "19", "20"};
         Assert.assertArrayEquals(expectedOutput, actualOutput);
     }
 
@@ -1704,9 +1747,9 @@ public class Chapter10Test {
     @Test
     public void shouldInsertAtTheBeginningOfHeapOnSortedLists() {
         // given
-        List<Integer> sortedList = new List<>(2,4,8,8,13,14,15);
+        List<Integer> sortedList = new List<>(2, 4, 8, 8, 13, 14, 15);
         int key = 1;
-        List<Integer> expectedAfterInsertion = new List<>(1,2,4,8,8,13,14,15);
+        List<Integer> expectedAfterInsertion = new List<>(1, 2, 4, 8, 8, 13, 14, 15);
 
         // when
         Chapter10.sortedListMinHeapInsert(sortedList, key);
@@ -1718,9 +1761,9 @@ public class Chapter10Test {
     @Test
     public void shouldInsertAtTheEndOfHeapOnSortedLists() {
         // given
-        List<Integer> sortedList = new List<>(2,4,8,8,13,14,15);
+        List<Integer> sortedList = new List<>(2, 4, 8, 8, 13, 14, 15);
         int key = 20;
-        List<Integer> expectedAfterInsertion = new List<>(2,4,8,8,13,14,15,20);
+        List<Integer> expectedAfterInsertion = new List<>(2, 4, 8, 8, 13, 14, 15, 20);
 
         // when
         Chapter10.sortedListMinHeapInsert(sortedList, key);
@@ -1732,9 +1775,9 @@ public class Chapter10Test {
     @Test
     public void shouldInsertInTheMiddleOfHeapOnSortedLists() {
         // given
-        List<Integer> sortedList = new List<>(2,4,8,8,13,14,15);
+        List<Integer> sortedList = new List<>(2, 4, 8, 8, 13, 14, 15);
         int key = 12;
-        List<Integer> expectedAfterInsertion = new List<>(2,4,8,8,12,13,14,15);
+        List<Integer> expectedAfterInsertion = new List<>(2, 4, 8, 8, 12, 13, 14, 15);
 
         // when
         Chapter10.sortedListMinHeapInsert(sortedList, key);
@@ -1746,7 +1789,7 @@ public class Chapter10Test {
     @Test
     public void shouldGetMinimumFromHeapOnSortedLists() {
         // given
-        List<Integer> sortedList = new List<>(2,4,8,8,13,14,15);
+        List<Integer> sortedList = new List<>(2, 4, 8, 8, 13, 14, 15);
         List<Integer> original = new List<>(sortedList);
         int expectedMinimum = 2;
 
@@ -1791,8 +1834,8 @@ public class Chapter10Test {
     @Test
     public void shouldExtractMinimumFromHeapOnSortedLists() {
         // given
-        List<Integer> sortedList = new List<>(2,4,8,8,13,14,15);
-        List<Integer> expectedAfterExtraction = new List<>(4,8,8,13,14,15);
+        List<Integer> sortedList = new List<>(2, 4, 8, 8, 13, 14, 15);
+        List<Integer> expectedAfterExtraction = new List<>(4, 8, 8, 13, 14, 15);
         int expectedMinimum = 2;
 
         // when
@@ -1806,9 +1849,9 @@ public class Chapter10Test {
     @Test
     public void shouldMergeHeapsOnSortedLists() {
         // given
-        List<Integer> sortedList1 = new List<>(2,4,8,8,13,14,15);
-        List<Integer> sortedList2 = new List<>(1,2,5,6,8,12,14,14);
-        List<Integer> expectedMerged = new List<>(1,2,2,4,5,6,8,8,8,12,13,14,14,14,15);
+        List<Integer> sortedList1 = new List<>(2, 4, 8, 8, 13, 14, 15);
+        List<Integer> sortedList2 = new List<>(1, 2, 5, 6, 8, 12, 14, 14);
+        List<Integer> expectedMerged = new List<>(1, 2, 2, 4, 5, 6, 8, 8, 8, 12, 13, 14, 14, 14, 15);
 
         // when
         List<Integer> actualMerged = Chapter10.sortedListMinHeapUnion(sortedList1, sortedList2);
@@ -1820,12 +1863,13 @@ public class Chapter10Test {
     @Test
     public void shouldFindElementAfterJumpsInCompactList() {
         // given
-        MultipleArrayList<String> multipleArrayList = new MultipleArrayList<>();
-        multipleArrayList.next = new Array<>(6,4,null,5,1,3,8,9,10,11);
-        multipleArrayList.prev = new Array<>(5,null,6,2,4,1,null,null,null,null);
-        multipleArrayList.key  = new Array<>("ddd","aaa","fff","bbb","ccc","eee",null,null,null,null);
-        multipleArrayList.L = 2;
-        multipleArrayList.free = 7;
+        MultipleArrayList<String> multipleArrayList = new MultipleArrayList<>(
+                new Array<>(6, 4, null, 5, 1, 3, 8, 9, 10, 11),
+                new Array<>("ddd", "aaa", "fff", "bbb", "ccc", "eee", null, null, null, null),
+                new Array<>(5, null, 6, 2, 4, 1, null, null, null, null),
+                2,
+                7
+        );
         mockStatic(Chapter5.class);
         when(Chapter5.random(1, 6)).thenReturn(3, 1);
 
@@ -1839,12 +1883,13 @@ public class Chapter10Test {
     @Test
     public void shouldFindElementByJumpingOnItInCompactList() {
         // given
-        MultipleArrayList<String> multipleArrayList = new MultipleArrayList<>();
-        multipleArrayList.next = new Array<>(6,4,null,5,1,3,8,9,10,11);
-        multipleArrayList.prev = new Array<>(5,null,6,2,4,1,null,null,null,null);
-        multipleArrayList.key  = new Array<>("ddd","aaa","fff","bbb","ccc","eee",null,null,null,null);
-        multipleArrayList.L = 2;
-        multipleArrayList.free = 7;
+        MultipleArrayList<String> multipleArrayList = new MultipleArrayList<>(
+                new Array<>(6, 4, null, 5, 1, 3, 8, 9, 10, 11),
+                new Array<>("ddd", "aaa", "fff", "bbb", "ccc", "eee", null, null, null, null),
+                new Array<>(5, null, 6, 2, 4, 1, null, null, null, null),
+                2,
+                7
+        );
         mockStatic(Chapter5.class);
         when(Chapter5.random(1, 6)).thenReturn(6);
 
@@ -1858,12 +1903,13 @@ public class Chapter10Test {
     @Test
     public void shouldNotFindNonexistentElementInCompactList() {
         // given
-        MultipleArrayList<String> multipleArrayList = new MultipleArrayList<>();
-        multipleArrayList.next = new Array<>(6,4,null,5,1,3,8,9,10,11);
-        multipleArrayList.prev = new Array<>(5,null,6,2,4,1,null,null,null,null);
-        multipleArrayList.key  = new Array<>("ddd","aaa","fff","bbb","ccc","eee",null,null,null,null);
-        multipleArrayList.L = 2;
-        multipleArrayList.free = 7;
+        MultipleArrayList<String> multipleArrayList = new MultipleArrayList<>(
+                new Array<>(6, 4, null, 5, 1, 3, 8, 9, 10, 11),
+                new Array<>("ddd", "aaa", "fff", "bbb", "ccc", "eee", null, null, null, null),
+                new Array<>(5, null, 6, 2, 4, 1, null, null, null, null),
+                2,
+                7
+        );
 
         // when
         Integer actualFoundPosition = Chapter10.compactListSearch(multipleArrayList, 6, "xxx");

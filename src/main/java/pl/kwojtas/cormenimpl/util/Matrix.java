@@ -61,20 +61,6 @@ public class Matrix<T> {
     }
 
     /**
-     * Creates a matrix by copying an existing matrix.
-     *
-     * @param otherMatrix the matrix to be copied
-     */
-    public Matrix(Matrix<T> otherMatrix) {
-        if (this == otherMatrix) {
-            return;
-        }
-        data = otherMatrix.data;
-        rows = otherMatrix.rows;
-        columns = otherMatrix.columns;
-    }
-
-    /**
      * Returns a row of the matrix.
      *
      * @param row the row number to return
@@ -83,7 +69,7 @@ public class Matrix<T> {
      */
     public Array<T> row(int row) {
         if (row < 1 || row > rows) {
-            throw new RuntimeException("Matrix index out of bound");
+            throw new RuntimeException("Row index out of bound");
         }
         return new Array<>(data[row - 1]);
     }
@@ -91,14 +77,14 @@ public class Matrix<T> {
     /**
      * Returns an element at a given position.
      *
-     * @param row the row of the element to return
+     * @param row    the row of the element to return
      * @param column the column of the element to return
      * @return the element in row {@code row} and column {@code column}
      * @throws RuntimeException if {@code row < 1} or {@code row > rows} or {@code column < 1} or {@code column > columns}
      */
     public T at(int row, int column) {
         if (row < 1 || row > rows || column < 1 || column > columns) {
-            throw new RuntimeException("Matrix index out of bound");
+            throw new RuntimeException("Row index or column index out of bound");
         }
         return data[row - 1][column - 1];
     }
@@ -106,14 +92,14 @@ public class Matrix<T> {
     /**
      * Sets an element at a given position.
      *
-     * @param row the row of the element to set
-     * @param column the column of the element to set
+     * @param row     the row of the element to set
+     * @param column  the column of the element to set
      * @param element the new element
      * @throws RuntimeException if {@code row < 1} or {@code row > rows} or {@code column < 1} or {@code column > columns}
      */
     public void set(int row, int column, T element) {
         if (row < 1 || row > rows || column < 1 || column > columns) {
-            throw new RuntimeException("Matrix index out of bound");
+            throw new RuntimeException("Row index or column index out of bound");
         }
         data[row - 1][column - 1] = element;
     }
@@ -121,9 +107,9 @@ public class Matrix<T> {
     /**
      * Exchanges two elements in the matrix.
      *
-     * @param row1 the row of the first element
+     * @param row1    the row of the first element
      * @param column1 the column of the first element
-     * @param row2 the row of the second element
+     * @param row2    the row of the second element
      * @param column2 the column of the second element
      */
     public void exch(int row1, int column1, int row2, int column2) {
@@ -131,4 +117,5 @@ public class Matrix<T> {
         set(row1, column1, at(row2, column2));
         set(row2, column2, swap);
     }
+
 }

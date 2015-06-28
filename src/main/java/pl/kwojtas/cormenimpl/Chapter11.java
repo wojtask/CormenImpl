@@ -20,14 +20,15 @@ import static pl.kwojtas.cormenimpl.Chapter10.push;
  */
 public final class Chapter11 {
 
-    private Chapter11() { }
+    private Chapter11() {
+    }
 
     /**
      * Searches for an element in a direct-address table.
      * <p><span style="font-variant:small-caps;">Direct-Address-Search</span> from subchapter 11.1.</p>
      *
-     * @param T the direct-address table to scan
-     * @param k the key of the element to find
+     * @param T   the direct-address table to scan
+     * @param k   the key of the element to find
      * @param <T> the type of elements' values in {@code T}
      * @return the element of key {@code k} in table {@code T}, or {@code null} if {@code T} does not contain such element
      */
@@ -39,8 +40,8 @@ public final class Chapter11 {
      * Inserts an element into a direct-address table.
      * <p><span style="font-variant:small-caps;">Direct-Address-Insert</span> from subchapter 11.1.</p>
      *
-     * @param T the direct-address table
-     * @param x the element to insert
+     * @param T   the direct-address table
+     * @param x   the element to insert
      * @param <T> the type of elements' values in {@code T}
      */
     public static <T> void directAddressInsert(ZeroBasedIndexedArray<Element<T>> T, Element<T> x) {
@@ -51,8 +52,8 @@ public final class Chapter11 {
      * Deletes an element from a direct-address table.
      * <p><span style="font-variant:small-caps;">Direct-Address-Delete</span> from subchapter 11.1</p>
      *
-     * @param T the direct-address table
-     * @param x the element from {@code T} to delete
+     * @param T   the direct-address table
+     * @param x   the element from {@code T} to delete
      * @param <T> the type of elements' values in {@code T}
      */
     public static <T> void directAddressDelete(ZeroBasedIndexedArray<Element<T>> T, Element<T> x) {
@@ -63,7 +64,7 @@ public final class Chapter11 {
      * Searches for an element with the smallest key in a direct-address table.
      * <p>Solution to exercise 11.1-1.</p>
      *
-     * @param T the direct-address table to scan
+     * @param T   the direct-address table to scan
      * @param <T> the type of elements' values in {@code T}
      * @return the element with the smallest key in {@code T}, or {@code null} if {@code T} does not contain such element
      */
@@ -115,8 +116,8 @@ public final class Chapter11 {
      * Searches for an element in a direct-address table that does not require keys of elements to be distinct.
      * <p>Solution to exercise 11.1-3.</p>
      *
-     * @param T the direct-address table to scan
-     * @param k the key of the element to find
+     * @param T   the direct-address table to scan
+     * @param k   the key of the element to find
      * @param <T> the type of elements' values in {@code T}
      * @return one of the elements of key {@code k} in table {@code T}, or {@code null} if {@code T} does not contain such element
      */
@@ -132,8 +133,8 @@ public final class Chapter11 {
      * Inserts an element into a direct-address table that does not require keys of elements to be distinct.
      * <p>Solution to exercise 11.1-3.</p>
      *
-     * @param T the direct-address table
-     * @param x the element to insert
+     * @param T   the direct-address table
+     * @param x   the element to insert
      * @param <T> the type of elements' values in {@code T}
      */
     public static <T> void directAddressInsert_(ZeroBasedIndexedArray<List<Element<T>>> T, Element<T> x) {
@@ -145,8 +146,8 @@ public final class Chapter11 {
      * Deletes an element from a direct-address table that does not require keys of elements to be distinct.
      * <p>Solution to exercise 11.1-3.</p>
      *
-     * @param T the direct-address table
-     * @param x the element from {@code T} to delete
+     * @param T   the direct-address table
+     * @param x   the element from {@code T} to delete
      * @param <T> the type of elements' values in {@code T}
      */
     public static <T> void directAddressDelete_(ZeroBasedIndexedArray<List<Element<T>>> T, Element<T> x) {
@@ -159,8 +160,8 @@ public final class Chapter11 {
      * Searches for an element in a dictionary using direct addressing on a huge array.
      * <p>Solution to exercise 11.1-4.</p>
      *
-     * @param H the huge array representing the dictionary to scan
-     * @param k the key of the element to find
+     * @param H   the huge array representing the dictionary to scan
+     * @param k   the key of the element to find
      * @param <T> the type of elements' values in {@code H}
      * @return the element of key {@code k} in {@code H}, or {@code null} if {@code H} does not contain such element
      */
@@ -175,8 +176,8 @@ public final class Chapter11 {
      * Inserts an element into a dictionary using direct addressing on a huge array.
      * <p>Solution to exercise 11.1-4.</p>
      *
-     * @param H the huge array representing the dictionary
-     * @param x the element to insert
+     * @param H   the huge array representing the dictionary
+     * @param x   the element to insert
      * @param <T> the type of elements' values in {@code H}
      */
     public static <T> void hugeArrayInsert(HugeArray<T> H, Element<T> x) {
@@ -188,8 +189,8 @@ public final class Chapter11 {
      * Deletes an element from a dictionary using direct addressing on a huge array.
      * <p>Solution to exercise 11.1-4.</p>
      *
-     * @param H the huge array representing the dictionary
-     * @param x the element to delete
+     * @param H   the huge array representing the dictionary
+     * @param x   the element to delete
      * @param <T> the type of elements' values in {@code H}
      */
     public static <T> void hugeArrayDelete(HugeArray<T> H, Element<T> x) {
@@ -203,8 +204,8 @@ public final class Chapter11 {
      * Inserts an element into a hash table using chaining for collision resolution.
      * <p><span style="font-variant:small-caps;">Chained-Hash-Insert</span> from subchapter 11.2.</p>
      *
-     * @param T the hash table using chaining for collision resolution
-     * @param x the element to insert
+     * @param T   the hash table using chaining for collision resolution
+     * @param x   the element to insert
      * @param <T> the type of elements' values in {@code T}
      */
     public static <T> void chainedHashInsert(ChainedHashTable<T> T, Element<T> x) {
@@ -216,8 +217,8 @@ public final class Chapter11 {
      * Searches for an element in a hash table using chaining for collision resolution.
      * <p><span style="font-variant:small-caps;">Chained-Hash-Search</span> from subchapter 11.2.</p>
      *
-     * @param T the hash table using chaining for collision resolution
-     * @param k the key of the element to find
+     * @param T   the hash table using chaining for collision resolution
+     * @param k   the key of the element to find
      * @param <T> the type of elements' values in {@code T}
      * @return the element of key {@code k} in {@code T}, or {@code null} if {@code T} does not contain such element
      */
@@ -237,8 +238,8 @@ public final class Chapter11 {
      * Deletes an element from a hash table using chaining for collision resolution.
      * <p><span style="font-variant:small-caps;">Chained-Hash-Delete</span> from subchapter 11.2.</p>
      *
-     * @param T the hash table using chaining for collision resolution
-     * @param x the element to delete
+     * @param T   the hash table using chaining for collision resolution
+     * @param x   the element to delete
      * @param <T> the type of elements' values in {@code T}
      */
     public static <T> void chainedHashDelete(ChainedHashTable<T> T, Element<T> x) {
@@ -251,8 +252,8 @@ public final class Chapter11 {
      * Inserts an element into a hash table using an in-place chaining for collision resolution.
      * <p>Solution to exercise 11.2-4.</p>
      *
-     * @param T the hash table using an in-place chaining for collision resolution
-     * @param x the element to insert
+     * @param T   the hash table using an in-place chaining for collision resolution
+     * @param x   the element to insert
      * @param <T> the type of elements' values in {@code T}
      * @return the index in {@code T} allocated for {@code x}
      */
@@ -305,9 +306,9 @@ public final class Chapter11 {
      * Deletes an element from a hash table using an in-place chaining for collision resolution.
      * <p>Solution to exercise 11.2-4.</p>
      *
-     * @param T the hash table using an in-place chaining for collision resolution
+     * @param T        the hash table using an in-place chaining for collision resolution
      * @param position the position of the element to delete
-     * @param <T> the type of elements' values in {@code T}
+     * @param <T>      the type of elements' values in {@code T}
      */
     public static <T> void inPlaceChainedHashDelete(HashTableWithFreeList<T> T, int position) {
         HashTableWithFreeList.Node node = T.at(position);
@@ -330,8 +331,8 @@ public final class Chapter11 {
      * Searches for an element in a hash table using an in-place chaining for collision resolution.
      * <p>Solution to exercise 11.2-4.</p>
      *
-     * @param T the hash table using an in-place chaining for collision resolution
-     * @param k the key of the element to find
+     * @param T   the hash table using an in-place chaining for collision resolution
+     * @param k   the key of the element to find
      * @param <T> the type of elements' values in {@code T}
      * @return the element of key {@code k} in {@code T}, or {@code null} if {@code T} does not contain such element
      */

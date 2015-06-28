@@ -11,13 +11,14 @@ import static pl.kwojtas.cormenimpl.util.Util.less;
  */
 public final class Chapter2 {
 
-    private Chapter2() { }
+    private Chapter2() {
+    }
 
     /**
      * Sorts elements using insertion sort.
      * <p><span style="font-variant:small-caps;">Insertion-Sort</span> from subchapter 2.1.</p>
      *
-     * @param A the array of elements to sort
+     * @param A   the array of elements to sort
      * @param <T> the type of elements in {@code A}
      */
     public static <T extends Comparable> void insertionSort(Array<T> A) {
@@ -36,7 +37,7 @@ public final class Chapter2 {
      * Sorts elements in non-increasing order using insertion sort.
      * <p>Solution to exercise 2.1-2.</p>
      *
-     * @param A the array of elements to sort
+     * @param A   the array of elements to sort
      * @param <T> the type of elements in {@code A}
      */
     public static <T extends Comparable> void nonincreasingInsertionSort(Array<T> A) {
@@ -55,8 +56,8 @@ public final class Chapter2 {
      * Searches for an element in an array using linear search.
      * <p><span style="font-variant:small-caps;">Linear-Search</span> from solution to exercise 2.1-3.</p>
      *
-     * @param A the array to scan
-     * @param v the element to find
+     * @param A   the array to scan
+     * @param v   the element to find
      * @param <T> the type of elements in {@code A}
      * @return index {@code i} such that {@code A[i] = v}, or {@code null} if {@code v} does not appear in {@code A}
      */
@@ -97,7 +98,7 @@ public final class Chapter2 {
      * Sorts elements using selection sort.
      * <p><span style="font-variant:small-caps;">Selection-Sort</span> from solution to exercise 2.2-2.</p>
      *
-     * @param A the array of elements to sort
+     * @param A   the array of elements to sort
      * @param <T> the type of elements in {@code A}
      */
     public static <T extends Comparable> void selectionSort(Array<T> A) {
@@ -170,10 +171,10 @@ public final class Chapter2 {
      * without using sentinels.
      * <p><span style="font-variant:small-caps;">Merge'</span> from solution to exercise 2.3-2.</p>
      *
-     * @param A the array of elements containing subarrays to merge
-     * @param p the index of the beginning of the first subarray in {@code A} being merged
-     * @param q the index of the end of the first subarray in {@code A} being merged
-     * @param r the index of end of the second subarray in {@code A} being merged
+     * @param A   the array of elements containing subarrays to merge
+     * @param p   the index of the beginning of the first subarray in {@code A} being merged
+     * @param q   the index of the end of the first subarray in {@code A} being merged
+     * @param r   the index of end of the second subarray in {@code A} being merged
      * @param <T> the type of elements in {@code A}
      */
     public static <T extends Comparable> void merge_(Array<T> A, int p, int q, int r) {
@@ -204,11 +205,11 @@ public final class Chapter2 {
      * Searches for an element in an array using recursive version of binary search.
      * <p><span style="font-variant:small-caps;">Recursive-Binary-Search</span> from solution to exercise 2.3-5.</p>
      *
-     * @param A the array to scan
-     * @param v the element to find
-     * @param low the index of the beginning of the subarray in {@code A} being scanned
+     * @param A    the array to scan
+     * @param v    the element to find
+     * @param low  the index of the beginning of the subarray in {@code A} being scanned
      * @param high the index of the end of the subarray in {@code A} being scanned
-     * @param <T> the type of elements in {@code A}
+     * @param <T>  the type of elements in {@code A}
      * @return index {@code i} such that {@code A[i] = v}, or {@code null} if {@code v} does not appear in {@code A}
      */
     public static <T extends Comparable> Integer recursiveBinarySearch(Array<T> A, T v, int low, int high) {
@@ -229,8 +230,8 @@ public final class Chapter2 {
      * Searches for an element in an array using iterative version of binary search.
      * <p><span style="font-variant:small-caps;">Iterative-Binary-Search</span> from solution to exercise 2.3-5.</p>
      *
-     * @param A the array to scan
-     * @param v the element to find
+     * @param A   the array to scan
+     * @param v   the element to find
      * @param <T> the type of elements in {@code A}
      * @return index {@code i} such that {@code A[i] = v}, or {@code null} if {@code v} does not appear in {@code A}
      */
@@ -274,13 +275,13 @@ public final class Chapter2 {
      * Sorts elements using bubble sort.
      * <p><span style="font-variant:small-caps;">Bubble-Sort</span> from problem 2-2.</p>
      *
-     * @param A the array of elements to sort
+     * @param A   the array of elements to sort
      * @param <T> the type of elements in {@code A}
      */
     public static <T extends Comparable> void bubbleSort(Array<T> A) {
         for (int i = 1; i <= A.length; i++) {
             for (int j = A.length; j >= i + 1; j--) {
-                if (less(A.at(j), A.at(j-1))) {
+                if (less(A.at(j), A.at(j - 1))) {
                     A.exch(j, j - 1);
                 }
             }

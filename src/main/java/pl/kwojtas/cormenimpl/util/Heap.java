@@ -13,9 +13,9 @@ public class Heap<T> extends Array<T> {
     public int heapSize;
 
     /**
-     * Creates a heap from the existing array and initial array length.
+     * Creates a heap from the existing array and initial length of an underlying array.
      *
-     * @param array the array of initial elements
+     * @param array         the array of initial elements
      * @param initialLength the length of the heap's underlying array
      * @throws RuntimeException if the {@code array} is longer than {@code initialLength}
      */
@@ -43,7 +43,7 @@ public class Heap<T> extends Array<T> {
      * Creates an empty heap with an underlying array of a given length.
      *
      * @param length the length of the underlying array
-     * @param <T> the type of elements in the new heap
+     * @param <T>    the type of elements in the new heap
      * @return the empty heap with an underlying array of length {@code length}
      */
     public static <T> Heap<T> withLength(int length) {

@@ -21,7 +21,7 @@ public class Pair<T1, T2> {
     /**
      * Creates an ordered pair from given elements.
      *
-     * @param first the first element
+     * @param first  the first element
      * @param second the second element
      */
     public Pair(T1 first, T2 second) {

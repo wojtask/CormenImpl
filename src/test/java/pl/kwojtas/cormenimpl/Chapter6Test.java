@@ -33,7 +33,7 @@ public class Chapter6Test {
     @Test
     public void shouldSortArrayUsingHeapsort() {
         // given
-        Array<Integer> array = new Array<>(5,7,9,2,6,8,6,6,3,1,7,8);
+        Array<Integer> array = new Array<>(5, 7, 9, 2, 6, 8, 6, 6, 3, 1, 7, 8);
         Array<Integer> original = new Array<>(array);
 
         // when
@@ -47,7 +47,7 @@ public class Chapter6Test {
     @Test
     public void shouldRestoreMinHeapPropertyUsingMinHeapify() {
         // given
-        Array<Integer> array = new Array<>(0,1,16,3,4,7,17,12,10,5,13,9,8,27);
+        Array<Integer> array = new Array<>(0, 1, 16, 3, 4, 7, 17, 12, 10, 5, 13, 9, 8, 27);
         Heap<Integer> heap = new Heap<>(array);
         Heap<Integer> original = new Heap<>(array);
         int position = 3;
@@ -70,7 +70,7 @@ public class Chapter6Test {
     @Test
     public void shouldRestoreMaxHeapPropertyUsingIterativeMaxHeapify() {
         // given
-        Array<Integer> array = new Array<>(27,17,3,16,13,10,1,5,7,12,4,8,9,0);
+        Array<Integer> array = new Array<>(27, 17, 3, 16, 13, 10, 1, 5, 7, 12, 4, 8, 9, 0);
         Heap<Integer> heap = new Heap<>(array);
         Heap<Integer> original = new Heap<>(array);
         int position = 3;
@@ -93,7 +93,7 @@ public class Chapter6Test {
     @Test
     public void shouldGetMaximumFromMaxHeap() {
         // given
-        Array<Integer> array = new Array<>(27,7,20,4,6,13,17,0,3,2,1,5,11,10);
+        Array<Integer> array = new Array<>(27, 7, 20, 4, 6, 13, 17, 0, 3, 2, 1, 5, 11, 10);
         Heap<Integer> heap = new Heap<>(array);
         Heap<Integer> original = new Heap<>(array);
 
@@ -109,7 +109,7 @@ public class Chapter6Test {
     @Test
     public void shouldExtractMaximumFromMaxHeap() {
         // given
-        Array<Integer> array = new Array<>(27,7,20,4,6,13,17,0,3,2,1,5,11,10);
+        Array<Integer> array = new Array<>(27, 7, 20, 4, 6, 13, 17, 0, 3, 2, 1, 5, 11, 10);
         Heap<Integer> heap = new Heap<>(array);
         Heap<Integer> original = new Heap<>(array);
 
@@ -150,7 +150,7 @@ public class Chapter6Test {
     @Test
     public void shouldIncreaseKeyInMaxHeap() {
         // given
-        Array<Integer> array = new Array<>(27,7,20,4,6,13,17,0,3,2,1,5,11,10);
+        Array<Integer> array = new Array<>(27, 7, 20, 4, 6, 13, 17, 0, 3, 2, 1, 5, 11, 10);
         Heap<Integer> heap = new Heap<>(array);
         Heap<Integer> original = new Heap<>(array);
         int position = 12;
@@ -173,7 +173,7 @@ public class Chapter6Test {
     @Test(expected = RuntimeException.class)
     public void shouldThrowExceptionWhenIncreasingKeyInMaxHeapWithSmallerNumber() {
         // given
-        Array<Integer> array = new Array<>(27,7,20,4,6,13,17,0,3,2,1,5,11,10);
+        Array<Integer> array = new Array<>(27, 7, 20, 4, 6, 13, 17, 0, 3, 2, 1, 5, 11, 10);
         Heap<Integer> heap = new Heap<>(array);
         int position = 3;
         int newKey = 16;
@@ -191,7 +191,7 @@ public class Chapter6Test {
     @Test
     public void shouldInsertIntoMaxHeap() {
         // given
-        Array<Integer> array = new Array<>(27,7,20,4,6,13,17,0,3,2,1,5,11,10);
+        Array<Integer> array = new Array<>(27, 7, 20, 4, 6, 13, 17, 0, 3, 2, 1, 5, 11, 10);
         Heap<Integer> heap = new Heap<>(array, array.length + 1);
         Heap<Integer> original = new Heap<>(array, array.length + 1);
         int newKey = 34;
@@ -211,7 +211,7 @@ public class Chapter6Test {
     @Test
     public void shouldGetMinimumFromMinHeap() {
         // given
-        Array<Integer> array = new Array<>(0,6,1,11,7,3,2,27,13,17,20,10,4,5);
+        Array<Integer> array = new Array<>(0, 6, 1, 11, 7, 3, 2, 27, 13, 17, 20, 10, 4, 5);
         Heap<Integer> heap = new Heap<>(array);
         Heap<Integer> original = new Heap<>(array);
 
@@ -227,7 +227,7 @@ public class Chapter6Test {
     @Test
     public void shouldExtractMinimumFromMinHeap() {
         // given
-        Array<Integer> array = new Array<>(0,6,1,11,7,3,2,27,13,17,20,10,4,5);
+        Array<Integer> array = new Array<>(0, 6, 1, 11, 7, 3, 2, 27, 13, 17, 20, 10, 4, 5);
         Heap<Integer> heap = new Heap<>(array);
         Heap<Integer> original = new Heap<>(array);
 
@@ -260,7 +260,7 @@ public class Chapter6Test {
     @Test
     public void shouldDecreaseKeyInMinHeap() {
         // given
-        Array<Integer> array = new Array<>(0,6,1,11,7,3,2,27,13,17,20,10,4,5);
+        Array<Integer> array = new Array<>(0, 6, 1, 11, 7, 3, 2, 27, 13, 17, 20, 10, 4, 5);
         Heap<Integer> heap = new Heap<>(array);
         Heap<Integer> original = new Heap<>(array);
         int position = 11;
@@ -283,7 +283,7 @@ public class Chapter6Test {
     @Test(expected = RuntimeException.class)
     public void shouldThrowExceptionWhenDecreasingKeyInMinHeapWithLargerNumber() {
         // given
-        Array<Integer> array = new Array<>(0,6,1,11,7,3,2,27,13,17,20,10,4,5);
+        Array<Integer> array = new Array<>(0, 6, 1, 11, 7, 3, 2, 27, 13, 17, 20, 10, 4, 5);
         Heap<Integer> heap = new Heap<>(array);
         int position = 4;
         int newKey = 12;
@@ -301,7 +301,7 @@ public class Chapter6Test {
     @Test
     public void shouldInsertIntoMinHeap() {
         // given
-        Array<Integer> array = new Array<>(1,6,2,11,7,3,4,27,13,17,20,10,14,5);
+        Array<Integer> array = new Array<>(1, 6, 2, 11, 7, 3, 4, 27, 13, 17, 20, 10, 14, 5);
         Heap<Integer> heap = new Heap<>(array, array.length + 3);
         Heap<Integer> original = new Heap<>(array, array.length + 3);
         int newKey = 0;
@@ -413,7 +413,7 @@ public class Chapter6Test {
     @Test
     public void shouldDeleteFromMaxHeap() {
         // given
-        Array<Integer> array = new Array<>(27,7,20,4,6,13,17,0,3,2,1,5,11,10);
+        Array<Integer> array = new Array<>(27, 7, 20, 4, 6, 13, 17, 0, 3, 2, 1, 5, 11, 10);
         Heap<Integer> heap = new Heap<>(array);
         Heap<Integer> original = new Heap<>(array);
         int position = 10;
@@ -435,9 +435,18 @@ public class Chapter6Test {
     @Test
     public void shouldMergeSortedLists() {
         // given
-        Array<List<Integer>> sortedLists = new Array<>(new List<>(14,20,22,45,46), new List<>(4,4,23), new List<>(1),
-                new List<>(5,6,12,16,18,22,24,56,67), new List<>(1), new List<>(4,6,20,30), new List<>(), new List<>(68,68,68,69),
-                new List<>(45),new List<>(2,34));
+        Array<List<Integer>> sortedLists = new Array<>(
+                new List<>(14, 20, 22, 45, 46),
+                new List<>(4, 4, 23),
+                new List<>(1),
+                new List<>(5, 6, 12, 16, 18, 22, 24, 56, 67),
+                new List<>(1),
+                new List<>(4, 6, 20, 30),
+                new List<>(),
+                new List<>(68, 68, 68, 69),
+                new List<>(45),
+                new List<>(2, 34)
+        );
         Array<List<Integer>> original = Array.withLength(sortedLists.length);
         for (int i = 1; i <= sortedLists.length; i++) {
             original.set(i, new List<>(sortedLists.at(i)));
@@ -480,7 +489,7 @@ public class Chapter6Test {
     @Test
     public void shouldBuildMaxHeapUsingBuildMaxHeap_() {
         // given
-        Array<Integer> array = new Array<>(20,4,0,13,5,17,1,2,6,10,7,27,11,3);
+        Array<Integer> array = new Array<>(20, 4, 0, 13, 5, 17, 1, 2, 6, 10, 7, 27, 11, 3);
         Array<Integer> original = new Array<>(array);
 
         // when
@@ -497,7 +506,7 @@ public class Chapter6Test {
     @Test
     public void shouldExtractMaximumFromMultiaryMaxHeap() {
         // given
-        Array<Integer> array = new Array<>(32,17,27,13,20,16,8,9,13,18,23,24,5,3,12,7);
+        Array<Integer> array = new Array<>(32, 17, 27, 13, 20, 16, 8, 9, 13, 18, 23, 24, 5, 3, 12, 7);
         Heap<Integer> heap = new Heap<>(array);
         Heap<Integer> original = new Heap<>(array);
         int degree = 4;
@@ -539,7 +548,7 @@ public class Chapter6Test {
     @Test
     public void shouldInsertToMultiaryMaxHeap() {
         // given
-        Array<Integer> array = new Array<>(32,17,27,13,20,16,8,9,13,18,23,24,5,3,12,7);
+        Array<Integer> array = new Array<>(32, 17, 27, 13, 20, 16, 8, 9, 13, 18, 23, 24, 5, 3, 12, 7);
         Heap<Integer> heap = new Heap<>(array, array.length + 1);
         Heap<Integer> original = new Heap<>(array, array.length + 1);
         int degree = 4;
@@ -560,7 +569,7 @@ public class Chapter6Test {
     @Test
     public void shouldIncreaseKeyInMultiaryMaxHeap() {
         // given
-        Array<Integer> array = new Array<>(32,17,27,13,20,16,8,9,13,18,23,24,5,3,12,7);
+        Array<Integer> array = new Array<>(32, 17, 27, 13, 20, 16, 8, 9, 13, 18, 23, 24, 5, 3, 12, 7);
         Heap<Integer> heap = new Heap<>(array);
         Heap<Integer> original = new Heap<>(array);
         int degree = 4;
@@ -584,7 +593,7 @@ public class Chapter6Test {
     @Test
     public void shouldSortArrayUsingYoungSort() {
         // given
-        Array<Integer> array = new Array<>(5,7,9,2,6,8,6,6,3,1,7,8,6,3,7,8);
+        Array<Integer> array = new Array<>(5, 7, 9, 2, 6, 8, 6, 6, 3, 1, 7, 8, 6, 3, 7, 8);
         Array<Integer> original = new Array<>(array);
 
         // when
@@ -599,10 +608,10 @@ public class Chapter6Test {
     public void shouldFindKeyUsingYoungSearch() {
         // given
         Young Y = new Young(
-                new Array<>(2,3,14,16),
-                new Array<>(4,8,Integer.MAX_VALUE,Integer.MAX_VALUE),
-                new Array<>(5,12,Integer.MAX_VALUE,Integer.MAX_VALUE),
-                new Array<>(9,Integer.MAX_VALUE,Integer.MAX_VALUE,Integer.MAX_VALUE)
+                new Array<>(2, 3, 14, 16),
+                new Array<>(4, 8, Integer.MAX_VALUE, Integer.MAX_VALUE),
+                new Array<>(5, 12, Integer.MAX_VALUE, Integer.MAX_VALUE),
+                new Array<>(9, Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE)
         );
         int key = 12;
 
@@ -617,10 +626,10 @@ public class Chapter6Test {
     public void shouldNotFindNonexistentKeyUsingYoungSearch() {
         // given
         Young Y = new Young(
-                new Array<>(2,3,14,16),
-                new Array<>(4,8,Integer.MAX_VALUE,Integer.MAX_VALUE),
-                new Array<>(5,12,Integer.MAX_VALUE,Integer.MAX_VALUE),
-                new Array<>(9,Integer.MAX_VALUE,Integer.MAX_VALUE,Integer.MAX_VALUE)
+                new Array<>(2, 3, 14, 16),
+                new Array<>(4, 8, Integer.MAX_VALUE, Integer.MAX_VALUE),
+                new Array<>(5, 12, Integer.MAX_VALUE, Integer.MAX_VALUE),
+                new Array<>(9, Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE)
         );
         int key = 10;
 

@@ -30,7 +30,7 @@ public class Chapter2Test {
     @Test
     public void shouldSortArrayUsingInsertionSort() {
         // given
-        Array<Integer> array = new Array<>(5,7,9,2,6,8,6,6,3,1,7,8);
+        Array<Integer> array = new Array<>(5, 7, 9, 2, 6, 8, 6, 6, 3, 1, 7, 8);
         Array<Integer> original = new Array<>(array);
 
         // when
@@ -44,7 +44,7 @@ public class Chapter2Test {
     @Test
     public void shouldSortArrayInNonincreasingOrderUsingInsertionSort() {
         // given
-        Array<Integer> array = new Array<>(5,7,9,2,6,8,6,6,3,1,7,8);
+        Array<Integer> array = new Array<>(5, 7, 9, 2, 6, 8, 6, 6, 3, 1, 7, 8);
         Array<Integer> original = new Array<>(array);
 
         // when
@@ -58,7 +58,7 @@ public class Chapter2Test {
     @Test
     public void shouldFindKeyUsingLinearSearch() {
         // given
-        Array<Integer> array = new Array<>(5,7,9,2,6,1,6,6,3,1,7,8);
+        Array<Integer> array = new Array<>(5, 7, 9, 2, 6, 1, 6, 6, 3, 1, 7, 8);
         Array<Integer> original = new Array<>(array);
         int key = 6;
 
@@ -74,7 +74,7 @@ public class Chapter2Test {
     @Test
     public void shouldNotFindNonexistentKeyUsingLinearSearch() {
         // given
-        Array<Integer> array = new Array<>(5,7,9,2,6,1,6,6,3,1,7,8);
+        Array<Integer> array = new Array<>(5, 7, 9, 2, 6, 1, 6, 6, 3, 1, 7, 8);
         int key = 4;
 
         // when
@@ -87,8 +87,8 @@ public class Chapter2Test {
     @Test
     public void shouldAddTwoNumbersInBinary() {
         // given
-        Array<Integer> firstNumberBits = new Array<>(0,0,1,1,0,1,0,0,0,0,1);
-        Array<Integer> secondNumberBits = new Array<>(0,1,1,1,1,0,0,1,0,1,1);
+        Array<Integer> firstNumberBits = new Array<>(0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 1);
+        Array<Integer> secondNumberBits = new Array<>(0, 1, 1, 1, 1, 0, 0, 1, 0, 1, 1);
         int a = bitsToNumber(firstNumberBits);
         int b = bitsToNumber(secondNumberBits);
         int bitsLength = firstNumberBits.length;
@@ -114,7 +114,7 @@ public class Chapter2Test {
     @Test
     public void shouldSortArrayUsingSelectionSort() {
         // given
-        Array<Integer> array = new Array<>(5,7,9,2,6,8,6,6,3,1,7,8);
+        Array<Integer> array = new Array<>(5, 7, 9, 2, 6, 8, 6, 6, 3, 1, 7, 8);
         Array<Integer> original = new Array<>(array);
 
         // when
@@ -128,7 +128,7 @@ public class Chapter2Test {
     @Test
     public void shouldSortArrayUsingMergeSort() {
         // given
-        Array<Integer> array = new Array<>(5,7,9,2,6,8,6,6,3,1,7,8);
+        Array<Integer> array = new Array<>(5, 7, 9, 2, 6, 8, 6, 6, 3, 1, 7, 8);
         Array<Integer> original = new Array<>(array);
 
         // when
@@ -142,7 +142,7 @@ public class Chapter2Test {
     @Test
     public void shouldMergeArrayUsingMerge_() {
         // given
-        Array<Integer> array = new Array<>(2,5,7,9,1,3,6,6,6,7,8,8);
+        Array<Integer> array = new Array<>(2, 5, 7, 9, 1, 3, 6, 6, 6, 7, 8, 8);
         Array<Integer> original = new Array<>(array);
         int mid = 4;
 
@@ -157,7 +157,7 @@ public class Chapter2Test {
     @Test
     public void shouldFindKeyUsingRecursiveBinarySearch() {
         // given
-        Array<Integer> array = new Array<>(1,2,3,5,6,6,6,7,7,8,8,9);
+        Array<Integer> array = new Array<>(1, 2, 3, 5, 6, 6, 6, 7, 7, 8, 8, 9);
         Array<Integer> original = new Array<>(array);
         int key = 3;
 
@@ -173,7 +173,7 @@ public class Chapter2Test {
     @Test
     public void shouldNotFindNonexistentKeyUsingRecursiveBinarySearch() {
         // given
-        Array<Integer> array = new Array<>(1,2,3,5,6,6,6,7,7,8,8,9);
+        Array<Integer> array = new Array<>(1, 2, 3, 5, 6, 6, 6, 7, 7, 8, 8, 9);
         int key = 4;
 
         // when
@@ -186,7 +186,7 @@ public class Chapter2Test {
     @Test
     public void shouldFindKeyUsingIterativeBinarySearch() {
         // given
-        Array<Integer> array = new Array<>(1,2,3,5,6,6,6,7,7,8,8,9);
+        Array<Integer> array = new Array<>(1, 2, 3, 5, 6, 6, 6, 7, 7, 8, 8, 9);
         Array<Integer> original = new Array<>(array);
         int key = 3;
 
@@ -202,7 +202,7 @@ public class Chapter2Test {
     @Test
     public void shouldNotFindNonexistentKeyUsingIterativeBinarySearch() {
         // given
-        Array<Integer> array = new Array<>(1,2,3,5,6,6,6,7,7,8,8,9);
+        Array<Integer> array = new Array<>(1, 2, 3, 5, 6, 6, 6, 7, 7, 8, 8, 9);
         int key = 4;
 
         // when
@@ -215,7 +215,7 @@ public class Chapter2Test {
     @Test
     public void shouldFindSum() {
         // given
-        Array<Integer> array = new Array<>(5,7,9,2,6,1,6,6,3,1,7,8);
+        Array<Integer> array = new Array<>(5, 7, 9, 2, 6, 1, 6, 6, 3, 1, 7, 8);
         int sum = 17;
 
         // when
@@ -228,7 +228,7 @@ public class Chapter2Test {
     @Test
     public void shouldNotFindNonexistentSum() {
         // given
-        Array<Integer> array = new Array<>(5,7,9,2,6,1,6,6,3,1,7,8);
+        Array<Integer> array = new Array<>(5, 7, 9, 2, 6, 1, 6, 6, 3, 1, 7, 8);
         int sum = 18;
 
         // when
@@ -241,7 +241,7 @@ public class Chapter2Test {
     @Test
     public void shouldSortArrayUsingBubbleSort() {
         // given
-        Array<Integer> array = new Array<>(5,7,9,2,6,8,6,6,3,1,7,8);
+        Array<Integer> array = new Array<>(5, 7, 9, 2, 6, 8, 6, 6, 3, 1, 7, 8);
         Array<Integer> original = new Array<>(array);
 
         // when
@@ -255,7 +255,7 @@ public class Chapter2Test {
     @Test
     public void shouldEvaluatePolynomialUsingHornersRule() {
         // given
-        ZeroBasedIndexedArray<Double> coefficients = new ZeroBasedIndexedArray<>(-1.5,3.2,1.6,3.4,-5.0,0.0,-1.0,1.0);
+        ZeroBasedIndexedArray<Double> coefficients = new ZeroBasedIndexedArray<>(-1.5, 3.2, 1.6, 3.4, -5.0, 0.0, -1.0, 1.0);
         double x = -2.0;
         double expectedResult = -300.7;
         double delta = 1e-15;
@@ -270,7 +270,7 @@ public class Chapter2Test {
     @Test
     public void shouldEvaluatePolynomialNaively() {
         // given
-        ZeroBasedIndexedArray<Double> coefficients = new ZeroBasedIndexedArray<>(-1.5,3.2,1.6,3.4,-5.0,0.0,-1.0,1.0);
+        ZeroBasedIndexedArray<Double> coefficients = new ZeroBasedIndexedArray<>(-1.5, 3.2, 1.6, 3.4, -5.0, 0.0, -1.0, 1.0);
         double x = -2.0;
         double expectedResult = -300.7;
         double delta = 1e-15;
@@ -285,7 +285,7 @@ public class Chapter2Test {
     @Test
     public void shouldCountInversions() {
         // given
-        Array<Integer> array = new Array<>(5,7,9,2,6,8,6,6,3,1,7,8);
+        Array<Integer> array = new Array<>(5, 7, 9, 2, 6, 8, 6, 6, 3, 1, 7, 8);
         Array<Integer> original = new Array<>(array);
 
         // when

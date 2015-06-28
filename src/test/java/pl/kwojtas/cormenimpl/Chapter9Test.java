@@ -26,7 +26,7 @@ import static pl.kwojtas.cormenimpl.TestUtil.assertSorted;
 import static pl.kwojtas.cormenimpl.TestUtil.sortArray;
 
 @RunWith(PowerMockRunner.class)
-@PrepareForTest({ Chapter5.class })
+@PrepareForTest({Chapter5.class})
 public class Chapter9Test {
 
     @Test
@@ -40,7 +40,7 @@ public class Chapter9Test {
     @Test
     public void shouldFindMinimum() {
         // given
-        Array<Integer> array = new Array<>(5,7,9,2,6,8,6,6,3,1,7,8);
+        Array<Integer> array = new Array<>(5, 7, 9, 2, 6, 8, 6, 6, 3, 1, 7, 8);
         Array<Integer> original = new Array<>(array);
 
         // when
@@ -55,7 +55,7 @@ public class Chapter9Test {
     @Test
     public void shouldFindMinimumAndMaximumForArrayOfEvenSize() {
         // given
-        Array<Integer> array = new Array<>(5,7,9,2,6,8,6,6,3,1,7,8);
+        Array<Integer> array = new Array<>(5, 7, 9, 2, 6, 8, 6, 6, 3, 1, 7, 8);
         Array<Integer> original = new Array<>(array);
 
         // when
@@ -72,7 +72,7 @@ public class Chapter9Test {
     @Test
     public void shouldFindMinimumAndMaximumForArrayOfEvenSize2() {
         // given
-        Array<Integer> array = new Array<>(7,5,2,9,6,8,6,6,3,1,7,8);
+        Array<Integer> array = new Array<>(7, 5, 2, 9, 6, 8, 6, 6, 3, 1, 7, 8);
         Array<Integer> original = new Array<>(array);
 
         // when
@@ -89,7 +89,7 @@ public class Chapter9Test {
     @Test
     public void shouldFindMinimumAndMaximumForArrayOfOddSize() {
         // given
-        Array<Integer> array = new Array<>(3,5,2,6,6,5,1,8,9,4,7,4,2);
+        Array<Integer> array = new Array<>(3, 5, 2, 6, 6, 5, 1, 8, 9, 4, 7, 4, 2);
         Array<Integer> original = new Array<>(array);
 
         // when
@@ -106,7 +106,7 @@ public class Chapter9Test {
     @Test
     public void shouldFindOrderStatisticUsingRandomizedSelectAtTheFirstRecursionLevel() {
         // given
-        Array<Integer> array = new Array<>(5,7,9,2,6,8,6,6,3,1,7,8);
+        Array<Integer> array = new Array<>(5, 7, 9, 2, 6, 8, 6, 6, 3, 1, 7, 8);
         Array<Integer> original = new Array<>(array);
         int order = 4;
         mockStatic(Chapter5.class);
@@ -122,7 +122,7 @@ public class Chapter9Test {
     @Test
     public void shouldFindOrderStatisticUsingRandomizedSelectByCallingItRecursively() {
         // given
-        Array<Integer> array = new Array<>(5,7,9,2,6,8,6,6,3,1,7,8);
+        Array<Integer> array = new Array<>(5, 7, 9, 2, 6, 8, 6, 6, 3, 1, 7, 8);
         Array<Integer> original = new Array<>(array);
         int order = 8;
         mockStatic(Chapter5.class);
@@ -154,7 +154,7 @@ public class Chapter9Test {
     @Test
     public void shouldFindOrderStatisticUsingIterativeRandomizedSelectAtTheFirstAttempt() {
         // given
-        Array<Integer> array = new Array<>(5,7,9,2,6,8,6,6,3,1,7,8);
+        Array<Integer> array = new Array<>(5, 7, 9, 2, 6, 8, 6, 6, 3, 1, 7, 8);
         Array<Integer> original = new Array<>(array);
         int order = 4;
         mockStatic(Chapter5.class);
@@ -170,7 +170,7 @@ public class Chapter9Test {
     @Test
     public void shouldFindOrderStatisticUsingIterativeRandomizedSelectByDividingArray() {
         // given
-        Array<Integer> array = new Array<>(5,7,9,2,6,8,6,6,3,1,7,8);
+        Array<Integer> array = new Array<>(5, 7, 9, 2, 6, 8, 6, 6, 3, 1, 7, 8);
         Array<Integer> original = new Array<>(array);
         int order = 8;
         mockStatic(Chapter5.class);
@@ -188,7 +188,7 @@ public class Chapter9Test {
     @Test
     public void shouldFindOrderStatisticUsingSelect() {
         // given
-        Array<Integer> array = new Array<>(5,7,9,2,6,8,6,6,3,1,7,8);
+        Array<Integer> array = new Array<>(5, 7, 9, 2, 6, 8, 6, 6, 3, 1, 7, 8);
         Array<Integer> original = new Array<>(array);
         int order = 7;
 
@@ -202,7 +202,7 @@ public class Chapter9Test {
     @Test
     public void shouldSortArrayUsingBestCaseQuicksort() {
         // given
-        Array<Integer> array = new Array<>(5,7,9,2,6,8,6,6,3,1,7,8);
+        Array<Integer> array = new Array<>(5, 7, 9, 2, 6, 8, 6, 6, 3, 1, 7, 8);
         Array<Integer> original = new Array<>(array);
 
         // when
@@ -230,7 +230,7 @@ public class Chapter9Test {
     @Test
     public void shouldFindOrderStatisticUsingSelectUsingMedianSubroutine() {
         // given
-        Array<Integer> array = new Array<>(5,7,9,2,6,8,6,6,3,1,7,8);
+        Array<Integer> array = new Array<>(5, 7, 9, 2, 6, 8, 6, 6, 3, 1, 7, 8);
         Array<Integer> original = new Array<>(array);
         int order = 6;
 
@@ -244,7 +244,7 @@ public class Chapter9Test {
     @Test
     public void shouldFindOrderStatisticUsingSelectUsingMedianSubroutine2() {
         // given
-        Array<Integer> array = new Array<>(5,7,9,2,6,8,6,6,3,1,7,8);
+        Array<Integer> array = new Array<>(5, 7, 9, 2, 6, 8, 6, 6, 3, 1, 7, 8);
         Array<Integer> original = new Array<>(array);
         int order = 4;
 
@@ -258,7 +258,7 @@ public class Chapter9Test {
     @Test
     public void shouldFindOrderStatisticUsingSelectUsingMedianSubroutine3() {
         // given
-        Array<Integer> array = new Array<>(5,7,9,2,6,8,6,6,3,1,7,8);
+        Array<Integer> array = new Array<>(5, 7, 9, 2, 6, 8, 6, 6, 3, 1, 7, 8);
         Array<Integer> original = new Array<>(array);
         int order = 8;
 
@@ -272,7 +272,7 @@ public class Chapter9Test {
     @Test
     public void shouldReturnEmptySetOfQuantilesOfFirstOrder() {
         // given
-        Array<Integer> array = new Array<>(5,0,7,9,4,2,6,8,3,1);
+        Array<Integer> array = new Array<>(5, 0, 7, 9, 4, 2, 6, 8, 3, 1);
         int order = 1;
 
         // when
@@ -286,7 +286,7 @@ public class Chapter9Test {
     @Test
     public void shouldReturnMedianAsQuantileOfSecondOrder() {
         // given
-        Array<Integer> array = new Array<>(5,0,7,9,4,2,6,8,3,1);
+        Array<Integer> array = new Array<>(5, 0, 7, 9, 4, 2, 6, 8, 3, 1);
         int order = 2;
 
         // when
@@ -302,7 +302,7 @@ public class Chapter9Test {
     @Test
     public void shouldFindQuantilesOfAverageOrder() {
         // given
-        Array<Integer> array = new Array<>(5,0,7,9,4,2,6,8,3,1);
+        Array<Integer> array = new Array<>(5, 0, 7, 9, 4, 2, 6, 8, 3, 1);
         Array<Integer> original = new Array<>(array);
         int order = 5;
 
@@ -341,7 +341,7 @@ public class Chapter9Test {
     @Test
     public void shouldReturnAllElementsAsQuantilesOfHighestOrder() {
         // given
-        Array<Integer> array = new Array<>(5,0,7,9,4,2,6,8,3,1);
+        Array<Integer> array = new Array<>(5, 0, 7, 9, 4, 2, 6, 8, 3, 1);
         Array<Integer> original = new Array<>(array);
         int order = array.length + 1;
 
@@ -359,7 +359,7 @@ public class Chapter9Test {
     @Test
     public void shouldReturnMedianAsMedianProximityOf1() {
         // given
-        Array<Integer> array = new Array<>(5,0,15,17,4,2,6,16,3,1);
+        Array<Integer> array = new Array<>(5, 0, 15, 17, 4, 2, 6, 16, 3, 1);
         int proximitySize = 1;
         int expectedMedian = 4;
 
@@ -376,7 +376,7 @@ public class Chapter9Test {
     @Test
     public void shouldFindMedianProximity() {
         // given
-        Array<Integer> array = new Array<>(5,0,15,17,4,2,6,16,3,1);
+        Array<Integer> array = new Array<>(5, 0, 15, 17, 4, 2, 6, 16, 3, 1);
         Array<Integer> original = new Array<>(array);
         int proximitySize = 4;
 
@@ -416,8 +416,8 @@ public class Chapter9Test {
     @Test
     public void shouldFindMedianOfTwoArrays() {
         // given
-        Array<Integer> array1 = new Array<>(1,2,3,5,6,6,6,7,7,8,8,9);
-        Array<Integer> array2 = new Array<>(1,1,5,6,7,8,8,8,9,9,9,9);
+        Array<Integer> array1 = new Array<>(1, 2, 3, 5, 6, 6, 6, 7, 7, 8, 8, 9);
+        Array<Integer> array2 = new Array<>(1, 1, 5, 6, 7, 8, 8, 8, 9, 9, 9, 9);
         Array<Integer> original1 = new Array<>(array1);
         Array<Integer> original2 = new Array<>(array2);
 
@@ -444,8 +444,8 @@ public class Chapter9Test {
     @Test
     public void shouldFindWeightedMedianUsingSorting() {
         // given
-        Array<Integer> array = new Array<>(0,1,2,3,4,5,6,7,8,9);
-        Array<Double> weights = new Array<>(0.05,0.05,0.1,0.2,0.02,0.1,0.03,0.05,0.3,0.1);
+        Array<Integer> array = new Array<>(0, 1, 2, 3, 4, 5, 6, 7, 8, 9);
+        Array<Double> weights = new Array<>(0.05, 0.05, 0.1, 0.2, 0.02, 0.1, 0.03, 0.05, 0.3, 0.1);
         Array<Integer> originalArray = new Array<>(array);
         Array<Double> originalWeights = new Array<>(weights);
 
@@ -488,8 +488,8 @@ public class Chapter9Test {
     @Test
     public void shouldFindWeightedMedian() {
         // given
-        Array<Integer> array = new Array<>(0,1,2,3,4,5,6,7,8,9);
-        Array<Double> weights = new Array<>(0.05,0.05,0.1,0.2,0.02,0.1,0.03,0.05,0.3,0.1);
+        Array<Integer> array = new Array<>(0, 1, 2, 3, 4, 5, 6, 7, 8, 9);
+        Array<Double> weights = new Array<>(0.05, 0.05, 0.1, 0.2, 0.02, 0.1, 0.03, 0.05, 0.3, 0.1);
         Array<Integer> originalArray = new Array<>(array);
         Array<Double> originalWeights = new Array<>(weights);
 
@@ -503,9 +503,9 @@ public class Chapter9Test {
     @Test
     public void shouldFindPostOfficeLocation() {
         // given
-        Array<Point2D> points = new Array<>(new Point2D(1.0,1.0),new Point2D(1.0,3.0),new Point2D(1.0,5.0),new Point2D(3.0,1.0),
-                new Point2D(3.0,5.0),new Point2D(5.0,1.0),new Point2D(5.0,3.0),new Point2D(5.0,5.0));
-        Array<Double> weights = new Array<>(0.1,0.1,0.2,0.02,0.2,0.3,0.05,0.03);
+        Array<Point2D> points = new Array<>(new Point2D(1.0, 1.0), new Point2D(1.0, 3.0), new Point2D(1.0, 5.0), new Point2D(3.0, 1.0),
+                new Point2D(3.0, 5.0), new Point2D(5.0, 1.0), new Point2D(5.0, 3.0), new Point2D(5.0, 5.0));
+        Array<Double> weights = new Array<>(0.1, 0.1, 0.2, 0.02, 0.2, 0.3, 0.05, 0.03);
         Array<Point2D> originalPoints = new Array<>(points);
         Array<Double> originalWeights = new Array<>(weights);
 
@@ -532,7 +532,7 @@ public class Chapter9Test {
     @Test
     public void shouldFindOrderStatisticUsingSmallOrderSelect() {
         // given
-        Array<Integer> array = new Array<>(5,12,1,0,13,12,0,10,9,1,4,3,16,15,19,6,11,20,2);
+        Array<Integer> array = new Array<>(5, 12, 1, 0, 13, 12, 0, 10, 9, 1, 4, 3, 16, 15, 19, 6, 11, 20, 2);
         Array<Integer> original = new Array<>(array);
         int order = 3;
 
@@ -546,7 +546,7 @@ public class Chapter9Test {
     @Test
     public void shouldFindOrderStatisticUsingSmallOrderSelect2() {
         // given
-        Array<Integer> array = new Array<>(5,12,1,0,13,12,0,10,9,1,4,3,16,15,19,6,11,20,2);
+        Array<Integer> array = new Array<>(5, 12, 1, 0, 13, 12, 0, 10, 9, 1, 4, 3, 16, 15, 19, 6, 11, 20, 2);
         Array<Integer> original = new Array<>(array);
         int order = 7;
 
