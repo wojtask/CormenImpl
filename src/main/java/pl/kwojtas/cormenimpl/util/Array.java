@@ -32,6 +32,7 @@ public class Array<T> {
      * @param <T>    the type of elements in the new array
      * @return the array of length {@code length} filled with {@code null}s
      */
+    @SuppressWarnings("unchecked")
     public static <T> Array<T> withLength(int length) {
         return new Array<>((T[]) new Object[length]);
     }
@@ -78,6 +79,7 @@ public class Array<T> {
      *
      * @param otherArray the array to be copied
      */
+    @SuppressWarnings("unchecked")
     public void set(Array<T> otherArray) {
         if (this == otherArray) {
             return;

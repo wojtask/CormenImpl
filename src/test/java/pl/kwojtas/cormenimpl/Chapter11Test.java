@@ -15,10 +15,10 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Modifier;
 
-import static junit.framework.Assert.assertNotNull;
 import static junit.framework.TestCase.assertNull;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static pl.kwojtas.cormenimpl.Chapter11.DELETED;
 
@@ -104,6 +104,7 @@ public class Chapter11Test {
         Element<String> actualMaximum = Chapter11.directAddressMaximum(directAddressTable);
 
         // then
+        assertNotNull(actualMaximum);
         assertEquals(expectedMaximum.key, actualMaximum.key);
         assertEquals(expectedMaximum.data, actualMaximum.data);
     }
@@ -192,6 +193,7 @@ public class Chapter11Test {
         Element<String> actualFoundElement = Chapter11.directAddressSearch_(directAddressTable, element.key);
 
         // then
+        assertNotNull(actualFoundElement);
         assertEquals(element.key, actualFoundElement.key);
         assertEquals(element.data, actualFoundElement.data);
     }
@@ -259,6 +261,7 @@ public class Chapter11Test {
         Element<String> actualFoundElement = Chapter11.hugeArraySearch(hugeArray, element.key);
 
         // then
+        assertNotNull(actualFoundElement);
         assertEquals(element.key, actualFoundElement.key);
         assertEquals(element.data, actualFoundElement.data);
     }
@@ -350,6 +353,7 @@ public class Chapter11Test {
         Element<String> actualFoundElement = Chapter11.chainedHashSearch(chainedHashTable, element.key);
 
         // then
+        assertNotNull(actualFoundElement);
         assertEquals(element.key, actualFoundElement.key);
         assertEquals(element.data, actualFoundElement.data);
     }

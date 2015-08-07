@@ -25,6 +25,7 @@ public class Matrix<T> {
      * @param rows the initial rows of the matrix
      */
     @SafeVarargs
+    @SuppressWarnings("unchecked")
     public Matrix(Array<T>... rows) {
         this.data = (T[][]) new Object[rows.length][];
         for (int i = 0; i < rows.length; i++) {
@@ -45,6 +46,7 @@ public class Matrix<T> {
      *
      * @param rows the initial rows of the matrix
      */
+    @SuppressWarnings("unchecked")
     public Matrix(Array<Array<T>> rows) {
         this.data = (T[][]) new Object[rows.length][];
         for (int i = 0; i < rows.length; i++) {
