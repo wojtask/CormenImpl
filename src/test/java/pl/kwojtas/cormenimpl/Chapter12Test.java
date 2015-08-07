@@ -3,6 +3,7 @@ package pl.kwojtas.cormenimpl;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import pl.kwojtas.cormenimpl.util.Array;
 import pl.kwojtas.cormenimpl.util.BinaryTree;
 
 import java.io.ByteArrayOutputStream;
@@ -523,6 +524,19 @@ public class Chapter12Test {
         while (nodeToInsert != tree.root) {
             nodeToInsert = nodeToInsert.p;
         }
+    }
+
+    @Test
+    public void shouldSortArrayUsingInorderSort() {
+        Array<Integer> array = new Array<>(5, 7, 9, 2, 6, 8, 6, 6, 3, 1, 7, 8);
+
+        // when
+        Chapter12.inorderSort(array);
+
+        // then
+        String[] actualOutput = splitOutContent();
+        String[] expectedOutput = new String[]{"1", "2", "3", "5", "6", "6", "6", "7", "7", "8", "8", "9"};
+        assertArrayEquals(expectedOutput, actualOutput);
     }
 
 }

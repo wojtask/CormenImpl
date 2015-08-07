@@ -1,5 +1,6 @@
 package pl.kwojtas.cormenimpl;
 
+import pl.kwojtas.cormenimpl.util.Array;
 import pl.kwojtas.cormenimpl.util.BinaryTree;
 
 import static pl.kwojtas.cormenimpl.util.Util.less;
@@ -317,6 +318,21 @@ public final class Chapter12 {
                 z.p = x;
             }
         }
+    }
+
+    /**
+     * Sorts elements by inserting them into a binary tree and performing inorder tree walk on it.
+     * <p>Exercise 12.3-3.</p>
+     *
+     * @param A   the array of elements to sort
+     * @param <T> the type of elements in {@code A}
+     */
+    public static <T extends Comparable> void inorderSort(Array<T> A) {
+        BinaryTree<T> T = new BinaryTree<>();
+        for (int i = 1; i <= A.length; i++) {
+            treeInsert(T, new BinaryTree.Node<>(A.at(i)));
+        }
+        inorderTreeWalk(T.root);
     }
 
 }
