@@ -5,6 +5,7 @@ import pl.kwojtas.cormenimpl.util.BinaryTree;
 import pl.kwojtas.cormenimpl.util.RadixTree;
 
 import static pl.kwojtas.cormenimpl.util.Util.less;
+import static pl.kwojtas.cormenimpl.util.Util.random;
 
 /**
  * Implements algorithms from Chapter 12.
@@ -251,7 +252,7 @@ public final class Chapter12 {
     }
 
     /**
-     * Deletes a node from a binary tree
+     * Deletes a node from a binary tree.
      * <p><span style="font-variant:small-caps;">Tree-Delete</span> from subchapter 12.3.</p>
      *
      * @param T   the binary tree
@@ -334,6 +335,50 @@ public final class Chapter12 {
             treeInsert(T, new BinaryTree.Node<>(A.at(i)));
         }
         inorderTreeWalk(T.root);
+    }
+
+    /**
+     * Deletes a node from a binary tree - a fair version.
+     * <p>Solution to exercise 12.3-6.</p>
+     *
+     * @param T   the binary tree
+     * @param z   the node to delete
+     * @param <T> the type of keys in {@code T}
+     * @return the node deleted from {@code T}
+     */
+    public static <T extends Comparable> BinaryTree.Node<T> fairTreeDelete(BinaryTree<T> T, BinaryTree.Node<T> z) {
+        BinaryTree.Node<T> y;
+        if (z.left == null || z.right == null) {
+            y = z;
+        } else {
+            if (random() == 0) {
+                y = treePredecessor(z);
+            } else {
+                y = treeSuccessor(z);
+            }
+        }
+        BinaryTree.Node<T> x;
+        if (y.left != null) {
+            x = y.left;
+        } else {
+            x = y.right;
+        }
+        if (x != null) {
+            x.p = y.p;
+        }
+        if (y.p == null) {
+            T.root = x;
+        } else {
+            if (y == y.p.left) {
+                y.p.left = x;
+            } else {
+                y.p.right = x;
+            }
+        }
+        if (y != z) {
+            z.key = y.key;
+        }
+        return y;
     }
 
     /**

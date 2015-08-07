@@ -3,8 +3,12 @@ package pl.kwojtas.cormenimpl;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
 import pl.kwojtas.cormenimpl.util.Array;
 import pl.kwojtas.cormenimpl.util.BinaryTree;
+import pl.kwojtas.cormenimpl.util.Util;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
@@ -17,7 +21,11 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+import static org.powermock.api.mockito.PowerMockito.mockStatic;
+import static org.powermock.api.mockito.PowerMockito.when;
 
+@RunWith(PowerMockRunner.class)
+@PrepareForTest({Util.class})
 public class Chapter12Test {
 
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
@@ -538,6 +546,82 @@ public class Chapter12Test {
         String[] actualOutput = splitOutContent();
         String[] expectedOutput = new String[]{"1", "2", "3", "5", "6", "6", "6", "7", "7", "8", "8", "9"};
         assertArrayEquals(expectedOutput, actualOutput);
+    }
+
+    @Test
+    public void shouldDeleteLeafFromTreeUsingFairTreeDelete() {
+        // given
+        BinaryTree<Integer> tree = getExemplaryBinaryTree();
+        int exampleTreeSize = tree.getSize();
+
+        // when
+        Chapter12.fairTreeDelete(tree, tree.root.right.left); // a leaf
+
+        // then
+        assertNull(tree.root.right.left);
+        assertEquals(exampleTreeSize - 1, tree.getSize());
+    }
+
+    @Test
+    public void shouldDeleteNodeWithOneChildFromTreeUsingFairTreeDelete() {
+        // given
+        BinaryTree<Integer> tree = getExemplaryBinaryTree();
+        int exampleTreeSize = tree.getSize();
+
+        // when
+        Chapter12.fairTreeDelete(tree, tree.root.left); // a node with one child
+
+        // then
+        assertNotNull(tree.root.left);
+        assertEquals(Integer.valueOf(1), tree.root.left.key);
+        assertEquals(exampleTreeSize - 1, tree.getSize());
+    }
+
+    @Test
+    public void shouldDeleteNodeWithTwoChildrenFromTreeUsingFairTreeDeleteBySplicingOutItsPredecessor() {
+        // given
+        BinaryTree<Integer> tree = getExemplaryBinaryTree();
+        int exampleTreeSize = tree.getSize();
+        mockStatic(Util.class);
+        when(Util.random()).thenReturn(0);
+
+        // when
+        Chapter12.fairTreeDelete(tree, tree.root.right); // a node with two children (predecessor's key = 11)
+
+        // then
+        assertNotNull(tree.root.right);
+        assertEquals(Integer.valueOf(11), tree.root.right.key);
+        assertEquals(exampleTreeSize - 1, tree.getSize());
+    }
+
+    @Test
+    public void shouldDeleteNodeWithTwoChildrenFromTreeUsingFairTreeDeleteBySplicingOutItsSuccessor() {
+        // given
+        BinaryTree<Integer> tree = getExemplaryBinaryTree();
+        int exampleTreeSize = tree.getSize();
+        mockStatic(Util.class);
+        when(Util.random()).thenReturn(1);
+
+        // when
+        Chapter12.fairTreeDelete(tree, tree.root.right); // a node with two children (successor's key = 19)
+
+        // then
+        assertNotNull(tree.root.right);
+        assertEquals(Integer.valueOf(19), tree.root.right.key);
+        assertEquals(exampleTreeSize - 1, tree.getSize());
+    }
+
+    @Test
+    public void shouldDeleteRootFromTreeUsingFairTreeDelete() {
+        // given
+        BinaryTree<Integer> tree = new BinaryTree<>();
+        tree.root = new BinaryTree.Node<>(10);
+
+        // when
+        Chapter12.fairTreeDelete(tree, tree.root);
+
+        // then
+        assertNull(tree.root);
     }
 
     @Test
