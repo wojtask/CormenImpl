@@ -528,6 +528,7 @@ public class Chapter12Test {
 
     @Test
     public void shouldSortArrayUsingInorderSort() {
+        // given
         Array<Integer> array = new Array<>(5, 7, 9, 2, 6, 8, 6, 6, 3, 1, 7, 8);
 
         // when
@@ -536,6 +537,20 @@ public class Chapter12Test {
         // then
         String[] actualOutput = splitOutContent();
         String[] expectedOutput = new String[]{"1", "2", "3", "5", "6", "6", "6", "7", "7", "8", "8", "9"};
+        assertArrayEquals(expectedOutput, actualOutput);
+    }
+
+    @Test
+    public void shouldSortBitStringsUsingRadixTree() {
+        // given
+        Array<String> array = new Array<>("1011", "10", "011", "100", "0");
+
+        // when
+        Chapter12.bitStringsSort(array);
+
+        // then
+        String[] actualOutput = splitOutContent();
+        String[] expectedOutput = new String[]{"0", "011", "10", "100", "1011"};
         assertArrayEquals(expectedOutput, actualOutput);
     }
 

@@ -2,6 +2,7 @@ package pl.kwojtas.cormenimpl;
 
 import pl.kwojtas.cormenimpl.util.Array;
 import pl.kwojtas.cormenimpl.util.BinaryTree;
+import pl.kwojtas.cormenimpl.util.RadixTree;
 
 import static pl.kwojtas.cormenimpl.util.Util.less;
 
@@ -333,6 +334,51 @@ public final class Chapter12 {
             treeInsert(T, new BinaryTree.Node<>(A.at(i)));
         }
         inorderTreeWalk(T.root);
+    }
+
+    /**
+     * Sorts bit strings (strings consisted of '0's and '1's) using radix tree.
+     * <p>Solution to problem 12-2.</p>
+     *
+     * @param A the array of bit strings to sort
+     */
+    public static void bitStringsSort(Array<String> A) {
+        RadixTree T = new RadixTree();
+        for (int i = 1; i <= A.length; i++) {
+            radixTreeInsert(T, A.at(i));
+        }
+        preorderRadixTreeWalk(T.root, "");
+    }
+
+    private static void radixTreeInsert(RadixTree T, String key) {
+        if (T.root == null) {
+            T.root = new RadixTree.Node();
+        }
+        RadixTree.Node x = T.root;
+        for (int i = 0; i < key.length(); i++) {
+            if (key.charAt(i) == '0') {
+                if (x.left == null) {
+                    x.left = new RadixTree.Node();
+                }
+                x = x.left;
+            } else {
+                if (x.right == null) {
+                    x.right = new RadixTree.Node();
+                }
+                x = x.right;
+            }
+        }
+        x.inTree = true;
+    }
+
+    private static void preorderRadixTreeWalk(RadixTree.Node x, String key) {
+        if (x != null) {
+            if (x.inTree) {
+                System.out.println(key);
+            }
+            preorderRadixTreeWalk(x.left, key + '0');
+            preorderRadixTreeWalk(x.right, key + '1');
+        }
     }
 
 }
