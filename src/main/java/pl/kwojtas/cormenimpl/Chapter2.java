@@ -21,7 +21,7 @@ public final class Chapter2 {
      * @param A   the array of elements to sort
      * @param <T> the type of elements in {@code A}
      */
-    public static <T extends Comparable> void insertionSort(Array<T> A) {
+    public static <T extends Comparable<? super T>> void insertionSort(Array<T> A) {
         for (int j = 2; j <= A.length; j++) {
             T key = A.at(j);
             int i = j - 1;
@@ -40,7 +40,7 @@ public final class Chapter2 {
      * @param A   the array of elements to sort
      * @param <T> the type of elements in {@code A}
      */
-    public static <T extends Comparable> void nonincreasingInsertionSort(Array<T> A) {
+    public static <T extends Comparable<? super T>> void nonincreasingInsertionSort(Array<T> A) {
         for (int j = 2; j <= A.length; j++) {
             T key = A.at(j);
             int i = j - 1;
@@ -101,7 +101,7 @@ public final class Chapter2 {
      * @param A   the array of elements to sort
      * @param <T> the type of elements in {@code A}
      */
-    public static <T extends Comparable> void selectionSort(Array<T> A) {
+    public static <T extends Comparable<? super T>> void selectionSort(Array<T> A) {
         int n = A.length;
         for (int j = 1; j <= n - 1; j++) {
             int min = j;
@@ -177,7 +177,7 @@ public final class Chapter2 {
      * @param r   the index of end of the second subarray in {@code A} being merged
      * @param <T> the type of elements in {@code A}
      */
-    public static <T extends Comparable> void merge_(Array<T> A, int p, int q, int r) {
+    public static <T extends Comparable<? super T>> void merge_(Array<T> A, int p, int q, int r) {
         int n1 = q - p + 1;
         int n2 = r - q;
         Array<T> L = Array.withLength(n1);
@@ -212,7 +212,7 @@ public final class Chapter2 {
      * @param <T>  the type of elements in {@code A}
      * @return index {@code i} such that {@code A[i] = v}, or {@code null} if {@code v} does not appear in {@code A}
      */
-    public static <T extends Comparable> Integer recursiveBinarySearch(Array<T> A, T v, int low, int high) {
+    public static <T extends Comparable<? super T>> Integer recursiveBinarySearch(Array<T> A, T v, int low, int high) {
         if (low > high) {
             return null;
         }
@@ -235,7 +235,7 @@ public final class Chapter2 {
      * @param <T> the type of elements in {@code A}
      * @return index {@code i} such that {@code A[i] = v}, or {@code null} if {@code v} does not appear in {@code A}
      */
-    public static <T extends Comparable> Integer iterativeBinarySearch(Array<T> A, T v) {
+    public static <T extends Comparable<? super T>> Integer iterativeBinarySearch(Array<T> A, T v) {
         int low = 1;
         int high = A.length;
         while (low <= high) {
@@ -278,7 +278,7 @@ public final class Chapter2 {
      * @param A   the array of elements to sort
      * @param <T> the type of elements in {@code A}
      */
-    public static <T extends Comparable> void bubbleSort(Array<T> A) {
+    public static <T extends Comparable<? super T>> void bubbleSort(Array<T> A) {
         for (int i = 1; i <= A.length; i++) {
             for (int j = A.length; j >= i + 1; j--) {
                 if (less(A.at(j), A.at(j - 1))) {

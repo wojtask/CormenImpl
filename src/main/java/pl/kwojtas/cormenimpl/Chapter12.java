@@ -69,7 +69,7 @@ public final class Chapter12 {
      * @param <T> the type of keys in the tree
      * @return the node with key {@code k} in the tree, or {@code null} if the tree does not contain such node
      */
-    public static <T extends Comparable> BinaryTree.Node<T> treeSearch(BinaryTree.Node<T> x, T k) {
+    public static <T extends Comparable<? super T>> BinaryTree.Node<T> treeSearch(BinaryTree.Node<T> x, T k) {
         if (x == null || k.equals(x.key)) {
             return x;
         }
@@ -89,7 +89,7 @@ public final class Chapter12 {
      * @param <T> the type of keys in the tree
      * @return the node with key {@code k} in the tree, or {@code null} if the tree does not contain such node
      */
-    public static <T extends Comparable> BinaryTree.Node<T> iterativeTreeSearch(BinaryTree.Node<T> x, T k) {
+    public static <T extends Comparable<? super T>> BinaryTree.Node<T> iterativeTreeSearch(BinaryTree.Node<T> x, T k) {
         while (x != null && !k.equals(x.key)) {
             if (less(k, x.key)) {
                 x = x.left;
@@ -138,7 +138,7 @@ public final class Chapter12 {
      * @param <T> the type of keys in the tree
      * @return the successor of {@code x} in the tree, or {@code null} if {@code x} has the largest key in the tree
      */
-    public static <T extends Comparable> BinaryTree.Node<T> treeSuccessor(BinaryTree.Node<T> x) {
+    public static <T extends Comparable<? super T>> BinaryTree.Node<T> treeSuccessor(BinaryTree.Node<T> x) {
         if (x.right != null) {
             return treeMinimum(x.right);
         }
@@ -158,7 +158,7 @@ public final class Chapter12 {
      * @param <T> the type of keys in the tree
      * @return the node with the smallest key in the tree
      */
-    public static <T extends Comparable> BinaryTree.Node<T> recursiveTreeMinimum(BinaryTree.Node<T> x) {
+    public static <T extends Comparable<? super T>> BinaryTree.Node<T> recursiveTreeMinimum(BinaryTree.Node<T> x) {
         if (x.left != null) {
             return recursiveTreeMinimum(x.left);
         }
@@ -173,7 +173,7 @@ public final class Chapter12 {
      * @param <T> the type of keys in the tree
      * @return the node with the largest key in the tree
      */
-    public static <T extends Comparable> BinaryTree.Node<T> recursiveTreeMaximum(BinaryTree.Node<T> x) {
+    public static <T extends Comparable<? super T>> BinaryTree.Node<T> recursiveTreeMaximum(BinaryTree.Node<T> x) {
         if (x.right != null) {
             return recursiveTreeMaximum(x.right);
         }
@@ -188,7 +188,7 @@ public final class Chapter12 {
      * @param <T> the type of keys in the tree
      * @return the predecessor of {@code x} in the tree, or {@code null} if {@code x} has the smallest key in the tree
      */
-    public static <T extends Comparable> BinaryTree.Node<T> treePredecessor(BinaryTree.Node<T> x) {
+    public static <T extends Comparable<? super T>> BinaryTree.Node<T> treePredecessor(BinaryTree.Node<T> x) {
         if (x.left != null) {
             return treeMaximum(x.left);
         }
@@ -207,7 +207,7 @@ public final class Chapter12 {
      * @param T   the binary tree
      * @param <T> the type of keys in the tree
      */
-    public static <T extends Comparable> void inorderTreeWalk_(BinaryTree<T> T) {
+    public static <T extends Comparable<? super T>> void inorderTreeWalk_(BinaryTree<T> T) {
         if (T.root == null) {
             return;
         }
@@ -228,7 +228,7 @@ public final class Chapter12 {
      * @param z   the node to insert
      * @param <T> the type of keys in the tree
      */
-    public static <T extends Comparable> void treeInsert(BinaryTree<T> T, BinaryTree.Node<T> z) {
+    public static <T extends Comparable<? super T>> void treeInsert(BinaryTree<T> T, BinaryTree.Node<T> z) {
         BinaryTree.Node<T> y = null;
         BinaryTree.Node<T> x = T.root;
         while (x != null) {
@@ -260,7 +260,7 @@ public final class Chapter12 {
      * @param <T> the type of keys in {@code T}
      * @return the node deleted from {@code T}
      */
-    public static <T extends Comparable> BinaryTree.Node<T> treeDelete(BinaryTree<T> T, BinaryTree.Node<T> z) {
+    public static <T extends Comparable<? super T>> BinaryTree.Node<T> treeDelete(BinaryTree<T> T, BinaryTree.Node<T> z) {
         BinaryTree.Node<T> y;
         if (z.left == null || z.right == null) {
             y = z;
@@ -300,7 +300,7 @@ public final class Chapter12 {
      * @param z   the node to insert
      * @param <T> the type of keys in {@code T}
      */
-    public static <T extends Comparable> void recursiveTreeInsert(BinaryTree<T> T, BinaryTree.Node<T> x, BinaryTree.Node<T> z) {
+    public static <T extends Comparable<? super T>> void recursiveTreeInsert(BinaryTree<T> T, BinaryTree.Node<T> x, BinaryTree.Node<T> z) {
         if (x == null) {
             T.root = z;
             return;
@@ -329,7 +329,7 @@ public final class Chapter12 {
      * @param A   the array of elements to sort
      * @param <T> the type of elements in {@code A}
      */
-    public static <T extends Comparable> void inorderSort(Array<T> A) {
+    public static <T extends Comparable<? super T>> void inorderSort(Array<T> A) {
         BinaryTree<T> T = new BinaryTree<>();
         for (int i = 1; i <= A.length; i++) {
             treeInsert(T, new BinaryTree.Node<>(A.at(i)));
@@ -346,7 +346,7 @@ public final class Chapter12 {
      * @param <T> the type of keys in {@code T}
      * @return the node deleted from {@code T}
      */
-    public static <T extends Comparable> BinaryTree.Node<T> fairTreeDelete(BinaryTree<T> T, BinaryTree.Node<T> z) {
+    public static <T extends Comparable<? super T>> BinaryTree.Node<T> fairTreeDelete(BinaryTree<T> T, BinaryTree.Node<T> z) {
         BinaryTree.Node<T> y;
         if (z.left == null || z.right == null) {
             y = z;

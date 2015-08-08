@@ -1123,7 +1123,7 @@ public final class Chapter10 {
      * @return the index {@code i} of element with key {@code k} in {@code L},
      * or {@code null} if {@code L} does not contain such element
      */
-    public static <T extends Comparable> Integer compactListSearch(MultipleArrayList<T> L, int n, T k) {
+    public static <T extends Comparable<? super T>> Integer compactListSearch(MultipleArrayList<T> L, int n, T k) {
         Integer i = L.L;
         while (i != null && less(L.key.at(i), k)) {
             int j = random(1, n);

@@ -341,9 +341,10 @@ public class Chapter12Test {
     @Test
     public void shouldPrintOutEmptyTreeUsingInorderTreeWalk_() {
         // given
+        BinaryTree<Integer> tree = new BinaryTree<>();
 
         // when
-        Chapter12.inorderTreeWalk_(new BinaryTree<>());
+        Chapter12.inorderTreeWalk_(tree);
 
         // then
         assertEquals(0, outContent.size());

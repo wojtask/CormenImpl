@@ -311,7 +311,7 @@ public final class Chapter11 {
      * @param <T>      the type of elements' values in {@code T}
      */
     public static <T> void inPlaceChainedHashDelete(HashTableWithFreeList<T> T, int position) {
-        HashTableWithFreeList.Node node = T.at(position);
+        HashTableWithFreeList.Node<T> node = T.at(position);
         if (node.prev != null) {
             T.at(node.prev).next = node.next;
         }

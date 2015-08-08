@@ -62,7 +62,7 @@ public final class Chapter6 {
      * @param i   the index of the node in {@code A} the property is violated at
      * @param <T> the type of elements in {@code A}
      */
-    static <T extends Comparable> void maxHeapify(Heap<T> A, int i) {
+    static <T extends Comparable<? super T>> void maxHeapify(Heap<T> A, int i) {
         int l = left(i);
         int r = right(i);
         int largest;
@@ -88,7 +88,7 @@ public final class Chapter6 {
      * @param <T> the type of elements in {@code A}
      * @return a max-heap constructed from elements from {@code A}
      */
-    static <T extends Comparable> Heap<T> buildMaxHeap(Array<T> A) {
+    static <T extends Comparable<? super T>> Heap<T> buildMaxHeap(Array<T> A) {
         Heap<T> H = new Heap<>(A);
         H.heapSize = H.length;
         for (int i = H.length / 2; i >= 1; i--) {
@@ -104,7 +104,7 @@ public final class Chapter6 {
      * @param A   the array of elements to sort
      * @param <T> the type of elements in {@code A}
      */
-    public static <T extends Comparable> void heapsort(Array<T> A) {
+    public static <T extends Comparable<? super T>> void heapsort(Array<T> A) {
         Heap<T> H = buildMaxHeap(A);
         for (int i = H.length; i >= 2; i--) {
             H.exch(1, i);
@@ -122,7 +122,7 @@ public final class Chapter6 {
      * @param i   the index of the node in {@code A} the property is violated at
      * @param <T> the type of elements in {@code A}
      */
-    public static <T extends Comparable> void minHeapify(Heap<T> A, int i) {
+    public static <T extends Comparable<? super T>> void minHeapify(Heap<T> A, int i) {
         int l = left(i);
         int r = right(i);
         int smallest;
@@ -148,7 +148,7 @@ public final class Chapter6 {
      * @param i   the index of the node in {@code A} the property is violated at
      * @param <T> the type of elements in {@code A}
      */
-    public static <T extends Comparable> void iterativeMaxHeapify(Heap<T> A, int i) {
+    public static <T extends Comparable<? super T>> void iterativeMaxHeapify(Heap<T> A, int i) {
         while (true) {
             int l = left(i);
             int r = right(i);
@@ -431,7 +431,7 @@ public final class Chapter6 {
      * @param <T> the type of keys in {@code A}
      * @return the key of the element deleted from {@code A}
      */
-    public static <T extends Comparable> T maxHeapDelete(Heap<T> A, int i) {
+    public static <T extends Comparable<? super T>> T maxHeapDelete(Heap<T> A, int i) {
         A.exch(i, A.heapSize);
         A.heapSize--;
         maxHeapify(A, i);

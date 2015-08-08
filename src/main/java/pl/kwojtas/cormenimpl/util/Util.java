@@ -15,44 +15,48 @@ public class Util {
     /**
      * Checks if one value is less than another value.
      *
-     * @param a the first value
-     * @param b the second value
+     * @param a   the first value
+     * @param b   the second value
+     * @param <T> the type of {@code b}
      * @return {@code true} if {@code a < b}, or {@code false} otherwise
      */
-    public static boolean less(Comparable a, Comparable b) {
+    public static <T> boolean less(Comparable<? super T> a, T b) {
         return a.compareTo(b) < 0;
     }
 
     /**
      * Checks if one value is less than or equal to another value.
      *
-     * @param a the first value
-     * @param b the second value
+     * @param a   the first value
+     * @param b   the second value
+     * @param <T> the type of {@code b}
      * @return {@code true} if {@code a <= b}, or {@code false} otherwise
      */
-    public static boolean leq(Comparable a, Comparable b) {
+    public static <T> boolean leq(Comparable<? super T> a, T b) {
         return a.compareTo(b) <= 0;
     }
 
     /**
      * Checks if one value is greater than another value.
      *
-     * @param a the first value
-     * @param b the second value
+     * @param a   the first value
+     * @param b   the second value
+     * @param <T> the type of {@code b}
      * @return {@code true} if {@code a > b}, or {@code false} otherwise
      */
-    public static boolean greater(Comparable a, Comparable b) {
+    public static <T> boolean greater(Comparable<? super T> a, T b) {
         return a.compareTo(b) > 0;
     }
 
     /**
      * Checks if one value is greater than or equal to another value.
      *
-     * @param a the first value
-     * @param b the second value
+     * @param a   the first value
+     * @param b   the second value
+     * @param <T> the type of {@code b}
      * @return {@code true} if {@code a >= b}, or {@code false} otherwise
      */
-    public static boolean geq(Comparable a, Comparable b) {
+    public static <T> boolean geq(Comparable<? super T> a, T b) {
         return a.compareTo(b) >= 0;
     }
 
@@ -64,7 +68,7 @@ public class Util {
      * @param <T> the type of the values
      * @return the minimum of {@code a} and {@code b}
      */
-    public static <T extends Comparable> T min(T a, T b) {
+    public static <T extends Comparable<? super T>> T min(T a, T b) {
         return leq(a, b) ? a : b;
     }
 
@@ -76,7 +80,7 @@ public class Util {
      * @param <T> the type of the values
      * @return the maximum of {@code a} and {@code b}
      */
-    public static <T extends Comparable> T max(T a, T b) {
+    public static <T extends Comparable<? super T>> T max(T a, T b) {
         return geq(a, b) ? a : b;
     }
 
@@ -90,7 +94,7 @@ public class Util {
     }
 
     /**
-     * Computes the ceiling of a quotient.
+     * Returns the ceiling of a quotient.
      *
      * @param a the dividend
      * @param b the divisor

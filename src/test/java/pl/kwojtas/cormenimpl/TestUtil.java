@@ -36,7 +36,7 @@ public class TestUtil {
         }
     }
 
-    public static <T extends Comparable> void sortArray(Array<T> array, Comparator<T> comparator) {
+    public static <T extends Comparable<? super T>> void sortArray(Array<T> array, Comparator<T> comparator) {
         ArrayList<T> arrayList = new ArrayList<>();
         for (int i = 1; i <= array.length; i++) {
             arrayList.add(array.at(i));
@@ -47,11 +47,11 @@ public class TestUtil {
         }
     }
 
-    public static <T extends Comparable> void sortArray(Array<T> array) {
+    public static <T extends Comparable<? super T>> void sortArray(Array<T> array) {
         sortArray(array, Comparator.<T>naturalOrder());
     }
 
-    public static <T extends Comparable> void assertSorted(Array<T> array) {
+    public static <T extends Comparable<? super T>> void assertSorted(Array<T> array) {
         for (int i = 2; i <= array.length; i++) {
             assertTrue(leq(array.at(i - 1), array.at(i)));
         }
