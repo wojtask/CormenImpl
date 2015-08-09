@@ -23,6 +23,8 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.powermock.api.mockito.PowerMockito.mockStatic;
 import static org.powermock.api.mockito.PowerMockito.when;
+import static pl.kwojtas.cormenimpl.TestUtil.assertShuffled;
+import static pl.kwojtas.cormenimpl.TestUtil.assertSorted;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest({Util.class})
@@ -637,6 +639,20 @@ public class Chapter12Test {
         String[] actualOutput = splitOutContent();
         String[] expectedOutput = new String[]{"0", "011", "10", "100", "1011"};
         assertArrayEquals(expectedOutput, actualOutput);
+    }
+
+    @Test
+    public void shouldSortArrayUsingTreeBuildingQuicksort() {
+        // given
+        Array<Integer> array = new Array<>(5, 7, 9, 2, 6, 8, 6, 6, 3, 1, 7, 8);
+        Array<Integer> original = new Array<>(array);
+
+        // when
+        Chapter12.treeBuildingQuicksort(array, 1, array.length);
+
+        // then
+        assertShuffled(original, array);
+        assertSorted(array);
     }
 
 }

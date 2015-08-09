@@ -4,6 +4,7 @@ import pl.kwojtas.cormenimpl.util.Array;
 import pl.kwojtas.cormenimpl.util.BinaryTree;
 import pl.kwojtas.cormenimpl.util.RadixTree;
 
+import static pl.kwojtas.cormenimpl.util.Util.leq;
 import static pl.kwojtas.cormenimpl.util.Util.less;
 import static pl.kwojtas.cormenimpl.util.Util.random;
 
@@ -16,7 +17,7 @@ public final class Chapter12 {
     }
 
     /**
-     * Prints out keys of a binary tree performing inorder tree walk.
+     * Prints out keys of a binary search tree performing inorder tree walk.
      * <p><span style="font-variant:small-caps;">Inorder-Tree-Walk</span> from subchapter 12.1.</p>
      *
      * @param x   the root of the tree to print out
@@ -31,7 +32,7 @@ public final class Chapter12 {
     }
 
     /**
-     * Prints out keys of a binary tree performing preorder tree walk.
+     * Prints out keys of a binary search tree performing preorder tree walk.
      * <p><span style="font-variant:small-caps;">Preorder-Tree-Walk</span> from solution to exercise 12.1-4.</p>
      *
      * @param x   the root of the tree to print out
@@ -46,7 +47,7 @@ public final class Chapter12 {
     }
 
     /**
-     * Prints out keys of a binary tree performing postorder tree walk.
+     * Prints out keys of a binary search tree performing postorder tree walk.
      * <p><span style="font-variant:small-caps;">Postorder-Tree-Walk</span> from solution to exercise 12.1-4.</p>
      *
      * @param x   the root of the tree to print out
@@ -61,7 +62,7 @@ public final class Chapter12 {
     }
 
     /**
-     * Searches for a key in a binary tree.
+     * Searches for a key in a binary search tree.
      * <p><span style="font-variant:small-caps;">Tree-Search</span> from subchapter 12.2.</p>
      *
      * @param x   the root of the tree
@@ -81,7 +82,7 @@ public final class Chapter12 {
     }
 
     /**
-     * Iteratively searches for a key in a binary tree.
+     * Iteratively searches for a key in a binary search tree.
      * <p><span style="font-variant:small-caps;">Iterative-Tree-Search</span> from subchapter 12.2.</p>
      *
      * @param x   the root of the tree
@@ -101,7 +102,7 @@ public final class Chapter12 {
     }
 
     /**
-     * Returns the node with the smallest key in a non-empty binary tree.
+     * Returns the node with the smallest key in a non-empty binary search tree.
      * <p><span style="font-variant:small-caps;">Tree-Minimum</span> from subchapter 12.2.</p>
      *
      * @param x   the root of the tree
@@ -116,7 +117,7 @@ public final class Chapter12 {
     }
 
     /**
-     * Returns the node with the largest key in a non-empty binary tree.
+     * Returns the node with the largest key in a non-empty binary search tree.
      * <p><span style="font-variant:small-caps;">Tree-Maximum</span> from subchapter 12.2.</p>
      *
      * @param x   the root of the tree
@@ -131,7 +132,7 @@ public final class Chapter12 {
     }
 
     /**
-     * Returns the node's successor in a non-empty binary tree.
+     * Returns the node's successor in a non-empty binary search tree.
      * <p><span style="font-variant:small-caps;">Tree-Successor</span> from subchapter 12.2.</p>
      *
      * @param x   the node of the tree
@@ -151,7 +152,7 @@ public final class Chapter12 {
     }
 
     /**
-     * Returns the node with the smallest key in a non-empty binary tree - a recursive version.
+     * Returns the node with the smallest key in a non-empty binary search tree - a recursive version.
      * <p><span style="font-variant:small-caps;">Recursive-Tree-Minimum</span> from solution to exercise 12.2-2.</p>
      *
      * @param x   the root of the tree
@@ -166,7 +167,7 @@ public final class Chapter12 {
     }
 
     /**
-     * Returns the node with the largest key in a non-empty binary tree - a recursive version.
+     * Returns the node with the largest key in a non-empty binary search tree - a recursive version.
      * <p><span style="font-variant:small-caps;">Recursive-Tree-Maximum</span> from solution to exercise 12.2-2.</p>
      *
      * @param x   the root of the tree
@@ -181,7 +182,7 @@ public final class Chapter12 {
     }
 
     /**
-     * Returns the node's predecessor in a non-empty binary tree.
+     * Returns the node's predecessor in a non-empty binary search tree.
      * <p><span style="font-variant:small-caps;">Tree-Predecessor</span> from solution to exercise 12.2-3.</p>
      *
      * @param x   the node of the tree
@@ -201,10 +202,10 @@ public final class Chapter12 {
     }
 
     /**
-     * Prints out keys of a binary tree performing inorder tree walk - iterative version.
+     * Prints out keys of a binary search tree performing inorder tree walk - iterative version.
      * <p>Exercise 12.2-7.</p>
      *
-     * @param T   the binary tree
+     * @param T   the binary search tree
      * @param <E> the type of keys in the tree
      */
     public static <E extends Comparable<? super E>> void inorderTreeWalk_(BinaryTree<E> T) {
@@ -221,10 +222,10 @@ public final class Chapter12 {
     }
 
     /**
-     * Inserts a node into a binary tree.
+     * Inserts a node into a binary search tree.
      * <p><span style="font-variant:small-caps;">Tree-Insert</span> from subchapter 12.3.</p>
      *
-     * @param T   the binary tree
+     * @param T   the binary search tree
      * @param z   the node to insert
      * @param <E> the type of keys in the tree
      */
@@ -252,10 +253,10 @@ public final class Chapter12 {
     }
 
     /**
-     * Deletes a node from a binary tree.
+     * Deletes a node from a binary search tree.
      * <p><span style="font-variant:small-caps;">Tree-Delete</span> from subchapter 12.3.</p>
      *
-     * @param T   the binary tree
+     * @param T   the binary search tree
      * @param z   the node to delete
      * @param <E> the type of keys in {@code T}
      * @return the node deleted from {@code T}
@@ -292,10 +293,10 @@ public final class Chapter12 {
     }
 
     /**
-     * Inserts a node into a binary tree - a recursive version.
+     * Inserts a node into a binary search tree - a recursive version.
      * <p><span style="font-variant:small-caps;">Recursive-Tree-Insert</span> from solution to exercise 12.3-1.</p>
      *
-     * @param T   the binary tree
+     * @param T   the binary search tree
      * @param x   the root of tree {@code T}
      * @param z   the node to insert
      * @param <E> the type of keys in {@code T}
@@ -323,7 +324,7 @@ public final class Chapter12 {
     }
 
     /**
-     * Sorts elements by inserting them into a binary tree and performing inorder tree walk on it.
+     * Sorts elements by inserting them into a binary search tree and performing inorder tree walk on it.
      * <p>Exercise 12.3-3.</p>
      *
      * @param A   the array of elements to sort
@@ -338,10 +339,10 @@ public final class Chapter12 {
     }
 
     /**
-     * Deletes a node from a binary tree - a fair version.
+     * Deletes a node from a binary search tree - a fair version.
      * <p>Solution to exercise 12.3-6.</p>
      *
-     * @param T   the binary tree
+     * @param T   the binary search tree
      * @param z   the node to delete
      * @param <E> the type of keys in {@code T}
      * @return the node deleted from {@code T}
@@ -385,12 +386,12 @@ public final class Chapter12 {
      * Sorts bit strings (strings consisted of '0's and '1's) using radix tree.
      * <p>Solution to problem 12-2.</p>
      *
-     * @param A the array of bit strings to sort
+     * @param S the array representing a set of bit strings to sort
      */
-    public static void bitStringsSort(Array<String> A) {
+    public static void bitStringsSort(Array<String> S) {
         RadixTree T = new RadixTree();
-        for (int i = 1; i <= A.length; i++) {
-            radixTreeInsert(T, A.at(i));
+        for (int i = 1; i <= S.length; i++) {
+            radixTreeInsert(T, S.at(i));
         }
         preorderRadixTreeWalk(T.root, "");
     }
@@ -424,6 +425,37 @@ public final class Chapter12 {
             preorderRadixTreeWalk(x.left, key + '0');
             preorderRadixTreeWalk(x.right, key + '1');
         }
+    }
+
+    /**
+     * Sorts elements using quicksort that performs the same comparisons
+     * as those performed during inserting the elements to a binary search tree.
+     * <p>Solution to problem 12-3(f).</p>
+     *
+     * @param A   the array of elements to sort
+     * @param p   the index of the beginning of subarray in {@code A} being sorted
+     * @param r   the index of the end of subarray in {@code A} being sorted
+     * @param <E> the type of elements in {@code A}
+     */
+    public static <E extends Comparable<? super E>> void treeBuildingQuicksort(Array<E> A, int p, int r) {
+        if (p < r) {
+            int q = treeBuildingPartition(A, p, r);
+            treeBuildingQuicksort(A, p, q - 1);
+            treeBuildingQuicksort(A, q + 1, r);
+        }
+    }
+
+    private static <E extends Comparable<? super E>> int treeBuildingPartition(Array<E> A, int p, int r) {
+        E x = A.at(p);
+        int i = p;
+        for (int j = p + 1; j <= r; j++) {
+            if (leq(A.at(j), x)) {
+                i++;
+                A.exch(i, j);
+            }
+        }
+        A.exch(i, p);
+        return i;
     }
 
 }
