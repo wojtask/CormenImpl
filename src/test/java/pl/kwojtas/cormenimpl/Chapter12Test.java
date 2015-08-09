@@ -427,44 +427,47 @@ public class Chapter12Test {
     public void shouldDeleteLeafFromTree() {
         // given
         BinaryTree<Integer> tree = getExemplaryBinaryTree();
-        int exampleTreeSize = tree.getSize();
+        int exemplaryTreeSize = tree.getSize();
 
         // when
-        Chapter12.treeDelete(tree, tree.root.right.left); // a leaf
+        BinaryTree.Node<Integer> actualDeletedNode = Chapter12.treeDelete(tree, tree.root.right.left); // a leaf
 
         // then
+        assertEquals(Integer.valueOf(11), actualDeletedNode.key);
         assertNull(tree.root.right.left);
-        assertEquals(exampleTreeSize - 1, tree.getSize());
+        assertEquals(exemplaryTreeSize - 1, tree.getSize());
     }
 
     @Test
     public void shouldDeleteNodeWithOneChildFromTree() {
         // given
         BinaryTree<Integer> tree = getExemplaryBinaryTree();
-        int exampleTreeSize = tree.getSize();
+        int exemplaryTreeSize = tree.getSize();
 
         // when
-        Chapter12.treeDelete(tree, tree.root.left); // a node with one child
+        BinaryTree.Node<Integer> actualDeletedNode = Chapter12.treeDelete(tree, tree.root.left); // a node with one child
 
         // then
+        assertEquals(Integer.valueOf(4), actualDeletedNode.key);
         assertNotNull(tree.root.left);
         assertEquals(Integer.valueOf(1), tree.root.left.key);
-        assertEquals(exampleTreeSize - 1, tree.getSize());
+        assertEquals(exemplaryTreeSize - 1, tree.getSize());
     }
 
     @Test
     public void shouldDeleteNodeWithTwoChildrenFromTree() {
         // given
         BinaryTree<Integer> tree = getExemplaryBinaryTree();
-        int exampleTreeSize = tree.getSize();
+        int exemplaryTreeSize = tree.getSize();
 
         // when
-        Chapter12.treeDelete(tree, tree.root.right); // a node with two children (successor's key = 19)
+        BinaryTree.Node<Integer> actualDeletedNode = Chapter12.treeDelete(tree, tree.root.right); // a node with two children (successor's key = 19)
 
         // then
+        assertEquals(Integer.valueOf(19), actualDeletedNode.key);
         assertNotNull(tree.root.right);
         assertEquals(Integer.valueOf(19), tree.root.right.key);
-        assertEquals(exampleTreeSize - 1, tree.getSize());
+        assertEquals(exemplaryTreeSize - 1, tree.getSize());
     }
 
     @Test
@@ -474,9 +477,10 @@ public class Chapter12Test {
         tree.root = new BinaryTree.Node<>(10);
 
         // when
-        Chapter12.treeDelete(tree, tree.root);
+        BinaryTree.Node<Integer> actualDeletedNode = Chapter12.treeDelete(tree, tree.root);
 
         // then
+        assertEquals(Integer.valueOf(10), actualDeletedNode.key);
         assertNull(tree.root);
     }
 
@@ -552,66 +556,139 @@ public class Chapter12Test {
     }
 
     @Test
-    public void shouldDeleteLeafFromTreeUsingFairTreeDelete() {
+    public void shouldDeleteLeafFromTreeUsingSafeTreeDelete() {
         // given
         BinaryTree<Integer> tree = getExemplaryBinaryTree();
-        int exampleTreeSize = tree.getSize();
+        int exemplaryTreeSize = tree.getSize();
 
         // when
-        Chapter12.fairTreeDelete(tree, tree.root.right.left); // a leaf
+        Chapter12.safeTreeDelete(tree, tree.root.right.left); // a leaf
 
         // then
         assertNull(tree.root.right.left);
-        assertEquals(exampleTreeSize - 1, tree.getSize());
+        assertEquals(exemplaryTreeSize - 1, tree.getSize());
+    }
+
+    @Test
+    public void shouldDeleteNodeWithTwoChildrenFromTreeUsingSafeTreeDelete() {
+        // given
+        BinaryTree<Integer> tree = getExemplaryBinaryTree();
+        int exemplaryTreeSize = tree.getSize();
+
+        // when
+        Chapter12.safeTreeDelete(tree, tree.root.right); // a node with two children (successor's key = 19)
+
+        // then
+        assertNotNull(tree.root.right);
+        assertEquals(Integer.valueOf(19), tree.root.right.key);
+        assertEquals(exemplaryTreeSize - 1, tree.getSize());
+    }
+
+    @Test
+    public void shouldDeleteNodeWithTwoChildrenFromTreeUsingSafeTreeDelete2() {
+        // given
+        BinaryTree<Integer> tree = getExemplaryBinaryTreeForSafeDelete();
+        int exemplaryTreeSize = tree.getSize();
+
+        // when
+        Chapter12.safeTreeDelete(tree, tree.root.left); // a node with two children (successor's key = 6)
+
+        // then
+        assertNotNull(tree.root.left);
+        assertEquals(Integer.valueOf(6), tree.root.left.key);
+        assertEquals(exemplaryTreeSize - 1, tree.getSize());
+    }
+
+    private BinaryTree<Integer> getExemplaryBinaryTreeForSafeDelete() {
+        BinaryTree<Integer> tree = new BinaryTree<>();
+        BinaryTree.Node<Integer> x1 = new BinaryTree.Node<>(9);
+        BinaryTree.Node<Integer> x2 = new BinaryTree.Node<>(5);
+        BinaryTree.Node<Integer> x3 = new BinaryTree.Node<>(10);
+        BinaryTree.Node<Integer> x4 = new BinaryTree.Node<>(2);
+        BinaryTree.Node<Integer> x5 = new BinaryTree.Node<>(7);
+        BinaryTree.Node<Integer> x6 = new BinaryTree.Node<>(6);
+        BinaryTree.Node<Integer> x7 = new BinaryTree.Node<>(8);
+        tree.root = x1;
+        x1.left = x2;
+        x2.p = x1;
+        x1.right = x3;
+        x3.p = x1;
+        x2.left = x4;
+        x4.p = x2;
+        x2.right = x5;
+        x5.p = x2;
+        x5.left = x6;
+        x6.p = x5;
+        x5.right = x7;
+        x7.p = x5;
+        return tree;
+    }
+
+    @Test
+    public void shouldDeleteLeafFromTreeUsingFairTreeDelete() {
+        // given
+        BinaryTree<Integer> tree = getExemplaryBinaryTree();
+        int exemplaryTreeSize = tree.getSize();
+
+        // when
+        BinaryTree.Node<Integer> actualDeletedNode = Chapter12.fairTreeDelete(tree, tree.root.right.left); // a leaf
+
+        // then
+        assertEquals(Integer.valueOf(11), actualDeletedNode.key);
+        assertNull(tree.root.right.left);
+        assertEquals(exemplaryTreeSize - 1, tree.getSize());
     }
 
     @Test
     public void shouldDeleteNodeWithOneChildFromTreeUsingFairTreeDelete() {
         // given
         BinaryTree<Integer> tree = getExemplaryBinaryTree();
-        int exampleTreeSize = tree.getSize();
+        int exemplaryTreeSize = tree.getSize();
 
         // when
-        Chapter12.fairTreeDelete(tree, tree.root.left); // a node with one child
+        BinaryTree.Node<Integer> actualDeletedNode = Chapter12.fairTreeDelete(tree, tree.root.left); // a node with one child
 
         // then
+        assertEquals(Integer.valueOf(4), actualDeletedNode.key);
         assertNotNull(tree.root.left);
         assertEquals(Integer.valueOf(1), tree.root.left.key);
-        assertEquals(exampleTreeSize - 1, tree.getSize());
+        assertEquals(exemplaryTreeSize - 1, tree.getSize());
     }
 
     @Test
     public void shouldDeleteNodeWithTwoChildrenFromTreeUsingFairTreeDeleteBySplicingOutItsPredecessor() {
         // given
         BinaryTree<Integer> tree = getExemplaryBinaryTree();
-        int exampleTreeSize = tree.getSize();
+        int exemplaryTreeSize = tree.getSize();
         mockStatic(Util.class);
         when(Util.random()).thenReturn(0);
 
         // when
-        Chapter12.fairTreeDelete(tree, tree.root.right); // a node with two children (predecessor's key = 11)
+        BinaryTree.Node<Integer> actualDeletedNode = Chapter12.fairTreeDelete(tree, tree.root.right); // a node with two children (predecessor's key = 11)
 
         // then
+        assertEquals(Integer.valueOf(11), actualDeletedNode.key);
         assertNotNull(tree.root.right);
         assertEquals(Integer.valueOf(11), tree.root.right.key);
-        assertEquals(exampleTreeSize - 1, tree.getSize());
+        assertEquals(exemplaryTreeSize - 1, tree.getSize());
     }
 
     @Test
     public void shouldDeleteNodeWithTwoChildrenFromTreeUsingFairTreeDeleteBySplicingOutItsSuccessor() {
         // given
         BinaryTree<Integer> tree = getExemplaryBinaryTree();
-        int exampleTreeSize = tree.getSize();
+        int exemplaryTreeSize = tree.getSize();
         mockStatic(Util.class);
         when(Util.random()).thenReturn(1);
 
         // when
-        Chapter12.fairTreeDelete(tree, tree.root.right); // a node with two children (successor's key = 19)
+        BinaryTree.Node<Integer> actualDeletedNode = Chapter12.fairTreeDelete(tree, tree.root.right); // a node with two children (successor's key = 19)
 
         // then
+        assertEquals(Integer.valueOf(19), actualDeletedNode.key);
         assertNotNull(tree.root.right);
         assertEquals(Integer.valueOf(19), tree.root.right.key);
-        assertEquals(exampleTreeSize - 1, tree.getSize());
+        assertEquals(exemplaryTreeSize - 1, tree.getSize());
     }
 
     @Test
@@ -621,9 +698,10 @@ public class Chapter12Test {
         tree.root = new BinaryTree.Node<>(10);
 
         // when
-        Chapter12.fairTreeDelete(tree, tree.root);
+        BinaryTree.Node<Integer> actualDeletedNode = Chapter12.fairTreeDelete(tree, tree.root);
 
         // then
+        assertEquals(Integer.valueOf(10), actualDeletedNode.key);
         assertNull(tree.root);
     }
 

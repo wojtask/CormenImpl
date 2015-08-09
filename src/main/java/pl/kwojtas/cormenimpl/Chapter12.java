@@ -339,6 +339,42 @@ public final class Chapter12 {
     }
 
     /**
+     * Deletes a node from a binary search tree - a safe version.
+     * <p>Solution to exercise 12.3-4.</p>
+     *
+     * @param T   the binary search tree
+     * @param z   the node to delete
+     * @param <E> the type of keys in {@code T}
+     */
+    public static <E extends Comparable<? super E>> void safeTreeDelete(BinaryTree<E> T, BinaryTree.Node<E> z) {
+        if (z.left == null || z.right == null) {
+            treeDelete(T, z);
+            return;
+        }
+        BinaryTree.Node<E> y = treeSuccessor(z);
+        if (y.right != null) {
+            y.right.p = y.p;
+        }
+        if (y == y.p.left) {
+            y.p.left = y.right;
+        } else {
+            y.p.right = y.right;
+        }
+        z.left.p = y;
+        z.right.p = y;
+        if (z.p != null) {
+            if (z == z.p.left) {
+                z.p.left = y;
+            } else {
+                z.p.right = y;
+            }
+        }
+        y.p = z.p;
+        y.left = z.left;
+        y.right = z.right;
+    }
+
+    /**
      * Deletes a node from a binary search tree - a fair version.
      * <p>Solution to exercise 12.3-6.</p>
      *
@@ -428,7 +464,7 @@ public final class Chapter12 {
     }
 
     /**
-     * Sorts elements using quicksort that performs the same comparisons
+     * Sorts elements using quicksort that performs exactly the same comparisons
      * as those performed during inserting the elements to a binary search tree.
      * <p>Solution to problem 12-3(f).</p>
      *
