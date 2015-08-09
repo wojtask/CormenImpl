@@ -25,9 +25,9 @@ public final class Chapter7 {
      * @param A   the array of elements to sort
      * @param p   the index of the beginning of subarray in {@code A} being sorted
      * @param r   the index of the end of subarray in {@code A} being sorted
-     * @param <T> the type of elements in {@code A}
+     * @param <E> the type of elements in {@code A}
      */
-    public static <T extends Comparable<? super T>> void quicksort(Array<T> A, int p, int r) {
+    public static <E extends Comparable<? super E>> void quicksort(Array<E> A, int p, int r) {
         if (p < r) {
             int q = partition(A, p, r);
             quicksort(A, p, q - 1);
@@ -43,11 +43,11 @@ public final class Chapter7 {
      * @param A   the array of elements to partition
      * @param p   the index of the beginning of subarray in {@code A} being partitioned
      * @param r   the index of the end of subarray in {@code A} being partitioned and the index of the pivot element
-     * @param <T> the type of elements in {@code A}
+     * @param <E> the type of elements in {@code A}
      * @return the index of the pivot element after partitioning
      */
-    static <T extends Comparable<? super T>> int partition(Array<T> A, int p, int r) {
-        T x = A.at(r);
+    static <E extends Comparable<? super E>> int partition(Array<E> A, int p, int r) {
+        E x = A.at(r);
         int i = p - 1;
         for (int j = p; j <= r - 1; j++) {
             if (leq(A.at(j), x)) {
@@ -67,10 +67,10 @@ public final class Chapter7 {
      * @param A   the array of elements to partition
      * @param p   the index of the beginning of subarray in {@code A} being partitioned
      * @param r   the index of the end of subarray in {@code A} being partitioned
-     * @param <T> the type of elements in {@code A}
+     * @param <E> the type of elements in {@code A}
      * @return the index of the pivot element after partitioning
      */
-    static <T extends Comparable<? super T>> int randomizedPartition(Array<T> A, int p, int r) {
+    static <E extends Comparable<? super E>> int randomizedPartition(Array<E> A, int p, int r) {
         int i = random(p, r);
         A.exch(r, i);
         return partition(A, p, r);
@@ -83,9 +83,9 @@ public final class Chapter7 {
      * @param A   the array of elements to sort
      * @param p   the index of the beginning of subarray in {@code A} being sorted
      * @param r   the index of the end of subarray in {@code A} being sorted
-     * @param <T> the type of elements in {@code A}
+     * @param <E> the type of elements in {@code A}
      */
-    public static <T extends Comparable<? super T>> void randomizedQuicksort(Array<T> A, int p, int r) {
+    public static <E extends Comparable<? super E>> void randomizedQuicksort(Array<E> A, int p, int r) {
         if (p < r) {
             int q = randomizedPartition(A, p, r);
             quicksort(A, p, q - 1);
@@ -101,11 +101,11 @@ public final class Chapter7 {
      * @param p   the index of the beginning of subarray in {@code A} being sorted
      * @param r   the index of the end of subarray in {@code A} being sorted
      * @param k   the minimum size of a subarray that should be sorted using quicksort
-     * @param <T> the type of elements in {@code A}
+     * @param <E> the type of elements in {@code A}
      */
-    public static <T extends Comparable<? super T>> void sortNearlySorted(Array<T> A, int p, int r, int k) {
+    public static <E extends Comparable<? super E>> void sortNearlySorted(Array<E> A, int p, int r, int k) {
         quicksortNearlySorted(A, p, r, k);
-        Array<T> nearlySorted = Array.withLength(r - p + 1);
+        Array<E> nearlySorted = Array.withLength(r - p + 1);
         for (int i = p; i <= r; i++) {
             nearlySorted.set(i - p + 1, A.at(i));
         }
@@ -115,7 +115,7 @@ public final class Chapter7 {
         }
     }
 
-    private static <T extends Comparable<? super T>> void quicksortNearlySorted(Array<T> A, int p, int r, int k) {
+    private static <E extends Comparable<? super E>> void quicksortNearlySorted(Array<E> A, int p, int r, int k) {
         if (r - p + 1 >= k) {
             int q = partition(A, p, r);
             quicksortNearlySorted(A, p, q - 1, k);
@@ -130,11 +130,11 @@ public final class Chapter7 {
      * @param A   the array of elements to partition
      * @param p   the index of the beginning of subarray in {@code A} being partitioned
      * @param r   the index of the end of subarray in {@code A} being partitioned
-     * @param <T> the type of elements in {@code A}
+     * @param <E> the type of elements in {@code A}
      * @return the index of the pivot element after partitioning
      */
-    static <T extends Comparable<? super T>> int hoarePartition(Array<T> A, int p, int r) {
-        T x = A.at(p);
+    static <E extends Comparable<? super E>> int hoarePartition(Array<E> A, int p, int r) {
+        E x = A.at(p);
         int i = p - 1;
         int j = r + 1;
         while (true) {
@@ -159,9 +159,9 @@ public final class Chapter7 {
      * @param A   the array of elements to sort
      * @param p   the index of the beginning of subarray in {@code A} being sorted
      * @param r   the index of the end of subarray in {@code A} being sorted
-     * @param <T> the type of elements in {@code A}
+     * @param <E> the type of elements in {@code A}
      */
-    public static <T extends Comparable<? super T>> void hoareQuicksort(Array<T> A, int p, int r) {
+    public static <E extends Comparable<? super E>> void hoareQuicksort(Array<E> A, int p, int r) {
         if (p < r) {
             int q = hoarePartition(A, p, r);
             quicksort(A, p, q);
@@ -176,9 +176,9 @@ public final class Chapter7 {
      * @param A   the array of elements to sort
      * @param i   the index of the beginning of subarray in {@code A} being sorted
      * @param j   the index of the end of subarray in {@code A} being sorted
-     * @param <T> the type of elements in {@code A}
+     * @param <E> the type of elements in {@code A}
      */
-    public static <T extends Comparable<? super T>> void stoogeSort(Array<T> A, int i, int j) {
+    public static <E extends Comparable<? super E>> void stoogeSort(Array<E> A, int i, int j) {
         if (greater(A.at(i), A.at(j))) {
             A.exch(i, j);
         }
@@ -198,9 +198,9 @@ public final class Chapter7 {
      * @param A   the array of elements to sort
      * @param p   the index of the beginning of subarray in {@code A} being sorted
      * @param r   the index of the end of subarray in {@code A} being sorted
-     * @param <T> the type of elements in {@code A}
+     * @param <E> the type of elements in {@code A}
      */
-    public static <T extends Comparable<? super T>> void quicksort_(Array<T> A, int p, int r) {
+    public static <E extends Comparable<? super E>> void quicksort_(Array<E> A, int p, int r) {
         while (p < r) {
             int q = partition(A, p, r);
             quicksort_(A, p, q - 1);
@@ -215,9 +215,9 @@ public final class Chapter7 {
      * @param A   the array of elements to sort
      * @param p   the index of the beginning of subarray in {@code A} being sorted
      * @param r   the index of the end of subarray in {@code A} being sorted
-     * @param <T> the type of elements in {@code A}
+     * @param <E> the type of elements in {@code A}
      */
-    public static <T extends Comparable<? super T>> void quicksort__(Array<T> A, int p, int r) {
+    public static <E extends Comparable<? super E>> void quicksort__(Array<E> A, int p, int r) {
         while (p < r) {
             int q = partition(A, p, r);
             if (q - p < r - q) {
@@ -239,16 +239,16 @@ public final class Chapter7 {
      * @param A   the array of elements to partition
      * @param p   the index of the beginning of subarray in {@code A} being partitioned
      * @param r   the index of the end of subarray in {@code A} being partitioned
-     * @param <T> the type of elements in {@code A}
+     * @param <E> the type of elements in {@code A}
      * @return the index of the pivot element after partitioning
      */
-    public static <T extends Comparable<? super T>> int medianOf3Partition(Array<T> A, int p, int r) {
+    public static <E extends Comparable<? super E>> int medianOf3Partition(Array<E> A, int p, int r) {
         int i1 = random(p, r);
         int i2 = random(p, r);
         int i3 = random(p, r);
-        Array<T> pivots = new Array<>(A.at(i1), A.at(i2), A.at(i3));
+        Array<E> pivots = new Array<>(A.at(i1), A.at(i2), A.at(i3));
         insertionSort(pivots);
-        T median = pivots.at(2);
+        E median = pivots.at(2);
         if (median.equals(A.at(i1))) {
             A.exch(r, i1);
         } else if (median.equals(A.at(i2))) {

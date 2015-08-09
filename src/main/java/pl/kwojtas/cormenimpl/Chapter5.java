@@ -66,10 +66,10 @@ public final class Chapter5 {
      * <p><span style="font-variant:small-caps;">Permute-By-Sorting</span> from subchapter 5.3.</p>
      *
      * @param A   the array of elements to permute
-     * @param <T> the type of elements in {@code A}
+     * @param <E> the type of elements in {@code A}
      * @return a permutation of {@code A}
      */
-    public static <T> Array<T> permuteBySorting(Array<T> A) {
+    public static <E> Array<E> permuteBySorting(Array<E> A) {
         int n = A.length;
         Array<Integer> P = Array.withLength(n);
         for (int i = 1; i <= n; i++) {
@@ -79,7 +79,7 @@ public final class Chapter5 {
         return A;
     }
 
-    private static <T> void sortUsingExternalKeys(Array<T> A, Array<Integer> keys, int p, int r) {
+    private static <E> void sortUsingExternalKeys(Array<E> A, Array<Integer> keys, int p, int r) {
         if (p < r) {
             int q = (p + r) / 2;
             sortUsingExternalKeys(A, keys, p, q);
@@ -88,11 +88,11 @@ public final class Chapter5 {
         }
     }
 
-    private static <T> void mergeUsingExternalKeys(Array<T> A, Array<Integer> keys, int p, int q, int r) {
+    private static <E> void mergeUsingExternalKeys(Array<E> A, Array<Integer> keys, int p, int q, int r) {
         int n1 = q - p + 1;
         int n2 = r - q;
-        Array<T> L = Array.withLength(n1 + 1);
-        Array<T> R = Array.withLength(n2 + 1);
+        Array<E> L = Array.withLength(n1 + 1);
+        Array<E> R = Array.withLength(n2 + 1);
         Array<Integer> keysL = Array.withLength(n1 + 1);
         Array<Integer> keysR = Array.withLength(n2 + 1);
         for (int i = 1; i <= n1; i++) {
@@ -125,9 +125,9 @@ public final class Chapter5 {
      * <p><span style="font-variant:small-caps;">Randomize-In-Place</span> from subchapter 5.3.</p>
      *
      * @param A   the array of elements to permute
-     * @param <T> the type of elements in {@code A}
+     * @param <E> the type of elements in {@code A}
      */
-    public static <T> void randomizeInPlace(Array<T> A) {
+    public static <E> void randomizeInPlace(Array<E> A) {
         int n = A.length;
         for (int i = 1; i <= n; i++) {
             A.exch(i, random(i, n));
@@ -139,9 +139,9 @@ public final class Chapter5 {
      * <p><span style="font-variant:small-caps;">Randomize-In-Place'</span> from solution to exercise 5.3-1.</p>
      *
      * @param A   the array of elements to permute
-     * @param <T> the type of elements in {@code A}
+     * @param <E> the type of elements in {@code A}
      */
-    public static <T> void randomizeInPlace_(Array<T> A) {
+    public static <E> void randomizeInPlace_(Array<E> A) {
         int n = A.length;
         A.exch(1, random(1, n));
         for (int i = 2; i <= n; i++) {
@@ -154,10 +154,10 @@ public final class Chapter5 {
      * <p>Solution to exercise 5.3-6.</p>
      *
      * @param A   the array of elements to permute
-     * @param <T> the type of elements in {@code A}
+     * @param <E> the type of elements in {@code A}
      * @return a permutation of {@code A}
      */
-    public static <T> Array<T> permuteUniformlyBySorting(Array<T> A) {
+    public static <E> Array<E> permuteUniformlyBySorting(Array<E> A) {
         int n = A.length;
         Array<Integer> P = Array.withLength(n);
         for (int i = 1; i <= n; i++) {
@@ -167,7 +167,7 @@ public final class Chapter5 {
         return A;
     }
 
-    private static <T> void sortUniformlyUsingExternalKeys(Array<T> A, Array<Integer> keys, int p, int r) {
+    private static <E> void sortUniformlyUsingExternalKeys(Array<E> A, Array<Integer> keys, int p, int r) {
         if (p < r) {
             int q = (p + r) / 2;
             sortUniformlyUsingExternalKeys(A, keys, p, q);
@@ -176,11 +176,11 @@ public final class Chapter5 {
         }
     }
 
-    private static <T> void mergeUniformlyUsingExternalKeys(Array<T> A, Array<Integer> keys, int p, int q, int r) {
+    private static <E> void mergeUniformlyUsingExternalKeys(Array<E> A, Array<Integer> keys, int p, int q, int r) {
         int n1 = q - p + 1;
         int n2 = r - q;
-        Array<T> L = Array.withLength(n1 + 1);
-        Array<T> R = Array.withLength(n2 + 1);
+        Array<E> L = Array.withLength(n1 + 1);
+        Array<E> R = Array.withLength(n2 + 1);
         Array<Integer> keysL = Array.withLength(n1 + 1);
         Array<Integer> keysR = Array.withLength(n2 + 1);
         for (int i = 1; i <= n1; i++) {
@@ -214,10 +214,10 @@ public final class Chapter5 {
      *
      * @param A   the array to scan
      * @param x   the element to find
-     * @param <T> the type of elements in {@code A}
+     * @param <E> the type of elements in {@code A}
      * @return index {@code i} such that {@code A[i] = v}, or {@code null} if {@code v} does not appear in {@code A}
      */
-    public static <T> Integer randomSearch(Array<T> A, T x) {
+    public static <E> Integer randomSearch(Array<E> A, E x) {
         int n = A.length;
         Array<Boolean> B = Array.withLength(n);
         for (int k = 1; k <= n; k++) {

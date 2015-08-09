@@ -4,21 +4,21 @@ package pl.kwojtas.cormenimpl.util;
  * Implements a priority queue with ranked elements.
  * Maintains a global rank and sets it to new elements so that ranks of elements are unique in this priority queue.
  *
- * @param <T> the type of keys in the priority queue
+ * @param <E> the type of keys in the priority queue
  */
-public class PriorityQueueWithRanks<T> extends Heap<PriorityQueueWithRanks.KeyWithRank<T>> {
+public class PriorityQueueWithRanks<E> extends Heap<PriorityQueueWithRanks.KeyWithRank<E>> {
 
     /**
      * Implements a ranked element.
      *
-     * @param <T> the type of key
+     * @param <F> the type of key
      */
-    public static class KeyWithRank<T> {
+    public static class KeyWithRank<F> {
 
         /**
          * The key of the element.
          */
-        public T key;
+        public F key;
 
         /**
          * The rank of the element.
@@ -31,7 +31,7 @@ public class PriorityQueueWithRanks<T> extends Heap<PriorityQueueWithRanks.KeyWi
          * @param key  the key of the new element
          * @param rank the rank of the new element
          */
-        public KeyWithRank(T key, int rank) {
+        public KeyWithRank(F key, int rank) {
             this.key = key;
             this.rank = rank;
         }

@@ -3,9 +3,9 @@ package pl.kwojtas.cormenimpl.util;
 /**
  * Implements a huge array.
  *
- * @param <T> the type of elements in the huge array
+ * @param <E> the type of elements in the huge array
  */
-public class HugeArray<T> {
+public class HugeArray<E> {
 
     /**
      * The array containing indices of elements in stack {@code S}.
@@ -15,7 +15,7 @@ public class HugeArray<T> {
     /**
      * The auxiliary stack containing the elements of the huge array.
      */
-    public Stack<Element<T>> S;
+    public Stack<Element<E>> S;
 
     /**
      * Creates a huge array with a given size and stack capacity.

@@ -17,10 +17,10 @@ public class Util {
      *
      * @param a   the first value
      * @param b   the second value
-     * @param <T> the type of {@code b}
+     * @param <E> the type of {@code b}
      * @return {@code true} if {@code a < b}, or {@code false} otherwise
      */
-    public static <T> boolean less(Comparable<? super T> a, T b) {
+    public static <E> boolean less(Comparable<? super E> a, E b) {
         return a.compareTo(b) < 0;
     }
 
@@ -29,10 +29,10 @@ public class Util {
      *
      * @param a   the first value
      * @param b   the second value
-     * @param <T> the type of {@code b}
+     * @param <E> the type of {@code b}
      * @return {@code true} if {@code a <= b}, or {@code false} otherwise
      */
-    public static <T> boolean leq(Comparable<? super T> a, T b) {
+    public static <E> boolean leq(Comparable<? super E> a, E b) {
         return a.compareTo(b) <= 0;
     }
 
@@ -41,10 +41,10 @@ public class Util {
      *
      * @param a   the first value
      * @param b   the second value
-     * @param <T> the type of {@code b}
+     * @param <E> the type of {@code b}
      * @return {@code true} if {@code a > b}, or {@code false} otherwise
      */
-    public static <T> boolean greater(Comparable<? super T> a, T b) {
+    public static <E> boolean greater(Comparable<? super E> a, E b) {
         return a.compareTo(b) > 0;
     }
 
@@ -53,10 +53,10 @@ public class Util {
      *
      * @param a   the first value
      * @param b   the second value
-     * @param <T> the type of {@code b}
+     * @param <E> the type of {@code b}
      * @return {@code true} if {@code a >= b}, or {@code false} otherwise
      */
-    public static <T> boolean geq(Comparable<? super T> a, T b) {
+    public static <E> boolean geq(Comparable<? super E> a, E b) {
         return a.compareTo(b) >= 0;
     }
 
@@ -65,10 +65,10 @@ public class Util {
      *
      * @param a   the first value
      * @param b   the second value
-     * @param <T> the type of the values
+     * @param <E> the type of the values
      * @return the minimum of {@code a} and {@code b}
      */
-    public static <T extends Comparable<? super T>> T min(T a, T b) {
+    public static <E extends Comparable<? super E>> E min(E a, E b) {
         return leq(a, b) ? a : b;
     }
 
@@ -77,10 +77,10 @@ public class Util {
      *
      * @param a   the first value
      * @param b   the second value
-     * @param <T> the type of the values
+     * @param <E> the type of the values
      * @return the maximum of {@code a} and {@code b}
      */
-    public static <T extends Comparable<? super T>> T max(T a, T b) {
+    public static <E extends Comparable<? super E>> E max(E a, E b) {
         return geq(a, b) ? a : b;
     }
 

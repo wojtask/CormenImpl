@@ -598,9 +598,9 @@ public final class Chapter8 {
      * @param k   the number of elements taken for averages
      * @param p   the index of the beginning of subarray in {@code A} being rearranged
      * @param r   the index of the end of subarray in {@code A} being rearranged
-     * @param <T> the type of elements in {@code A}
+     * @param <E> the type of elements in {@code A}
      */
-    public static <T extends Comparable<? super T>> void averageSort(Array<T> A, int k, int p, int r) {
+    public static <E extends Comparable<? super E>> void averageSort(Array<E> A, int k, int p, int r) {
         if (p + k - 1 < r) {
             int q = partition(A, p, r);
             averageSort(A, k, p, q - 1);

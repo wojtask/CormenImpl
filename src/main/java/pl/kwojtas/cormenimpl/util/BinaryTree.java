@@ -3,43 +3,43 @@ package pl.kwojtas.cormenimpl.util;
 /**
  * Implements a binary tree.
  *
- * @param <T> the type of elements in the binary tree
+ * @param <E> the type of elements in the binary tree
  */
-public class BinaryTree<T> {
+public class BinaryTree<E> {
 
     /**
      * Implements a binary tree's node.
      *
-     * @param <U> the type of the node's key
+     * @param <F> the type of the node's key
      */
-    public static class Node<U> {
+    public static class Node<F> {
 
         /**
          * The key.
          */
-        public U key;
+        public F key;
 
         /**
          * The parent node.
          */
-        public Node<U> p;
+        public Node<F> p;
 
         /**
          * The left child node.
          */
-        public Node<U> left;
+        public Node<F> left;
 
         /**
          * The right child node.
          */
-        public Node<U> right;
+        public Node<F> right;
 
         /**
          * Creates a node with a given key.
          *
          * @param key the key of the new node
          */
-        public Node(U key) {
+        public Node(F key) {
             this.key = key;
         }
     }
@@ -47,7 +47,7 @@ public class BinaryTree<T> {
     /**
      * The root of the tree.
      */
-    public Node<T> root;
+    public Node<E> root;
 
     /**
      * Returns the number of elements in the tree.
@@ -58,7 +58,7 @@ public class BinaryTree<T> {
         return getSize(root);
     }
 
-    private int getSize(Node<T> x) {
+    private int getSize(Node<E> x) {
         if (x == null) {
             return 0;
         }

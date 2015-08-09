@@ -19,11 +19,11 @@ public final class Chapter2 {
      * <p><span style="font-variant:small-caps;">Insertion-Sort</span> from subchapter 2.1.</p>
      *
      * @param A   the array of elements to sort
-     * @param <T> the type of elements in {@code A}
+     * @param <E> the type of elements in {@code A}
      */
-    public static <T extends Comparable<? super T>> void insertionSort(Array<T> A) {
+    public static <E extends Comparable<? super E>> void insertionSort(Array<E> A) {
         for (int j = 2; j <= A.length; j++) {
-            T key = A.at(j);
+            E key = A.at(j);
             int i = j - 1;
             while (i > 0 && greater(A.at(i), key)) {
                 A.set(i + 1, A.at(i));
@@ -38,11 +38,11 @@ public final class Chapter2 {
      * <p>Solution to exercise 2.1-2.</p>
      *
      * @param A   the array of elements to sort
-     * @param <T> the type of elements in {@code A}
+     * @param <E> the type of elements in {@code A}
      */
-    public static <T extends Comparable<? super T>> void nonincreasingInsertionSort(Array<T> A) {
+    public static <E extends Comparable<? super E>> void nonincreasingInsertionSort(Array<E> A) {
         for (int j = 2; j <= A.length; j++) {
-            T key = A.at(j);
+            E key = A.at(j);
             int i = j - 1;
             while (i > 0 && less(A.at(i), key)) {
                 A.set(i + 1, A.at(i));
@@ -58,10 +58,10 @@ public final class Chapter2 {
      *
      * @param A   the array to scan
      * @param v   the element to find
-     * @param <T> the type of elements in {@code A}
+     * @param <E> the type of elements in {@code A}
      * @return index {@code i} such that {@code A[i] = v}, or {@code null} if {@code v} does not appear in {@code A}
      */
-    public static <T> Integer linearSearch(Array<T> A, T v) {
+    public static <E> Integer linearSearch(Array<E> A, E v) {
         int i = 1;
         while (i <= A.length && !A.at(i).equals(v)) {
             i++;
@@ -99,9 +99,9 @@ public final class Chapter2 {
      * <p><span style="font-variant:small-caps;">Selection-Sort</span> from solution to exercise 2.2-2.</p>
      *
      * @param A   the array of elements to sort
-     * @param <T> the type of elements in {@code A}
+     * @param <E> the type of elements in {@code A}
      */
-    public static <T extends Comparable<? super T>> void selectionSort(Array<T> A) {
+    public static <E extends Comparable<? super E>> void selectionSort(Array<E> A) {
         int n = A.length;
         for (int j = 1; j <= n - 1; j++) {
             int min = j;
@@ -175,13 +175,13 @@ public final class Chapter2 {
      * @param p   the index of the beginning of the first subarray in {@code A} being merged
      * @param q   the index of the end of the first subarray in {@code A} being merged
      * @param r   the index of end of the second subarray in {@code A} being merged
-     * @param <T> the type of elements in {@code A}
+     * @param <E> the type of elements in {@code A}
      */
-    public static <T extends Comparable<? super T>> void merge_(Array<T> A, int p, int q, int r) {
+    public static <E extends Comparable<? super E>> void merge_(Array<E> A, int p, int q, int r) {
         int n1 = q - p + 1;
         int n2 = r - q;
-        Array<T> L = Array.withLength(n1);
-        Array<T> R = Array.withLength(n2);
+        Array<E> L = Array.withLength(n1);
+        Array<E> R = Array.withLength(n2);
         for (int i = 1; i <= n1; i++) {
             L.set(i, A.at(p + i - 1));
         }
@@ -209,10 +209,10 @@ public final class Chapter2 {
      * @param v    the element to find
      * @param low  the index of the beginning of the subarray in {@code A} being scanned
      * @param high the index of the end of the subarray in {@code A} being scanned
-     * @param <T>  the type of elements in {@code A}
+     * @param <E>  the type of elements in {@code A}
      * @return index {@code i} such that {@code A[i] = v}, or {@code null} if {@code v} does not appear in {@code A}
      */
-    public static <T extends Comparable<? super T>> Integer recursiveBinarySearch(Array<T> A, T v, int low, int high) {
+    public static <E extends Comparable<? super E>> Integer recursiveBinarySearch(Array<E> A, E v, int low, int high) {
         if (low > high) {
             return null;
         }
@@ -232,10 +232,10 @@ public final class Chapter2 {
      *
      * @param A   the array to scan
      * @param v   the element to find
-     * @param <T> the type of elements in {@code A}
+     * @param <E> the type of elements in {@code A}
      * @return index {@code i} such that {@code A[i] = v}, or {@code null} if {@code v} does not appear in {@code A}
      */
-    public static <T extends Comparable<? super T>> Integer iterativeBinarySearch(Array<T> A, T v) {
+    public static <E extends Comparable<? super E>> Integer iterativeBinarySearch(Array<E> A, E v) {
         int low = 1;
         int high = A.length;
         while (low <= high) {
@@ -276,9 +276,9 @@ public final class Chapter2 {
      * <p><span style="font-variant:small-caps;">Bubble-Sort</span> from problem 2-2.</p>
      *
      * @param A   the array of elements to sort
-     * @param <T> the type of elements in {@code A}
+     * @param <E> the type of elements in {@code A}
      */
-    public static <T extends Comparable<? super T>> void bubbleSort(Array<T> A) {
+    public static <E extends Comparable<? super E>> void bubbleSort(Array<E> A) {
         for (int i = 1; i <= A.length; i++) {
             for (int j = A.length; j >= i + 1; j--) {
                 if (less(A.at(j), A.at(j - 1))) {

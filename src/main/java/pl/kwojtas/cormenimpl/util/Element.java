@@ -3,9 +3,9 @@ package pl.kwojtas.cormenimpl.util;
 /**
  * Implements a generic element - a structure with a key and satellite data.
  *
- * @param <T> the type of satellite data
+ * @param <E> the type of satellite data
  */
-public class Element<T> {
+public class Element<E> {
 
     /**
      * The key.
@@ -15,7 +15,7 @@ public class Element<T> {
     /**
      * The satellite data.
      */
-    public T data;
+    public E data;
 
     /**
      * Creates an element from a given key and satellite data.
@@ -23,7 +23,7 @@ public class Element<T> {
      * @param key  the key of the new element
      * @param data the satellite data of the new element
      */
-    public Element(int key, T data) {
+    public Element(int key, E data) {
         this.key = key;
         this.data = data;
     }
@@ -33,7 +33,7 @@ public class Element<T> {
      *
      * @param otherElement the element to be copied
      */
-    public Element(Element<T> otherElement) {
+    public Element(Element<E> otherElement) {
         this.key = otherElement.key;
         this.data = otherElement.data;
     }

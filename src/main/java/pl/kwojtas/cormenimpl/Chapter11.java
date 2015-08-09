@@ -29,10 +29,10 @@ public final class Chapter11 {
      *
      * @param T   the direct-address table to scan
      * @param k   the key of the element to find
-     * @param <T> the type of elements' values in {@code T}
+     * @param <E> the type of elements' values in {@code T}
      * @return the element of key {@code k} in table {@code T}, or {@code null} if {@code T} does not contain such element
      */
-    public static <T> Element<T> directAddressSearch(ZeroBasedIndexedArray<Element<T>> T, int k) {
+    public static <E> Element<E> directAddressSearch(ZeroBasedIndexedArray<Element<E>> T, int k) {
         return T.at(k);
     }
 
@@ -42,9 +42,9 @@ public final class Chapter11 {
      *
      * @param T   the direct-address table
      * @param x   the element to insert
-     * @param <T> the type of elements' values in {@code T}
+     * @param <E> the type of elements' values in {@code T}
      */
-    public static <T> void directAddressInsert(ZeroBasedIndexedArray<Element<T>> T, Element<T> x) {
+    public static <E> void directAddressInsert(ZeroBasedIndexedArray<Element<E>> T, Element<E> x) {
         T.set(x.key, x);
     }
 
@@ -54,9 +54,9 @@ public final class Chapter11 {
      *
      * @param T   the direct-address table
      * @param x   the element from {@code T} to delete
-     * @param <T> the type of elements' values in {@code T}
+     * @param <E> the type of elements' values in {@code T}
      */
-    public static <T> void directAddressDelete(ZeroBasedIndexedArray<Element<T>> T, Element<T> x) {
+    public static <E> void directAddressDelete(ZeroBasedIndexedArray<Element<E>> T, Element<E> x) {
         T.set(x.key, null);
     }
 
@@ -65,10 +65,10 @@ public final class Chapter11 {
      * <p>Solution to exercise 11.1-1.</p>
      *
      * @param T   the direct-address table to scan
-     * @param <T> the type of elements' values in {@code T}
+     * @param <E> the type of elements' values in {@code T}
      * @return the element with the smallest key in {@code T}, or {@code null} if {@code T} does not contain such element
      */
-    public static <T> Element<T> directAddressMaximum(ZeroBasedIndexedArray<Element<T>> T) {
+    public static <E> Element<E> directAddressMaximum(ZeroBasedIndexedArray<Element<E>> T) {
         int m = T.length;
         for (int i = m - 1; i >= 0; i--) {
             if (T.at(i) != null) {
@@ -118,11 +118,11 @@ public final class Chapter11 {
      *
      * @param T   the direct-address table to scan
      * @param k   the key of the element to find
-     * @param <T> the type of elements' values in {@code T}
+     * @param <E> the type of elements' values in {@code T}
      * @return one of the elements of key {@code k} in table {@code T}, or {@code null} if {@code T} does not contain such element
      */
-    public static <T> Element<T> directAddressSearch_(ZeroBasedIndexedArray<List<Element<T>>> T, int k) {
-        List<Element<T>> list = T.at(k);
+    public static <E> Element<E> directAddressSearch_(ZeroBasedIndexedArray<List<Element<E>>> T, int k) {
+        List<Element<E>> list = T.at(k);
         if (list.head != null) {
             return list.head.key;
         }
@@ -135,10 +135,10 @@ public final class Chapter11 {
      *
      * @param T   the direct-address table
      * @param x   the element to insert
-     * @param <T> the type of elements' values in {@code T}
+     * @param <E> the type of elements' values in {@code T}
      */
-    public static <T> void directAddressInsert_(ZeroBasedIndexedArray<List<Element<T>>> T, Element<T> x) {
-        List<Element<T>> list = T.at(x.key);
+    public static <E> void directAddressInsert_(ZeroBasedIndexedArray<List<Element<E>>> T, Element<E> x) {
+        List<Element<E>> list = T.at(x.key);
         listInsert(list, new List.Node<>(x));
     }
 
@@ -148,11 +148,11 @@ public final class Chapter11 {
      *
      * @param T   the direct-address table
      * @param x   the element from {@code T} to delete
-     * @param <T> the type of elements' values in {@code T}
+     * @param <E> the type of elements' values in {@code T}
      */
-    public static <T> void directAddressDelete_(ZeroBasedIndexedArray<List<Element<T>>> T, Element<T> x) {
-        List<Element<T>> list = T.at(x.key);
-        List.Node<Element<T>> node = listSearch(list, x);
+    public static <E> void directAddressDelete_(ZeroBasedIndexedArray<List<Element<E>>> T, Element<E> x) {
+        List<Element<E>> list = T.at(x.key);
+        List.Node<Element<E>> node = listSearch(list, x);
         listDelete(list, node);
     }
 
@@ -162,10 +162,10 @@ public final class Chapter11 {
      *
      * @param H   the huge array representing the dictionary to scan
      * @param k   the key of the element to find
-     * @param <T> the type of elements' values in {@code H}
+     * @param <E> the type of elements' values in {@code H}
      * @return the element of key {@code k} in {@code H}, or {@code null} if {@code H} does not contain such element
      */
-    public static <T> Element<T> hugeArraySearch(HugeArray<T> H, int k) {
+    public static <E> Element<E> hugeArraySearch(HugeArray<E> H, int k) {
         if (1 <= H.T.at(k) && H.T.at(k) <= H.S.top && H.S.at(H.T.at(k)).key == k) {
             return new Element<>(H.S.at(H.T.at(k)));
         }
@@ -178,9 +178,9 @@ public final class Chapter11 {
      *
      * @param H   the huge array representing the dictionary
      * @param x   the element to insert
-     * @param <T> the type of elements' values in {@code H}
+     * @param <E> the type of elements' values in {@code H}
      */
-    public static <T> void hugeArrayInsert(HugeArray<T> H, Element<T> x) {
+    public static <E> void hugeArrayInsert(HugeArray<E> H, Element<E> x) {
         push(H.S, x);
         H.T.set(x.key, H.S.top);
     }
@@ -191,11 +191,11 @@ public final class Chapter11 {
      *
      * @param H   the huge array representing the dictionary
      * @param x   the element to delete
-     * @param <T> the type of elements' values in {@code H}
+     * @param <E> the type of elements' values in {@code H}
      */
-    public static <T> void hugeArrayDelete(HugeArray<T> H, Element<T> x) {
+    public static <E> void hugeArrayDelete(HugeArray<E> H, Element<E> x) {
         int k = x.key;
-        Element<T> y = pop(H.S);
+        Element<E> y = pop(H.S);
         H.S.set(H.T.at(k), y);
         H.T.set(y.key, H.T.at(k));
     }
@@ -206,10 +206,10 @@ public final class Chapter11 {
      *
      * @param T   the hash table using chaining for collision resolution
      * @param x   the element to insert
-     * @param <T> the type of elements' values in {@code T}
+     * @param <E> the type of elements' values in {@code T}
      */
-    public static <T> void chainedHashInsert(ChainedHashTable<T> T, Element<T> x) {
-        List<Element<T>> list = T.at(T.h.compute(x.key));
+    public static <E> void chainedHashInsert(ChainedHashTable<E> T, Element<E> x) {
+        List<Element<E>> list = T.at(T.h.compute(x.key));
         listInsert(list, new List.Node<>(x));
     }
 
@@ -219,12 +219,12 @@ public final class Chapter11 {
      *
      * @param T   the hash table using chaining for collision resolution
      * @param k   the key of the element to find
-     * @param <T> the type of elements' values in {@code T}
+     * @param <E> the type of elements' values in {@code T}
      * @return the element of key {@code k} in {@code T}, or {@code null} if {@code T} does not contain such element
      */
-    public static <T> Element<T> chainedHashSearch(ChainedHashTable<T> T, int k) {
-        List<Element<T>> list = T.at(T.h.compute(k));
-        List.Node<Element<T>> x = list.head;
+    public static <E> Element<E> chainedHashSearch(ChainedHashTable<E> T, int k) {
+        List<Element<E>> list = T.at(T.h.compute(k));
+        List.Node<Element<E>> x = list.head;
         while (x != null) {
             if (x.key.key == k) {
                 return x.key;
@@ -240,11 +240,11 @@ public final class Chapter11 {
      *
      * @param T   the hash table using chaining for collision resolution
      * @param x   the element to delete
-     * @param <T> the type of elements' values in {@code T}
+     * @param <E> the type of elements' values in {@code T}
      */
-    public static <T> void chainedHashDelete(ChainedHashTable<T> T, Element<T> x) {
-        List<Element<T>> list = T.at(T.h.compute(x.key));
-        List.Node<Element<T>> node = listSearch(list, x);
+    public static <E> void chainedHashDelete(ChainedHashTable<E> T, Element<E> x) {
+        List<Element<E>> list = T.at(T.h.compute(x.key));
+        List.Node<Element<E>> node = listSearch(list, x);
         listDelete(list, node);
     }
 
@@ -254,10 +254,10 @@ public final class Chapter11 {
      *
      * @param T   the hash table using an in-place chaining for collision resolution
      * @param x   the element to insert
-     * @param <T> the type of elements' values in {@code T}
+     * @param <E> the type of elements' values in {@code T}
      * @return the index in {@code T} allocated for {@code x}
      */
-    public static <T> int inPlaceChainedHashInsert(HashTableWithFreeList<T> T, Element<T> x) {
+    public static <E> int inPlaceChainedHashInsert(HashTableWithFreeList<E> T, Element<E> x) {
         int position = T.h.compute(x.key);
         if (T.at(position).element == null) {
             allocateHashTableNode(T, position);
@@ -265,7 +265,7 @@ public final class Chapter11 {
             T.at(position).element = x;
             return position;
         }
-        HashTableWithFreeList.Node<T> otherNode = T.at(position);
+        HashTableWithFreeList.Node<E> otherNode = T.at(position);
         int otherElementPosition = T.h.compute(otherNode.element.key);
         if (otherElementPosition == position) {
             int newPosition = allocateHashTableNode(T, T.free);
@@ -288,11 +288,11 @@ public final class Chapter11 {
         }
     }
 
-    private static <T> int allocateHashTableNode(HashTableWithFreeList<T> T, int position) {
+    private static <E> int allocateHashTableNode(HashTableWithFreeList<E> T, int position) {
         if (T.free == null) {
             throw new RuntimeException("overflow");
         }
-        HashTableWithFreeList.Node<T> node = T.at(position);
+        HashTableWithFreeList.Node<E> node = T.at(position);
         if (node.next != null) {
             T.at(node.next).prev = node.prev;
         }
@@ -308,10 +308,10 @@ public final class Chapter11 {
      *
      * @param T        the hash table using an in-place chaining for collision resolution
      * @param position the position of the element to delete
-     * @param <T>      the type of elements' values in {@code T}
+     * @param <E>      the type of elements' values in {@code T}
      */
-    public static <T> void inPlaceChainedHashDelete(HashTableWithFreeList<T> T, int position) {
-        HashTableWithFreeList.Node<T> node = T.at(position);
+    public static <E> void inPlaceChainedHashDelete(HashTableWithFreeList<E> T, int position) {
+        HashTableWithFreeList.Node<E> node = T.at(position);
         if (node.prev != null) {
             T.at(node.prev).next = node.next;
         }
@@ -333,10 +333,10 @@ public final class Chapter11 {
      *
      * @param T   the hash table using an in-place chaining for collision resolution
      * @param k   the key of the element to find
-     * @param <T> the type of elements' values in {@code T}
+     * @param <E> the type of elements' values in {@code T}
      * @return the element of key {@code k} in {@code T}, or {@code null} if {@code T} does not contain such element
      */
-    public static <T> Integer inPlaceChainedHashSearch(HashTableWithFreeList<T> T, int k) {
+    public static <E> Integer inPlaceChainedHashSearch(HashTableWithFreeList<E> T, int k) {
         Integer position = T.h.compute(k);
         while (position != null && T.at(position).element != null) {
             if (T.at(position).element.key == k) {

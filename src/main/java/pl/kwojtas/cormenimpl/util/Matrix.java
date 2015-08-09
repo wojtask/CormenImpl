@@ -3,11 +3,11 @@ package pl.kwojtas.cormenimpl.util;
 /**
  * Implements a matrix.
  *
- * @param <T> the type of elements in the matrix
+ * @param <E> the type of elements in the matrix
  */
-public class Matrix<T> {
+public class Matrix<E> {
 
-    private T[][] data;
+    private E[][] data;
 
     /**
      * The number of rows.
@@ -26,13 +26,13 @@ public class Matrix<T> {
      */
     @SafeVarargs
     @SuppressWarnings("unchecked")
-    public Matrix(Array<T>... rows) {
-        this.data = (T[][]) new Object[rows.length][];
+    public Matrix(Array<E>... rows) {
+        this.data = (E[][]) new Object[rows.length][];
         for (int i = 0; i < rows.length; i++) {
             if (rows[i].length != rows[0].length) {
                 throw new RuntimeException("Different sizes of rows");
             }
-            this.data[i] = (T[]) new Object[rows[i].length];
+            this.data[i] = (E[]) new Object[rows[i].length];
             for (int j = 0; j < rows[i].length; j++) {
                 this.data[i][j] = rows[i].at(j + 1);
             }
@@ -47,13 +47,13 @@ public class Matrix<T> {
      * @param rows the initial rows of the matrix
      */
     @SuppressWarnings("unchecked")
-    public Matrix(Array<Array<T>> rows) {
-        this.data = (T[][]) new Object[rows.length][];
+    public Matrix(Array<Array<E>> rows) {
+        this.data = (E[][]) new Object[rows.length][];
         for (int i = 0; i < rows.length; i++) {
             if (rows.at(i + 1).length != rows.at(1).length) {
                 throw new RuntimeException("Different sizes of rows");
             }
-            this.data[i] = (T[]) new Object[rows.at(i + 1).length];
+            this.data[i] = (E[]) new Object[rows.at(i + 1).length];
             for (int j = 0; j < rows.at(i + 1).length; j++) {
                 this.data[i][j] = rows.at(i + 1).at(j + 1);
             }
@@ -69,7 +69,7 @@ public class Matrix<T> {
      * @return an array representing row {@code row}
      * @throws RuntimeException if {@code row < 1} or {@code row > rows}
      */
-    public Array<T> row(int row) {
+    public Array<E> row(int row) {
         if (row < 1 || row > rows) {
             throw new RuntimeException("Row index out of bound");
         }
@@ -84,7 +84,7 @@ public class Matrix<T> {
      * @return the element in row {@code row} and column {@code column}
      * @throws RuntimeException if {@code row < 1} or {@code row > rows} or {@code column < 1} or {@code column > columns}
      */
-    public T at(int row, int column) {
+    public E at(int row, int column) {
         if (row < 1 || row > rows || column < 1 || column > columns) {
             throw new RuntimeException("Row index or column index out of bound");
         }
@@ -99,7 +99,7 @@ public class Matrix<T> {
      * @param element the new element
      * @throws RuntimeException if {@code row < 1} or {@code row > rows} or {@code column < 1} or {@code column > columns}
      */
-    public void set(int row, int column, T element) {
+    public void set(int row, int column, E element) {
         if (row < 1 || row > rows || column < 1 || column > columns) {
             throw new RuntimeException("Row index or column index out of bound");
         }
@@ -115,7 +115,7 @@ public class Matrix<T> {
      * @param column2 the column of the second element
      */
     public void exch(int row1, int column1, int row2, int column2) {
-        T swap = at(row1, column1);
+        E swap = at(row1, column1);
         set(row1, column1, at(row2, column2));
         set(row2, column2, swap);
     }

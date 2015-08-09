@@ -35,10 +35,10 @@ public final class Chapter10 {
      * <p><span style="font-variant:small-caps;">Stack-Empty</span> from subchapter 10.1.</p>
      *
      * @param S   the stack
-     * @param <T> the type of elements in {@code S}
+     * @param <E> the type of elements in {@code S}
      * @return {@code true} if {@code S} is empty, or {@code false} otherwise
      */
-    public static <T> boolean stackEmpty(Stack<T> S) {
+    public static <E> boolean stackEmpty(Stack<E> S) {
         return S.top == 0;
     }
 
@@ -48,9 +48,9 @@ public final class Chapter10 {
      *
      * @param S   the stack
      * @param x   the element to insert
-     * @param <T> the type of elements in {@code S}
+     * @param <E> the type of elements in {@code S}
      */
-    public static <T> void push(Stack<T> S, T x) {
+    public static <E> void push(Stack<E> S, E x) {
         S.top++;
         S.set(S.top, x);
     }
@@ -60,11 +60,11 @@ public final class Chapter10 {
      * <p><span style="font-variant:small-caps;">Pop</span> from subchapter 10.1.</p>
      *
      * @param S   the stack
-     * @param <T> the type of elements in {@code S}
+     * @param <E> the type of elements in {@code S}
      * @return the element deleted from the top of {@code S}
      * @throws RuntimeException if {@code S} is empty
      */
-    public static <T> T pop(Stack<T> S) {
+    public static <E> E pop(Stack<E> S) {
         if (stackEmpty(S)) {
             throw new RuntimeException("underflow");
         }
@@ -78,10 +78,10 @@ public final class Chapter10 {
      *
      * @param Q   the queue
      * @param x   the element to insert
-     * @param <T> the type of elements in {@code Q}
+     * @param <E> the type of elements in {@code Q}
      * @throws RuntimeException if {@code Q} is full
      */
-    public static <T> void enqueue(Queue<T> Q, T x) {
+    public static <E> void enqueue(Queue<E> Q, E x) {
         if (Q.head == Q.tail + 1) {
             throw new RuntimeException("overflow");
         }
@@ -101,15 +101,15 @@ public final class Chapter10 {
      * <p><span style="font-variant:small-caps;">Dequeue</span> from subchapter 10.1 and solution to exercise 10.1-4.</p>
      *
      * @param Q   the queue
-     * @param <T> the type of elements in {@code Q}
+     * @param <E> the type of elements in {@code Q}
      * @return the element deleted from the head of {@code Q}
      * @throws RuntimeException if {@code Q} is empty
      */
-    public static <T> T dequeue(Queue<T> Q) {
+    public static <E> E dequeue(Queue<E> Q) {
         if (queueEmpty(Q)) {
             throw new RuntimeException("underflow");
         }
-        T x = Q.at(Q.head);
+        E x = Q.at(Q.head);
         if (Q.head == Q.length) {
             Q.head = 1;
         } else {
@@ -124,9 +124,9 @@ public final class Chapter10 {
      *
      * @param A   the array containing two stacks
      * @param x   the element to insert
-     * @param <T> the type of elements in {@code A}
+     * @param <E> the type of elements in {@code A}
      */
-    public static <T> void firstStackPush(DoubleStack<T> A, T x) {
+    public static <E> void firstStackPush(DoubleStack<E> A, E x) {
         A.top1++;
         A.set(A.top1, x);
     }
@@ -136,11 +136,11 @@ public final class Chapter10 {
      * <p>Solution to exercise 10.1-2.</p>
      *
      * @param A   the array containing two stacks
-     * @param <T> the type of elements in {@code A}
+     * @param <E> the type of elements in {@code A}
      * @return the element deleted from the top of the first stack
      * @throws RuntimeException if the first stack is empty
      */
-    public static <T> T firstStackPop(DoubleStack<T> A) {
+    public static <E> E firstStackPop(DoubleStack<E> A) {
         if (firstStackEmpty(A)) {
             throw new RuntimeException("underflow");
         }
@@ -153,10 +153,10 @@ public final class Chapter10 {
      * <p>Solution to exercise 10.1-2.</p>
      *
      * @param A   the array containing two stacks
-     * @param <T> the type of elements in {@code A}
+     * @param <E> the type of elements in {@code A}
      * @return {@code true} if the first stack is empty, or {@code false} otherwise
      */
-    public static <T> boolean firstStackEmpty(DoubleStack<T> A) {
+    public static <E> boolean firstStackEmpty(DoubleStack<E> A) {
         return A.top1 == 0;
     }
 
@@ -166,9 +166,9 @@ public final class Chapter10 {
      *
      * @param A   the array containing two stacks
      * @param x   the element to insert
-     * @param <T> the type of elements in {@code A}
+     * @param <E> the type of elements in {@code A}
      */
-    public static <T> void secondStackPush(DoubleStack<T> A, T x) {
+    public static <E> void secondStackPush(DoubleStack<E> A, E x) {
         A.top2--;
         A.set(A.top2, x);
     }
@@ -178,11 +178,11 @@ public final class Chapter10 {
      * <p>Solution to exercise 10.1-2.</p>
      *
      * @param A   the array containing two stacks
-     * @param <T> the type of elements in {@code A}
+     * @param <E> the type of elements in {@code A}
      * @return the deleted element from the top of the second stack
      * @throws RuntimeException if the second stack is empty
      */
-    public static <T> T secondStackPop(DoubleStack<T> A) {
+    public static <E> E secondStackPop(DoubleStack<E> A) {
         if (secondStackEmpty(A)) {
             throw new RuntimeException("underflow");
         }
@@ -195,10 +195,10 @@ public final class Chapter10 {
      * <p>Solution to exercise 10.1-2.</p>
      *
      * @param A   the array containing two stacks
-     * @param <T> the type of elements in {@code A}
+     * @param <E> the type of elements in {@code A}
      * @return {@code true} if the second stack is empty, or {@code false} otherwise
      */
-    public static <T> boolean secondStackEmpty(DoubleStack<T> A) {
+    public static <E> boolean secondStackEmpty(DoubleStack<E> A) {
         return A.top2 == A.length + 1;
     }
 
@@ -207,10 +207,10 @@ public final class Chapter10 {
      * <p><span style="font-variant:small-caps;">Queue-Empty</span> from solution to exercise 10.1-4.</p>
      *
      * @param Q   the queue
-     * @param <T> the type of elements in {@code Q}
+     * @param <E> the type of elements in {@code Q}
      * @return {@code true} if {@code Q} is empty, or {@code false} otherwise
      */
-    public static <T> boolean queueEmpty(Queue<T> Q) {
+    public static <E> boolean queueEmpty(Queue<E> Q) {
         return Q.head == Q.tail;
     }
 
@@ -220,9 +220,9 @@ public final class Chapter10 {
      *
      * @param D   the deque
      * @param x   the element to insert
-     * @param <T> the type of elements in {@code D}
+     * @param <E> the type of elements in {@code D}
      */
-    public static <T> void headEnqueue(Deque<T> D, T x) {
+    public static <E> void headEnqueue(Deque<E> D, E x) {
         if (D.head == 1) {
             D.head = D.length;
         } else {
@@ -236,11 +236,11 @@ public final class Chapter10 {
      * <p><span style="font-variant:small-caps;">Head-Dequeue</span> from solution to exercise 10.1-5.</p>
      *
      * @param D   the deque
-     * @param <T> the type of elements in {@code D}
+     * @param <E> the type of elements in {@code D}
      * @return the element removed from the head of {@code D}
      */
-    public static <T> T headDequeue(Deque<T> D) {
-        T x = D.at(D.head);
+    public static <E> E headDequeue(Deque<E> D) {
+        E x = D.at(D.head);
         if (D.head == D.length) {
             D.head = 1;
         } else {
@@ -255,9 +255,9 @@ public final class Chapter10 {
      *
      * @param D   the deque
      * @param x   the element to insert
-     * @param <T> the type of elements in {@code D}
+     * @param <E> the type of elements in {@code D}
      */
-    public static <T> void tailEnqueue(Deque<T> D, T x) {
+    public static <E> void tailEnqueue(Deque<E> D, E x) {
         D.set(D.tail, x);
         if (D.tail == D.length) {
             D.tail = 1;
@@ -271,10 +271,10 @@ public final class Chapter10 {
      * <p><span style="font-variant:small-caps;">Tail-Dequeue</span> from solution to exercise 10.1-5.</p>
      *
      * @param D   the deque
-     * @param <T> the type of elements in {@code D}
+     * @param <E> the type of elements in {@code D}
      * @return the element deleted from the tail of {@code D}
      */
-    public static <T> T tailDequeue(Deque<T> D) {
+    public static <E> E tailDequeue(Deque<E> D) {
         if (D.tail == 1) {
             D.tail = D.length;
         } else {
@@ -290,9 +290,9 @@ public final class Chapter10 {
      * @param S1  the first stack
      * @param S2  the second stack
      * @param x   the element to insert to the queue
-     * @param <T> the type of elements in the queue
+     * @param <E> the type of elements in the queue
      */
-    public static <T> void enqueueOnStacks(Stack<T> S1, @SuppressWarnings("unused") Stack<T> S2, T x) {
+    public static <E> void enqueueOnStacks(Stack<E> S1, @SuppressWarnings("unused") Stack<E> S2, E x) {
         push(S1, x);
     }
 
@@ -302,18 +302,18 @@ public final class Chapter10 {
      *
      * @param S1  the first stack
      * @param S2  the second stack
-     * @param <T> the type of elements in {@code S1} and {@code S2}
+     * @param <E> the type of elements in {@code S1} and {@code S2}
      * @return the element deleted from the queue
      * @throws RuntimeException if the queue is empty
      */
-    public static <T> T dequeueOnStacks(Stack<T> S1, Stack<T> S2) {
+    public static <E> E dequeueOnStacks(Stack<E> S1, Stack<E> S2) {
         if (stackEmpty(S1)) {
             throw new RuntimeException("underflow");
         }
         while (!stackEmpty(S1)) {
             push(S2, pop(S1));
         }
-        T x = pop(S2);
+        E x = pop(S2);
         while (!stackEmpty(S2)) {
             push(S1, pop(S2));
         }
@@ -327,9 +327,9 @@ public final class Chapter10 {
      * @param Q1  the first queue
      * @param Q2  the second queue
      * @param x   the element to insert
-     * @param <T> the type of elements on the stack
+     * @param <E> the type of elements on the stack
      */
-    public static <T> void pushOnQueues(Queue<T> Q1, @SuppressWarnings("unused") Queue<T> Q2, T x) {
+    public static <E> void pushOnQueues(Queue<E> Q1, @SuppressWarnings("unused") Queue<E> Q2, E x) {
         enqueue(Q1, x);
     }
 
@@ -339,15 +339,15 @@ public final class Chapter10 {
      *
      * @param Q1  the first queue
      * @param Q2  the second queue
-     * @param <T> the type of elements on the stack
+     * @param <E> the type of elements on the stack
      * @return the element deleted from the stack
      * @throws RuntimeException if the stack is empty
      */
-    public static <T> T popOnQueues(Queue<T> Q1, Queue<T> Q2) {
+    public static <E> E popOnQueues(Queue<E> Q1, Queue<E> Q2) {
         if (queueEmpty(Q1)) {
             throw new RuntimeException("underflow");
         }
-        T x = null;
+        E x = null;
         while (!queueEmpty(Q1)) {
             x = dequeue(Q1);
             if (!queueEmpty(Q1)) {
@@ -366,11 +366,11 @@ public final class Chapter10 {
      *
      * @param L   the doubly linked list
      * @param k   the key of the element to find
-     * @param <T> the type of elements in {@code L}
+     * @param <E> the type of elements in {@code L}
      * @return the element of key {@code k} in list {@code L}, or {@code null} if {@code L} does not contain such element
      */
-    public static <T> List.Node<T> listSearch(List<T> L, T k) {
-        List.Node<T> x = L.head;
+    public static <E> List.Node<E> listSearch(List<E> L, E k) {
+        List.Node<E> x = L.head;
         while (x != null && !x.key.equals(k)) {
             x = x.next;
         }
@@ -383,9 +383,9 @@ public final class Chapter10 {
      *
      * @param L   the doubly linked list
      * @param x   the element to insert
-     * @param <T> the type of elements in {@code L}
+     * @param <E> the type of elements in {@code L}
      */
-    public static <T> void listInsert(List<T> L, List.Node<T> x) {
+    public static <E> void listInsert(List<E> L, List.Node<E> x) {
         x.next = L.head;
         if (L.head != null) {
             L.head.prev = x;
@@ -400,9 +400,9 @@ public final class Chapter10 {
      *
      * @param L   the doubly linked list
      * @param x   the element in {@code L} to delete
-     * @param <T> the type of elements in {@code L}
+     * @param <E> the type of elements in {@code L}
      */
-    public static <T> void listDelete(List<T> L, List.Node<T> x) {
+    public static <E> void listDelete(List<E> L, List.Node<E> x) {
         if (x.prev != null) {
             x.prev.next = x.next;
         } else {
@@ -419,9 +419,9 @@ public final class Chapter10 {
      *
      * @param L   the doubly linked list with a sentinel
      * @param x   the element in {@code L} to delete
-     * @param <T> the type of elements in {@code L}
+     * @param <E> the type of elements in {@code L}
      */
-    public static <T> void listDelete_(@SuppressWarnings("unused") ListWithSentinel<T> L, ListWithSentinel.Node<T> x) {
+    public static <E> void listDelete_(@SuppressWarnings("unused") ListWithSentinel<E> L, ListWithSentinel.Node<E> x) {
         x.prev.next = x.next;
         x.next.prev = x.prev;
     }
@@ -432,11 +432,11 @@ public final class Chapter10 {
      *
      * @param L   the doubly linked list with a sentinel
      * @param k   the key of the element to find
-     * @param <T> the type of elements in {@code L}
+     * @param <E> the type of elements in {@code L}
      * @return the element with key {@code k} in {@code L}, or {@code null} if {@code L} does not contain such element
      */
-    public static <T> ListWithSentinel.Node<T> listSearch_(ListWithSentinel<T> L, T k) {
-        ListWithSentinel.Node<T> x = L.nil.next;
+    public static <E> ListWithSentinel.Node<E> listSearch_(ListWithSentinel<E> L, E k) {
+        ListWithSentinel.Node<E> x = L.nil.next;
         while (x != L.nil && !x.key.equals(k)) {
             x = x.next;
         }
@@ -449,9 +449,9 @@ public final class Chapter10 {
      *
      * @param L   the doubly linked list with a sentinel
      * @param x   the element to insert
-     * @param <T> the type of elements in {@code L}
+     * @param <E> the type of elements in {@code L}
      */
-    public static <T> void listInsert_(ListWithSentinel<T> L, ListWithSentinel.Node<T> x) {
+    public static <E> void listInsert_(ListWithSentinel<E> L, ListWithSentinel.Node<E> x) {
         x.next = L.nil.next;
         L.nil.next.prev = x;
         L.nil.next = x;
@@ -464,9 +464,9 @@ public final class Chapter10 {
      *
      * @param L   the singly linked list
      * @param x   the element to insert
-     * @param <T> the type of elements in {@code L}
+     * @param <E> the type of elements in {@code L}
      */
-    public static <T> void singlyLinkedListInsert(SinglyLinkedList<T> L, SinglyLinkedList.Node<T> x) {
+    public static <E> void singlyLinkedListInsert(SinglyLinkedList<E> L, SinglyLinkedList.Node<E> x) {
         x.next = L.head;
         L.head = x;
     }
@@ -477,13 +477,13 @@ public final class Chapter10 {
      *
      * @param L   the singly linked list
      * @param x   the element in {@code L} to delete
-     * @param <T> the type of elements in {@code L}
+     * @param <E> the type of elements in {@code L}
      */
-    public static <T> void singlyLinkedListDelete(SinglyLinkedList<T> L, SinglyLinkedList.Node<T> x) {
+    public static <E> void singlyLinkedListDelete(SinglyLinkedList<E> L, SinglyLinkedList.Node<E> x) {
         if (x == L.head) {
             L.head = L.head.next;
         } else {
-            SinglyLinkedList.Node<T> y = L.head;
+            SinglyLinkedList.Node<E> y = L.head;
             while (y.next != x) {
                 y = y.next;
             }
@@ -497,10 +497,10 @@ public final class Chapter10 {
      *
      * @param L   the singly linked list
      * @param k   the key of the element to insert onto the stack
-     * @param <T> the type of elements in {@code L}
+     * @param <E> the type of elements in {@code L}
      */
-    public static <T> void singlyLinkedListPush(SinglyLinkedList<T> L, T k) {
-        SinglyLinkedList.Node<T> x = new SinglyLinkedList.Node<>(k);
+    public static <E> void singlyLinkedListPush(SinglyLinkedList<E> L, E k) {
+        SinglyLinkedList.Node<E> x = new SinglyLinkedList.Node<>(k);
         singlyLinkedListInsert(L, x);
     }
 
@@ -509,14 +509,14 @@ public final class Chapter10 {
      * <p><span style="font-variant:small-caps;">Singly-Linked-List-Pop</span> from solution to exercise 10.2-2.</p>
      *
      * @param L   the singly linked list
-     * @param <T> the type of elements in {@code L}
+     * @param <E> the type of elements in {@code L}
      * @return the element deleted from the stack
      */
-    public static <T> T singlyLinkedListPop(SinglyLinkedList<T> L) {
+    public static <E> E singlyLinkedListPop(SinglyLinkedList<E> L) {
         if (L.head == null) {
             throw new RuntimeException("underflow");
         }
-        SinglyLinkedList.Node<T> x = L.head;
+        SinglyLinkedList.Node<E> x = L.head;
         L.head = x.next;
         return x.key;
     }
@@ -527,10 +527,10 @@ public final class Chapter10 {
      *
      * @param L   the singly linked list
      * @param k   the key of the element to insert into a queue
-     * @param <T> the type of elements in {@code L}
+     * @param <E> the type of elements in {@code L}
      */
-    public static <T> void singlyLinkedListEnqueue(SinglyLinkedListWithTail<T> L, T k) {
-        SinglyLinkedListWithTail.Node<T> x = new SinglyLinkedList.Node<>(k);
+    public static <E> void singlyLinkedListEnqueue(SinglyLinkedListWithTail<E> L, E k) {
+        SinglyLinkedListWithTail.Node<E> x = new SinglyLinkedList.Node<>(k);
         if (L.tail != null) {
             L.tail.next = x;
         } else {
@@ -544,15 +544,15 @@ public final class Chapter10 {
      * <p><span style="font-variant:small-caps;">Singly-Linked-List-Dequeue</span> from solution to exercise 10.2-3.</p>
      *
      * @param L   the singly linked list
-     * @param <T> the type of elements in {@code L}
+     * @param <E> the type of elements in {@code L}
      * @return the element deleted from the queue
      * @throws RuntimeException if the queue is empty
      */
-    public static <T> T singlyLinkedListDequeue(SinglyLinkedListWithTail<T> L) {
+    public static <E> E singlyLinkedListDequeue(SinglyLinkedListWithTail<E> L) {
         if (L.head == null) {
             throw new RuntimeException("underflow");
         }
-        SinglyLinkedListWithTail.Node<T> x = L.head;
+        SinglyLinkedListWithTail.Node<E> x = L.head;
         L.head = x.next;
         if (L.tail == x) {
             L.tail = null;
@@ -566,9 +566,9 @@ public final class Chapter10 {
      *
      * @param L   the singly linked circular list
      * @param x   the element to insert
-     * @param <T> the type of elements in {@code L}
+     * @param <E> the type of elements in {@code L}
      */
-    public static <T> void circularListInsert(CircularList<T> L, CircularList.Node<T> x) {
+    public static <E> void circularListInsert(CircularList<E> L, CircularList.Node<E> x) {
         if (L.head == null) {
             L.head = x.next = x;
         } else {
@@ -583,10 +583,10 @@ public final class Chapter10 {
      *
      * @param L   the singly linked circular list
      * @param x   the element in {@code L} to delete
-     * @param <T> the type of elements in {@code L}
+     * @param <E> the type of elements in {@code L}
      */
-    public static <T> void circularListDelete(CircularList<T> L, CircularList.Node<T> x) {
-        CircularList.Node<T> y = L.head;
+    public static <E> void circularListDelete(CircularList<E> L, CircularList.Node<E> x) {
+        CircularList.Node<E> y = L.head;
         while (y.next != x) {
             y = y.next;
         }
@@ -606,17 +606,17 @@ public final class Chapter10 {
      *
      * @param L   the singly linked circular list
      * @param k   the key of the element to find
-     * @param <T> the type of elements in {@code L}
+     * @param <E> the type of elements in {@code L}
      * @return the element with key {@code k} in {@code L}, or {@code null} if {@code L} does not contain such element
      */
-    public static <T> CircularList.Node<T> circularListSearch(CircularList<T> L, T k) {
+    public static <E> CircularList.Node<E> circularListSearch(CircularList<E> L, E k) {
         if (L.head == null) {
             return null;
         }
         if (L.head.key.equals(k)) {
             return L.head;
         }
-        CircularList.Node<T> x = L.head.next;
+        CircularList.Node<E> x = L.head.next;
         while (x != L.head) {
             if (x.key.equals(k)) {
                 return x;
@@ -632,13 +632,13 @@ public final class Chapter10 {
      *
      * @param S1  the first set
      * @param S2  the second set, disjoint with {@code S1}
-     * @param <T> the type of elements in {@code S1} and {@code S2}
+     * @param <E> the type of elements in {@code S1} and {@code S2}
      * @return the union of {@code S1} and {@code S2}
      */
-    public static <T> CircularList<T> circularListsUnion(CircularList<T> S1, CircularList<T> S2) {
-        CircularList<T> S = new CircularList<>();
+    public static <E> CircularList<E> circularListsUnion(CircularList<E> S1, CircularList<E> S2) {
+        CircularList<E> S = new CircularList<>();
         if (S1.head != null && S2.head != null) {
-            CircularList.Node<T> x = S1.head.next;
+            CircularList.Node<E> x = S1.head.next;
             S1.head.next = S2.head.next;
             S2.head.next = x;
         }
@@ -656,13 +656,13 @@ public final class Chapter10 {
      * <p><span style="font-variant:small-caps;">Singly-Linked-List-Reverse</span> from solution to exercise 10.2-7.</p>
      *
      * @param L   the singly linked list
-     * @param <T> the type of elements in {@code L}
+     * @param <E> the type of elements in {@code L}
      */
-    public static <T> void singlyLinkedListReverse(SinglyLinkedList<T> L) {
-        SinglyLinkedList<T> L_ = new SinglyLinkedList<>();
+    public static <E> void singlyLinkedListReverse(SinglyLinkedList<E> L) {
+        SinglyLinkedList<E> L_ = new SinglyLinkedList<>();
         L_.head = null;
         while (L.head != null) {
-            SinglyLinkedList.Node<T> x = L.head;
+            SinglyLinkedList.Node<E> x = L.head;
             singlyLinkedListDelete(L, L.head);
             singlyLinkedListInsert(L_, x);
         }
@@ -675,14 +675,14 @@ public final class Chapter10 {
      *
      * @param L   the XOR linked list
      * @param k   the key of the element to find
-     * @param <T> the type of elements in {@code L}
+     * @param <E> the type of elements in {@code L}
      * @return the element of key {@code k} in list {@code L}, or {@code null} if {@code L} does not contain such element
      */
-    public static <T> XorLinkedList.Node<T> xorLinkedListSearch(XorLinkedList<T> L, T k) {
-        XorLinkedList.Node<T> x = L.head;
-        XorLinkedList.Node<T> y = null;
+    public static <E> XorLinkedList.Node<E> xorLinkedListSearch(XorLinkedList<E> L, E k) {
+        XorLinkedList.Node<E> x = L.head;
+        XorLinkedList.Node<E> y = null;
         while (x != null && !x.key.equals(k)) {
-            XorLinkedList.Node<T> z = L.byAddress(x.np ^ (y != null ? y.address : 0));
+            XorLinkedList.Node<E> z = L.byAddress(x.np ^ (y != null ? y.address : 0));
             y = x;
             x = z;
         }
@@ -695,9 +695,9 @@ public final class Chapter10 {
      *
      * @param L   the XOR linked list
      * @param x   the element to insert
-     * @param <T> the type of elements in {@code L}
+     * @param <E> the type of elements in {@code L}
      */
-    public static <T> void xorLinkedListInsert(XorLinkedList<T> L, XorLinkedList.Node<T> x) {
+    public static <E> void xorLinkedListInsert(XorLinkedList<E> L, XorLinkedList.Node<E> x) {
         x.np = L.head != null ? L.head.address : 0;
         if (L.head != null) {
             L.head.np ^= x.address;
@@ -714,12 +714,12 @@ public final class Chapter10 {
      *
      * @param L   the XOR linked list
      * @param x   the element in {@code L} to delete
-     * @param <T> the type of elements in {@code L}
+     * @param <E> the type of elements in {@code L}
      */
-    public static <T> void xorLinkedListDelete(XorLinkedList<T> L, XorLinkedList.Node<T> x) {
-        XorLinkedList.Node<T> x_ = L.head;
-        XorLinkedList.Node<T> y = null;
-        XorLinkedList.Node<T> z;
+    public static <E> void xorLinkedListDelete(XorLinkedList<E> L, XorLinkedList.Node<E> x) {
+        XorLinkedList.Node<E> x_ = L.head;
+        XorLinkedList.Node<E> y = null;
+        XorLinkedList.Node<E> z;
         while (x_ != x) {
             z = L.byAddress(x_.np ^ (y != null ? y.address : 0));
             y = x_;
@@ -745,10 +745,10 @@ public final class Chapter10 {
      * <p><span style="font-variant:small-caps;">Xor-Linked-List-Reverse</span> from solution to exercise 10.2-8.</p>
      *
      * @param L   the XOR linked list
-     * @param <T> the type of elements in {@code L}
+     * @param <E> the type of elements in {@code L}
      */
-    public static <T> void xorLinkedListReverse(XorLinkedList<T> L) {
-        XorLinkedList.Node<T> x = L.head;
+    public static <E> void xorLinkedListReverse(XorLinkedList<E> L) {
+        XorLinkedList.Node<E> x = L.head;
         L.head = L.tail;
         L.tail = x;
     }
@@ -758,11 +758,11 @@ public final class Chapter10 {
      * <p><span style="font-variant:small-caps;">Allocate-Object</span> from subchapter 10.3.</p>
      *
      * @param L   the list in the multiple-array representation
-     * @param <T> the type of elements in {@code L}
+     * @param <E> the type of elements in {@code L}
      * @return the index of the allocated object in {@code L}
      * @throws RuntimeException if {@code L} is full
      */
-    public static <T> int allocateObject(MultipleArrayList<T> L) {
+    public static <E> int allocateObject(MultipleArrayList<E> L) {
         if (L.free == null) {
             throw new RuntimeException("out of space");
         }
@@ -777,9 +777,9 @@ public final class Chapter10 {
      *
      * @param L   the list in a multiple-array representation
      * @param x   the index of the object in {@code L} to free
-     * @param <T> the type of elements in {@code L}
+     * @param <E> the type of elements in {@code L}
      */
-    public static <T> void freeObject(MultipleArrayList<T> L, int x) {
+    public static <E> void freeObject(MultipleArrayList<E> L, int x) {
         L.next.set(x, L.free);
         L.free = x;
     }
@@ -818,10 +818,10 @@ public final class Chapter10 {
      * <p><span style="font-variant:small-caps;">Compact-List-Allocate-Object</span> from solution to exercise 10.3-4.</p>
      *
      * @param L   the list in the compact multiple-array representation
-     * @param <T> the type of elements in {@code L}
+     * @param <E> the type of elements in {@code L}
      * @return the index of the allocated object in {@code L}
      */
-    public static <T> int compactListAllocateObject(MultipleArrayList<T> L) {
+    public static <E> int compactListAllocateObject(MultipleArrayList<E> L) {
         return allocateObject(L);
     }
 
@@ -831,9 +831,9 @@ public final class Chapter10 {
      *
      * @param L   the list in the compact multiple-array representation
      * @param x   the index of the object in {@code L} to free
-     * @param <T> the type of elements in {@code L}
+     * @param <E> the type of elements in {@code L}
      */
-    public static <T> void compactListFreeObject(MultipleArrayList<T> L, int x) {
+    public static <E> void compactListFreeObject(MultipleArrayList<E> L, int x) {
         int n = L.getLength();
         int y;
         if (L.free == null) {
@@ -869,9 +869,9 @@ public final class Chapter10 {
      * <p><span style="font-variant:small-caps;">Compactify-List</span> from solution to exercise 10.3-5.</p>
      *
      * @param L   the list in the multiple-array representation
-     * @param <T> the type of elements in {@code L}
+     * @param <E> the type of elements in {@code L}
      */
-    public static <T> void compactifyList(MultipleArrayList<T> L) {
+    public static <E> void compactifyList(MultipleArrayList<E> L) {
         int m = L.getLength();
         setPrevFields(L, Integer.MAX_VALUE);
         Integer x = L.L;
@@ -910,7 +910,7 @@ public final class Chapter10 {
         fixPrevFields(L);
     }
 
-    private static <T> void setPrevFields(MultipleArrayList<T> L, int value) {
+    private static <E> void setPrevFields(MultipleArrayList<E> L, int value) {
         Integer x = L.L;
         while (x != null) {
             L.prev.set(x, value);
@@ -918,7 +918,7 @@ public final class Chapter10 {
         }
     }
 
-    private static <T> void fixPrevFields(MultipleArrayList<T> L) {
+    private static <E> void fixPrevFields(MultipleArrayList<E> L) {
         if (L.L == null) {
             return;
         }
@@ -937,16 +937,16 @@ public final class Chapter10 {
      * <p><span style="font-variant:small-caps;">Iterative-Preorder-Tree-Walk</span> from solution to exercise 10.4-3.</p>
      *
      * @param T   the binary tree
-     * @param <T> the type of elements in {@code T}
+     * @param <E> the type of elements in {@code T}
      */
-    public static <T> void iterativePreorderTreeWalk(BinaryTree<T> T) {
+    public static <E> void iterativePreorderTreeWalk(BinaryTree<E> T) {
         if (T.root == null) {
             return;
         }
-        Stack<BinaryTree.Node<T>> S = Stack.withLength(T.getSize());
+        Stack<BinaryTree.Node<E>> S = Stack.withLength(T.getSize());
         push(S, T.root);
         while (!stackEmpty(S)) {
-            BinaryTree.Node<T> x = pop(S);
+            BinaryTree.Node<E> x = pop(S);
             System.out.println(x.key);
             if (x.right != null) {
                 push(S, x.right);
@@ -962,9 +962,9 @@ public final class Chapter10 {
      * <p><span style="font-variant:small-caps;">Tree-Walk</span> from solution to exercise 10.4-4.</p>
      *
      * @param x   the root of the tree
-     * @param <T> the type of elements in the tree
+     * @param <E> the type of elements in the tree
      */
-    public static <T> void treeWalk(MultiaryTree.Node<T> x) {
+    public static <E> void treeWalk(MultiaryTree.Node<E> x) {
         if (x != null) {
             System.out.println(x.key);
             treeWalk(x.leftChild);
@@ -977,10 +977,10 @@ public final class Chapter10 {
      * <p><span style="font-variant:small-caps;">Stackless-Inorder-Visit</span> from solution to exercise 10.4-5.</p>
      *
      * @param x   the node of the tree to visit
-     * @param <T> the type of elements in the tree
+     * @param <E> the type of elements in the tree
      * @return the next node of the tree to visit according to inorder, or {@code null} if no such node exists
      */
-    static <T> BinaryTree.Node<T> stacklessInorderVisit(BinaryTree.Node<T> x) {
+    static <E> BinaryTree.Node<E> stacklessInorderVisit(BinaryTree.Node<E> x) {
         System.out.println(x.key);
         if (x.right != null) {
             return x.right;
@@ -993,12 +993,12 @@ public final class Chapter10 {
      * <p><span style="font-variant:small-caps;">Stackless-Inorder-Tree-Walk</span> from solution to exercise 10.4-5.</p>
      *
      * @param T   the binary tree
-     * @param <T> the type of elements in {@code T}
+     * @param <E> the type of elements in {@code T}
      */
-    public static <T> void stacklessInorderTreeWalk(BinaryTree<T> T) {
-        BinaryTree.Node<T> prev = null;
-        BinaryTree.Node<T> curr = T.root;
-        BinaryTree.Node<T> next;
+    public static <E> void stacklessInorderTreeWalk(BinaryTree<E> T) {
+        BinaryTree.Node<E> prev = null;
+        BinaryTree.Node<E> curr = T.root;
+        BinaryTree.Node<E> next;
         while (curr != null) {
             if (prev == curr.p) {
                 if (curr.left != null) {
@@ -1119,11 +1119,11 @@ public final class Chapter10 {
      * @param L   the list in the compact multiple-array representation
      * @param n   the number of elements in {@code L}
      * @param k   the key of the element to find
-     * @param <T> the type of elements in {@code L}
+     * @param <E> the type of elements in {@code L}
      * @return the index {@code i} of element with key {@code k} in {@code L},
      * or {@code null} if {@code L} does not contain such element
      */
-    public static <T extends Comparable<? super T>> Integer compactListSearch(MultipleArrayList<T> L, int n, T k) {
+    public static <E extends Comparable<? super E>> Integer compactListSearch(MultipleArrayList<E> L, int n, E k) {
         Integer i = L.L;
         while (i != null && less(L.key.at(i), k)) {
             int j = random(1, n);

@@ -3,20 +3,20 @@ package pl.kwojtas.cormenimpl.util;
 /**
  * Implements an ordered pair.
  *
- * @param <T1> the type of the first element of the pair
- * @param <T2> the type of the second element of the pair
+ * @param <E> the type of the first element of the pair
+ * @param <F> the type of the second element of the pair
  */
-public class Pair<T1, T2> {
+public class Pair<E, F> {
 
     /**
      * The first element of the pair.
      */
-    public T1 first;
+    public E first;
 
     /**
      * The second element of the pair.
      */
-    public T2 second;
+    public F second;
 
     /**
      * Creates an ordered pair from given elements.
@@ -24,7 +24,7 @@ public class Pair<T1, T2> {
      * @param first  the first element
      * @param second the second element
      */
-    public Pair(T1 first, T2 second) {
+    public Pair(E first, F second) {
         this.first = first;
         this.second = second;
     }

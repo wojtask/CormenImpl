@@ -60,9 +60,9 @@ public final class Chapter6 {
      *
      * @param A   the heap with max-heap property violated at one node
      * @param i   the index of the node in {@code A} the property is violated at
-     * @param <T> the type of elements in {@code A}
+     * @param <E> the type of elements in {@code A}
      */
-    static <T extends Comparable<? super T>> void maxHeapify(Heap<T> A, int i) {
+    static <E extends Comparable<? super E>> void maxHeapify(Heap<E> A, int i) {
         int l = left(i);
         int r = right(i);
         int largest;
@@ -85,11 +85,11 @@ public final class Chapter6 {
      * <p><span style="font-variant:small-caps;">Build-Max-Heap</span> from subchapter 6.3.</p>
      *
      * @param A   the array of elements
-     * @param <T> the type of elements in {@code A}
+     * @param <E> the type of elements in {@code A}
      * @return a max-heap constructed from elements from {@code A}
      */
-    static <T extends Comparable<? super T>> Heap<T> buildMaxHeap(Array<T> A) {
-        Heap<T> H = new Heap<>(A);
+    static <E extends Comparable<? super E>> Heap<E> buildMaxHeap(Array<E> A) {
+        Heap<E> H = new Heap<>(A);
         H.heapSize = H.length;
         for (int i = H.length / 2; i >= 1; i--) {
             maxHeapify(H, i);
@@ -102,10 +102,10 @@ public final class Chapter6 {
      * <p><span style="font-variant:small-caps;">Heapsort</span> from subchapter 6.4.</p>
      *
      * @param A   the array of elements to sort
-     * @param <T> the type of elements in {@code A}
+     * @param <E> the type of elements in {@code A}
      */
-    public static <T extends Comparable<? super T>> void heapsort(Array<T> A) {
-        Heap<T> H = buildMaxHeap(A);
+    public static <E extends Comparable<? super E>> void heapsort(Array<E> A) {
+        Heap<E> H = buildMaxHeap(A);
         for (int i = H.length; i >= 2; i--) {
             H.exch(1, i);
             H.heapSize--;
@@ -120,9 +120,9 @@ public final class Chapter6 {
      *
      * @param A   the heap with min-heap property violated at one node
      * @param i   the index of the node in {@code A} the property is violated at
-     * @param <T> the type of elements in {@code A}
+     * @param <E> the type of elements in {@code A}
      */
-    public static <T extends Comparable<? super T>> void minHeapify(Heap<T> A, int i) {
+    public static <E extends Comparable<? super E>> void minHeapify(Heap<E> A, int i) {
         int l = left(i);
         int r = right(i);
         int smallest;
@@ -146,9 +146,9 @@ public final class Chapter6 {
      *
      * @param A   the heap with max-heap property violated at one node
      * @param i   the index of the node in {@code A} the property is violated at
-     * @param <T> the type of elements in {@code A}
+     * @param <E> the type of elements in {@code A}
      */
-    public static <T extends Comparable<? super T>> void iterativeMaxHeapify(Heap<T> A, int i) {
+    public static <E extends Comparable<? super E>> void iterativeMaxHeapify(Heap<E> A, int i) {
         while (true) {
             int l = left(i);
             int r = right(i);
@@ -302,15 +302,15 @@ public final class Chapter6 {
      *
      * @param priorityQueue the min-priority queue with ranked elements
      * @param key           the key to insert to the queue
-     * @param <T>           the type of keys in {@code priorityQueue}
+     * @param <E>           the type of keys in {@code priorityQueue}
      */
-    public static <T> void enqueueUsingPriorityQueue(PriorityQueueWithRanks<T> priorityQueue, T key) {
+    public static <E> void enqueueUsingPriorityQueue(PriorityQueueWithRanks<E> priorityQueue, E key) {
         int rank = priorityQueue.getCurrentRank();
-        PriorityQueueWithRanks.KeyWithRank<T> keyWithRank = new PriorityQueueWithRanks.KeyWithRank<>(key, rank);
+        PriorityQueueWithRanks.KeyWithRank<E> keyWithRank = new PriorityQueueWithRanks.KeyWithRank<>(key, rank);
         minHeapInsertWithRanks(priorityQueue, keyWithRank);
     }
 
-    private static <T> void minHeapInsertWithRanks(PriorityQueueWithRanks<T> priorityQueue, PriorityQueueWithRanks.KeyWithRank<T> keyWithRank) {
+    private static <E> void minHeapInsertWithRanks(PriorityQueueWithRanks<E> priorityQueue, PriorityQueueWithRanks.KeyWithRank<E> keyWithRank) {
         priorityQueue.heapSize++;
         priorityQueue.set(priorityQueue.heapSize, keyWithRank);
     }
@@ -321,22 +321,22 @@ public final class Chapter6 {
      * <p>Solution to exercise 6.5-6.</p>
      *
      * @param priorityQueue the min-priority queue with ranked elements
-     * @param <T>           the type of keys in {@code priorityQueue}
+     * @param <E>           the type of keys in {@code priorityQueue}
      * @return the key removed from the queue
      */
-    public static <T> T dequeueUsingPriorityQueue(PriorityQueueWithRanks<T> priorityQueue) {
+    public static <E> E dequeueUsingPriorityQueue(PriorityQueueWithRanks<E> priorityQueue) {
         return heapExtractMinWithRanks(priorityQueue).key;
     }
 
-    private static <T> PriorityQueueWithRanks.KeyWithRank<T> heapExtractMinWithRanks(PriorityQueueWithRanks<T> priorityQueue) {
-        PriorityQueueWithRanks.KeyWithRank<T> min = priorityQueue.at(1);
+    private static <E> PriorityQueueWithRanks.KeyWithRank<E> heapExtractMinWithRanks(PriorityQueueWithRanks<E> priorityQueue) {
+        PriorityQueueWithRanks.KeyWithRank<E> min = priorityQueue.at(1);
         priorityQueue.set(1, priorityQueue.at(priorityQueue.heapSize));
         priorityQueue.heapSize--;
         minHeapifyWithRanks(priorityQueue, 1);
         return min;
     }
 
-    private static <T> void minHeapifyWithRanks(PriorityQueueWithRanks<T> priorityQueue, int i) {
+    private static <E> void minHeapifyWithRanks(PriorityQueueWithRanks<E> priorityQueue, int i) {
         int l = left(i);
         int r = right(i);
         int smallest;
@@ -361,21 +361,21 @@ public final class Chapter6 {
      *
      * @param priorityQueue the max-priority queue with ranked elements
      * @param key           the key to insert to the stack
-     * @param <T>           the type of keys in {@code priorityQueue}
+     * @param <E>           the type of keys in {@code priorityQueue}
      */
-    public static <T> void pushUsingPriorityQueue(PriorityQueueWithRanks<T> priorityQueue, T key) {
+    public static <E> void pushUsingPriorityQueue(PriorityQueueWithRanks<E> priorityQueue, E key) {
         int rank = priorityQueue.getCurrentRank();
-        PriorityQueueWithRanks.KeyWithRank<T> keyWithRank = new PriorityQueueWithRanks.KeyWithRank<>(key, rank);
+        PriorityQueueWithRanks.KeyWithRank<E> keyWithRank = new PriorityQueueWithRanks.KeyWithRank<>(key, rank);
         maxHeapInsertWithRanks(priorityQueue, keyWithRank);
     }
 
-    private static <T> void maxHeapInsertWithRanks(PriorityQueueWithRanks<T> priorityQueue, PriorityQueueWithRanks.KeyWithRank<T> keyWithRank) {
+    private static <E> void maxHeapInsertWithRanks(PriorityQueueWithRanks<E> priorityQueue, PriorityQueueWithRanks.KeyWithRank<E> keyWithRank) {
         priorityQueue.heapSize++;
         priorityQueue.set(priorityQueue.heapSize, new PriorityQueueWithRanks.KeyWithRank<>(keyWithRank.key, Integer.MIN_VALUE));
         heapIncreaseRank(priorityQueue, priorityQueue.heapSize, keyWithRank.rank);
     }
 
-    private static <T> void heapIncreaseRank(PriorityQueueWithRanks<T> priorityQueue, int i, int rank) {
+    private static <E> void heapIncreaseRank(PriorityQueueWithRanks<E> priorityQueue, int i, int rank) {
         priorityQueue.at(i).rank = rank;
         while (i > 1 && priorityQueue.at(parent(i)).rank < priorityQueue.at(i).rank) {
             priorityQueue.exch(i, parent(i));
@@ -389,22 +389,22 @@ public final class Chapter6 {
      * <p>Solution to exercise 6.5-6.</p>
      *
      * @param priorityQueue the max-priority queue with ranked elements
-     * @param <T>           the type of keys in {@code priorityQueue}
+     * @param <E>           the type of keys in {@code priorityQueue}
      * @return the key removed from the stack
      */
-    public static <T> T popUsingPriorityQueue(PriorityQueueWithRanks<T> priorityQueue) {
+    public static <E> E popUsingPriorityQueue(PriorityQueueWithRanks<E> priorityQueue) {
         return heapExtractMaxWithRanks(priorityQueue).key;
     }
 
-    private static <T> PriorityQueueWithRanks.KeyWithRank<T> heapExtractMaxWithRanks(PriorityQueueWithRanks<T> priorityQueue) {
-        PriorityQueueWithRanks.KeyWithRank<T> max = priorityQueue.at(1);
+    private static <E> PriorityQueueWithRanks.KeyWithRank<E> heapExtractMaxWithRanks(PriorityQueueWithRanks<E> priorityQueue) {
+        PriorityQueueWithRanks.KeyWithRank<E> max = priorityQueue.at(1);
         priorityQueue.set(1, priorityQueue.at(priorityQueue.heapSize));
         priorityQueue.heapSize--;
         maxHeapifyWithRanks(priorityQueue, 1);
         return max;
     }
 
-    private static <T> void maxHeapifyWithRanks(PriorityQueueWithRanks<T> priorityQueue, int i) {
+    private static <E> void maxHeapifyWithRanks(PriorityQueueWithRanks<E> priorityQueue, int i) {
         int l = left(i);
         int r = right(i);
         int largest;
@@ -428,10 +428,10 @@ public final class Chapter6 {
      *
      * @param A   the max-heap
      * @param i   the index of the key in {@code A} to be deleted
-     * @param <T> the type of keys in {@code A}
+     * @param <E> the type of keys in {@code A}
      * @return the key of the element deleted from {@code A}
      */
-    public static <T extends Comparable<? super T>> T maxHeapDelete(Heap<T> A, int i) {
+    public static <E extends Comparable<? super E>> E maxHeapDelete(Heap<E> A, int i) {
         A.exch(i, A.heapSize);
         A.heapSize--;
         maxHeapify(A, i);
@@ -449,6 +449,7 @@ public final class Chapter6 {
      * @param sortedLists an array of sorted lists
      * @return the merged sorted list
      */
+    @SuppressWarnings("all")
     public static List<Integer> mergeSortedLists(Array<List<Integer>> sortedLists) {
         List<Integer> mergedList = new List<>();
         Heap<Pair<Integer, List<Integer>>> minPriorityQueue = Heap.withLength(sortedLists.length);
@@ -481,8 +482,7 @@ public final class Chapter6 {
         heapDecreaseKeyForMergingLists(A, A.heapSize, key);
     }
 
-    private static void heapDecreaseKeyForMergingLists(
-            Heap<Pair<Integer, List<Integer>>> A, int i, Pair<Integer, List<Integer>> key) {
+    private static void heapDecreaseKeyForMergingLists(Heap<Pair<Integer, List<Integer>>> A, int i, Pair<Integer, List<Integer>> key) {
         A.set(i, key);
         while (i > 1 && A.at(parent(i)).first > A.at(i).first) {
             A.exch(i, parent(i));

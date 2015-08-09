@@ -736,7 +736,7 @@ public class Chapter10Test {
         assertElementDeletedFromList(keyToDelete, list.toArray(), original.toArray());
     }
 
-    private <T> void assertElementDeletedFromList(T deletedKey, Array<T> listArray, Array<T> originalArray) {
+    private <E> void assertElementDeletedFromList(E deletedKey, Array<E> listArray, Array<E> originalArray) {
         assertEquals(originalArray.length - 1, listArray.length);
         int i = 0;
         boolean elementsEqual = true;
@@ -813,7 +813,7 @@ public class Chapter10Test {
         assertElementInsertedIntoBeginningOfList(keyToInsert, listArray, originalArray);
     }
 
-    private <T> void assertElementInsertedIntoBeginningOfList(T keyToInsert, Array<T> listArray, Array<T> originalArray) {
+    private <E> void assertElementInsertedIntoBeginningOfList(E keyToInsert, Array<E> listArray, Array<E> originalArray) {
         assertEquals(originalArray.length + 1, listArray.length);
         assertEquals(keyToInsert, listArray.at(1));
         for (int i = 2; i <= listArray.length; i++) {

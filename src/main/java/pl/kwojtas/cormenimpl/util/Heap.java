@@ -3,9 +3,9 @@ package pl.kwojtas.cormenimpl.util;
 /**
  * Implements a heap.
  *
- * @param <T> the type of elements in the heap
+ * @param <E> the type of elements in the heap
  */
-public class Heap<T> extends Array<T> {
+public class Heap<E> extends Array<E> {
 
     /**
      * The number of elements in the heap.
@@ -19,7 +19,7 @@ public class Heap<T> extends Array<T> {
      * @param initialLength the length of the heap's underlying array
      * @throws RuntimeException if the {@code array} is longer than {@code initialLength}
      */
-    public Heap(Array<T> array, int initialLength) {
+    public Heap(Array<E> array, int initialLength) {
         super(Array.withLength(initialLength));
         if (array.length > initialLength) {
             throw new RuntimeException("Array is larger than initial length");
@@ -35,7 +35,7 @@ public class Heap<T> extends Array<T> {
      *
      * @param array the array to be copied
      */
-    public Heap(Array<T> array) {
+    public Heap(Array<E> array) {
         this(array, array.length);
     }
 
@@ -43,10 +43,10 @@ public class Heap<T> extends Array<T> {
      * Creates an empty heap with an underlying array of a given length.
      *
      * @param length the length of the underlying array
-     * @param <T>    the type of elements in the new heap
+     * @param <E>    the type of elements in the new heap
      * @return the empty heap with an underlying array of length {@code length}
      */
-    public static <T> Heap<T> withLength(int length) {
+    public static <E> Heap<E> withLength(int length) {
         return new Heap<>(new Array<>(), length);
     }
 

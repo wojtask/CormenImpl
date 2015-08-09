@@ -11,14 +11,14 @@ import static pl.kwojtas.cormenimpl.util.Util.leq;
 
 public class TestUtil {
 
-    public static <T> void assertArrayEquals(Array<T> expected, Array<T> actual) {
+    public static <E> void assertArrayEquals(Array<E> expected, Array<E> actual) {
         assertEquals(expected.length, actual.length);
         for (int i = 1; i <= expected.length; i++) {
             assertEquals(expected.at(i), actual.at(i));
         }
     }
 
-    private static <T> void assertArrayContains(Array<T> array, T element) {
+    private static <E> void assertArrayContains(Array<E> array, E element) {
         boolean found = false;
         for (int i = 1; i <= array.length && !found; i++) {
             found = array.at(i).equals(element);
@@ -26,7 +26,7 @@ public class TestUtil {
         assertTrue(found);
     }
 
-    public static <T> void assertShuffled(Array<T> original, Array<T> shuffled) {
+    public static <E> void assertShuffled(Array<E> original, Array<E> shuffled) {
         assertEquals(original.length, shuffled.length);
         for (int i = 1; i <= original.length; i++) {
             assertArrayContains(shuffled, original.at(i));
@@ -36,8 +36,8 @@ public class TestUtil {
         }
     }
 
-    public static <T extends Comparable<? super T>> void sortArray(Array<T> array, Comparator<T> comparator) {
-        ArrayList<T> arrayList = new ArrayList<>();
+    public static <E extends Comparable<? super E>> void sortArray(Array<E> array, Comparator<E> comparator) {
+        ArrayList<E> arrayList = new ArrayList<>();
         for (int i = 1; i <= array.length; i++) {
             arrayList.add(array.at(i));
         }
@@ -47,17 +47,17 @@ public class TestUtil {
         }
     }
 
-    public static <T extends Comparable<? super T>> void sortArray(Array<T> array) {
-        sortArray(array, Comparator.<T>naturalOrder());
+    public static <E extends Comparable<? super E>> void sortArray(Array<E> array) {
+        sortArray(array, Comparator.<E>naturalOrder());
     }
 
-    public static <T extends Comparable<? super T>> void assertSorted(Array<T> array) {
+    public static <E extends Comparable<? super E>> void assertSorted(Array<E> array) {
         for (int i = 2; i <= array.length; i++) {
             assertTrue(leq(array.at(i - 1), array.at(i)));
         }
     }
 
-    public static <T> void assertSorted(Array<T> array, Comparator<T> comparator) {
+    public static <E> void assertSorted(Array<E> array, Comparator<E> comparator) {
         for (int i = 2; i <= array.length; i++) {
             assertTrue(comparator.compare(array.at(i - 1), array.at(i)) <= 0);
         }

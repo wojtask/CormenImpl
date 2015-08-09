@@ -3,33 +3,33 @@ package pl.kwojtas.cormenimpl.util;
 /**
  * Implements a singly linked list.
  *
- * @param <T> the type of elements in the list
+ * @param <E> the type of elements in the list
  */
-public class SinglyLinkedList<T> {
+public class SinglyLinkedList<E> {
 
     /**
      * Implements a singly linked list's node.
      *
-     * @param <U> the type of the node's key
+     * @param <F> the type of the node's key
      */
-    public static class Node<U> {
+    public static class Node<F> {
 
         /**
          * The key.
          */
-        public U key;
+        public F key;
 
         /**
          * The next node.
          */
-        public Node<U> next;
+        public Node<F> next;
 
         /**
          * Creates a node with a given key.
          *
          * @param key the key of the new node
          */
-        public Node(U key) {
+        public Node(F key) {
             this.key = key;
         }
     }
@@ -37,7 +37,7 @@ public class SinglyLinkedList<T> {
     /**
      * The head of the list.
      */
-    public Node<T> head;
+    public Node<E> head;
 
     /**
      * Creates a list from given elements.
@@ -45,14 +45,14 @@ public class SinglyLinkedList<T> {
      * @param elements the initial contents of the list
      */
     @SafeVarargs
-    public SinglyLinkedList(T... elements) {
+    public SinglyLinkedList(E... elements) {
         if (elements.length == 0) {
             return;
         }
         head = new Node<>(elements[0]);
-        Node<T> x = head;
+        Node<E> x = head;
         for (int i = 1; i < elements.length; i++) {
-            Node<T> y = new Node<>(elements[i]);
+            Node<E> y = new Node<>(elements[i]);
             x.next = y;
             x = y;
         }
@@ -63,15 +63,15 @@ public class SinglyLinkedList<T> {
      *
      * @param otherList the list to be copied
      */
-    public SinglyLinkedList(SinglyLinkedList<T> otherList) {
+    public SinglyLinkedList(SinglyLinkedList<E> otherList) {
         if (otherList.head == null) {
             return;
         }
         head = new Node<>(otherList.head.key);
-        Node<T> x = head;
-        Node<T> z = otherList.head.next;
+        Node<E> x = head;
+        Node<E> z = otherList.head.next;
         while (z != null) {
-            Node<T> y = new Node<>(z.key);
+            Node<E> y = new Node<>(z.key);
             x.next = y;
             x = y;
             z = z.next;
@@ -85,7 +85,7 @@ public class SinglyLinkedList<T> {
      */
     public int getLength() {
         int length = 0;
-        Node<T> x = head;
+        Node<E> x = head;
         while (x != null) {
             length++;
             x = x.next;
@@ -98,9 +98,9 @@ public class SinglyLinkedList<T> {
      *
      * @return the array containing all the elements in the list
      */
-    public Array<T> toArray() {
-        Array<T> array = Array.withLength(getLength());
-        Node<T> x = head;
+    public Array<E> toArray() {
+        Array<E> array = Array.withLength(getLength());
+        Node<E> x = head;
         int i = 1;
         while (x != null) {
             array.set(i, x.key);

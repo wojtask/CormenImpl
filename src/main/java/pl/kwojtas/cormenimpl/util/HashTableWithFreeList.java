@@ -3,21 +3,21 @@ package pl.kwojtas.cormenimpl.util;
 /**
  * Implements a hash table with a doubly linked list of free positions.
  *
- * @param <T> the type of elements in the hash table
+ * @param <E> the type of elements in the hash table
  */
-public class HashTableWithFreeList<T> extends ZeroBasedIndexedArray<HashTableWithFreeList.Node<T>> {
+public class HashTableWithFreeList<E> extends ZeroBasedIndexedArray<HashTableWithFreeList.Node<E>> {
 
     /**
      * Implements a doubly linked list's node.
      *
-     * @param <U> the type of satellite data in the node's element
+     * @param <F> the type of satellite data in the node's element
      */
-    public static class Node<U> {
+    public static class Node<F> {
 
         /**
          * The element containing a key and satellite data.
          */
-        public Element<U> element;
+        public Element<F> element;
 
         /**
          * The index of the previous node.
@@ -61,10 +61,10 @@ public class HashTableWithFreeList<T> extends ZeroBasedIndexedArray<HashTableWit
      *
      * @param length the length of the underlying array
      * @param h      the hash function of the new hash table
-     * @param <T>    the type of elements in the new hash table
+     * @param <E>    the type of elements in the new hash table
      * @return the empty hash table with an underlying array of length {@code length} and with hash function {@code h}
      */
-    public static <T> HashTableWithFreeList<T> withLengthAndHashFunction(int length, HashFunction h) {
+    public static <E> HashTableWithFreeList<E> withLengthAndHashFunction(int length, HashFunction h) {
         return new HashTableWithFreeList<>(length, h);
     }
 

@@ -3,9 +3,9 @@ package pl.kwojtas.cormenimpl.util;
 /**
  * Implements a doubly linked list using the multiple-array representation.
  *
- * @param <T> the type of elements in the list
+ * @param <E> the type of elements in the list
  */
-public class MultipleArrayList<T> {
+public class MultipleArrayList<E> {
 
     /**
      * The array of indices of next elements.
@@ -15,7 +15,7 @@ public class MultipleArrayList<T> {
     /**
      * The array of keys.
      */
-    public Array<T> key;
+    public Array<E> key;
 
     /**
      * The array of indices of previous elements.
@@ -41,7 +41,7 @@ public class MultipleArrayList<T> {
      * @param L    the index of the head of the new list
      * @param free the index of the head of the free list in the new list
      */
-    public MultipleArrayList(Array<Integer> next, Array<T> key, Array<Integer> prev, Integer L, Integer free) {
+    public MultipleArrayList(Array<Integer> next, Array<E> key, Array<Integer> prev, Integer L, Integer free) {
         this.next = next;
         this.key = key;
         this.prev = prev;
@@ -55,7 +55,7 @@ public class MultipleArrayList<T> {
      *
      * @param otherList the list to be copied
      */
-    public MultipleArrayList(MultipleArrayList<T> otherList) {
+    public MultipleArrayList(MultipleArrayList<E> otherList) {
         next = new Array<>(otherList.next);
         key = new Array<>(otherList.key);
         prev = new Array<>(otherList.prev);
@@ -98,8 +98,8 @@ public class MultipleArrayList<T> {
      *
      * @return the array containing all the elements in the list
      */
-    public Array<T> toArray() {
-        Array<T> array = Array.withLength(getLength());
+    public Array<E> toArray() {
+        Array<E> array = Array.withLength(getLength());
         Integer x = L;
         int i = 1;
         while (x != null) {

@@ -8,21 +8,21 @@ import static pl.kwojtas.cormenimpl.Chapter5.random;
 /**
  * Implements a XOR linked list.
  *
- * @param <T> the type of elements in the list
+ * @param <E> the type of elements in the list
  */
-public class XorLinkedList<T> {
+public class XorLinkedList<E> {
 
     /**
      * Implements a XOR linked list's node.
      *
-     * @param <U> the type of the node's key
+     * @param <F> the type of the node's key
      */
-    public static class Node<U> {
+    public static class Node<F> {
 
         /**
          * The key.
          */
-        public U key;
+        public F key;
 
         /**
          * The (simulated) address of the node.
@@ -34,13 +34,13 @@ public class XorLinkedList<T> {
          */
         public int np;
 
-        private Node(U key, int address) {
+        private Node(F key, int address) {
             this.key = key;
             this.address = address;
         }
     }
 
-    private Map<Integer, Node<T>> addressToNode;
+    private Map<Integer, Node<E>> addressToNode;
 
     /**
      * Creates a new XOR list's node and registers it in the address-to-node map.
@@ -49,12 +49,12 @@ public class XorLinkedList<T> {
      * @param key the key of the new node
      * @return the new node
      */
-    public Node<T> registerNode(T key) {
+    public Node<E> registerNode(E key) {
         int address;
         do {
             address = random(1, Integer.MAX_VALUE);
         } while (addressToNode.containsKey(address));
-        Node<T> x = new Node<>(key, address);
+        Node<E> x = new Node<>(key, address);
         addressToNode.put(address, x);
         return x;
     }
@@ -62,12 +62,12 @@ public class XorLinkedList<T> {
     /**
      * The head of the list.
      */
-    public Node<T> head;
+    public Node<E> head;
 
     /**
      * The tail of the list.
      */
-    public Node<T> tail;
+    public Node<E> tail;
 
     /**
      * Creates an empty XOR linked list.
@@ -81,23 +81,23 @@ public class XorLinkedList<T> {
      *
      * @param otherList the list to be copied
      */
-    public XorLinkedList(XorLinkedList<T> otherList) {
+    public XorLinkedList(XorLinkedList<E> otherList) {
         addressToNode = new HashMap<>();
         if (otherList.head == null) {
             return;
         }
         head = registerNode(otherList.head.key);
-        Node<T> x = head;
-        Node<T> y = null;
-        Node<T> x_ = otherList.byAddress(otherList.head.np);
-        Node<T> y_ = otherList.head;
+        Node<E> x = head;
+        Node<E> y = null;
+        Node<E> x_ = otherList.byAddress(otherList.head.np);
+        Node<E> y_ = otherList.head;
         while (x_ != null) {
-            Node<T> z = registerNode(x_.key);
+            Node<E> z = registerNode(x_.key);
             z.np = x.address;
             x.np = z.address ^ (y != null ? y.address : 0);
             y = x;
             x = z;
-            Node<T> z_ = otherList.byAddress(x_.np ^ (y_ != null ? y_.address : 0));
+            Node<E> z_ = otherList.byAddress(x_.np ^ (y_ != null ? y_.address : 0));
             y_ = x_;
             x_ = z_;
         }
@@ -110,7 +110,7 @@ public class XorLinkedList<T> {
      * @param address the address of the node
      * @return the node of address {@code address} in the list, or {@code null} if the list does not contain such node
      */
-    public Node<T> byAddress(int address) {
+    public Node<E> byAddress(int address) {
         return addressToNode.get(address);
     }
 
@@ -121,11 +121,11 @@ public class XorLinkedList<T> {
      */
     public int getLength() {
         int length = 0;
-        Node<T> x = head;
-        Node<T> y = null;
+        Node<E> x = head;
+        Node<E> y = null;
         while (x != null) {
             length++;
-            XorLinkedList.Node<T> z = byAddress(x.np ^ (y != null ? y.address : 0));
+            XorLinkedList.Node<E> z = byAddress(x.np ^ (y != null ? y.address : 0));
             y = x;
             x = z;
         }
@@ -137,15 +137,15 @@ public class XorLinkedList<T> {
      *
      * @return the array containing all the elements in the list
      */
-    public Array<T> toArray() {
-        Array<T> array = Array.withLength(getLength());
-        Node<T> x = head;
-        Node<T> y = null;
+    public Array<E> toArray() {
+        Array<E> array = Array.withLength(getLength());
+        Node<E> x = head;
+        Node<E> y = null;
         int i = 1;
         while (x != null) {
             array.set(i, x.key);
             i++;
-            XorLinkedList.Node<T> z = byAddress(x.np ^ (y != null ? y.address : 0));
+            XorLinkedList.Node<E> z = byAddress(x.np ^ (y != null ? y.address : 0));
             y = x;
             x = z;
         }

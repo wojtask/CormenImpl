@@ -30,11 +30,11 @@ public final class Chapter9 {
      * <p><span style="font-variant:small-caps;">Minimum</span> from subchapter 9.1.</p>
      *
      * @param A   the array to scan
-     * @param <T> the type of elements in {@code A}
+     * @param <E> the type of elements in {@code A}
      * @return the smallest element in {@code A}
      */
-    public static <T extends Comparable<? super T>> T minimum(Array<T> A) {
-        T min = A.at(1);
+    public static <E extends Comparable<? super E>> E minimum(Array<E> A) {
+        E min = A.at(1);
         for (int i = 2; i <= A.length; i++) {
             if (greater(min, A.at(i))) {
                 min = A.at(i);
@@ -48,13 +48,13 @@ public final class Chapter9 {
      * <p>Subchapter 9.1.</p>
      *
      * @param A   the array to scan
-     * @param <T> the type of elements in {@code A}
+     * @param <E> the type of elements in {@code A}
      * @return the pair <tt>(a<sub>1</sub>, a<sub>2</sub>)</tt> such that <tt>a<sub>1</sub></tt>
      * is the smallest element in {@code A} and <tt>a<sub>2</sub></tt> is the largest element in {@code A}
      */
-    public static <T extends Comparable<? super T>> Pair<T, T> minimumMaximum(Array<T> A) {
+    public static <E extends Comparable<? super E>> Pair<E, E> minimumMaximum(Array<E> A) {
         int n = A.length;
-        Pair<T, T> p;
+        Pair<E, E> p;
         int i;
         if (n % 2 == 1) {
             p = new Pair<>(A.at(1), A.at(1));
@@ -96,10 +96,10 @@ public final class Chapter9 {
      * @param p   the index of the beginning of subarray in {@code A} being scanned
      * @param r   the index of the end of subarray in {@code A} being scanned
      * @param i   the number of order statistic to find (1 - the smallest element)
-     * @param <T> the type of elements in {@code A}
+     * @param <E> the type of elements in {@code A}
      * @return the {@code i}-th order statistic ({@code i}-th smallest element) in {@code A}
      */
-    public static <T extends Comparable<? super T>> T randomizedSelect(Array<T> A, int p, int r, int i) {
+    public static <E extends Comparable<? super E>> E randomizedSelect(Array<E> A, int p, int r, int i) {
         if (p == r) {
             return A.at(p);
         }
@@ -122,10 +122,10 @@ public final class Chapter9 {
      * @param p   the index of the beginning of subarray in {@code A} being scanned
      * @param r   the index of the end of subarray in {@code A} being scanned
      * @param i   the number of order statistic to find (1 - the smallest element)
-     * @param <T> the type of elements in {@code A}
+     * @param <E> the type of elements in {@code A}
      * @return the {@code i}-th order statistic (the {@code i}-th smallest element) in {@code A}
      */
-    public static <T extends Comparable<? super T>> T iterativeRandomizedSelect(Array<T> A, int p, int r, int i) {
+    public static <E extends Comparable<? super E>> E iterativeRandomizedSelect(Array<E> A, int p, int r, int i) {
         while (p < r) {
             int q = randomizedPartition(A, p, r);
             int k = q - p + 1;
@@ -149,15 +149,15 @@ public final class Chapter9 {
      * @param p   the index of the beginning of subarray in {@code A} being scanned
      * @param r   the index of the end of subarray in {@code A} being scanned
      * @param i   the number of order statistic to find (1 - the smallest element)
-     * @param <T> the type of elements in {@code A}
+     * @param <E> the type of elements in {@code A}
      * @return the {@code i}-th order statistic (the {@code i}-th smallest element) in {@code A}
      */
-    public static <T extends Comparable<? super T>> T select(Array<T> A, int p, int r, int i) {
+    public static <E extends Comparable<? super E>> E select(Array<E> A, int p, int r, int i) {
         int n = r - p + 1;
         if (n == 1) {
             return A.at(p);
         }
-        ZeroBasedIndexedArray<Array<T>> groups = ZeroBasedIndexedArray.withLength(ceil(n, 5));
+        ZeroBasedIndexedArray<Array<E>> groups = ZeroBasedIndexedArray.withLength(ceil(n, 5));
         for (int j = 0; j < groups.length - 1; j++) {
             groups.set(j, Array.withLength(5));
         }
@@ -165,12 +165,12 @@ public final class Chapter9 {
         for (int j = p; j <= r; j++) {
             groups.at((j - p) / 5).set((j - p) % 5 + 1, A.at(j));
         }
-        Array<T> medians = Array.withLength(groups.length);
+        Array<E> medians = Array.withLength(groups.length);
         for (int j = 0; j < groups.length; j++) {
             insertionSort(groups.at(j));
             medians.set(j + 1, groups.at(j).at((groups.at(j).length + 1) / 2));
         }
-        T x = select(medians, 1, medians.length, (medians.length + 1) / 2);
+        E x = select(medians, 1, medians.length, (medians.length + 1) / 2);
         int k = partitionAround(A, p, r, x) - p + 1;
         if (i == k) {
             return x;
@@ -181,7 +181,7 @@ public final class Chapter9 {
         return select(A, p + k, r, i - k);
     }
 
-    private static <T extends Comparable<? super T>> int partitionAround(Array<T> A, int p, int r, T x) {
+    private static <E extends Comparable<? super E>> int partitionAround(Array<E> A, int p, int r, E x) {
         int q = p;
         while (!A.at(q).equals(x)) {
             q++;
@@ -205,9 +205,9 @@ public final class Chapter9 {
      * @param A   the array of elements to sort
      * @param p   the index of the beginning of subarray in {@code A} being sorted
      * @param r   the index of the end of subarray in {@code A} being sorted
-     * @param <T> the type of elements in {@code A}
+     * @param <E> the type of elements in {@code A}
      */
-    public static <T extends Comparable<? super T>> void bestCaseQuicksort(Array<T> A, int p, int r) {
+    public static <E extends Comparable<? super E>> void bestCaseQuicksort(Array<E> A, int p, int r) {
         if (p < r) {
             int q = (p + r) / 2;
             select(A, p, r, q);
@@ -225,15 +225,15 @@ public final class Chapter9 {
      * @param p   the index of the beginning of subarray in {@code A} being scanned
      * @param r   the index of the end of subarray in {@code A} being scanned
      * @param i   the number of order statistic to find (1 - the smallest element)
-     * @param <T> the type of elements in {@code A}
+     * @param <E> the type of elements in {@code A}
      * @return the {@code i}-th order statistic (the {@code i}-th smallest element) in {@code A}
      */
-    public static <T extends Comparable<? super T>> T selectUsingMedianSubroutine(Array<T> A, int p, int r, int i) {
+    public static <E extends Comparable<? super E>> E selectUsingMedianSubroutine(Array<E> A, int p, int r, int i) {
         if (p == r) {
             return A.at(p);
         }
         int q = (p + r) / 2;
-        T x = select(A, p, r, q); // black-box median subroutine
+        E x = select(A, p, r, q); // black-box median subroutine
         partitionAround(A, p, r, x); // we need to explicitly partition around the median because the used subroutine might not do it
         int k = q - p + 1;
         if (i == k) {
@@ -253,10 +253,10 @@ public final class Chapter9 {
      * @param p   the index of the beginning of subarray in {@code A} being scanned
      * @param r   the index of the end of subarray in {@code A} being scanned
      * @param k   the order of quantiles to find
-     * @param <T> the type of elements in {@code A}
+     * @param <E> the type of elements in {@code A}
      * @return the set of {@code k}-th quantiles of the set represented by {@code A}
      */
-    public static <T extends Comparable<? super T>> Set<T> quantiles(Array<T> A, int p, int r, int k) {
+    public static <E extends Comparable<? super E>> Set<E> quantiles(Array<E> A, int p, int r, int k) {
         int n = r - p + 1;
         if (k == 1) {
             return new HashSet<>();
@@ -267,8 +267,8 @@ public final class Chapter9 {
         if (q1 != q2) {
             select(A, q1 + 1, r, q2 - q1);
         }
-        Set<T> L = quantiles(A, p, q1 - 1, k / 2);
-        Set<T> R = quantiles(A, q2 + 1, r, k / 2);
+        Set<E> L = quantiles(A, p, q1 - 1, k / 2);
+        Set<E> R = quantiles(A, q2 + 1, r, k / 2);
         L.add(A.at(q1));
         L.add(A.at(q2));
         L.addAll(R);
@@ -313,10 +313,10 @@ public final class Chapter9 {
      * @param Y   the second array to scan having the equal length as {@code X}
      * @param pY  the index of the beginning of subarray in {@code Y} being scanned
      * @param rY  the index of the end of subarray in {@code Y} being scanned
-     * @param <T> the type of elements in {@code X} and {@code Y}
+     * @param <E> the type of elements in {@code X} and {@code Y}
      * @return the median of elements in {@code X} and {@code Y}
      */
-    public static <T extends Comparable<? super T>> T twoArraysMedian(Array<T> X, int pX, int rX, Array<T> Y, int pY, int rY) {
+    public static <E extends Comparable<? super E>> E twoArraysMedian(Array<E> X, int pX, int rX, Array<E> Y, int pY, int rY) {
         if (rX - pX <= 1) {
             return min(max(X.at(pX), Y.at(pY)), min(X.at(rX), Y.at(rY)));
         }
@@ -340,10 +340,10 @@ public final class Chapter9 {
      *
      * @param A   the array of elements to scan
      * @param w   the array of weights of elements from {@code A}, such that {@code w[i]} is the weight of {@code A[i]}
-     * @param <T> the type of elements in {@code A}
+     * @param <E> the type of elements in {@code A}
      * @return the weighted median of {@code A} based on weights from {@code w}
      */
-    public static <T extends Comparable<? super T>> T weightedMedianUsingSorting(Array<T> A, Array<Double> w) {
+    public static <E extends Comparable<? super E>> E weightedMedianUsingSorting(Array<E> A, Array<Double> w) {
         sortWithWeights(A, w, 1, A.length);
         double weightSum = 0.0;
         int i = 1;
@@ -354,7 +354,7 @@ public final class Chapter9 {
         return A.at(i - 1);
     }
 
-    private static <T extends Comparable<? super T>> void sortWithWeights(Array<T> A, Array<Double> w, int p, int r) {
+    private static <E extends Comparable<? super E>> void sortWithWeights(Array<E> A, Array<Double> w, int p, int r) {
         if (p < r) {
             int q = partitionWithWeights(A, w, p, r);
             sortWithWeights(A, w, p, q - 1);
@@ -362,8 +362,8 @@ public final class Chapter9 {
         }
     }
 
-    private static <T extends Comparable<? super T>> int partitionWithWeights(Array<T> A, Array<Double> w, int p, int r) {
-        T x = A.at(r);
+    private static <E extends Comparable<? super E>> int partitionWithWeights(Array<E> A, Array<Double> w, int p, int r) {
+        E x = A.at(r);
         int i = p - 1;
         for (int j = p; j <= r - 1; j++) {
             if (less(A.at(j), x)) {
@@ -385,10 +385,10 @@ public final class Chapter9 {
      * @param w   the array of weights of elements from {@code A}, such that {@code w[i]} is the weight of {@code A[i]}
      * @param p   the index of the beginning of subarray in {@code A} being scanned
      * @param r   the index of the end of subarray in {@code A} being scanned
-     * @param <T> the type of elements in {@code A}
+     * @param <E> the type of elements in {@code A}
      * @return the weighted median of {@code A} based on weights from {@code w}
      */
-    public static <T extends Comparable<? super T>> T weightedMedian(Array<T> A, Array<Double> w, int p, int r) {
+    public static <E extends Comparable<? super E>> E weightedMedian(Array<E> A, Array<Double> w, int p, int r) {
         if (r - p + 1 <= 2) {
             return w.at(p) >= w.at(r) ? A.at(p) : A.at(r);
         }
@@ -411,8 +411,8 @@ public final class Chapter9 {
         }
     }
 
-    private static <T extends Comparable<? super T>> void partitionAroundMedianWithWeights(Array<T> A, Array<Double> w, int p, int r) {
-        T x = select(new Array<>(A), p, r, (p + r) / 2);
+    private static <E extends Comparable<? super E>> void partitionAroundMedianWithWeights(Array<E> A, Array<Double> w, int p, int r) {
+        E x = select(new Array<>(A), p, r, (p + r) / 2);
         int q = p;
         while (!A.at(q).equals(x)) {
             q++;
@@ -451,15 +451,15 @@ public final class Chapter9 {
      *
      * @param A   the array to scan
      * @param i   the number of order statistic to find (1 - the smallest element)
-     * @param <T> the type of elements in {@code A}
+     * @param <E> the type of elements in {@code A}
      * @return the {@code i}-th order statistic (the {@code i}-th smallest element) in {@code A}
      */
-    public static <T extends Comparable<? super T>> T smallOrderSelect(Array<T> A, int i) {
+    public static <E extends Comparable<? super E>> E smallOrderSelect(Array<E> A, int i) {
         smallOrderSelect(A, 1, A.length, i);
         return A.at(i);
     }
 
-    private static <T extends Comparable<? super T>> ZeroBasedIndexedArray<Integer> smallOrderSelect(Array<T> A, int p, int r, int i) {
+    private static <E extends Comparable<? super E>> ZeroBasedIndexedArray<Integer> smallOrderSelect(Array<E> A, int p, int r, int i) {
         int n = r - p + 1;
         int m = n / 2;
         if (i >= m) {
@@ -487,8 +487,8 @@ public final class Chapter9 {
         return permutation;
     }
 
-    private static <T extends Comparable<? super T>> ZeroBasedIndexedArray<Integer> permutationProducingSelect(
-            Array<T> A, int p, int r, int i) {
+    private static <E extends Comparable<? super E>> ZeroBasedIndexedArray<Integer> permutationProducingSelect(
+            Array<E> A, int p, int r, int i) {
         int n = r - p + 1;
         ZeroBasedIndexedArray<Integer> permutation = ZeroBasedIndexedArray.withLength(n);
         for (int j = 0; j <= n - 1; j++) {
@@ -497,7 +497,7 @@ public final class Chapter9 {
         if (n == 1) {
             return permutation;
         }
-        ZeroBasedIndexedArray<Array<T>> groups = ZeroBasedIndexedArray.withLength(ceil(n, 5));
+        ZeroBasedIndexedArray<Array<E>> groups = ZeroBasedIndexedArray.withLength(ceil(n, 5));
         for (int j = 0; j < groups.length - 1; j++) {
             groups.set(j, Array.withLength(5));
         }
@@ -505,12 +505,12 @@ public final class Chapter9 {
         for (int j = p; j <= r; j++) {
             groups.at((j - p) / 5).set((j - p) % 5 + 1, A.at(j));
         }
-        Array<T> medians = Array.withLength(groups.length);
+        Array<E> medians = Array.withLength(groups.length);
         for (int j = 0; j < groups.length; j++) {
             insertionSort(groups.at(j));
             medians.set(j + 1, groups.at(j).at((groups.at(j).length + 1) / 2));
         }
-        T x = select(medians, 1, medians.length, (medians.length + 1) / 2);
+        E x = select(medians, 1, medians.length, (medians.length + 1) / 2);
         int k = permutationChangingPartitionAround(A, p, r, x, permutation) - p + 1;
         if (i < k) {
             ZeroBasedIndexedArray<Integer> permutationChanges = permutationProducingSelect(A, p, p + k - 2, i);
@@ -533,15 +533,15 @@ public final class Chapter9 {
         }
     }
 
-    private static <T extends Comparable<? super T>> void applyPermutationChangesWithArrayUpdate(
+    private static <E extends Comparable<? super E>> void applyPermutationChangesWithArrayUpdate(
             ZeroBasedIndexedArray<Integer> permutation,
             ZeroBasedIndexedArray<Integer> permutationChanges,
-            Array<T> A,
+            Array<E> A,
             int p,
             int r) {
         int changesLength = r - p + 1;
         ZeroBasedIndexedArray<Integer> appliedChanges = ZeroBasedIndexedArray.withLength(changesLength);
-        Array<T> permutedArrayFragment = Array.withLength(changesLength);
+        Array<E> permutedArrayFragment = Array.withLength(changesLength);
         for (int j = 0; j <= changesLength - 1; j++) {
             if (permutationChanges.at(j) < changesLength - 1) {
                 appliedChanges.set(j, permutation.at(permutationChanges.at(j)));
@@ -557,8 +557,8 @@ public final class Chapter9 {
         }
     }
 
-    private static <T extends Comparable<? super T>> int permutationChangingPartitionAround(
-            Array<T> A, int p, int r, T x, ZeroBasedIndexedArray<Integer> permutation) {
+    private static <E extends Comparable<? super E>> int permutationChangingPartitionAround(
+            Array<E> A, int p, int r, E x, ZeroBasedIndexedArray<Integer> permutation) {
         int q = p;
         while (!A.at(q).equals(x)) {
             q++;
