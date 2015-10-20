@@ -139,7 +139,7 @@ public final class Chapter12 {
      * @param <E> the type of keys in the tree
      * @return the successor of {@code x} in the tree, or {@code null} if {@code x} has the largest key in the tree
      */
-    public static <E extends Comparable<? super E>> BinaryTree.Node<E> treeSuccessor(BinaryTree.Node<E> x) {
+    public static <E> BinaryTree.Node<E> treeSuccessor(BinaryTree.Node<E> x) {
         if (x.right != null) {
             return treeMinimum(x.right);
         }
@@ -159,7 +159,7 @@ public final class Chapter12 {
      * @param <E> the type of keys in the tree
      * @return the node with the smallest key in the tree
      */
-    public static <E extends Comparable<? super E>> BinaryTree.Node<E> recursiveTreeMinimum(BinaryTree.Node<E> x) {
+    public static <E> BinaryTree.Node<E> recursiveTreeMinimum(BinaryTree.Node<E> x) {
         if (x.left != null) {
             return recursiveTreeMinimum(x.left);
         }
@@ -174,7 +174,7 @@ public final class Chapter12 {
      * @param <E> the type of keys in the tree
      * @return the node with the largest key in the tree
      */
-    public static <E extends Comparable<? super E>> BinaryTree.Node<E> recursiveTreeMaximum(BinaryTree.Node<E> x) {
+    public static <E> BinaryTree.Node<E> recursiveTreeMaximum(BinaryTree.Node<E> x) {
         if (x.right != null) {
             return recursiveTreeMaximum(x.right);
         }
@@ -189,7 +189,7 @@ public final class Chapter12 {
      * @param <E> the type of keys in the tree
      * @return the predecessor of {@code x} in the tree, or {@code null} if {@code x} has the smallest key in the tree
      */
-    public static <E extends Comparable<? super E>> BinaryTree.Node<E> treePredecessor(BinaryTree.Node<E> x) {
+    public static <E> BinaryTree.Node<E> treePredecessor(BinaryTree.Node<E> x) {
         if (x.left != null) {
             return treeMaximum(x.left);
         }
@@ -202,13 +202,13 @@ public final class Chapter12 {
     }
 
     /**
-     * Prints out keys of a binary search tree performing inorder tree walk - iterative version.
+     * Prints out keys of a binary search tree performing inorder tree walk - an iterative version.
      * <p>Exercise 12.2-7.</p>
      *
      * @param T   the binary search tree
-     * @param <E> the type of keys in the tree
+     * @param <E> the type of keys in {@code T}
      */
-    public static <E extends Comparable<? super E>> void inorderTreeWalk_(BinaryTree<E> T) {
+    public static <E> void inorderTreeWalk_(BinaryTree<E> T) {
         if (T.root == null) {
             return;
         }
@@ -227,7 +227,7 @@ public final class Chapter12 {
      *
      * @param T   the binary search tree
      * @param z   the node to insert
-     * @param <E> the type of keys in the tree
+     * @param <E> the type of keys in {@code T}
      */
     public static <E extends Comparable<? super E>> void treeInsert(BinaryTree<E> T, BinaryTree.Node<E> z) {
         BinaryTree.Node<E> y = null;
@@ -261,7 +261,7 @@ public final class Chapter12 {
      * @param <E> the type of keys in {@code T}
      * @return the node deleted from {@code T}
      */
-    public static <E extends Comparable<? super E>> BinaryTree.Node<E> treeDelete(BinaryTree<E> T, BinaryTree.Node<E> z) {
+    public static <E> BinaryTree.Node<E> treeDelete(BinaryTree<E> T, BinaryTree.Node<E> z) {
         BinaryTree.Node<E> y;
         if (z.left == null || z.right == null) {
             y = z;
@@ -346,7 +346,7 @@ public final class Chapter12 {
      * @param z   the node to delete
      * @param <E> the type of keys in {@code T}
      */
-    public static <E extends Comparable<? super E>> void safeTreeDelete(BinaryTree<E> T, BinaryTree.Node<E> z) {
+    public static <E> void safeTreeDelete(BinaryTree<E> T, BinaryTree.Node<E> z) {
         if (z.left == null || z.right == null) {
             treeDelete(T, z);
             return;
@@ -383,7 +383,7 @@ public final class Chapter12 {
      * @param <E> the type of keys in {@code T}
      * @return the node deleted from {@code T}
      */
-    public static <E extends Comparable<? super E>> BinaryTree.Node<E> fairTreeDelete(BinaryTree<E> T, BinaryTree.Node<E> z) {
+    public static <E> BinaryTree.Node<E> fairTreeDelete(BinaryTree<E> T, BinaryTree.Node<E> z) {
         BinaryTree.Node<E> y;
         if (z.left == null || z.right == null) {
             y = z;

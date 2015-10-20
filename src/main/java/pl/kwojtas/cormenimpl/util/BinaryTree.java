@@ -3,7 +3,7 @@ package pl.kwojtas.cormenimpl.util;
 /**
  * Implements a binary tree.
  *
- * @param <E> the type of elements in the binary tree
+ * @param <E> the type of elements in the tree
  */
 public class BinaryTree<E> {
 

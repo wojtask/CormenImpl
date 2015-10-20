@@ -3,7 +3,7 @@ package pl.kwojtas.cormenimpl.util;
 /**
  * Implements an arbitrary rooted tree using the left-child, right-sibling representation.
  *
- * @param <E> the type of elements in the arbitrary rooted tree
+ * @param <E> the type of elements in the tree
  */
 public class MultiaryTree<E> {
 

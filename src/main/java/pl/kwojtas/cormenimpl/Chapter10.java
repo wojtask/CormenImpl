@@ -796,9 +796,9 @@ public final class Chapter10 {
         if (A.free == null) {
             throw new RuntimeException("out of space");
         }
-        int i = A.free;
-        A.free = A.at(i + 1);
-        return i;
+        int x = A.free;
+        A.free = A.at(x + 1);
+        return x;
     }
 
     /**
@@ -806,11 +806,11 @@ public final class Chapter10 {
      * <p><span style="font-variant:small-caps;">Single-Array-Free-Object</span> from solution to exercise 10.3-2.</p>
      *
      * @param A the list in the single-array representation
-     * @param i the index of the object in {@code A} to free
+     * @param x the index of the object in {@code A} to free
      */
-    public static void singleArrayFreeObject(SingleArrayList A, int i) {
-        A.set(i + 1, A.free);
-        A.free = i;
+    public static void singleArrayFreeObject(SingleArrayList A, int x) {
+        A.set(x + 1, A.free);
+        A.free = x;
     }
 
     /**
@@ -834,10 +834,9 @@ public final class Chapter10 {
      * @param <E> the type of elements in {@code L}
      */
     public static <E> void compactListFreeObject(MultipleArrayList<E> L, int x) {
-        int n = L.getLength();
         int y;
         if (L.free == null) {
-            y = n;
+            y = L.key.length;
         } else {
             y = L.free - 1;
         }
