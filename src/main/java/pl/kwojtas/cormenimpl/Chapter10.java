@@ -872,7 +872,7 @@ public final class Chapter10 {
      */
     public static <E> void compactifyList(MultipleArrayList<E> L) {
         int m = L.getLength();
-        setPrevFields(L, Integer.MAX_VALUE);
+        setPrevFields(L, -1);
         Integer x = L.L;
         Integer x_ = null;
         Integer y = 1;
@@ -881,7 +881,7 @@ public final class Chapter10 {
                 x_ = x;
                 x = L.next.at(x);
             } else {
-                while (L.prev.at(y) != null && L.prev.at(y) == Integer.MAX_VALUE) {
+                while (L.prev.at(y) != null && L.prev.at(y) == -1) {
                     y++;
                 }
                 L.key.exch(x, y);
