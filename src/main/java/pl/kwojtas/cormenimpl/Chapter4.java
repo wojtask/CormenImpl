@@ -20,26 +20,46 @@ public final class Chapter4 {
     public static Integer findMissingInteger(Array<Integer> A) {
         A = extendArrayWithExtraIntegers(A);
         int n = A.length;
+        Array<Integer> positions = Array.withLength(n);
+        for (int i = 1; i <= n; i++) {
+            positions.set(i, i);
+        }
         Integer missingInteger = 0;
-        for (int j = 0; j <= getBitLength(n) - 1; j++) {
-            int actualOnes = 0;
+        int j = 0;
+        while (n > 0) {
+            Array<Integer> positionsOfZeroBitNumbers = Array.withLength((n - 1) / 2);
+            Array<Integer> positionsOfOneBitNumbers = Array.withLength((n - 1) / 2);
+            int zerosFound = 0;
+            int onesFound = 0;
             for (int i = 1; i <= n; i++) {
-                if (getBit(j, A, i)) {
-                    actualOnes++;
+                if (getBit(j, A, positions.at(i)) == 0) {
+                    zerosFound++;
+                    // we don't care for more than (n - 1) / 2 numbers because in the next step
+                    // we will be working on the other array which will have length = (n - 1) / 2
+                    if (zerosFound <= positionsOfZeroBitNumbers.length) {
+                        positionsOfZeroBitNumbers.set(zerosFound, positions.at(i));
+                    }
+                } else {
+                    onesFound++;
+                    if (onesFound <= positionsOfOneBitNumbers.length) {
+                        positionsOfOneBitNumbers.set(onesFound, positions.at(i));
+                    }
                 }
             }
-            if (actualOnes < (n + 1) / 2) {
+            if (zerosFound == (n - 1) / 2) {
+                positions = positionsOfZeroBitNumbers;
+            } else {
+                positions = positionsOfOneBitNumbers;
                 missingInteger |= (1 << j);
             }
+            j++;
+            n = (n - 1) / 2;
         }
         return missingInteger;
     }
 
     private static Array<Integer> extendArrayWithExtraIntegers(Array<Integer> A) {
-        int n = A.length;
-        while (!isPowerOf2Minus1(n)) {
-            n++;
-        }
+        int n = nextPowerOf2Minus1(A.length);
         Array<Integer> extended = Array.withLength(n);
         for (int i = 1; i <= A.length; i++) {
             extended.set(i, A.at(i));
@@ -50,27 +70,16 @@ public final class Chapter4 {
         return extended;
     }
 
-    private static boolean isPowerOf2Minus1(int n) {
-        while (n > 0) {
-            if (n % 2 == 0) {
-                return false;
-            }
-            n /= 2;
+    private static int nextPowerOf2Minus1(int n) {
+        int result = 1;
+        while (result <= n) {
+            result <<= 1;
         }
-        return true;
+        return result - 1;
     }
 
-    private static int getBitLength(int n) {
-        int bitLength = 0;
-        while (n > 0) {
-            bitLength++;
-            n /= 2;
-        }
-        return bitLength;
-    }
-
-    private static boolean getBit(int j, Array<Integer> A, int i) {
-        return (A.at(i) & (1 << j)) != 0;
+    private static int getBit(int j, Array<Integer> A, int i) {
+        return A.at(i) & (1 << j);
     }
 
     /**
