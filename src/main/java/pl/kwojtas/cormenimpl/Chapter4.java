@@ -18,64 +18,41 @@ public final class Chapter4 {
      * @return the missing integer in {@code A}
      */
     public static Integer findMissingInteger(Array<Integer> A) {
-        A = extendArrayWithExtraIntegers(A);
         int n = A.length;
-        Array<Integer> positions = Array.withLength(n);
+        Array<Integer> positionsOfNumbers = Array.withLength(n);
         for (int i = 1; i <= n; i++) {
-            positions.set(i, i);
+            positionsOfNumbers.set(i, i);
         }
         Integer missingInteger = 0;
         int j = 0;
         while (n > 0) {
-            Array<Integer> positionsOfZeroBitNumbers = Array.withLength((n - 1) / 2);
-            Array<Integer> positionsOfOneBitNumbers = Array.withLength((n - 1) / 2);
+            Array<Integer> positionsOfNumbersWithBit0 = Array.withLength(n / 2);
+            Array<Integer> positionsOfNumbersWithBit1 = Array.withLength((n - 1) / 2);
             int zerosFound = 0;
             int onesFound = 0;
             for (int i = 1; i <= n; i++) {
-                if (getBit(j, A, positions.at(i)) == 0) {
+                if (getBit(j, A, positionsOfNumbers.at(i)) == 0) {
                     zerosFound++;
-                    // we don't care for more than (n - 1) / 2 numbers because in the next step
-                    // we will be working on the other array which will have length = (n - 1) / 2
-                    if (zerosFound <= positionsOfZeroBitNumbers.length) {
-                        positionsOfZeroBitNumbers.set(zerosFound, positions.at(i));
+                    if (zerosFound <= positionsOfNumbersWithBit0.length) {
+                        positionsOfNumbersWithBit0.set(zerosFound, positionsOfNumbers.at(i));
                     }
                 } else {
                     onesFound++;
-                    if (onesFound <= positionsOfOneBitNumbers.length) {
-                        positionsOfOneBitNumbers.set(onesFound, positions.at(i));
+                    if (onesFound <= positionsOfNumbersWithBit1.length) {
+                        positionsOfNumbersWithBit1.set(onesFound, positionsOfNumbers.at(i));
                     }
                 }
             }
-            if (zerosFound == (n - 1) / 2) {
-                positions = positionsOfZeroBitNumbers;
-            } else {
-                positions = positionsOfOneBitNumbers;
+            if (zerosFound == n / 2 + 1) {
+                positionsOfNumbers = positionsOfNumbersWithBit1;
                 missingInteger |= (1 << j);
+            } else {
+                positionsOfNumbers = positionsOfNumbersWithBit0;
             }
             j++;
-            n = (n - 1) / 2;
+            n = positionsOfNumbers.length;
         }
         return missingInteger;
-    }
-
-    private static Array<Integer> extendArrayWithExtraIntegers(Array<Integer> A) {
-        int n = nextPowerOf2Minus1(A.length);
-        Array<Integer> extended = Array.withLength(n);
-        for (int i = 1; i <= A.length; i++) {
-            extended.set(i, A.at(i));
-        }
-        for (int i = A.length + 1; i <= n; i++) {
-            extended.set(i, i);
-        }
-        return extended;
-    }
-
-    private static int nextPowerOf2Minus1(int n) {
-        int result = 1;
-        while (result <= n) {
-            result <<= 1;
-        }
-        return result - 1;
     }
 
     private static int getBit(int j, Array<Integer> A, int i) {

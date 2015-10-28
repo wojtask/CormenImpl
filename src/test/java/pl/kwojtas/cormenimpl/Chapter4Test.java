@@ -26,7 +26,7 @@ public class Chapter4Test {
     @Test
     public void shouldFindMissingInteger() {
         // given
-        Array<Integer> array = new Array<>(12, 1, 6, 11, 4, 3, 0, 10, 13, 8, 5, 2, 9);
+        Array<Integer> array = new Array<>(12, 1, 6, 11, 4, 3, 0, 10, 13, 7, 5, 2, 9);
         Array<Integer> original = new Array<>(array);
 
         // when
