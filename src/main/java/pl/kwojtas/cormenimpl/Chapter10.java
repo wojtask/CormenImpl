@@ -716,6 +716,7 @@ public final class Chapter10 {
      * @param x   the element in {@code L} to delete
      * @param <E> the type of elements in {@code L}
      */
+    @SuppressWarnings("all")
     public static <E> void xorLinkedListDelete(XorLinkedList<E> L, XorLinkedList.Node<E> x) {
         XorLinkedList.Node<E> x_ = L.head;
         XorLinkedList.Node<E> y = null;
@@ -726,17 +727,15 @@ public final class Chapter10 {
             x_ = z;
         }
         z = L.byAddress(x.np ^ (y != null ? y.address : 0));
-        if (y != null) {
-            y.np ^= x.address ^ (z != null ? z.address : 0);
-        }
-        if (z != null) {
-            z.np ^= x.address ^ (y != null ? y.address : 0);
-        }
         if (x == L.head) {
             L.head = z;
+        } else {
+            y.np ^= x.address ^ (z != null ? z.address : 0);
         }
         if (x == L.tail) {
             L.tail = y;
+        } else {
+            z.np ^= x.address ^ (y != null ? y.address : 0);
         }
     }
 
