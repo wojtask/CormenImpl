@@ -2,6 +2,7 @@ package pl.kwojtas.cormenimpl;
 
 import org.junit.Test;
 import pl.kwojtas.cormenimpl.util.ChainedHashTable;
+import pl.kwojtas.cormenimpl.util.DirectAddressTable;
 import pl.kwojtas.cormenimpl.util.Element;
 import pl.kwojtas.cormenimpl.util.HashFunction;
 import pl.kwojtas.cormenimpl.util.HashProbingFunction;
@@ -173,24 +174,34 @@ public class Chapter11Test {
         assertEquals(Integer.valueOf(0), bitVector.at(key));
     }
 
-    private ZeroBasedIndexedArray<List<Element<String>>> getExemplaryDirectAddressTableWithNonDistinctKeys() {
-        ZeroBasedIndexedArray<List<Element<String>>> directAddressTable = ZeroBasedIndexedArray.withLength(5);
-        directAddressTable.set(0, new List<>(new Element<>(0, "zero")));
-        directAddressTable.set(1, new List<>(new Element<>(1, "oneA"), new Element<>(1, "oneB"), new Element<>(1, "oneC")));
-        directAddressTable.set(2, new List<>());
-        directAddressTable.set(3, new List<>(new Element<>(3, "threeA"), new Element<>(3, "threeB")));
-        directAddressTable.set(4, new List<>());
+    private DirectAddressTable<String> getExemplaryDirectAddressTableWithNonDistinctKeys() {
+        DirectAddressTable<String> directAddressTable = new DirectAddressTable<>(5);
+        DirectAddressTable.Element<String> x0 = new DirectAddressTable.Element<>(0, "zero");
+        DirectAddressTable.Element<String> x1a = new DirectAddressTable.Element<>(1, "oneA");
+        DirectAddressTable.Element<String> x1b = new DirectAddressTable.Element<>(1, "oneB");
+        DirectAddressTable.Element<String> x1c = new DirectAddressTable.Element<>(1, "oneC");
+        DirectAddressTable.Element<String> x3a = new DirectAddressTable.Element<>(3, "threeA");
+        DirectAddressTable.Element<String> x3b = new DirectAddressTable.Element<>(1, "threeB");
+        directAddressTable.set(0, x0);
+        directAddressTable.set(1, x1a);
+        x1a.next = x1b;
+        x1b.prev = x1a;
+        x1b.next = x1c;
+        x1c.prev = x1b;
+        directAddressTable.set(3, x3a);
+        x3a.next = x3b;
+        x3b.prev = x3a;
         return directAddressTable;
     }
 
     @Test
     public void shouldFindElementInDirectAddressTableWithNonDistinctKeys() {
         // given
-        ZeroBasedIndexedArray<List<Element<String>>> directAddressTable = getExemplaryDirectAddressTableWithNonDistinctKeys();
-        Element<String> element = new Element<>(3, "threeA");
+        DirectAddressTable<String> directAddressTable = getExemplaryDirectAddressTableWithNonDistinctKeys();
+        DirectAddressTable.Element<String> element = new DirectAddressTable.Element<>(3, "threeA");
 
         // when
-        Element<String> actualFoundElement = Chapter11.directAddressSearch_(directAddressTable, element.key);
+        DirectAddressTable.Element<String> actualFoundElement = Chapter11.directAddressSearch_(directAddressTable, element.key);
 
         // then
         assertNotNull(actualFoundElement);
@@ -201,11 +212,11 @@ public class Chapter11Test {
     @Test
     public void shouldNotFindNonexistentElementInDirectAddressTableWithNonDistinctKeys() {
         // given
-        ZeroBasedIndexedArray<List<Element<String>>> directAddressTable = getExemplaryDirectAddressTableWithNonDistinctKeys();
+        DirectAddressTable<String> directAddressTable = getExemplaryDirectAddressTableWithNonDistinctKeys();
         int key = 2;
 
         // when
-        Element<String> actualFoundElement = Chapter11.directAddressSearch_(directAddressTable, key);
+        DirectAddressTable.Element<String> actualFoundElement = Chapter11.directAddressSearch_(directAddressTable, key);
 
         // then
         assertNull(actualFoundElement);
@@ -214,29 +225,29 @@ public class Chapter11Test {
     @Test
     public void shouldInsertIntoDirectAddressTableWithNonDistinctKeys() {
         // given
-        ZeroBasedIndexedArray<List<Element<String>>> directAddressTable = getExemplaryDirectAddressTableWithNonDistinctKeys();
-        Element<String> element = new Element<>(4, "four");
-        int key = 4;
+        DirectAddressTable<String> directAddressTable = getExemplaryDirectAddressTableWithNonDistinctKeys();
+        DirectAddressTable.Element<String> element = new DirectAddressTable.Element<>(4, "four");
 
         // when
         Chapter11.directAddressInsert_(directAddressTable, element);
 
         // then
-        assertEquals(element.key, directAddressTable.at(key).head.key.key);
-        assertEquals(element.data, directAddressTable.at(key).head.key.data);
+        DirectAddressTable.Element<String> actualElement = directAddressTable.at(element.key);
+        assertEquals(element.key, actualElement.key);
+        assertEquals(element.data, actualElement.data);
     }
 
     @Test
     public void shouldDeleteFromDirectAddressTableWithNonDistinctKeys() {
         // given
-        ZeroBasedIndexedArray<List<Element<String>>> directAddressTable = getExemplaryDirectAddressTableWithNonDistinctKeys();
+        DirectAddressTable<String> directAddressTable = getExemplaryDirectAddressTableWithNonDistinctKeys();
         int key = 1;
 
         // when
-        Chapter11.directAddressDelete_(directAddressTable, directAddressTable.at(key).head.next.key);
+        Chapter11.directAddressDelete_(directAddressTable, directAddressTable.at(key).next);
 
         // then
-        assertEquals(2, directAddressTable.at(key).getLength());
+        assertEquals("oneC", directAddressTable.at(key).next.data);
     }
 
     private HugeArray<String> getExemplaryHugeArray() {

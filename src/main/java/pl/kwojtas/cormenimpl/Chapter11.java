@@ -1,6 +1,7 @@
 package pl.kwojtas.cormenimpl;
 
 import pl.kwojtas.cormenimpl.util.ChainedHashTable;
+import pl.kwojtas.cormenimpl.util.DirectAddressTable;
 import pl.kwojtas.cormenimpl.util.Element;
 import pl.kwojtas.cormenimpl.util.HashFunction;
 import pl.kwojtas.cormenimpl.util.HashTableWithFreeList;
@@ -121,12 +122,8 @@ public final class Chapter11 {
      * @param <E> the type of elements' values in {@code T}
      * @return one of the elements of key {@code k} in table {@code T}, or {@code null} if {@code T} does not contain such element
      */
-    public static <E> Element<E> directAddressSearch_(ZeroBasedIndexedArray<List<Element<E>>> T, int k) {
-        List<Element<E>> list = T.at(k);
-        if (list.head != null) {
-            return list.head.key;
-        }
-        return null;
+    public static <E> DirectAddressTable.Element<E> directAddressSearch_(DirectAddressTable<E> T, int k) {
+        return T.at(k);
     }
 
     /**
@@ -137,9 +134,14 @@ public final class Chapter11 {
      * @param x   the element to insert
      * @param <E> the type of elements' values in {@code T}
      */
-    public static <E> void directAddressInsert_(ZeroBasedIndexedArray<List<Element<E>>> T, Element<E> x) {
-        List<Element<E>> list = T.at(x.key);
-        listInsert(list, new List.Node<>(x));
+    public static <E> void directAddressInsert_(DirectAddressTable<E> T, DirectAddressTable.Element<E> x) {
+        DirectAddressTable.Element<E> y = T.at(x.key);
+        x.next = T.at(x.key);
+        if (y != null) {
+            T.at(x.key).prev = x;
+        }
+        T.set(x.key, x);
+        x.prev = null;
     }
 
     /**
@@ -150,10 +152,15 @@ public final class Chapter11 {
      * @param x   the element from {@code T} to delete
      * @param <E> the type of elements' values in {@code T}
      */
-    public static <E> void directAddressDelete_(ZeroBasedIndexedArray<List<Element<E>>> T, Element<E> x) {
-        List<Element<E>> list = T.at(x.key);
-        List.Node<Element<E>> node = listSearch(list, x);
-        listDelete(list, node);
+    public static <E> void directAddressDelete_(DirectAddressTable<E> T, DirectAddressTable.Element<E> x) {
+        if (x.prev != null) {
+            x.prev.next = x.next;
+        } else {
+            T.set(x.key, x.next);
+        }
+        if (x.next != null) {
+            x.next.prev = x.prev;
+        }
     }
 
     /**
