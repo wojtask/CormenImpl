@@ -3,9 +3,9 @@ package pl.kwojtas.cormenimpl;
 import org.junit.Test;
 import pl.kwojtas.cormenimpl.util.Array;
 import pl.kwojtas.cormenimpl.util.Heap;
-import pl.kwojtas.cormenimpl.util.List;
 import pl.kwojtas.cormenimpl.util.PriorityQueueWithRanks;
 import pl.kwojtas.cormenimpl.util.PriorityQueueWithRanks.KeyWithRank;
+import pl.kwojtas.cormenimpl.util.SinglyLinkedList;
 import pl.kwojtas.cormenimpl.util.Young;
 
 import java.lang.reflect.Constructor;
@@ -435,37 +435,37 @@ public class Chapter6Test {
     @Test
     public void shouldMergeSortedLists() {
         // given
-        Array<List<Integer>> sortedLists = new Array<>(
-                new List<>(14, 20, 22, 45, 46),
-                new List<>(4, 4, 23),
-                new List<>(1),
-                new List<>(5, 6, 12, 16, 18, 22, 24, 56, 67),
-                new List<>(1),
-                new List<>(4, 6, 20, 30),
-                new List<>(),
-                new List<>(68, 68, 68, 69),
-                new List<>(45),
-                new List<>(2, 34)
+        Array<SinglyLinkedList<Integer>> sortedLists = new Array<>(
+                new SinglyLinkedList<>(14, 20, 22, 45, 46),
+                new SinglyLinkedList<>(4, 4, 23),
+                new SinglyLinkedList<>(1),
+                new SinglyLinkedList<>(5, 6, 12, 16, 18, 22, 24, 56, 67),
+                new SinglyLinkedList<>(1),
+                new SinglyLinkedList<>(4, 6, 20, 30),
+                new SinglyLinkedList<>(),
+                new SinglyLinkedList<>(68, 68, 68, 69),
+                new SinglyLinkedList<>(45),
+                new SinglyLinkedList<>(2, 34)
         );
-        Array<List<Integer>> original = Array.withLength(sortedLists.length);
+        Array<SinglyLinkedList<Integer>> original = Array.withLength(sortedLists.length);
         for (int i = 1; i <= sortedLists.length; i++) {
-            original.set(i, new List<>(sortedLists.at(i)));
+            original.set(i, new SinglyLinkedList<>(sortedLists.at(i)));
         }
 
         // when
-        List<Integer> actualMergedList = Chapter6.mergeSortedLists(sortedLists);
+        SinglyLinkedList<Integer> actualMergedList = Chapter6.mergeSortedLists(sortedLists);
 
         // then
         assertSorted(actualMergedList.toArray());
         assertMerged(original, actualMergedList);
     }
 
-    private void assertMerged(Array<List<Integer>> sortedLists, List<Integer> actualMergedList) {
-        List.Node<Integer> x = actualMergedList.head;
+    private void assertMerged(Array<SinglyLinkedList<Integer>> sortedLists, SinglyLinkedList<Integer> actualMergedList) {
+        SinglyLinkedList.Node<Integer> x = actualMergedList.head;
         while (x != null) {
             boolean found = false;
             for (int i = 1; i <= sortedLists.length && !found; i++) {
-                List.Node<Integer> y = sortedLists.at(i).head;
+                SinglyLinkedList.Node<Integer> y = sortedLists.at(i).head;
                 while (y != null && !found) {
                     if (y.key.equals(x.key)) {
                         y.key = Integer.MAX_VALUE; // mark found element with a special value
@@ -478,7 +478,7 @@ public class Chapter6Test {
             x = x.next;
         }
         for (int i = 1; i <= sortedLists.length; i++) {
-            List.Node<Integer> y = sortedLists.at(i).head;
+            SinglyLinkedList.Node<Integer> y = sortedLists.at(i).head;
             while (y != null) {
                 assertEquals(Integer.valueOf(Integer.MAX_VALUE), y.key);
                 y = y.next;

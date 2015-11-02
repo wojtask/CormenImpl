@@ -1098,33 +1098,15 @@ public final class Chapter10 {
      * @return the sorted singly linked list representing the union of {@code L1} and {@code L2}
      */
     public static SinglyLinkedList<Integer> sortedListMinHeapUnion(SinglyLinkedList<Integer> L1, SinglyLinkedList<Integer> L2) {
-        SinglyLinkedList<Integer> L = new SinglyLinkedList<>();
-        SinglyLinkedList.Node<Integer> newHead;
-        while (L1.head != null && L2.head != null) {
-            if (leq(L1.head.key, L2.head.key)) {
-                if (L1.head.key.equals(L2.head.key)) {
-                    singlyLinkedListDelete(L2, L2.head);
-                }
-                newHead = L1.head.next;
-                singlyLinkedListInsert(L, L1.head);
-                L1.head = newHead;
-            } else {
-                newHead = L2.head.next;
-                singlyLinkedListInsert(L, L2.head);
-                L2.head = newHead;
+        SinglyLinkedList<Integer> L = mergeSortedLists(new Array<>(L1, L2));
+        SinglyLinkedList.Node<Integer> x = L.head;
+        while (x != null) {
+            SinglyLinkedList.Node<Integer> y = x.next;
+            if (y != null && x.key.equals(y.key)) {
+                x.next = y.next;
             }
+            x = x.next;
         }
-        while (L1.head != null) {
-            newHead = L1.head.next;
-            singlyLinkedListInsert(L, L1.head);
-            L1.head = newHead;
-        }
-        while (L2.head != null) {
-            newHead = L2.head.next;
-            singlyLinkedListInsert(L, L2.head);
-            L2.head = newHead;
-        }
-        singlyLinkedListReverse(L);
         return L;
     }
 

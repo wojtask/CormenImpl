@@ -2,9 +2,9 @@ package pl.kwojtas.cormenimpl;
 
 import pl.kwojtas.cormenimpl.util.Array;
 import pl.kwojtas.cormenimpl.util.Heap;
-import pl.kwojtas.cormenimpl.util.List;
 import pl.kwojtas.cormenimpl.util.Pair;
 import pl.kwojtas.cormenimpl.util.PriorityQueueWithRanks;
+import pl.kwojtas.cormenimpl.util.SinglyLinkedList;
 import pl.kwojtas.cormenimpl.util.Young;
 
 import static java.lang.Math.max;
@@ -443,26 +443,26 @@ public final class Chapter6 {
     }
 
     /**
-     * Merges sorted lists into a single sorted list.
+     * Merges sorted lists into a single sorted list (a version for singly linked lists).
      * <p>Solution to exercise 6.5-8.</p>
      *
      * @param sortedLists an array of sorted lists
      * @return the merged sorted list
      */
     @SuppressWarnings("all")
-    public static List<Integer> mergeSortedLists(Array<List<Integer>> sortedLists) {
-        List<Integer> mergedList = new List<>();
-        Heap<Pair<Integer, List<Integer>>> minPriorityQueue = Heap.withLength(sortedLists.length);
+    public static SinglyLinkedList<Integer> mergeSortedLists(Array<SinglyLinkedList<Integer>> sortedLists) {
+        SinglyLinkedList<Integer> mergedList = new SinglyLinkedList<>();
+        Heap<Pair<Integer, SinglyLinkedList<Integer>>> minPriorityQueue = Heap.withLength(sortedLists.length);
         for (int i = 1; i <= sortedLists.length; i++) {
             if (sortedLists.at(i).head != null) {
                 minHeapInsertForMergingLists(minPriorityQueue, new Pair<>(sortedLists.at(i).head.key, sortedLists.at(i)));
                 sortedLists.at(i).head = sortedLists.at(i).head.next;
             }
         }
-        List.Node<Integer> tail = null;
+        SinglyLinkedList.Node<Integer> tail = null;
         while (minPriorityQueue.heapSize > 0) {
-            Pair<Integer, List<Integer>> min = heapExtractMinForMergingLists(minPriorityQueue);
-            List.Node<Integer> newNode = new List.Node<>(min.first);
+            Pair<Integer, SinglyLinkedList<Integer>> min = heapExtractMinForMergingLists(minPriorityQueue);
+            SinglyLinkedList.Node<Integer> newNode = new SinglyLinkedList.Node<>(min.first);
             if (mergedList.head == null) {
                 mergedList.head = tail = newNode;
             } else {
@@ -476,13 +476,13 @@ public final class Chapter6 {
         return mergedList;
     }
 
-    private static void minHeapInsertForMergingLists(Heap<Pair<Integer, List<Integer>>> A, Pair<Integer, List<Integer>> key) {
+    private static void minHeapInsertForMergingLists(Heap<Pair<Integer, SinglyLinkedList<Integer>>> A, Pair<Integer, SinglyLinkedList<Integer>> key) {
         A.heapSize++;
         A.set(A.heapSize, new Pair<>(Integer.MAX_VALUE, key.second));
         heapDecreaseKeyForMergingLists(A, A.heapSize, key);
     }
 
-    private static void heapDecreaseKeyForMergingLists(Heap<Pair<Integer, List<Integer>>> A, int i, Pair<Integer, List<Integer>> key) {
+    private static void heapDecreaseKeyForMergingLists(Heap<Pair<Integer, SinglyLinkedList<Integer>>> A, int i, Pair<Integer, SinglyLinkedList<Integer>> key) {
         A.set(i, key);
         while (i > 1 && A.at(parent(i)).first > A.at(i).first) {
             A.exch(i, parent(i));
@@ -490,15 +490,15 @@ public final class Chapter6 {
         }
     }
 
-    private static Pair<Integer, List<Integer>> heapExtractMinForMergingLists(Heap<Pair<Integer, List<Integer>>> A) {
-        Pair<Integer, List<Integer>> min = A.at(1);
+    private static Pair<Integer, SinglyLinkedList<Integer>> heapExtractMinForMergingLists(Heap<Pair<Integer, SinglyLinkedList<Integer>>> A) {
+        Pair<Integer, SinglyLinkedList<Integer>> min = A.at(1);
         A.set(1, A.at(A.heapSize));
         A.heapSize--;
         minHeapifyForMergingLists(A, 1);
         return min;
     }
 
-    private static void minHeapifyForMergingLists(Heap<Pair<Integer, List<Integer>>> A, int i) {
+    private static void minHeapifyForMergingLists(Heap<Pair<Integer, SinglyLinkedList<Integer>>> A, int i) {
         int l = left(i);
         int r = right(i);
         int smallest;
