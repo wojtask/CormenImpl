@@ -1016,60 +1016,54 @@ public final class Chapter10 {
 
     /**
      * Implements the mergeable min-heap operation <span style="font-variant:small-caps;">Make-Heap</span>
-     * using a sorted doubly linked list.
+     * using a sorted singly linked list.
      * <p>Solution to problem 10-2(a).</p>
      *
      * @return the empty mergeable min-heap
      */
-    public static List<Integer> sortedListMakeMinHeap() {
-        return new List<>();
+    public static SinglyLinkedList<Integer> sortedListMakeMinHeap() {
+        return new SinglyLinkedList<>();
     }
 
     /**
      * Implements the mergeable min-heap operation <span style="font-variant:small-caps;">Insert</span>
-     * using a sorted doubly linked list.
+     * using a sorted singly linked list.
      * <p>Solution to problem 10-2(a).</p>
      *
-     * @param L   the sorted doubly linked list representing the mergeable min-heap
+     * @param L   the sorted singly linked list representing the mergeable min-heap
      * @param key the key of the element to insert
      */
-    public static void sortedListMinHeapInsert(List<Integer> L, int key) {
-        List.Node<Integer> x = new List.Node<>(key);
+    public static void sortedListMinHeapInsert(SinglyLinkedList<Integer> L, int key) {
+        SinglyLinkedList.Node<Integer> x = new SinglyLinkedList.Node<>(key);
         if (L.head == null) {
             L.head = x;
             return;
         }
         if (key < L.head.key) {
             x.next = L.head;
-            L.head.prev = x;
             L.head = x;
             return;
         }
-        List.Node<Integer> y = L.head;
+        SinglyLinkedList.Node<Integer> y = L.head;
         while (y.next != null && y.next.key < key) {
             y = y.next;
         }
         if (y.next != null) {
             x.next = y.next;
-            x.prev = y;
-            y.next.prev = x;
-            y.next = x;
-        } else {
-            x.prev = y;
-            y.next = x;
         }
+        y.next = x;
     }
 
     /**
      * Implements the mergeable min-heap operation <span style="font-variant:small-caps;">Minimum</span>
-     * using a sorted doubly linked list.
+     * using a sorted singly linked list.
      * <p>Solution to problem 10-2(a).</p>
      *
-     * @param L the sorted doubly linked list representing the mergeable min-heap
+     * @param L the sorted singly linked list representing the mergeable min-heap
      * @return the smallest element of the mergeable min-heap
      * @throws RuntimeException if the mergeable min-heap is empty
      */
-    public static int sortedListHeapMinimum(List<Integer> L) {
+    public static int sortedListHeapMinimum(SinglyLinkedList<Integer> L) {
         if (L.head == null) {
             throw new RuntimeException("heap underflow");
         }
@@ -1078,36 +1072,60 @@ public final class Chapter10 {
 
     /**
      * Implements the mergeable min-heap operation <span style="font-variant:small-caps;">Extract-Min</span>
-     * using a sorted doubly linked list.
+     * using a sorted singly linked list.
      * <p>Solution to problem 10-2(a).</p>
      *
-     * @param L the sorted doubly linked list representing the mergeable min-heap
+     * @param L the sorted singly linked list representing the mergeable min-heap
      * @return the smallest element of the mergeable min-heap
      * @throws RuntimeException if the mergeable min-heap is empty
      */
-    public static int sortedListHeapExtractMin(List<Integer> L) {
+    public static int sortedListHeapExtractMin(SinglyLinkedList<Integer> L) {
         if (L.head == null) {
             throw new RuntimeException("heap underflow");
         }
         int minimum = L.head.key;
-        if (L.head.next != null) {
-            L.head.next.prev = L.head;
-        }
         L.head = L.head.next;
         return minimum;
     }
 
     /**
      * Implements the mergeable min-heap operation <span style="font-variant:small-caps;">Union</span>
-     * using a sorted doubly linked list.
+     * using a sorted singly linked list.
      * <p>Solution to problem 10-2(a).</p>
      *
-     * @param L1 the sorted doubly linked list representing the first mergeable min-heap
-     * @param L2 the sorted doubly linked list representing the second mergeable min-heap
-     * @return the sorted doubly linked list representing the union of {@code L1} and {@code L2}
+     * @param L1 the sorted singly linked list representing the first mergeable min-heap
+     * @param L2 the sorted singly linked list representing the second mergeable min-heap
+     * @return the sorted singly linked list representing the union of {@code L1} and {@code L2}
      */
-    public static List<Integer> sortedListMinHeapUnion(List<Integer> L1, List<Integer> L2) {
-        return mergeSortedLists(new Array<>(L1, L2));
+    public static SinglyLinkedList<Integer> sortedListMinHeapUnion(SinglyLinkedList<Integer> L1, SinglyLinkedList<Integer> L2) {
+        SinglyLinkedList<Integer> L = new SinglyLinkedList<>();
+        SinglyLinkedList.Node<Integer> newHead;
+        while (L1.head != null && L2.head != null) {
+            if (leq(L1.head.key, L2.head.key)) {
+                if (L1.head.key.equals(L2.head.key)) {
+                    singlyLinkedListDelete(L2, L2.head);
+                }
+                newHead = L1.head.next;
+                singlyLinkedListInsert(L, L1.head);
+                L1.head = newHead;
+            } else {
+                newHead = L2.head.next;
+                singlyLinkedListInsert(L, L2.head);
+                L2.head = newHead;
+            }
+        }
+        while (L1.head != null) {
+            newHead = L1.head.next;
+            singlyLinkedListInsert(L, L1.head);
+            L1.head = newHead;
+        }
+        while (L2.head != null) {
+            newHead = L2.head.next;
+            singlyLinkedListInsert(L, L2.head);
+            L2.head = newHead;
+        }
+        singlyLinkedListReverse(L);
+        return L;
     }
 
     /**
