@@ -279,22 +279,22 @@ public final class Chapter9 {
      * Finds elements closest to the median of a set.
      * <p><span style="font-variant:small-caps;">Median-Proximity</span> from solution to exercise 9.3-7.</p>
      *
-     * @param S the array containing elements of the set
+     * @param A the array containing elements of the set
      * @param k the proximity of the median
-     * @return the set of {@code k} elements closest to the median of {@code S}
+     * @return the set of {@code k} elements closest to the median of {@code A}
      */
-    public static Set<Integer> medianProximity(Array<Integer> S, int k) {
-        int n = S.length;
-        int x = select(S, 1, n, (n + 1) / 2);
+    public static Set<Integer> medianProximity(Array<Integer> A, int k) {
+        int n = A.length;
+        int x = select(A, 1, n, (n + 1) / 2);
         Array<Integer> dist = Array.withLength(n);
         for (int i = 1; i <= n; i++) {
-            dist.set(i, abs(S.at(i) - x));
+            dist.set(i, abs(A.at(i) - x));
         }
         int y = select(dist, 1, n, k);
         Set<Integer> M = new HashSet<>();
         for (int i = 1; i <= n; i++) {
-            if (abs(S.at(i) - x) <= y) {
-                M.add(S.at(i));
+            if (abs(A.at(i) - x) <= y) {
+                M.add(A.at(i));
             }
         }
         if (M.size() == k + 1) {
