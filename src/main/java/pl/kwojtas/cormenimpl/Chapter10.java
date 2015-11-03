@@ -1059,14 +1059,10 @@ public final class Chapter10 {
      * using a sorted singly linked list.
      * <p>Solution to problem 10-2(a).</p>
      *
-     * @param L the sorted singly linked list representing the mergeable min-heap
+     * @param L the sorted singly linked list representing the nonempty mergeable min-heap
      * @return the smallest element of the mergeable min-heap
-     * @throws RuntimeException if the mergeable min-heap is empty
      */
     public static int sortedListHeapMinimum(SinglyLinkedList<Integer> L) {
-        if (L.head == null) {
-            throw new RuntimeException("heap underflow");
-        }
         return L.head.key;
     }
 
@@ -1108,6 +1104,73 @@ public final class Chapter10 {
             x = x.next;
         }
         return L;
+    }
+
+    public static SinglyLinkedListWithTail<Integer> listMakeMinHeap() {
+        return new SinglyLinkedListWithTail<>();
+    }
+
+    public static void listMinHeapInsert(SinglyLinkedListWithTail<Integer> L, int key) {
+        SinglyLinkedListWithTail.Node<Integer> x = new SinglyLinkedListWithTail.Node<>(key);
+        if (L.head == null || less(key, L.head.key)) {
+            singlyLinkedListInsert(L, x);
+            if (L.tail == null) {
+                L.tail = x;
+            }
+        } else {
+            x.next = L.head.next;
+            L.head.next = x;
+        }
+    }
+
+    public static int listHeapMinimum(SinglyLinkedListWithTail<Integer> L) {
+        return L.head.key;
+    }
+
+    public static int listHeapExtractMin(SinglyLinkedListWithTail<Integer> L) {
+        if (L.head == null) {
+            throw new RuntimeException("heap underflow");
+        }
+        int minimum = L.head.key;
+        L.head = L.head.next;
+        if (L.head == null) {
+            L.tail = null;
+            return minimum;
+        }
+        SinglyLinkedListWithTail.Node<Integer> newMinimumNode = L.head;
+        SinglyLinkedListWithTail.Node<Integer> x = L.head;
+        while (x != null) {
+            if (less(x.key, newMinimumNode.key)) {
+                newMinimumNode = x;
+            }
+            x = x.next;
+        }
+        singlyLinkedListDelete(L, newMinimumNode);
+        singlyLinkedListInsert(L, newMinimumNode);
+        x = L.head;
+        while (x.next != null) {
+            x = x.next;
+        }
+        L.tail = x;
+        return minimum;
+    }
+
+    public static SinglyLinkedListWithTail<Integer> listMinHeapDisjointUnion(SinglyLinkedListWithTail<Integer> L1, SinglyLinkedListWithTail<Integer> L2) {
+        if (L1.head == null) {
+            return L2;
+        }
+        if (L2.head == null) {
+            return L1;
+        }
+        if (less(L1.head.key, L2.head.key)) {
+            L1.tail.next = L2.head;
+            L1.tail = L2.tail;
+            return L1;
+        } else {
+            L2.tail.next = L1.head;
+            L2.tail = L1.tail;
+            return L2;
+        }
     }
 
     /**

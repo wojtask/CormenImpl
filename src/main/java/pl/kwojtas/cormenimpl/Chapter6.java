@@ -170,7 +170,7 @@ public final class Chapter6 {
     }
 
     /**
-     * Returns the largest element in a max-heap.
+     * Returns the largest element in a nonempty max-heap.
      * <p><span style="font-variant:small-caps;">Heap-Maximum</span> from subchapter 6.5.</p>
      *
      * @param A the max-heap
@@ -233,7 +233,7 @@ public final class Chapter6 {
     }
 
     /**
-     * Returns the smallest element in a min-heap.
+     * Returns the smallest element in a nonempty min-heap.
      * <p><span style="font-variant:small-caps;">Heap-Minimum</span> from solution to exercise 6.5-3.</p>
      *
      * @param A the min-heap

@@ -1720,7 +1720,7 @@ public class Chapter10Test {
     }
 
     @Test
-    public void shouldMakeNewHeapOnSortedLists() {
+    public void shouldMakeNewHeapOnSortedList() {
         // given
 
         // when
@@ -1731,7 +1731,7 @@ public class Chapter10Test {
     }
 
     @Test
-    public void shouldInsertToEmptyHeapOnSortedLists() {
+    public void shouldInsertToEmptyHeapOnSortedList() {
         // given
         SinglyLinkedList<Integer> sortedList = new SinglyLinkedList<>();
         int key = 12;
@@ -1745,11 +1745,11 @@ public class Chapter10Test {
     }
 
     @Test
-    public void shouldInsertAtTheBeginningOfHeapOnSortedLists() {
+    public void shouldInsertAtTheBeginningOfHeapOnSortedList() {
         // given
-        SinglyLinkedList<Integer> sortedList = new SinglyLinkedList<>(2, 4, 8, 8, 13, 14, 15);
+        SinglyLinkedList<Integer> sortedList = new SinglyLinkedList<>(2, 4, 8, 13, 14, 15);
         int key = 1;
-        SinglyLinkedList<Integer> expectedAfterInsertion = new SinglyLinkedList<>(1, 2, 4, 8, 8, 13, 14, 15);
+        SinglyLinkedList<Integer> expectedAfterInsertion = new SinglyLinkedList<>(1, 2, 4, 8, 13, 14, 15);
 
         // when
         Chapter10.sortedListMinHeapInsert(sortedList, key);
@@ -1759,11 +1759,11 @@ public class Chapter10Test {
     }
 
     @Test
-    public void shouldInsertAtTheEndOfHeapOnSortedLists() {
+    public void shouldInsertAtTheEndOfHeapOnSortedList() {
         // given
-        SinglyLinkedList<Integer> sortedList = new SinglyLinkedList<>(2, 4, 8, 8, 13, 14, 15);
+        SinglyLinkedList<Integer> sortedList = new SinglyLinkedList<>(2, 4, 8, 13, 14, 15);
         int key = 20;
-        SinglyLinkedList<Integer> expectedAfterInsertion = new SinglyLinkedList<>(2, 4, 8, 8, 13, 14, 15, 20);
+        SinglyLinkedList<Integer> expectedAfterInsertion = new SinglyLinkedList<>(2, 4, 8, 13, 14, 15, 20);
 
         // when
         Chapter10.sortedListMinHeapInsert(sortedList, key);
@@ -1773,11 +1773,11 @@ public class Chapter10Test {
     }
 
     @Test
-    public void shouldInsertInTheMiddleOfHeapOnSortedLists() {
+    public void shouldInsertInTheMiddleOfHeapOnSortedList() {
         // given
-        SinglyLinkedList<Integer> sortedList = new SinglyLinkedList<>(2, 4, 8, 8, 13, 14, 15);
-        int key = 12;
-        SinglyLinkedList<Integer> expectedAfterInsertion = new SinglyLinkedList<>(2, 4, 8, 8, 12, 13, 14, 15);
+        SinglyLinkedList<Integer> sortedList = new SinglyLinkedList<>(2, 4, 8, 13, 14, 15);
+        int key = 11;
+        SinglyLinkedList<Integer> expectedAfterInsertion = new SinglyLinkedList<>(2, 4, 8, 11, 13, 14, 15);
 
         // when
         Chapter10.sortedListMinHeapInsert(sortedList, key);
@@ -1787,9 +1787,9 @@ public class Chapter10Test {
     }
 
     @Test
-    public void shouldGetMinimumFromHeapOnSortedLists() {
+    public void shouldGetMinimumFromHeapOnSortedList() {
         // given
-        SinglyLinkedList<Integer> sortedList = new SinglyLinkedList<>(2, 4, 8, 8, 13, 14, 15);
+        SinglyLinkedList<Integer> sortedList = new SinglyLinkedList<>(2, 4, 8, 13, 14, 15);
         SinglyLinkedList<Integer> original = new SinglyLinkedList<>(sortedList);
         int expectedMinimum = 2;
 
@@ -1802,22 +1802,7 @@ public class Chapter10Test {
     }
 
     @Test(expected = RuntimeException.class)
-    public void shouldThrowExceptionWhenGettingMinimumFromHeapOnSortedLists() {
-        // given
-        SinglyLinkedList<Integer> sortedList = new SinglyLinkedList<>();
-
-        try {
-            // when
-            Chapter10.sortedListHeapMinimum(sortedList);
-        } catch (RuntimeException e) {
-            // then
-            assertEquals("heap underflow", e.getMessage());
-            throw e;
-        }
-    }
-
-    @Test(expected = RuntimeException.class)
-    public void shouldThrowExceptionWhenExtractingMinimumFromHeapOnSortedLists() {
+    public void shouldThrowExceptionWhenExtractingMinimumFromEmptyHeapOnSortedList() {
         // given
         SinglyLinkedList<Integer> sortedList = new SinglyLinkedList<>();
 
@@ -1832,10 +1817,10 @@ public class Chapter10Test {
     }
 
     @Test
-    public void shouldExtractMinimumFromHeapOnSortedLists() {
+    public void shouldExtractMinimumFromHeapOnSortedList() {
         // given
-        SinglyLinkedList<Integer> sortedList = new SinglyLinkedList<>(2, 4, 8, 8, 13, 14, 15);
-        SinglyLinkedList<Integer> expectedAfterExtraction = new SinglyLinkedList<>(4, 8, 8, 13, 14, 15);
+        SinglyLinkedList<Integer> sortedList = new SinglyLinkedList<>(2, 4, 8, 13, 14, 15);
+        SinglyLinkedList<Integer> expectedAfterExtraction = new SinglyLinkedList<>(4, 8, 13, 14, 15);
         int expectedMinimum = 2;
 
         // when
@@ -1855,6 +1840,118 @@ public class Chapter10Test {
 
         // when
         SinglyLinkedList<Integer> actualMerged = Chapter10.sortedListMinHeapUnion(sortedList1, sortedList2);
+
+        // then
+        assertArrayEquals(expectedMerged.toArray(), actualMerged.toArray());
+    }
+
+    @Test
+    public void shouldMakeNewHeapOnList() {
+        // given
+
+        // when
+        SinglyLinkedListWithTail<Integer> actualHeap = Chapter10.listMakeMinHeap();
+
+        // then
+        assertEquals(0, actualHeap.getLength());
+    }
+
+    @Test
+    public void shouldInsertToEmptyHeapOnList() {
+        // given
+        SinglyLinkedListWithTail<Integer> list = new SinglyLinkedListWithTail<>();
+        int key = 12;
+        SinglyLinkedListWithTail<Integer> expectedAfterInsertion = new SinglyLinkedListWithTail<>(12);
+
+        // when
+        Chapter10.listMinHeapInsert(list, key);
+
+        // then
+        assertArrayEquals(expectedAfterInsertion.toArray(), list.toArray());
+    }
+
+    @Test
+    public void shouldInsertNewMinimumIntoHeapOnList() {
+        // given
+        SinglyLinkedListWithTail<Integer> list = new SinglyLinkedListWithTail<>(2, 8, 12, 10, 6, 5, 3);
+        int key = 1;
+        SinglyLinkedListWithTail<Integer> expectedAfterInsertion = new SinglyLinkedListWithTail<>(1, 2, 8, 12, 10, 6, 5, 3);
+
+        // when
+        Chapter10.listMinHeapInsert(list, key);
+
+        // then
+        assertArrayEquals(expectedAfterInsertion.toArray(), list.toArray());
+    }
+
+    @Test
+    public void shouldInsertElementNotBecomingMinimumIntoHeapOnList() {
+        // given
+        SinglyLinkedListWithTail<Integer> list = new SinglyLinkedListWithTail<>(2, 8, 12, 10, 6, 5, 3);
+        int key = 7;
+        SinglyLinkedListWithTail<Integer> expectedAfterInsertion = new SinglyLinkedListWithTail<>(2, 7, 8, 12, 10, 6, 5, 3);
+
+        // when
+        Chapter10.listMinHeapInsert(list, key);
+
+        // then
+        assertArrayEquals(expectedAfterInsertion.toArray(), list.toArray());
+    }
+
+    @Test
+    public void shouldGetMinimumFromHeapOnList() {
+        // given
+        SinglyLinkedListWithTail<Integer> list = new SinglyLinkedListWithTail<>(2, 8, 12, 10, 6, 5, 3);
+        SinglyLinkedListWithTail<Integer> original = new SinglyLinkedListWithTail<>(list);
+        int expectedMinimum = 2;
+
+        // when
+        int actualMinimum = Chapter10.listHeapMinimum(list);
+
+        // then
+        assertEquals(expectedMinimum, actualMinimum);
+        assertArrayEquals(original.toArray(), list.toArray());
+    }
+
+    @Test(expected = RuntimeException.class)
+    public void shouldThrowExceptionWhenExtractingMinimumFromEmptyHeapOnList() {
+        // given
+        SinglyLinkedListWithTail<Integer> list = new SinglyLinkedListWithTail<>();
+
+        try {
+            // when
+            Chapter10.listHeapExtractMin(list);
+        } catch (RuntimeException e) {
+            // then
+            assertEquals("heap underflow", e.getMessage());
+            throw e;
+        }
+    }
+
+    @Test
+    public void shouldExtractMinimumFromHeapOnList() {
+        // given
+        SinglyLinkedListWithTail<Integer> list = new SinglyLinkedListWithTail<>(2, 8, 12, 10, 6, 5, 3);
+        SinglyLinkedListWithTail<Integer> expectedAfterExtraction = new SinglyLinkedListWithTail<>(3, 8, 12, 10, 6, 5);
+        int expectedMinimum = 2;
+
+        // when
+        int actualMinimum = Chapter10.listHeapExtractMin(list);
+
+        // then
+        assertEquals(expectedMinimum, actualMinimum);
+        assertArrayEquals(expectedAfterExtraction.toArray(), list.toArray());
+    }
+
+    @Test
+    public void shouldMergeDisjointHeapsOnLists() {
+        // given
+        SinglyLinkedListWithTail<Integer> list1 = new SinglyLinkedListWithTail<>(2, 8, 12, 10, 6, 5, 3);
+        SinglyLinkedListWithTail<Integer> list2 = new SinglyLinkedListWithTail<>(1, 13, 7, 17, 9, 11);
+        SinglyLinkedListWithTail<Integer> expectedMerged = new SinglyLinkedListWithTail<>(1, 13, 7, 17, 9, 11, 2, 8, 12, 10, 6, 5, 3);
+
+        // when
+        SinglyLinkedList<Integer> actualMerged = Chapter10.listMinHeapDisjointUnion(list1, list2);
 
         // then
         assertArrayEquals(expectedMerged.toArray(), actualMerged.toArray());
