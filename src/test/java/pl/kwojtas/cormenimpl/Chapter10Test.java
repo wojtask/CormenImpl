@@ -1944,6 +1944,20 @@ public class Chapter10Test {
     }
 
     @Test
+    public void shouldMergeHeapsOnLists() {
+        // given
+        SinglyLinkedListWithTail<Integer> list1 = new SinglyLinkedListWithTail<>(2, 8, 12, 10, 6, 5, 3);
+        SinglyLinkedListWithTail<Integer> list2 = new SinglyLinkedListWithTail<>(3, 7, 4, 10, 6, 9);
+        SinglyLinkedListWithTail<Integer> expectedMerged = new SinglyLinkedListWithTail<>(2, 3, 4, 5, 6, 7, 8, 9, 10, 12);
+
+        // when
+        SinglyLinkedList<Integer> actualMerged = Chapter10.listMinHeapUnion(list1, list2);
+
+        // then
+        assertArrayEquals(expectedMerged.toArray(), actualMerged.toArray());
+    }
+
+    @Test
     public void shouldMergeDisjointHeapsOnLists() {
         // given
         SinglyLinkedListWithTail<Integer> list1 = new SinglyLinkedListWithTail<>(2, 8, 12, 10, 6, 5, 3);

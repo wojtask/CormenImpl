@@ -9,6 +9,7 @@ import pl.kwojtas.cormenimpl.util.List;
 import pl.kwojtas.cormenimpl.util.ListWithSentinel;
 import pl.kwojtas.cormenimpl.util.MultiaryTree;
 import pl.kwojtas.cormenimpl.util.MultipleArrayList;
+import pl.kwojtas.cormenimpl.util.Pair;
 import pl.kwojtas.cormenimpl.util.Queue;
 import pl.kwojtas.cormenimpl.util.SingleArrayList;
 import pl.kwojtas.cormenimpl.util.SinglyLinkedList;
@@ -1189,6 +1190,87 @@ public final class Chapter10 {
 
     /**
      * Implements the mergeable min-heap operation <span style="font-variant:small-caps;">Union</span>
+     * using a singly linked list.
+     * <p>Solution to problem 10-2(b).</p>
+     *
+     * @param L1 the singly linked list representing the first mergeable min-heap
+     * @param L2 the singly linked list representing the second mergeable min-heap
+     * @return the singly linked list representing the union of {@code L1} and {@code L2}
+     */
+    public static SinglyLinkedListWithTail<Integer> listMinHeapUnion(SinglyLinkedListWithTail<Integer> L1, SinglyLinkedListWithTail<Integer> L2) {
+        if (L1.head == null) {
+            return L2;
+        }
+        if (L2.head == null) {
+            return L1;
+        }
+        L1.tail.next = L2.head;
+        L1.tail = L2.tail;
+        listQuicksort(L1);
+        SinglyLinkedListWithTail.Node<Integer> x = L1.head;
+        while (x != null) {
+            SinglyLinkedList.Node<Integer> y = x.next;
+            if (y != null && x.key.equals(y.key)) {
+                x.next = y.next;
+                if (y == L1.tail) {
+                    L1.tail = x;
+                }
+            }
+            x = x.next;
+        }
+        return L1;
+    }
+
+    private static void listQuicksort(SinglyLinkedListWithTail<Integer> L) {
+        if (L.head != null) {
+            SinglyLinkedListWithTail.Node<Integer> pivot = L.head;
+            L.head = L.head.next;
+            Pair<SinglyLinkedListWithTail<Integer>, SinglyLinkedListWithTail<Integer>> p = listPartition(L, pivot);
+            listQuicksort(p.first);
+            listQuicksort(p.second);
+            if (p.first.head == null) {
+                L.head = pivot;
+            } else {
+                p.first.tail.next = pivot;
+                L.head = p.first.head;
+            }
+            pivot.next = p.second.head;
+            if (p.second.tail == null) {
+                L.tail = pivot;
+            } else {
+                L.tail = p.second.tail;
+            }
+        }
+    }
+
+    private static Pair<SinglyLinkedListWithTail<Integer>, SinglyLinkedListWithTail<Integer>> listPartition(
+            SinglyLinkedListWithTail<Integer> L, SinglyLinkedListWithTail.Node<Integer> pivot) {
+        if (L.head == null) {
+            return new Pair<>(new SinglyLinkedListWithTail<>(), new SinglyLinkedListWithTail<>());
+        }
+        SinglyLinkedListWithTail<Integer> L1 = new SinglyLinkedListWithTail<>();
+        SinglyLinkedListWithTail<Integer> L2 = new SinglyLinkedListWithTail<>();
+        SinglyLinkedListWithTail.Node<Integer> x = L.head;
+        while (x != null) {
+            SinglyLinkedList.Node<Integer> y = x.next;
+            if (leq(x.key, pivot.key)) {
+                singlyLinkedListInsert(L1, x);
+                if (L1.tail == null) {
+                    L1.tail = x;
+                }
+            } else {
+                singlyLinkedListInsert(L2, x);
+                if (L2.tail == null) {
+                    L2.tail = x;
+                }
+            }
+            x = y;
+        }
+        return new Pair<>(L1, L2);
+    }
+
+    /**
+     * Implements the mergeable min-heap operation <span style="font-variant:small-caps;">Union</span>
      * using a singly linked list assuming that the dynamic sets to be merged are disjoint.
      * <p>Solution to problem 10-2(c).</p>
      *
@@ -1212,6 +1294,7 @@ public final class Chapter10 {
             L2.tail = L1.tail;
             return L2;
         }
+
     }
 
     /**
