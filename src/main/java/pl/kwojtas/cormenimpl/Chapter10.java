@@ -1106,10 +1106,25 @@ public final class Chapter10 {
         return L;
     }
 
+    /**
+     * Implements the mergeable min-heap operation <span style="font-variant:small-caps;">Make-Heap</span>
+     * using a singly linked list.
+     * <p>Solution to problems 10-2(b), 10-2(c).</p>
+     *
+     * @return the empty mergeable min-heap
+     */
     public static SinglyLinkedListWithTail<Integer> listMakeMinHeap() {
         return new SinglyLinkedListWithTail<>();
     }
 
+    /**
+     * Implements the mergeable min-heap operation <span style="font-variant:small-caps;">Insert</span>
+     * using a singly linked list.
+     * <p>Solution to problems 10-2(b), 10-2(c).</p>
+     *
+     * @param L   the sorted singly linked list representing the mergeable min-heap
+     * @param key the key of the element to insert
+     */
     public static void listMinHeapInsert(SinglyLinkedListWithTail<Integer> L, int key) {
         SinglyLinkedListWithTail.Node<Integer> x = new SinglyLinkedListWithTail.Node<>(key);
         if (L.head == null || less(key, L.head.key)) {
@@ -1123,10 +1138,27 @@ public final class Chapter10 {
         }
     }
 
+    /**
+     * Implements the mergeable min-heap operation <span style="font-variant:small-caps;">Minimum</span>
+     * using a singly linked list.
+     * <p>Solution to problems 10-2(b), 10-2(c).</p>
+     *
+     * @param L the singly linked list representing the nonempty mergeable min-heap
+     * @return the smallest element of the mergeable min-heap
+     */
     public static int listHeapMinimum(SinglyLinkedListWithTail<Integer> L) {
         return L.head.key;
     }
 
+    /**
+     * Implements the mergeable min-heap operation <span style="font-variant:small-caps;">Extract-Min</span>
+     * using a singly linked list.
+     * <p>Solution to problems 10-2(b), 10-2(c).</p>
+     *
+     * @param L the singly linked list representing the mergeable min-heap
+     * @return the smallest element of the mergeable min-heap
+     * @throws RuntimeException if the mergeable min-heap is empty
+     */
     public static int listHeapExtractMin(SinglyLinkedListWithTail<Integer> L) {
         if (L.head == null) {
             throw new RuntimeException("heap underflow");
@@ -1155,6 +1187,15 @@ public final class Chapter10 {
         return minimum;
     }
 
+    /**
+     * Implements the mergeable min-heap operation <span style="font-variant:small-caps;">Union</span>
+     * using a singly linked list assuming that the dynamic sets to be merged are disjoint.
+     * <p>Solution to problem 10-2(c).</p>
+     *
+     * @param L1 the singly linked list representing the first mergeable min-heap
+     * @param L2 the singly linked list representing the second mergeable min-heap
+     * @return the singly linked list representing the union of {@code L1} and {@code L2}
+     */
     public static SinglyLinkedListWithTail<Integer> listMinHeapDisjointUnion(SinglyLinkedListWithTail<Integer> L1, SinglyLinkedListWithTail<Integer> L2) {
         if (L1.head == null) {
             return L2;
