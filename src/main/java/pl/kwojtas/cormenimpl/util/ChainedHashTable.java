@@ -5,7 +5,46 @@ package pl.kwojtas.cormenimpl.util;
  *
  * @param <E> the type of elements in the hash table
  */
-public class ChainedHashTable<E> extends ZeroBasedIndexedArray<List<Element<E>>> {
+public class ChainedHashTable<E> extends ZeroBasedIndexedArray<ChainedHashTable.Element<E>> {
+
+    /**
+     * Implements a chained hash table's element.
+     *
+     * @param <F> the type of satellite data
+     */
+    public static class Element<F> {
+
+        /**
+         * The key.
+         */
+        public int key;
+
+        /**
+         * The satellite data.
+         */
+        public F data;
+
+        /**
+         * The index of the previous element.
+         */
+        public Element<F> prev;
+
+        /**
+         * The index of the next element.
+         */
+        public Element<F> next;
+
+        /**
+         * Creates an element from a given key and satellite data with no previous nor next element.
+         *
+         * @param key  the key of the new element
+         * @param data the satellite data of the new element
+         */
+        public Element(int key, F data) {
+            this.key = key;
+            this.data = data;
+        }
+    }
 
     /**
      * The hash function used in the hash table.
@@ -14,9 +53,6 @@ public class ChainedHashTable<E> extends ZeroBasedIndexedArray<List<Element<E>>>
 
     private ChainedHashTable(int length, HashFunction h) {
         super(ZeroBasedIndexedArray.withLength(length));
-        for (int i = 0; i <= length - 1; i++) {
-            set(i, new List<>());
-        }
         this.h = h;
     }
 

@@ -7,12 +7,8 @@ import pl.kwojtas.cormenimpl.util.HashFunction;
 import pl.kwojtas.cormenimpl.util.HashTableWithFreeList;
 import pl.kwojtas.cormenimpl.util.HashTableWithOpenAddressing;
 import pl.kwojtas.cormenimpl.util.HugeArray;
-import pl.kwojtas.cormenimpl.util.List;
 import pl.kwojtas.cormenimpl.util.ZeroBasedIndexedArray;
 
-import static pl.kwojtas.cormenimpl.Chapter10.listDelete;
-import static pl.kwojtas.cormenimpl.Chapter10.listInsert;
-import static pl.kwojtas.cormenimpl.Chapter10.listSearch;
 import static pl.kwojtas.cormenimpl.Chapter10.pop;
 import static pl.kwojtas.cormenimpl.Chapter10.push;
 
@@ -215,9 +211,14 @@ public final class Chapter11 {
      * @param x   the element to insert
      * @param <E> the type of elements' values in {@code T}
      */
-    public static <E> void chainedHashInsert(ChainedHashTable<E> T, Element<E> x) {
-        List<Element<E>> list = T.at(T.h.compute(x.key));
-        listInsert(list, new List.Node<>(x));
+    public static <E> void chainedHashInsert(ChainedHashTable<E> T, ChainedHashTable.Element<E> x) {
+        int hash = T.h.compute(x.key);
+        x.next = T.at(hash);
+        if (T.at(hash) != null) {
+            T.at(hash).prev = x;
+        }
+        x.prev = null;
+        T.set(hash, x);
     }
 
     /**
@@ -229,12 +230,12 @@ public final class Chapter11 {
      * @param <E> the type of elements' values in {@code T}
      * @return the element of key {@code k} in {@code T}, or {@code null} if {@code T} does not contain such element
      */
-    public static <E> Element<E> chainedHashSearch(ChainedHashTable<E> T, int k) {
-        List<Element<E>> list = T.at(T.h.compute(k));
-        List.Node<Element<E>> x = list.head;
+    public static <E> ChainedHashTable.Element<E> chainedHashSearch(ChainedHashTable<E> T, int k) {
+        int hash = T.h.compute(k);
+        ChainedHashTable.Element<E> x = T.at(hash);
         while (x != null) {
-            if (x.key.key == k) {
-                return x.key;
+            if (x.key == k) {
+                return x;
             }
             x = x.next;
         }
@@ -249,10 +250,16 @@ public final class Chapter11 {
      * @param x   the element to delete
      * @param <E> the type of elements' values in {@code T}
      */
-    public static <E> void chainedHashDelete(ChainedHashTable<E> T, Element<E> x) {
-        List<Element<E>> list = T.at(T.h.compute(x.key));
-        List.Node<Element<E>> node = listSearch(list, x);
-        listDelete(list, node);
+    public static <E> void chainedHashDelete(ChainedHashTable<E> T, ChainedHashTable.Element<E> x) {
+        int hash = T.h.compute(x.key);
+        if (x.prev != null) {
+            x.prev.next = x.next;
+        } else {
+            T.set(hash, x.next);
+        }
+        if (x.next != null) {
+            x.next.prev = x.prev;
+        }
     }
 
     /**

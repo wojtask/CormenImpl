@@ -9,7 +9,6 @@ import pl.kwojtas.cormenimpl.util.HashProbingFunction;
 import pl.kwojtas.cormenimpl.util.HashTableWithFreeList;
 import pl.kwojtas.cormenimpl.util.HashTableWithOpenAddressing;
 import pl.kwojtas.cormenimpl.util.HugeArray;
-import pl.kwojtas.cormenimpl.util.List;
 import pl.kwojtas.cormenimpl.util.ZeroBasedIndexedArray;
 
 import java.lang.reflect.Constructor;
@@ -333,9 +332,21 @@ public class Chapter11Test {
                     }
                 }
         );
-        chainedHashTable.set(0, new List<>(new Element<>(35, "thirtyFive")));
-        chainedHashTable.set(1, new List<>(new Element<>(51, "fiftyOne"), new Element<>(16, "sixteen"), new Element<>(1, "one")));
-        chainedHashTable.set(3, new List<>(new Element<>(38, "thirtyEight"), new Element<>(23, "twentyThree")));
+        ChainedHashTable.Element<String> x35 = new ChainedHashTable.Element<>(35, "thirtyFive");
+        ChainedHashTable.Element<String> x51 = new ChainedHashTable.Element<>(51, "fiftyOne");
+        ChainedHashTable.Element<String> x16 = new ChainedHashTable.Element<>(16, "sixteen");
+        ChainedHashTable.Element<String> x1 = new ChainedHashTable.Element<>(1, "one");
+        ChainedHashTable.Element<String> x38 = new ChainedHashTable.Element<>(38, "thirtyEight");
+        ChainedHashTable.Element<String> x23 = new ChainedHashTable.Element<>(23, "twentyThree");
+        chainedHashTable.set(0, x35);
+        chainedHashTable.set(1, x51);
+        x51.next = x16;
+        x16.prev = x51;
+        x16.next = x1;
+        x1.prev = x16;
+        chainedHashTable.set(3, x38);
+        x38.next = x23;
+        x23.prev = x38;
         return chainedHashTable;
     }
 
@@ -343,25 +354,25 @@ public class Chapter11Test {
     public void shouldInsertIntoChainedHashTable() {
         // given
         ChainedHashTable<String> chainedHashTable = getExemplaryChainedHashTable();
-        Element<String> element = new Element<>(64, "sixtyFour");
-        int hashedKey = chainedHashTable.h.compute(element.key);
+        ChainedHashTable.Element<String> element = new ChainedHashTable.Element<>(64, "sixtyFour");
+        int hash = chainedHashTable.h.compute(element.key);
 
         // when
         Chapter11.chainedHashInsert(chainedHashTable, element);
 
         // then
-        assertEquals(element.key, chainedHashTable.at(hashedKey).head.key.key);
-        assertEquals(element.data, chainedHashTable.at(hashedKey).head.key.data);
+        assertEquals(element.key, chainedHashTable.at(hash).key);
+        assertEquals(element.data, chainedHashTable.at(hash).data);
     }
 
     @Test
     public void shouldFindElementInChainedHashTable() {
         // given
         ChainedHashTable<String> chainedHashTable = getExemplaryChainedHashTable();
-        Element<String> element = new Element<>(23, "twentyThree");
+        ChainedHashTable.Element<String> element = new ChainedHashTable.Element<>(23, "twentyThree");
 
         // when
-        Element<String> actualFoundElement = Chapter11.chainedHashSearch(chainedHashTable, element.key);
+        ChainedHashTable.Element<String> actualFoundElement = Chapter11.chainedHashSearch(chainedHashTable, element.key);
 
         // then
         assertNotNull(actualFoundElement);
@@ -376,7 +387,7 @@ public class Chapter11Test {
         int key = 42;
 
         // when
-        Element<String> actualFoundElement = Chapter11.chainedHashSearch(chainedHashTable, key);
+        ChainedHashTable.Element<String> actualFoundElement = Chapter11.chainedHashSearch(chainedHashTable, key);
 
         // then
         assertNull(actualFoundElement);
@@ -386,14 +397,14 @@ public class Chapter11Test {
     public void shouldDeleteFromChainedHashTable() {
         // given
         ChainedHashTable<String> chainedHashTable = getExemplaryChainedHashTable();
-        Element<String> element = chainedHashTable.at(1).head.next.key;
-        int chainLength = chainedHashTable.at(1).getLength();
+        ChainedHashTable.Element<String> element = chainedHashTable.at(1).next;
+        int expectedKey = chainedHashTable.at(1).next.next.key;
 
         // when
         Chapter11.chainedHashDelete(chainedHashTable, element);
 
         // then
-        assertEquals(chainLength - 1, chainedHashTable.at(1).getLength());
+        assertEquals(expectedKey, chainedHashTable.at(1).next.key);
     }
 
     @Test
