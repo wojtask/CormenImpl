@@ -1944,6 +1944,46 @@ public class Chapter10Test {
     }
 
     @Test
+    public void shouldExtractMinimumFromHeapOnListContainingOneElement() {
+        // given
+        SinglyLinkedListWithTail<Integer> list = new SinglyLinkedListWithTail<>(13);
+        int expectedMinimum = 13;
+
+        // when
+        int actualMinimum = Chapter10.listHeapExtractMin(list);
+
+        // then
+        assertEquals(expectedMinimum, actualMinimum);
+        assertNull(list.head);
+    }
+
+    @Test
+    public void shouldMergeHeapsOnListsWhereFirstHeapIsEmpty() {
+        // given
+        SinglyLinkedListWithTail<Integer> list1 = new SinglyLinkedListWithTail<>();
+        SinglyLinkedListWithTail<Integer> list2 = new SinglyLinkedListWithTail<>(3, 7, 4, 10, 6, 9);
+
+        // when
+        SinglyLinkedList<Integer> actualMerged = Chapter10.listMinHeapUnion(list1, list2);
+
+        // then
+        assertArrayEquals(list2.toArray(), actualMerged.toArray());
+    }
+
+    @Test
+    public void shouldMergeHeapsOnListsWhereSecondHeapIsEmpty() {
+        // given
+        SinglyLinkedListWithTail<Integer> list1 = new SinglyLinkedListWithTail<>(2, 8, 12, 10, 6, 5, 3);
+        SinglyLinkedListWithTail<Integer> list2 = new SinglyLinkedListWithTail<>();
+
+        // when
+        SinglyLinkedList<Integer> actualMerged = Chapter10.listMinHeapUnion(list1, list2);
+
+        // then
+        assertArrayEquals(list1.toArray(), actualMerged.toArray());
+    }
+
+    @Test
     public void shouldMergeHeapsOnLists() {
         // given
         SinglyLinkedListWithTail<Integer> list1 = new SinglyLinkedListWithTail<>(2, 8, 12, 10, 6, 5, 3);
@@ -1958,10 +1998,50 @@ public class Chapter10Test {
     }
 
     @Test
+    public void shouldMergeDisjointHeapsOnListsWhereFirstHeapIsEmpty() {
+        // given
+        SinglyLinkedListWithTail<Integer> list1 = new SinglyLinkedListWithTail<>();
+        SinglyLinkedListWithTail<Integer> list2 = new SinglyLinkedListWithTail<>(1, 13, 7, 17, 9, 11);
+
+        // when
+        SinglyLinkedList<Integer> actualMerged = Chapter10.listMinHeapDisjointUnion(list1, list2);
+
+        // then
+        assertArrayEquals(list2.toArray(), actualMerged.toArray());
+    }
+
+    @Test
+    public void shouldMergeDisjointHeapsOnListsWhereSecondHeapIsEmpty() {
+        // given
+        SinglyLinkedListWithTail<Integer> list1 = new SinglyLinkedListWithTail<>(2, 8, 12, 10, 6, 5, 3);
+        SinglyLinkedListWithTail<Integer> list2 = new SinglyLinkedListWithTail<>();
+
+        // when
+        SinglyLinkedList<Integer> actualMerged = Chapter10.listMinHeapDisjointUnion(list1, list2);
+
+        // then
+        assertArrayEquals(list1.toArray(), actualMerged.toArray());
+    }
+
+    @Test
     public void shouldMergeDisjointHeapsOnLists() {
         // given
         SinglyLinkedListWithTail<Integer> list1 = new SinglyLinkedListWithTail<>(2, 8, 12, 10, 6, 5, 3);
         SinglyLinkedListWithTail<Integer> list2 = new SinglyLinkedListWithTail<>(1, 13, 7, 17, 9, 11);
+        SinglyLinkedListWithTail<Integer> expectedMerged = new SinglyLinkedListWithTail<>(1, 13, 7, 17, 9, 11, 2, 8, 12, 10, 6, 5, 3);
+
+        // when
+        SinglyLinkedList<Integer> actualMerged = Chapter10.listMinHeapDisjointUnion(list1, list2);
+
+        // then
+        assertArrayEquals(expectedMerged.toArray(), actualMerged.toArray());
+    }
+
+    @Test
+    public void shouldMergeDisjointHeapsOnLists2() {
+        // given
+        SinglyLinkedListWithTail<Integer> list1 = new SinglyLinkedListWithTail<>(1, 13, 7, 17, 9, 11);
+        SinglyLinkedListWithTail<Integer> list2 = new SinglyLinkedListWithTail<>(2, 8, 12, 10, 6, 5, 3);
         SinglyLinkedListWithTail<Integer> expectedMerged = new SinglyLinkedListWithTail<>(1, 13, 7, 17, 9, 11, 2, 8, 12, 10, 6, 5, 3);
 
         // when

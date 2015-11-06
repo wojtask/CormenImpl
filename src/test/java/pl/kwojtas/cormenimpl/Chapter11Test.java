@@ -236,6 +236,24 @@ public class Chapter11Test {
     }
 
     @Test
+    public void shouldInsertDuplicateIntoDirectAddressTableWithNonDistinctKeys() {
+        // given
+        DirectAddressTable<String> directAddressTable = getExemplaryDirectAddressTableWithNonDistinctKeys();
+        DirectAddressTable.Element<String> newElement = new DirectAddressTable.Element<>(0, "zeroB");
+        DirectAddressTable.Element<String> existingElement = new DirectAddressTable.Element<>(0, "zero");
+
+        // when
+        Chapter11.directAddressInsert_(directAddressTable, newElement);
+
+        // then
+        DirectAddressTable.Element<String> actualElement = directAddressTable.at(newElement.key);
+        assertEquals(newElement.key, actualElement.key);
+        assertEquals(newElement.data, actualElement.data);
+        assertEquals(existingElement.key, actualElement.next.key);
+        assertEquals(existingElement.data, actualElement.next.data);
+    }
+
+    @Test
     public void shouldDeleteFromDirectAddressTableWithNonDistinctKeys() {
         // given
         DirectAddressTable<String> directAddressTable = getExemplaryDirectAddressTableWithNonDistinctKeys();
@@ -246,6 +264,19 @@ public class Chapter11Test {
 
         // then
         assertEquals("oneC", directAddressTable.at(key).next.data);
+    }
+
+    @Test
+    public void shouldDeleteElementWithUniqueKeyFromDirectAddressTableWithNonDistinctKeys() {
+        // given
+        DirectAddressTable<String> directAddressTable = getExemplaryDirectAddressTableWithNonDistinctKeys();
+        int key = 0;
+
+        // when
+        Chapter11.directAddressDelete_(directAddressTable, directAddressTable.at(key));
+
+        // then
+        assertNull(directAddressTable.at(key));
     }
 
     private HugeArray<String> getExemplaryHugeArray() {
@@ -350,10 +381,25 @@ public class Chapter11Test {
     }
 
     @Test
-    public void shouldInsertIntoChainedHashTable() {
+    public void shouldInsertIntoChainedHashTableWithEmptyChainAtGivenKey() {
         // given
         ChainedHashTable<String> chainedHashTable = getExemplaryChainedHashTable();
         ChainedHashTable.Element<String> element = new ChainedHashTable.Element<>(64, "sixtyFour");
+        int hash = chainedHashTable.h.compute(element.key);
+
+        // when
+        Chapter11.chainedHashInsert(chainedHashTable, element);
+
+        // then
+        assertEquals(element.key, chainedHashTable.at(hash).key);
+        assertEquals(element.data, chainedHashTable.at(hash).data);
+    }
+
+    @Test
+    public void shouldInsertIntoChainedHashTableWithNonemptyChainAtGivenKey() {
+        // given
+        ChainedHashTable<String> chainedHashTable = getExemplaryChainedHashTable();
+        ChainedHashTable.Element<String> element = new ChainedHashTable.Element<>(16, "sixteen");
         int hash = chainedHashTable.h.compute(element.key);
 
         // when
@@ -404,6 +450,19 @@ public class Chapter11Test {
 
         // then
         assertEquals(expectedKey, chainedHashTable.at(1).next.key);
+    }
+
+    @Test
+    public void shouldDeleteFromChainedHashTableTheOnlyElementInItsChain() {
+        // given
+        ChainedHashTable<String> chainedHashTable = getExemplaryChainedHashTable();
+        ChainedHashTable.Element<String> element = chainedHashTable.at(0);
+
+        // when
+        Chapter11.chainedHashDelete(chainedHashTable, element);
+
+        // then
+        assertNull(chainedHashTable.at(0));
     }
 
     @Test
