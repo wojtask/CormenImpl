@@ -8,7 +8,6 @@ public class BinaryTreeTest {
 
     @Test
     public void shouldReturnTreeSize() {
-        // given
         BinaryTree<String> tree = new BinaryTree<>();
         BinaryTree.Node<String> x1 = new BinaryTree.Node<>("1");
         BinaryTree.Node<String> x2 = new BinaryTree.Node<>("2");
@@ -22,10 +21,8 @@ public class BinaryTreeTest {
         x2.right = x4;
         x4.p = x2;
 
-        // when
         int actualSize = tree.getSize();
 
-        // then
         assertEquals(4, actualSize);
     }
 

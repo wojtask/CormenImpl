@@ -31,115 +31,91 @@ public class Chapter7Test {
 
     @Test
     public void shouldSortArrayUsingQuicksort() {
-        // given
         Array<Integer> array = new Array<>(5, 7, 9, 2, 6, 8, 6, 6, 3, 1, 7, 8);
         Array<Integer> original = new Array<>(array);
 
-        // when
         Chapter7.quicksort(array, 1, array.length);
 
-        // then
         assertShuffled(original, array);
         assertSorted(array);
     }
 
     @Test
     public void shouldSortArrayUsingRandomizedQuicksort() {
-        // given
         Array<Integer> array = new Array<>(5, 7, 9, 2, 6, 8, 6, 6, 3, 1, 7, 8);
         Array<Integer> original = new Array<>(array);
 
-        // when
         Chapter7.randomizedQuicksort(array, 1, array.length);
 
-        // then
         assertShuffled(original, array);
         assertSorted(array);
     }
 
     @Test
     public void shouldSortArrayUsingQuicksortWithInsertionSortForSmallArrays() {
-        // given
         Array<Integer> array = new Array<>(5, 7, 9, 2, 6, 8, 6, 6, 3, 1, 7, 8);
         Array<Integer> original = new Array<>(array);
         int threshold = 2;
 
-        // when
         Chapter7.sortNearlySorted(array, 1, array.length, threshold);
 
-        // then
         assertShuffled(original, array);
         assertSorted(array);
     }
 
     @Test
     public void shouldSortArrayUsingHoareQuicksort() {
-        // given
         Array<Integer> array = new Array<>(5, 7, 9, 2, 6, 8, 6, 6, 3, 1, 7, 8);
         Array<Integer> original = new Array<>(array);
 
-        // when
         Chapter7.hoareQuicksort(array, 1, array.length);
 
-        // then
         assertShuffled(original, array);
         assertSorted(array);
     }
 
     @Test
     public void shouldSortArrayUsingStoogeSort() {
-        // given
         Array<Integer> array = new Array<>(5, 7, 9, 2, 6, 8, 6, 6, 3, 1, 7, 8);
         Array<Integer> original = new Array<>(array);
 
-        // when
         Chapter7.stoogeSort(array, 1, array.length);
 
-        // then
         assertShuffled(original, array);
         assertSorted(array);
     }
 
     @Test
     public void shouldSortArrayUsingQuicksort_() {
-        // given
         Array<Integer> array = new Array<>(5, 7, 9, 2, 6, 8, 6, 6, 3, 1, 7, 8);
         Array<Integer> original = new Array<>(array);
 
-        // when
         Chapter7.quicksort_(array, 1, array.length);
 
-        // then
         assertShuffled(original, array);
         assertSorted(array);
     }
 
     @Test
     public void shouldSortArrayUsingQuicksort__() {
-        // given
         Array<Integer> array = new Array<>(5, 7, 9, 2, 6, 8, 6, 6, 3, 1, 7, 8);
         Array<Integer> original = new Array<>(array);
 
-        // when
         Chapter7.quicksort__(array, 1, array.length);
 
-        // then
         assertShuffled(original, array);
         assertSorted(array);
     }
 
     @Test
     public void shouldPartitionArrayUsingMedianOf3PartitionAsFirstPickedElement() {
-        // given
         Array<Integer> array = new Array<>(5, 7, 9, 2, 6, 8, 6, 6, 3, 1, 7, 8);
         Array<Integer> original = new Array<>(array);
         mockStatic(Chapter5.class);
         when(Chapter5.random(1, array.length)).thenReturn(7, 2, 10);
 
-        // when
         int pivotIndex = Chapter7.medianOf3Partition(array, 1, array.length);
 
-        // then
         assertShuffled(original, array);
         assertTrue(2 <= pivotIndex && pivotIndex <= array.length - 1);
         assertArrayPartitioned(array, pivotIndex);
@@ -147,16 +123,13 @@ public class Chapter7Test {
 
     @Test
     public void shouldPartitionArrayUsingMedianOf3PartitionAsSecondPickedElement() {
-        // given
         Array<Integer> array = new Array<>(5, 7, 9, 2, 6, 8, 6, 6, 3, 1, 7, 8);
         Array<Integer> original = new Array<>(array);
         mockStatic(Chapter5.class);
         when(Chapter5.random(1, array.length)).thenReturn(2, 7, 10);
 
-        // when
         int pivotIndex = Chapter7.medianOf3Partition(array, 1, array.length);
 
-        // then
         assertShuffled(original, array);
         assertTrue(2 <= pivotIndex && pivotIndex <= array.length - 1);
         assertArrayPartitioned(array, pivotIndex);
@@ -164,16 +137,13 @@ public class Chapter7Test {
 
     @Test
     public void shouldPartitionArrayUsingMedianOf3PartitionAsThirdPickedElement() {
-        // given
         Array<Integer> array = new Array<>(5, 7, 9, 2, 6, 8, 6, 6, 3, 1, 7, 8);
         Array<Integer> original = new Array<>(array);
         mockStatic(Chapter5.class);
         when(Chapter5.random(1, array.length)).thenReturn(10, 2, 7);
 
-        // when
         int pivotIndex = Chapter7.medianOf3Partition(array, 1, array.length);
 
-        // then
         assertShuffled(original, array);
         assertTrue(2 <= pivotIndex && pivotIndex <= array.length - 1);
         assertArrayPartitioned(array, pivotIndex);
@@ -190,7 +160,6 @@ public class Chapter7Test {
 
     @Test
     public void shouldSortIntervalsUsingFuzzySort() {
-        // given
         Array<Interval> intervals = new Array<>(
                 new Interval(5.0, 7.0),
                 new Interval(2.0, 9.0),
@@ -201,10 +170,8 @@ public class Chapter7Test {
         );
         Array<Interval> original = new Array<>(intervals);
 
-        // when
         Chapter7.fuzzySort(intervals, 1, intervals.length);
 
-        // then
         assertShuffled(original, intervals);
         assertArrayFuzzySorted(intervals);
     }

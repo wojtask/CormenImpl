@@ -25,14 +25,11 @@ public class Chapter4Test {
 
     @Test
     public void shouldFindMissingInteger() {
-        // given
         Array<Integer> array = new Array<>(12, 1, 6, 11, 4, 3, 0, 10, 13, 7, 5, 2, 9);
         Array<Integer> original = new Array<>(array);
 
-        // when
         Integer actualMissingInteger = Chapter4.findMissingInteger(array);
 
-        // then
         assertNotNull(actualMissingInteger);
         sortArray(original, Comparator.<Integer>naturalOrder());
         int i = 1;
@@ -48,7 +45,6 @@ public class Chapter4Test {
 
     @Test
     public void shouldGetLeftmostMinimaIndicesOfMongeArray() {
-        // given
         Array<Array<Double>> mongeArray = new Array<>(
                 new Array<>(10.0, 17.0, 13.0, 28.0, 23.0),
                 new Array<>(17.0, 22.0, 16.0, 29.0, 23.0),
@@ -60,10 +56,8 @@ public class Chapter4Test {
         );
         Array<Array<Double>> original = new Array<>(mongeArray);
 
-        // when
         Array<Integer> actualLeftmostMinimaIndices = Chapter4.mongeLeftmostMinimaIndices(mongeArray);
 
-        // then
         assertNotNull(actualLeftmostMinimaIndices);
         assertMinimaIndices(original, actualLeftmostMinimaIndices);
     }

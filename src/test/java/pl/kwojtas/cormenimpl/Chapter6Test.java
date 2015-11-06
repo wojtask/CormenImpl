@@ -32,30 +32,24 @@ public class Chapter6Test {
 
     @Test
     public void shouldSortArrayUsingHeapsort() {
-        // given
         Array<Integer> array = new Array<>(5, 7, 9, 2, 6, 8, 6, 6, 3, 1, 7, 8);
         Array<Integer> original = new Array<>(array);
 
-        // when
         Chapter6.heapsort(array);
 
-        // then
         assertShuffled(original, array);
         assertSorted(array);
     }
 
     @Test
     public void shouldRestoreMinHeapPropertyUsingMinHeapify() {
-        // given
         Array<Integer> array = new Array<>(0, 1, 16, 3, 4, 7, 17, 12, 10, 5, 13, 9, 8, 27);
         Heap<Integer> heap = new Heap<>(array);
         Heap<Integer> original = new Heap<>(array);
         int position = 3;
 
-        // when
         Chapter6.minHeapify(heap, position);
 
-        // then
         assertShuffled(original, heap);
         assertEquals(original.heapSize, heap.heapSize);
         assertMinHeap(heap);
@@ -69,16 +63,13 @@ public class Chapter6Test {
 
     @Test
     public void shouldRestoreMaxHeapPropertyUsingIterativeMaxHeapify() {
-        // given
         Array<Integer> array = new Array<>(27, 17, 3, 16, 13, 10, 1, 5, 7, 12, 4, 8, 9, 0);
         Heap<Integer> heap = new Heap<>(array);
         Heap<Integer> original = new Heap<>(array);
         int position = 3;
 
-        // when
         Chapter6.iterativeMaxHeapify(heap, position);
 
-        // then
         assertShuffled(original, heap);
         assertEquals(original.heapSize, heap.heapSize);
         assertMaxHeap(heap);
@@ -92,15 +83,12 @@ public class Chapter6Test {
 
     @Test
     public void shouldGetMaximumFromMaxHeap() {
-        // given
         Array<Integer> array = new Array<>(27, 7, 20, 4, 6, 13, 17, 0, 3, 2, 1, 5, 11, 10);
         Heap<Integer> heap = new Heap<>(array);
         Heap<Integer> original = new Heap<>(array);
 
-        // when
         int actualMaximum = Chapter6.heapMaximum(heap);
 
-        // then
         assertEquals(original.heapSize, heap.heapSize);
         assertArrayEquals(original, heap);
         assertEquals(original.at(1), Integer.valueOf(actualMaximum));
@@ -108,15 +96,12 @@ public class Chapter6Test {
 
     @Test
     public void shouldExtractMaximumFromMaxHeap() {
-        // given
         Array<Integer> array = new Array<>(27, 7, 20, 4, 6, 13, 17, 0, 3, 2, 1, 5, 11, 10);
         Heap<Integer> heap = new Heap<>(array);
         Heap<Integer> original = new Heap<>(array);
 
-        // when
         int actualMaximum = Chapter6.heapExtractMax(heap);
 
-        // then
         assertEquals(original.heapSize - 1, heap.heapSize);
         assertMaxHeap(heap);
         assertEquals(original.at(1), Integer.valueOf(actualMaximum));
@@ -135,13 +120,10 @@ public class Chapter6Test {
 
     @Test(expected = RuntimeException.class)
     public void shouldThrowExceptionWhenExtractingMaximumFromEmptyHeap() {
-        // given
 
         try {
-            // when
             Chapter6.heapExtractMax(Heap.withLength(3));
         } catch (RuntimeException e) {
-            // then
             assertEquals("heap underflow", e.getMessage());
             throw e;
         }
@@ -149,17 +131,14 @@ public class Chapter6Test {
 
     @Test
     public void shouldIncreaseKeyInMaxHeap() {
-        // given
         Array<Integer> array = new Array<>(27, 7, 20, 4, 6, 13, 17, 0, 3, 2, 1, 5, 11, 10);
         Heap<Integer> heap = new Heap<>(array);
         Heap<Integer> original = new Heap<>(array);
         int position = 12;
         int newKey = 23;
 
-        // when
         Chapter6.heapIncreaseKey(heap, position, newKey);
 
-        // then
         assertEquals(original.heapSize, heap.heapSize);
         assertMaxHeap(heap);
         assertHeapContains(heap, newKey);
@@ -172,17 +151,14 @@ public class Chapter6Test {
 
     @Test(expected = RuntimeException.class)
     public void shouldThrowExceptionWhenIncreasingKeyInMaxHeapWithSmallerNumber() {
-        // given
         Array<Integer> array = new Array<>(27, 7, 20, 4, 6, 13, 17, 0, 3, 2, 1, 5, 11, 10);
         Heap<Integer> heap = new Heap<>(array);
         int position = 3;
         int newKey = 16;
 
         try {
-            // when
             Chapter6.heapIncreaseKey(heap, position, newKey);
         } catch (RuntimeException e) {
-            // then
             assertEquals("new key is smaller than current key", e.getMessage());
             throw e;
         }
@@ -190,16 +166,13 @@ public class Chapter6Test {
 
     @Test
     public void shouldInsertIntoMaxHeap() {
-        // given
         Array<Integer> array = new Array<>(27, 7, 20, 4, 6, 13, 17, 0, 3, 2, 1, 5, 11, 10);
         Heap<Integer> heap = new Heap<>(array, array.length + 1);
         Heap<Integer> original = new Heap<>(array, array.length + 1);
         int newKey = 34;
 
-        // when
         Chapter6.maxHeapInsert(heap, newKey);
 
-        // then
         assertEquals(original.heapSize + 1, heap.heapSize);
         assertMaxHeap(heap);
         assertHeapContains(heap, newKey);
@@ -210,15 +183,12 @@ public class Chapter6Test {
 
     @Test
     public void shouldGetMinimumFromMinHeap() {
-        // given
         Array<Integer> array = new Array<>(0, 6, 1, 11, 7, 3, 2, 27, 13, 17, 20, 10, 4, 5);
         Heap<Integer> heap = new Heap<>(array);
         Heap<Integer> original = new Heap<>(array);
 
-        // when
         int actualMinimum = Chapter6.heapMinimum(heap);
 
-        // then
         assertEquals(original.heapSize, heap.heapSize);
         assertArrayEquals(original, heap);
         assertEquals(original.at(1), Integer.valueOf(actualMinimum));
@@ -226,15 +196,12 @@ public class Chapter6Test {
 
     @Test
     public void shouldExtractMinimumFromMinHeap() {
-        // given
         Array<Integer> array = new Array<>(0, 6, 1, 11, 7, 3, 2, 27, 13, 17, 20, 10, 4, 5);
         Heap<Integer> heap = new Heap<>(array);
         Heap<Integer> original = new Heap<>(array);
 
-        // when
         int actualMinimum = Chapter6.heapExtractMin(heap);
 
-        // then
         assertEquals(original.heapSize - 1, heap.heapSize);
         assertMinHeap(heap);
         assertEquals(original.at(1), Integer.valueOf(actualMinimum));
@@ -245,13 +212,10 @@ public class Chapter6Test {
 
     @Test(expected = RuntimeException.class)
     public void shouldThrowExceptionWhenExtractingMinimumFromEmptyHeap() {
-        // given
 
         try {
-            // when
             Chapter6.heapExtractMin(Heap.withLength(3));
         } catch (RuntimeException e) {
-            // then
             assertEquals("heap underflow", e.getMessage());
             throw e;
         }
@@ -259,17 +223,14 @@ public class Chapter6Test {
 
     @Test
     public void shouldDecreaseKeyInMinHeap() {
-        // given
         Array<Integer> array = new Array<>(0, 6, 1, 11, 7, 3, 2, 27, 13, 17, 20, 10, 4, 5);
         Heap<Integer> heap = new Heap<>(array);
         Heap<Integer> original = new Heap<>(array);
         int position = 11;
         int newKey = 4;
 
-        // when
         Chapter6.heapDecreaseKey(heap, position, newKey);
 
-        // then
         assertEquals(original.heapSize, heap.heapSize);
         assertMinHeap(heap);
         assertHeapContains(heap, newKey);
@@ -282,17 +243,14 @@ public class Chapter6Test {
 
     @Test(expected = RuntimeException.class)
     public void shouldThrowExceptionWhenDecreasingKeyInMinHeapWithLargerNumber() {
-        // given
         Array<Integer> array = new Array<>(0, 6, 1, 11, 7, 3, 2, 27, 13, 17, 20, 10, 4, 5);
         Heap<Integer> heap = new Heap<>(array);
         int position = 4;
         int newKey = 12;
 
         try {
-            // when
             Chapter6.heapDecreaseKey(heap, position, newKey);
         } catch (RuntimeException e) {
-            // then
             assertEquals("new key is larger than current key", e.getMessage());
             throw e;
         }
@@ -300,16 +258,13 @@ public class Chapter6Test {
 
     @Test
     public void shouldInsertIntoMinHeap() {
-        // given
         Array<Integer> array = new Array<>(1, 6, 2, 11, 7, 3, 4, 27, 13, 17, 20, 10, 14, 5);
         Heap<Integer> heap = new Heap<>(array, array.length + 3);
         Heap<Integer> original = new Heap<>(array, array.length + 3);
         int newKey = 0;
 
-        // when
         Chapter6.minHeapInsert(heap, newKey);
 
-        // then
         assertEquals(original.heapSize + 1, heap.heapSize);
         assertMinHeap(heap);
         assertHeapContains(heap, newKey);
@@ -320,15 +275,12 @@ public class Chapter6Test {
 
     @Test
     public void shouldEnqueueUsingPriorityQueue() {
-        // given
         PriorityQueueWithRanks<String> priorityQueueWithRanks = getExemplaryMinPriorityQueueWithRanks();
         String newKey = "jjj";
         int currentRank = 10;
 
-        // when
         Chapter6.enqueueUsingPriorityQueue(priorityQueueWithRanks, newKey);
 
-        // then
         assertEquals(currentRank + 1, priorityQueueWithRanks.getCurrentRank());
         assertEquals(newKey, priorityQueueWithRanks.at(currentRank).key);
         assertEquals(currentRank, priorityQueueWithRanks.at(currentRank).rank);
@@ -351,30 +303,24 @@ public class Chapter6Test {
 
     @Test
     public void shouldDequeueUsingPriorityQueue() {
-        // given
         PriorityQueueWithRanks<String> priorityQueueWithRanks = getExemplaryMinPriorityQueueWithRanks();
         String expectedDeletedElement = "aaa";
         int currentRank = 10;
 
-        // when
         String actualDeletedElement = Chapter6.dequeueUsingPriorityQueue(priorityQueueWithRanks);
 
-        // then
         assertEquals(currentRank, priorityQueueWithRanks.getCurrentRank());
         assertEquals(expectedDeletedElement, actualDeletedElement);
     }
 
     @Test
     public void shouldPushUsingPriorityQueue() {
-        // given
         PriorityQueueWithRanks<String> priorityQueueWithRanks = getExemplaryMaxPriorityQueueWithRanks();
         String newKey = "jjj";
         int currentRank = 10;
 
-        // when
         Chapter6.pushUsingPriorityQueue(priorityQueueWithRanks, newKey);
 
-        // then
         assertEquals(currentRank + 1, priorityQueueWithRanks.getCurrentRank());
         assertEquals(newKey, priorityQueueWithRanks.at(1).key);
         assertEquals(currentRank, priorityQueueWithRanks.at(1).rank);
@@ -397,31 +343,25 @@ public class Chapter6Test {
 
     @Test
     public void shouldPopUsingPriorityQueue() {
-        // given
         PriorityQueueWithRanks<String> priorityQueueWithRanks = getExemplaryMaxPriorityQueueWithRanks();
         String expectedDeletedElement = "iii";
         int currentRank = 10;
 
-        // when
         String actualDeletedElement = Chapter6.popUsingPriorityQueue(priorityQueueWithRanks);
 
-        // then
         assertEquals(currentRank, priorityQueueWithRanks.getCurrentRank());
         assertEquals(expectedDeletedElement, actualDeletedElement);
     }
 
     @Test
     public void shouldDeleteFromMaxHeap() {
-        // given
         Array<Integer> array = new Array<>(27, 7, 20, 4, 6, 13, 17, 0, 3, 2, 1, 5, 11, 10);
         Heap<Integer> heap = new Heap<>(array);
         Heap<Integer> original = new Heap<>(array);
         int position = 10;
 
-        // when
         Integer actualKey = Chapter6.maxHeapDelete(heap, position);
 
-        // then
         assertEquals(original.heapSize - 1, heap.heapSize);
         assertMaxHeap(heap);
         assertHeapContains(original, actualKey);
@@ -434,7 +374,6 @@ public class Chapter6Test {
 
     @Test
     public void shouldMergeSortedLists() {
-        // given
         Array<SinglyLinkedList<Integer>> sortedLists = new Array<>(
                 new SinglyLinkedList<>(14, 20, 22, 45, 46),
                 new SinglyLinkedList<>(4, 4, 23),
@@ -452,10 +391,8 @@ public class Chapter6Test {
             original.set(i, new SinglyLinkedList<>(sortedLists.at(i)));
         }
 
-        // when
         SinglyLinkedList<Integer> actualMergedList = Chapter6.mergeSortedLists(sortedLists);
 
-        // then
         assertSorted(actualMergedList.toArray());
         assertMerged(original, actualMergedList);
     }
@@ -488,14 +425,11 @@ public class Chapter6Test {
 
     @Test
     public void shouldBuildMaxHeapUsingBuildMaxHeap_() {
-        // given
         Array<Integer> array = new Array<>(20, 4, 0, 13, 5, 17, 1, 2, 6, 10, 7, 27, 11, 3);
         Array<Integer> original = new Array<>(array);
 
-        // when
         Heap<Integer> actualHeap = Chapter6.buildMaxHeap_(array);
 
-        // then
         for (int i = 1; i <= original.length; i++) {
             assertHeapContains(actualHeap, original.at(i));
         }
@@ -505,16 +439,13 @@ public class Chapter6Test {
 
     @Test
     public void shouldExtractMaximumFromMultiaryMaxHeap() {
-        // given
         Array<Integer> array = new Array<>(32, 17, 27, 13, 20, 16, 8, 9, 13, 18, 23, 24, 5, 3, 12, 7);
         Heap<Integer> heap = new Heap<>(array);
         Heap<Integer> original = new Heap<>(array);
         int degree = 4;
 
-        // when
         int actualMaximum = Chapter6.multiaryHeapExtractMax(heap, degree);
 
-        // then
         assertEquals(original.heapSize - 1, heap.heapSize);
         assertMultiaryMaxHeap(heap, degree);
         assertEquals(original.at(1), Integer.valueOf(actualMaximum));
@@ -532,14 +463,11 @@ public class Chapter6Test {
 
     @Test(expected = RuntimeException.class)
     public void shouldThrowExceptionWhenExtractingMaximumFromEmptyMultiaryHeap() {
-        // given
         int degree = 4;
 
         try {
-            // when
             Chapter6.multiaryHeapExtractMax(Heap.withLength(6), degree);
         } catch (RuntimeException e) {
-            // then
             assertEquals("heap underflow", e.getMessage());
             throw e;
         }
@@ -547,17 +475,14 @@ public class Chapter6Test {
 
     @Test
     public void shouldInsertToMultiaryMaxHeap() {
-        // given
         Array<Integer> array = new Array<>(32, 17, 27, 13, 20, 16, 8, 9, 13, 18, 23, 24, 5, 3, 12, 7);
         Heap<Integer> heap = new Heap<>(array, array.length + 1);
         Heap<Integer> original = new Heap<>(array, array.length + 1);
         int degree = 4;
         int newKey = 35;
 
-        // when
         Chapter6.multiaryMaxHeapInsert(heap, degree, newKey);
 
-        // then
         assertEquals(original.heapSize + 1, heap.heapSize);
         assertMultiaryMaxHeap(heap, degree);
         assertHeapContains(heap, newKey);
@@ -568,7 +493,6 @@ public class Chapter6Test {
 
     @Test
     public void shouldIncreaseKeyInMultiaryMaxHeap() {
-        // given
         Array<Integer> array = new Array<>(32, 17, 27, 13, 20, 16, 8, 9, 13, 18, 23, 24, 5, 3, 12, 7);
         Heap<Integer> heap = new Heap<>(array);
         Heap<Integer> original = new Heap<>(array);
@@ -576,10 +500,8 @@ public class Chapter6Test {
         int position = 14;
         int newKey = 35;
 
-        // when
         Chapter6.multiaryHeapIncreaseKey(heap, degree, position, newKey);
 
-        // then
         assertEquals(original.heapSize, heap.heapSize);
         assertMultiaryMaxHeap(heap, degree);
         assertHeapContains(heap, newKey);
@@ -592,21 +514,17 @@ public class Chapter6Test {
 
     @Test
     public void shouldSortArrayUsingYoungSort() {
-        // given
         Array<Integer> array = new Array<>(5, 7, 9, 2, 6, 8, 6, 6, 3, 1, 7, 8, 6, 3, 7, 8);
         Array<Integer> original = new Array<>(array);
 
-        // when
         Chapter6.youngSort(array);
 
-        // then
         assertShuffled(original, array);
         assertSorted(array);
     }
 
     @Test
     public void shouldFindKeyUsingYoungSearch() {
-        // given
         Young Y = new Young(
                 new Array<>(2, 3, 14, 16),
                 new Array<>(4, 8, Integer.MAX_VALUE, Integer.MAX_VALUE),
@@ -615,16 +533,13 @@ public class Chapter6Test {
         );
         int key = 12;
 
-        // when
         boolean keyFound = Chapter6.youngSearch(Y, Y.rows, Y.columns, key);
 
-        // then
         assertTrue(keyFound);
     }
 
     @Test
     public void shouldNotFindNonexistentKeyUsingYoungSearch() {
-        // given
         Young Y = new Young(
                 new Array<>(2, 3, 14, 16),
                 new Array<>(4, 8, Integer.MAX_VALUE, Integer.MAX_VALUE),
@@ -633,10 +548,8 @@ public class Chapter6Test {
         );
         int key = 10;
 
-        // when
         boolean keyFound = Chapter6.youngSearch(Y, Y.rows, Y.columns, key);
 
-        // then
         assertFalse(keyFound);
     }
 

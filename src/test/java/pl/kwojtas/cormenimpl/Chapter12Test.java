@@ -81,24 +81,18 @@ public class Chapter12Test {
 
     @Test
     public void shouldPrintOutEmptyTreeInInorder() {
-        // given
 
-        // when
         Chapter12.inorderTreeWalk(null);
 
-        // then
         assertEquals(0, outContent.size());
     }
 
     @Test
     public void shouldPrintOutNonemptyTreeInInorder() {
-        // given
         BinaryTree<Integer> tree = getExemplaryBinaryTree();
 
-        // when
         Chapter12.inorderTreeWalk(tree.root);
 
-        // then
         String[] actualOutput = splitOutContent();
         String[] expectedOutput = new String[]{"1", "4", "10", "11", "14", "19", "20"};
         assertArrayEquals(expectedOutput, actualOutput);
@@ -106,24 +100,18 @@ public class Chapter12Test {
 
     @Test
     public void shouldPrintOutEmptyTreeInPreorder() {
-        // given
 
-        // when
         Chapter12.preorderTreeWalk(null);
 
-        // then
         assertEquals(0, outContent.size());
     }
 
     @Test
     public void shouldPrintOutNonemptyTreeInPreorder() {
-        // given
         BinaryTree<Integer> tree = getExemplaryBinaryTree();
 
-        // when
         Chapter12.preorderTreeWalk(tree.root);
 
-        // then
         String[] actualOutput = splitOutContent();
         String[] expectedOutput = new String[]{"10", "4", "1", "14", "11", "19", "20"};
         assertArrayEquals(expectedOutput, actualOutput);
@@ -131,24 +119,18 @@ public class Chapter12Test {
 
     @Test
     public void shouldPrintOutEmptyTreeInPostorder() {
-        // given
 
-        // when
         Chapter12.postorderTreeWalk(null);
 
-        // then
         assertEquals(0, outContent.size());
     }
 
     @Test
     public void shouldPrintOutNonemptyTreeInPostorder() {
-        // given
         BinaryTree<Integer> tree = getExemplaryBinaryTree();
 
-        // when
         Chapter12.postorderTreeWalk(tree.root);
 
-        // then
         String[] actualOutput = splitOutContent();
         String[] expectedOutput = new String[]{"1", "4", "11", "20", "19", "14", "10"};
         assertArrayEquals(expectedOutput, actualOutput);
@@ -156,14 +138,11 @@ public class Chapter12Test {
 
     @Test
     public void shouldFindNodeInTree() {
-        // given
         BinaryTree<Integer> tree = getExemplaryBinaryTree();
         int key = 11;
 
-        // when
         BinaryTree.Node<Integer> actualFoundNode = Chapter12.treeSearch(tree.root, key);
 
-        // then
         assertNotNull(actualFoundNode);
         assertEquals(Integer.valueOf(key), actualFoundNode.key);
         while (actualFoundNode != tree.root) {
@@ -173,27 +152,21 @@ public class Chapter12Test {
 
     @Test
     public void shouldNotFindNonexistentNodeInTree() {
-        // given
         BinaryTree<Integer> tree = getExemplaryBinaryTree();
         int key = 17;
 
-        // when
         BinaryTree.Node<Integer> actualFoundNode = Chapter12.treeSearch(tree.root, key);
 
-        // then
         assertNull(actualFoundNode);
     }
 
     @Test
     public void shouldFindNodeInTreeUsingIterativeTreeSearch() {
-        // given
         BinaryTree<Integer> tree = getExemplaryBinaryTree();
         int key = 11;
 
-        // when
         BinaryTree.Node<Integer> actualFoundNode = Chapter12.iterativeTreeSearch(tree.root, key);
 
-        // then
         assertNotNull(actualFoundNode);
         assertEquals(Integer.valueOf(key), actualFoundNode.key);
         while (actualFoundNode != tree.root) {
@@ -203,26 +176,20 @@ public class Chapter12Test {
 
     @Test
     public void shouldNotFindNonexistentNodeInTreeUsingIterativeTreeSearch() {
-        // given
         BinaryTree<Integer> tree = getExemplaryBinaryTree();
         int key = 17;
 
-        // when
         BinaryTree.Node<Integer> actualFoundNode = Chapter12.iterativeTreeSearch(tree.root, key);
 
-        // then
         assertNull(actualFoundNode);
     }
 
     @Test
     public void shouldFindTreeMinimum() {
-        // given
         BinaryTree<Integer> tree = getExemplaryBinaryTree();
 
-        // when
         BinaryTree.Node<Integer> actualMinimum = Chapter12.treeMinimum(tree.root);
 
-        // then
         assertNotNull(actualMinimum);
         assertEquals(Integer.valueOf(1), actualMinimum.key);
         while (actualMinimum != tree.root) {
@@ -232,13 +199,10 @@ public class Chapter12Test {
 
     @Test
     public void shouldFindTreeMaximum() {
-        // given
         BinaryTree<Integer> tree = getExemplaryBinaryTree();
 
-        // when
         BinaryTree.Node<Integer> actualMaximum = Chapter12.treeMaximum(tree.root);
 
-        // then
         assertNotNull(actualMaximum);
         assertEquals(Integer.valueOf(20), actualMaximum.key);
         while (actualMaximum != tree.root) {
@@ -248,13 +212,10 @@ public class Chapter12Test {
 
     @Test
     public void shouldFindSuccessorInTree() {
-        // given
         BinaryTree<Integer> tree = getExemplaryBinaryTree();
 
-        // when
         BinaryTree.Node<Integer> actualSuccessor = Chapter12.treeSuccessor(tree.root);
 
-        // then
         assertNotNull(actualSuccessor);
         assertEquals(Integer.valueOf(11), actualSuccessor.key);
         while (actualSuccessor != tree.root) {
@@ -264,26 +225,20 @@ public class Chapter12Test {
 
     @Test
     public void shouldNotFindNonexistingSuccessorInTree() {
-        // given
         BinaryTree<Integer> tree = getExemplaryBinaryTree();
         BinaryTree.Node<Integer> node = tree.root.right.right.right; // a node with maximum value in the tree
 
-        // when
         BinaryTree.Node<Integer> actualSuccessor = Chapter12.treeSuccessor(node);
 
-        // then
         assertNull(actualSuccessor);
     }
 
     @Test
     public void shouldFindTreeMinimumUsingRecursiveTreeMinimum() {
-        // given
         BinaryTree<Integer> tree = getExemplaryBinaryTree();
 
-        // when
         BinaryTree.Node<Integer> actualMinimum = Chapter12.recursiveTreeMinimum(tree.root);
 
-        // then
         assertNotNull(actualMinimum);
         assertEquals(Integer.valueOf(1), actualMinimum.key);
         while (actualMinimum != tree.root) {
@@ -293,13 +248,10 @@ public class Chapter12Test {
 
     @Test
     public void shouldFindTreeMaximumUsingRecursiveTreeMaximum() {
-        // given
         BinaryTree<Integer> tree = getExemplaryBinaryTree();
 
-        // when
         BinaryTree.Node<Integer> actualMaximum = Chapter12.recursiveTreeMaximum(tree.root);
 
-        // then
         assertNotNull(actualMaximum);
         assertEquals(Integer.valueOf(20), actualMaximum.key);
         while (actualMaximum != tree.root) {
@@ -309,14 +261,11 @@ public class Chapter12Test {
 
     @Test
     public void shouldFindPredecessorInTree() {
-        // given
         BinaryTree<Integer> tree = getExemplaryBinaryTree();
         BinaryTree.Node<Integer> node = tree.root.right.left; // node of key = 11
 
-        // when
         BinaryTree.Node<Integer> actualPredecessor = Chapter12.treePredecessor(node);
 
-        // then
         assertNotNull(actualPredecessor);
         assertEquals(Integer.valueOf(10), actualPredecessor.key);
         while (actualPredecessor != tree.root) {
@@ -326,13 +275,10 @@ public class Chapter12Test {
 
     @Test
     public void shouldFindPredecessorInTreeForNodeWithLeftChild() {
-        // given
         BinaryTree<Integer> tree = getExemplaryBinaryTree();
 
-        // when
         BinaryTree.Node<Integer> actualPredecessor = Chapter12.treePredecessor(tree.root);
 
-        // then
         assertNotNull(actualPredecessor);
         assertEquals(Integer.valueOf(4), actualPredecessor.key);
         while (actualPredecessor != tree.root) {
@@ -342,25 +288,19 @@ public class Chapter12Test {
 
     @Test
     public void shouldPrintOutEmptyTreeUsingInorderTreeWalk_() {
-        // given
         BinaryTree<Integer> tree = new BinaryTree<>();
 
-        // when
         Chapter12.inorderTreeWalk_(tree);
 
-        // then
         assertEquals(0, outContent.size());
     }
 
     @Test
     public void shouldPrintOutNonemptyTreeUsingInorderTreeWalk_() {
-        // given
         BinaryTree<Integer> tree = getExemplaryBinaryTree();
 
-        // when
         Chapter12.inorderTreeWalk_(tree);
 
-        // then
         String[] actualOutput = splitOutContent();
         String[] expectedOutput = new String[]{"1", "4", "10", "11", "14", "19", "20"};
         assertArrayEquals(expectedOutput, actualOutput);
@@ -368,14 +308,11 @@ public class Chapter12Test {
 
     @Test
     public void shouldInsertNodeToEmptyTree() {
-        // given
         BinaryTree<Integer> tree = new BinaryTree<>();
         BinaryTree.Node<Integer> nodeToInsert = new BinaryTree.Node<>(12);
 
-        // when
         Chapter12.treeInsert(tree, nodeToInsert);
 
-        // then
         assertEquals(Integer.valueOf(12), nodeToInsert.key);
         assertNull(nodeToInsert.left);
         assertNull(nodeToInsert.right);
@@ -385,14 +322,11 @@ public class Chapter12Test {
 
     @Test
     public void shouldInsertNodeToNonemptyTree() {
-        // given
         BinaryTree<Integer> tree = getExemplaryBinaryTree();
         BinaryTree.Node<Integer> nodeToInsert = new BinaryTree.Node<>(12);
 
-        // when
         Chapter12.treeInsert(tree, nodeToInsert);
 
-        // then
         assertEquals(Integer.valueOf(12), nodeToInsert.key);
         assertNull(nodeToInsert.left);
         assertNull(nodeToInsert.right);
@@ -405,14 +339,11 @@ public class Chapter12Test {
 
     @Test
     public void shouldInsertNodeToNonemptyTree2() {
-        // given
         BinaryTree<Integer> tree = getExemplaryBinaryTree();
         BinaryTree.Node<Integer> nodeToInsert = new BinaryTree.Node<>(18);
 
-        // when
         Chapter12.treeInsert(tree, nodeToInsert);
 
-        // then
         assertEquals(Integer.valueOf(18), nodeToInsert.key);
         assertNull(nodeToInsert.left);
         assertNull(nodeToInsert.right);
@@ -425,14 +356,11 @@ public class Chapter12Test {
 
     @Test
     public void shouldDeleteLeafFromTree() {
-        // given
         BinaryTree<Integer> tree = getExemplaryBinaryTree();
         int exemplaryTreeSize = tree.getSize();
 
-        // when
         BinaryTree.Node<Integer> actualDeletedNode = Chapter12.treeDelete(tree, tree.root.right.left); // a leaf
 
-        // then
         assertEquals(Integer.valueOf(11), actualDeletedNode.key);
         assertNull(tree.root.right.left);
         assertEquals(exemplaryTreeSize - 1, tree.getSize());
@@ -440,14 +368,11 @@ public class Chapter12Test {
 
     @Test
     public void shouldDeleteNodeWithOneChildFromTree() {
-        // given
         BinaryTree<Integer> tree = getExemplaryBinaryTree();
         int exemplaryTreeSize = tree.getSize();
 
-        // when
         BinaryTree.Node<Integer> actualDeletedNode = Chapter12.treeDelete(tree, tree.root.left); // a node with one child
 
-        // then
         assertEquals(Integer.valueOf(4), actualDeletedNode.key);
         assertNotNull(tree.root.left);
         assertEquals(Integer.valueOf(1), tree.root.left.key);
@@ -456,14 +381,11 @@ public class Chapter12Test {
 
     @Test
     public void shouldDeleteNodeWithTwoChildrenFromTree() {
-        // given
         BinaryTree<Integer> tree = getExemplaryBinaryTree();
         int exemplaryTreeSize = tree.getSize();
 
-        // when
         BinaryTree.Node<Integer> actualDeletedNode = Chapter12.treeDelete(tree, tree.root.right); // a node with two children (successor's key = 19)
 
-        // then
         assertEquals(Integer.valueOf(19), actualDeletedNode.key);
         assertNotNull(tree.root.right);
         assertEquals(Integer.valueOf(19), tree.root.right.key);
@@ -472,28 +394,22 @@ public class Chapter12Test {
 
     @Test
     public void shouldDeleteRootFromTree() {
-        // given
         BinaryTree<Integer> tree = new BinaryTree<>();
         tree.root = new BinaryTree.Node<>(10);
 
-        // when
         BinaryTree.Node<Integer> actualDeletedNode = Chapter12.treeDelete(tree, tree.root);
 
-        // then
         assertEquals(Integer.valueOf(10), actualDeletedNode.key);
         assertNull(tree.root);
     }
 
     @Test
     public void shouldInsertNodeToEmptyTreeUsingRecursiveTreeInsert() {
-        // given
         BinaryTree<Integer> tree = new BinaryTree<>();
         BinaryTree.Node<Integer> nodeToInsert = new BinaryTree.Node<>(12);
 
-        // when
         Chapter12.recursiveTreeInsert(tree, tree.root, nodeToInsert);
 
-        // then
         assertEquals(Integer.valueOf(12), nodeToInsert.key);
         assertNull(nodeToInsert.left);
         assertNull(nodeToInsert.right);
@@ -503,14 +419,11 @@ public class Chapter12Test {
 
     @Test
     public void shouldInsertNodeToNonemptyTreeUsingRecursiveTreeInsert() {
-        // given
         BinaryTree<Integer> tree = getExemplaryBinaryTree();
         BinaryTree.Node<Integer> nodeToInsert = new BinaryTree.Node<>(12);
 
-        // when
         Chapter12.recursiveTreeInsert(tree, tree.root, nodeToInsert);
 
-        // then
         assertEquals(Integer.valueOf(12), nodeToInsert.key);
         assertNull(nodeToInsert.left);
         assertNull(nodeToInsert.right);
@@ -523,14 +436,11 @@ public class Chapter12Test {
 
     @Test
     public void shouldInsertNodeToNonemptyTreeUsingRecursiveTreeInsert2() {
-        // given
         BinaryTree<Integer> tree = getExemplaryBinaryTree();
         BinaryTree.Node<Integer> nodeToInsert = new BinaryTree.Node<>(18);
 
-        // when
         Chapter12.recursiveTreeInsert(tree, tree.root, nodeToInsert);
 
-        // then
         assertEquals(Integer.valueOf(18), nodeToInsert.key);
         assertNull(nodeToInsert.left);
         assertNull(nodeToInsert.right);
@@ -543,13 +453,10 @@ public class Chapter12Test {
 
     @Test
     public void shouldSortArrayUsingInorderSort() {
-        // given
         Array<Integer> array = new Array<>(5, 7, 9, 2, 6, 8, 6, 6, 3, 1, 7, 8);
 
-        // when
         Chapter12.inorderSort(array);
 
-        // then
         String[] actualOutput = splitOutContent();
         String[] expectedOutput = new String[]{"1", "2", "3", "5", "6", "6", "6", "7", "7", "8", "8", "9"};
         assertArrayEquals(expectedOutput, actualOutput);
@@ -557,28 +464,22 @@ public class Chapter12Test {
 
     @Test
     public void shouldDeleteLeafFromTreeUsingSafeTreeDelete() {
-        // given
         BinaryTree<Integer> tree = getExemplaryBinaryTree();
         int exemplaryTreeSize = tree.getSize();
 
-        // when
         Chapter12.safeTreeDelete(tree, tree.root.right.left); // a leaf
 
-        // then
         assertNull(tree.root.right.left);
         assertEquals(exemplaryTreeSize - 1, tree.getSize());
     }
 
     @Test
     public void shouldDeleteNodeWithTwoChildrenFromTreeUsingSafeTreeDelete() {
-        // given
         BinaryTree<Integer> tree = getExemplaryBinaryTree();
         int exemplaryTreeSize = tree.getSize();
 
-        // when
         Chapter12.safeTreeDelete(tree, tree.root.right); // a node with two children (successor's key = 19)
 
-        // then
         assertNotNull(tree.root.right);
         assertEquals(Integer.valueOf(19), tree.root.right.key);
         assertEquals(exemplaryTreeSize - 1, tree.getSize());
@@ -586,14 +487,11 @@ public class Chapter12Test {
 
     @Test
     public void shouldDeleteNodeWithTwoChildrenFromTreeUsingSafeTreeDelete2() {
-        // given
         BinaryTree<Integer> tree = getExemplaryBinaryTreeForSafeDelete();
         int exemplaryTreeSize = tree.getSize();
 
-        // when
         Chapter12.safeTreeDelete(tree, tree.root.left); // a node with two children (successor's key = 6)
 
-        // then
         assertNotNull(tree.root.left);
         assertEquals(Integer.valueOf(6), tree.root.left.key);
         assertEquals(exemplaryTreeSize - 1, tree.getSize());
@@ -626,14 +524,11 @@ public class Chapter12Test {
 
     @Test
     public void shouldDeleteLeafFromTreeUsingFairTreeDelete() {
-        // given
         BinaryTree<Integer> tree = getExemplaryBinaryTree();
         int exemplaryTreeSize = tree.getSize();
 
-        // when
         BinaryTree.Node<Integer> actualDeletedNode = Chapter12.fairTreeDelete(tree, tree.root.right.left); // a leaf
 
-        // then
         assertEquals(Integer.valueOf(11), actualDeletedNode.key);
         assertNull(tree.root.right.left);
         assertEquals(exemplaryTreeSize - 1, tree.getSize());
@@ -641,14 +536,11 @@ public class Chapter12Test {
 
     @Test
     public void shouldDeleteNodeWithOneChildFromTreeUsingFairTreeDelete() {
-        // given
         BinaryTree<Integer> tree = getExemplaryBinaryTree();
         int exemplaryTreeSize = tree.getSize();
 
-        // when
         BinaryTree.Node<Integer> actualDeletedNode = Chapter12.fairTreeDelete(tree, tree.root.left); // a node with one child
 
-        // then
         assertEquals(Integer.valueOf(4), actualDeletedNode.key);
         assertNotNull(tree.root.left);
         assertEquals(Integer.valueOf(1), tree.root.left.key);
@@ -657,16 +549,13 @@ public class Chapter12Test {
 
     @Test
     public void shouldDeleteNodeWithTwoChildrenFromTreeUsingFairTreeDeleteBySplicingOutItsPredecessor() {
-        // given
         BinaryTree<Integer> tree = getExemplaryBinaryTree();
         int exemplaryTreeSize = tree.getSize();
         mockStatic(Util.class);
         when(Util.random()).thenReturn(0);
 
-        // when
         BinaryTree.Node<Integer> actualDeletedNode = Chapter12.fairTreeDelete(tree, tree.root.right); // a node with two children (predecessor's key = 11)
 
-        // then
         assertEquals(Integer.valueOf(11), actualDeletedNode.key);
         assertNotNull(tree.root.right);
         assertEquals(Integer.valueOf(11), tree.root.right.key);
@@ -675,16 +564,13 @@ public class Chapter12Test {
 
     @Test
     public void shouldDeleteNodeWithTwoChildrenFromTreeUsingFairTreeDeleteBySplicingOutItsSuccessor() {
-        // given
         BinaryTree<Integer> tree = getExemplaryBinaryTree();
         int exemplaryTreeSize = tree.getSize();
         mockStatic(Util.class);
         when(Util.random()).thenReturn(1);
 
-        // when
         BinaryTree.Node<Integer> actualDeletedNode = Chapter12.fairTreeDelete(tree, tree.root.right); // a node with two children (successor's key = 19)
 
-        // then
         assertEquals(Integer.valueOf(19), actualDeletedNode.key);
         assertNotNull(tree.root.right);
         assertEquals(Integer.valueOf(19), tree.root.right.key);
@@ -693,27 +579,21 @@ public class Chapter12Test {
 
     @Test
     public void shouldDeleteRootFromTreeUsingFairTreeDelete() {
-        // given
         BinaryTree<Integer> tree = new BinaryTree<>();
         tree.root = new BinaryTree.Node<>(10);
 
-        // when
         BinaryTree.Node<Integer> actualDeletedNode = Chapter12.fairTreeDelete(tree, tree.root);
 
-        // then
         assertEquals(Integer.valueOf(10), actualDeletedNode.key);
         assertNull(tree.root);
     }
 
     @Test
     public void shouldSortBitStringsUsingRadixTree() {
-        // given
         Array<String> array = new Array<>("1011", "10", "011", "100", "0");
 
-        // when
         Chapter12.bitStringsSort(array);
 
-        // then
         String[] actualOutput = splitOutContent();
         String[] expectedOutput = new String[]{"0", "011", "10", "100", "1011"};
         assertArrayEquals(expectedOutput, actualOutput);
@@ -721,14 +601,11 @@ public class Chapter12Test {
 
     @Test
     public void shouldSortArrayUsingTreeBuildingQuicksort() {
-        // given
         Array<Integer> array = new Array<>(5, 7, 9, 2, 6, 8, 6, 6, 3, 1, 7, 8);
         Array<Integer> original = new Array<>(array);
 
-        // when
         Chapter12.treeBuildingQuicksort(array, 1, array.length);
 
-        // then
         assertShuffled(original, array);
         assertSorted(array);
     }

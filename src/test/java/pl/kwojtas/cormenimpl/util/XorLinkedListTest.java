@@ -10,25 +10,19 @@ public class XorLinkedListTest {
 
     @Test
     public void shouldCreateEmptyXorLinkedList() {
-        // given
 
-        // when
         XorLinkedList<String> xorLinkedList = new XorLinkedList<>();
 
-        // then
         assertNull(xorLinkedList.head);
         assertNull(xorLinkedList.tail);
     }
 
     @Test
     public void shouldCreateXorLinkedListByCopyingExistingXorLinkedList() {
-        // given
         XorLinkedList<String> otherXorLinkedList = getExemplaryXorLinkedList();
 
-        // when
         XorLinkedList<String> xorLinkedList = new XorLinkedList<>(otherXorLinkedList);
 
-        // then
         XorLinkedList.Node first = xorLinkedList.head;
         XorLinkedList.Node second = xorLinkedList.byAddress(first.np);
         XorLinkedList.Node third = xorLinkedList.byAddress(second.np ^ first.address);
@@ -55,39 +49,30 @@ public class XorLinkedListTest {
 
     @Test
     public void shouldCreateEmptyXorLinkedListByCopyingExistingEmptyXorLinkedList() {
-        // given
         XorLinkedList<String> otherXorLinkedList = new XorLinkedList<>();
 
-        // when
         XorLinkedList<String> xorLinkedList = new XorLinkedList<>(otherXorLinkedList);
 
-        // then
         assertNull(xorLinkedList.head);
         assertNull(xorLinkedList.tail);
     }
 
     @Test
     public void shouldGetXorLinkedListLength() {
-        // given
         XorLinkedList<String> xorLinkedList = getExemplaryXorLinkedList();
 
-        // when
         int actualLength = xorLinkedList.getLength();
 
-        // then
         assertEquals(3, actualLength);
     }
 
     @Test
     public void shouldTransformXorLinkedListToArray() {
-        // given
         XorLinkedList<String> xorLinkedList = getExemplaryXorLinkedList();
         Array<String> expectedArray = new Array<>("aaa", "bbb", "ccc");
 
-        // when
         Array<String> actualArray = xorLinkedList.toArray();
 
-        // then
         assertArrayEquals(expectedArray, actualArray);
     }
 
