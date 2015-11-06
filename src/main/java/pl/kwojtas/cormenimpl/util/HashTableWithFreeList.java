@@ -5,34 +5,44 @@ package pl.kwojtas.cormenimpl.util;
  *
  * @param <E> the type of elements in the hash table
  */
-public class HashTableWithFreeList<E> extends ZeroBasedIndexedArray<HashTableWithFreeList.Node<E>> {
+public class HashTableWithFreeList<E> extends ZeroBasedIndexedArray<HashTableWithFreeList.Element<E>> {
 
     /**
-     * Implements a doubly linked list's node.
+     * Implements a hash table's element.
      *
-     * @param <F> the type of satellite data in the node's element
+     * @param <F> the type of satellite data
      */
-    public static class Node<F> {
+    public static class Element<F> {
 
         /**
-         * The element containing a key and satellite data.
+         * The key.
          */
-        public Element<F> element;
+        public int key;
 
         /**
-         * The index of the previous node.
+         * The satellite data.
+         */
+        public F data;
+
+        /**
+         * The index of the previous element.
          */
         public Integer prev;
 
         /**
-         * The index of the next node.
+         * The index of the next element.
          */
         public Integer next;
 
         /**
-         * Creates an empty node with no previous node and no next node.
+         * Creates an element from a given key and satellite data with no previous nor next element.
+         *
+         * @param key  the key of the new element
+         * @param data the satellite data of the new element
          */
-        public Node() {
+        public Element(int key, F data) {
+            this.key = key;
+            this.data = data;
         }
     }
 
@@ -49,7 +59,7 @@ public class HashTableWithFreeList<E> extends ZeroBasedIndexedArray<HashTableWit
     private HashTableWithFreeList(int length, HashFunction h) {
         super(ZeroBasedIndexedArray.withLength(length));
         for (int i = 0; i <= length - 1; i++) {
-            set(i, new Node<>());
+            set(i, new HashTableWithFreeList.Element<>(i, null));
         }
         free = 0;
         this.length = length;

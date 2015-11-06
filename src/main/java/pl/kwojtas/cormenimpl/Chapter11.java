@@ -2,7 +2,6 @@ package pl.kwojtas.cormenimpl;
 
 import pl.kwojtas.cormenimpl.util.ChainedHashTable;
 import pl.kwojtas.cormenimpl.util.DirectAddressTable;
-import pl.kwojtas.cormenimpl.util.Element;
 import pl.kwojtas.cormenimpl.util.HashFunction;
 import pl.kwojtas.cormenimpl.util.HashTableWithFreeList;
 import pl.kwojtas.cormenimpl.util.HashTableWithOpenAddressing;
@@ -29,7 +28,7 @@ public final class Chapter11 {
      * @param <E> the type of elements' values in {@code T}
      * @return the element of key {@code k} in table {@code T}, or {@code null} if {@code T} does not contain such element
      */
-    public static <E> Element<E> directAddressSearch(ZeroBasedIndexedArray<Element<E>> T, int k) {
+    public static <E> DirectAddressTable.Element<E> directAddressSearch(DirectAddressTable<E> T, int k) {
         return T.at(k);
     }
 
@@ -41,7 +40,7 @@ public final class Chapter11 {
      * @param x   the element to insert
      * @param <E> the type of elements' values in {@code T}
      */
-    public static <E> void directAddressInsert(ZeroBasedIndexedArray<Element<E>> T, Element<E> x) {
+    public static <E> void directAddressInsert(DirectAddressTable<E> T, DirectAddressTable.Element<E> x) {
         T.set(x.key, x);
     }
 
@@ -53,7 +52,7 @@ public final class Chapter11 {
      * @param x   the element from {@code T} to delete
      * @param <E> the type of elements' values in {@code T}
      */
-    public static <E> void directAddressDelete(ZeroBasedIndexedArray<Element<E>> T, Element<E> x) {
+    public static <E> void directAddressDelete(DirectAddressTable<E> T, DirectAddressTable.Element<E> x) {
         T.set(x.key, null);
     }
 
@@ -65,7 +64,7 @@ public final class Chapter11 {
      * @param <E> the type of elements' values in {@code T}
      * @return the element with the smallest key in {@code T}, or {@code null} if {@code T} does not contain such element
      */
-    public static <E> Element<E> directAddressMaximum(ZeroBasedIndexedArray<Element<E>> T) {
+    public static <E> DirectAddressTable.Element<E> directAddressMaximum(DirectAddressTable<E> T) {
         int m = T.length;
         for (int i = m - 1; i >= 0; i--) {
             if (T.at(i) != null) {
@@ -168,9 +167,9 @@ public final class Chapter11 {
      * @param <E> the type of elements' values in {@code H}
      * @return the element of key {@code k} in {@code H}, or {@code null} if {@code H} does not contain such element
      */
-    public static <E> Element<E> hugeArraySearch(HugeArray<E> H, int k) {
+    public static <E> HugeArray.Element<E> hugeArraySearch(HugeArray<E> H, int k) {
         if (1 <= H.T.at(k) && H.T.at(k) <= H.S.top && H.S.at(H.T.at(k)).key == k) {
-            return new Element<>(H.S.at(H.T.at(k)));
+            return H.S.at(H.T.at(k));
         }
         return null;
     }
@@ -183,7 +182,7 @@ public final class Chapter11 {
      * @param x   the element to insert
      * @param <E> the type of elements' values in {@code H}
      */
-    public static <E> void hugeArrayInsert(HugeArray<E> H, Element<E> x) {
+    public static <E> void hugeArrayInsert(HugeArray<E> H, HugeArray.Element<E> x) {
         push(H.S, x);
         H.T.set(x.key, H.S.top);
     }
@@ -196,9 +195,9 @@ public final class Chapter11 {
      * @param x   the element to delete
      * @param <E> the type of elements' values in {@code H}
      */
-    public static <E> void hugeArrayDelete(HugeArray<E> H, Element<E> x) {
+    public static <E> void hugeArrayDelete(HugeArray<E> H, HugeArray.Element<E> x) {
         int k = x.key;
-        Element<E> y = pop(H.S);
+        HugeArray.Element<E> y = pop(H.S);
         H.S.set(H.T.at(k), y);
         H.T.set(y.key, H.T.at(k));
     }
@@ -271,47 +270,47 @@ public final class Chapter11 {
      * @param <E> the type of elements' values in {@code T}
      * @return the index in {@code T} allocated for {@code x}
      */
-    public static <E> int inPlaceChainedHashInsert(HashTableWithFreeList<E> T, Element<E> x) {
+    public static <E> int inPlaceChainedHashInsert(HashTableWithFreeList<E> T, HashTableWithFreeList.Element<E> x) {
         int position = T.h.compute(x.key);
-        if (T.at(position).element == null) {
+        if (T.at(position).data == null) {
             allocateHashTableNode(T, position);
             T.at(position).next = T.at(position).prev = null;
-            T.at(position).element = x;
+            T.set(position, x);
             return position;
         }
-        HashTableWithFreeList.Node<E> otherNode = T.at(position);
-        int otherElementPosition = T.h.compute(otherNode.element.key);
+        HashTableWithFreeList.Element<E> otherElement = T.at(position);
+        int otherElementPosition = T.h.compute(otherElement.key);
         if (otherElementPosition == position) {
             int newPosition = allocateHashTableNode(T, T.free);
-            T.at(newPosition).element = x;
+            T.set(newPosition, x);
             T.at(newPosition).prev = position;
-            T.at(newPosition).next = otherNode.next;
-            otherNode.next = newPosition;
+            T.at(newPosition).next = otherElement.next;
+            otherElement.next = newPosition;
             return newPosition;
         } else {
             int newPosition = allocateHashTableNode(T, T.free);
-            T.at(newPosition).element = otherNode.element;
-            if (otherNode.prev != null) {
-                T.at(otherNode.prev).next = newPosition;
+            T.set(newPosition, otherElement);
+            if (otherElement.prev != null) {
+                T.at(otherElement.prev).next = newPosition;
             }
-            if (otherNode.next != null) {
-                T.at(otherNode.next).prev = newPosition;
+            if (otherElement.next != null) {
+                T.at(otherElement.next).prev = newPosition;
             }
-            T.at(position).element = x;
+            T.set(position, x);
             return position;
         }
     }
 
-    private static <E> int allocateHashTableNode(HashTableWithFreeList<E> T, int position) {
+    private static <E> int allocateHashTableNode(HashTableWithFreeList<E> T, Integer position) {
         if (T.free == null) {
             throw new RuntimeException("overflow");
         }
-        HashTableWithFreeList.Node<E> node = T.at(position);
-        if (node.next != null) {
-            T.at(node.next).prev = node.prev;
+        HashTableWithFreeList.Element<E> element = T.at(position);
+        if (element.next != null) {
+            T.at(element.next).prev = element.prev;
         }
-        if (T.free == position) {
-            T.free = node.next;
+        if (T.free.equals(position)) {
+            T.free = element.next;
         }
         return position;
     }
@@ -325,16 +324,16 @@ public final class Chapter11 {
      * @param <E>      the type of elements' values in {@code T}
      */
     public static <E> void inPlaceChainedHashDelete(HashTableWithFreeList<E> T, int position) {
-        HashTableWithFreeList.Node<E> node = T.at(position);
-        if (node.prev != null) {
-            T.at(node.prev).next = node.next;
+        HashTableWithFreeList.Element<E> element = T.at(position);
+        if (element.prev != null) {
+            T.at(element.prev).next = element.next;
         }
-        if (node.next != null) {
-            T.at(node.next).prev = node.prev;
+        if (element.next != null) {
+            T.at(element.next).prev = element.prev;
         }
-        node.element = null;
-        node.prev = null;
-        node.next = T.free;
+        element.data = null;
+        element.prev = null;
+        element.next = T.free;
         if (T.free != null) {
             T.at(T.free).prev = position;
         }
@@ -352,8 +351,8 @@ public final class Chapter11 {
      */
     public static <E> Integer inPlaceChainedHashSearch(HashTableWithFreeList<E> T, int k) {
         Integer position = T.h.compute(k);
-        while (position != null && T.at(position).element != null) {
-            if (T.at(position).element.key == k) {
+        while (position != null && T.at(position) != null) {
+            if (T.at(position).key == k) {
                 return position;
             }
             position = T.at(position).next;

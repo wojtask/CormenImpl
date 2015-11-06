@@ -8,6 +8,35 @@ package pl.kwojtas.cormenimpl.util;
 public class HugeArray<E> {
 
     /**
+     * Implements a huge array's element.
+     *
+     * @param <F> the type of satellite data
+     */
+    public static class Element<F> {
+
+        /**
+         * The key.
+         */
+        public int key;
+
+        /**
+         * The satellite data.
+         */
+        public F data;
+
+        /**
+         * Creates an element from a given key and satellite data.
+         *
+         * @param key  the key of the new element
+         * @param data the satellite data of the new element
+         */
+        public Element(int key, F data) {
+            this.key = key;
+            this.data = data;
+        }
+    }
+
+    /**
      * The array containing indices of elements in stack {@code S}.
      */
     public ZeroBasedIndexedArray<Integer> T;
@@ -15,7 +44,7 @@ public class HugeArray<E> {
     /**
      * The auxiliary stack containing the elements of the huge array.
      */
-    public Stack<Element<E>> S;
+    public Stack<HugeArray.Element<E>> S;
 
     /**
      * Creates a huge array with a given size and stack capacity.

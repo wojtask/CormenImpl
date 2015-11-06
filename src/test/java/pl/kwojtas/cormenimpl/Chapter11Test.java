@@ -3,7 +3,6 @@ package pl.kwojtas.cormenimpl;
 import org.junit.Test;
 import pl.kwojtas.cormenimpl.util.ChainedHashTable;
 import pl.kwojtas.cormenimpl.util.DirectAddressTable;
-import pl.kwojtas.cormenimpl.util.Element;
 import pl.kwojtas.cormenimpl.util.HashFunction;
 import pl.kwojtas.cormenimpl.util.HashProbingFunction;
 import pl.kwojtas.cormenimpl.util.HashTableWithFreeList;
@@ -15,10 +14,10 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Modifier;
 
-import static junit.framework.TestCase.assertNull;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static pl.kwojtas.cormenimpl.Chapter11.DELETED;
 
@@ -32,22 +31,22 @@ public class Chapter11Test {
         constructor.newInstance();
     }
 
-    private ZeroBasedIndexedArray<Element<String>> getExemplaryDirectAddressTable() {
-        ZeroBasedIndexedArray<Element<String>> directAddressTable = ZeroBasedIndexedArray.withLength(5);
-        directAddressTable.set(0, new Element<>(0, "zero"));
-        directAddressTable.set(1, new Element<>(1, "one"));
-        directAddressTable.set(3, new Element<>(3, "three"));
+    private DirectAddressTable<String> getExemplaryDirectAddressTable() {
+        DirectAddressTable<String> directAddressTable = new DirectAddressTable<>(5);
+        directAddressTable.set(0, new DirectAddressTable.Element<>(0, "zero"));
+        directAddressTable.set(1, new DirectAddressTable.Element<>(1, "one"));
+        directAddressTable.set(3, new DirectAddressTable.Element<>(3, "three"));
         return directAddressTable;
     }
 
     @Test
     public void shouldFindElementInDirectAddressTable() {
         // given
-        ZeroBasedIndexedArray<Element<String>> directAddressTable = getExemplaryDirectAddressTable();
-        Element<String> element = new Element<>(3, "three");
+        DirectAddressTable<String> directAddressTable = getExemplaryDirectAddressTable();
+        DirectAddressTable.Element<String> element = new DirectAddressTable.Element<>(3, "three");
 
         // when
-        Element<String> actualFoundElement = Chapter11.directAddressSearch(directAddressTable, element.key);
+        DirectAddressTable.Element<String> actualFoundElement = Chapter11.directAddressSearch(directAddressTable, element.key);
 
         // then
         assertEquals(element.key, actualFoundElement.key);
@@ -57,11 +56,11 @@ public class Chapter11Test {
     @Test
     public void shouldNotFindNonexistentElementInDirectAddressTable() {
         // given
-        ZeroBasedIndexedArray<Element<String>> directAddressTable = getExemplaryDirectAddressTable();
+        DirectAddressTable<String> directAddressTable = getExemplaryDirectAddressTable();
         int key = 2;
 
         // when
-        Element<String> actualFoundElement = Chapter11.directAddressSearch(directAddressTable, key);
+        DirectAddressTable.Element<String> actualFoundElement = Chapter11.directAddressSearch(directAddressTable, key);
 
         // then
         assertNull(actualFoundElement);
@@ -70,8 +69,8 @@ public class Chapter11Test {
     @Test
     public void shouldInsertIntoDirectAddressTable() {
         // given
-        ZeroBasedIndexedArray<Element<String>> directAddressTable = getExemplaryDirectAddressTable();
-        Element<String> element = new Element<>(4, "four");
+        DirectAddressTable<String> directAddressTable = getExemplaryDirectAddressTable();
+        DirectAddressTable.Element<String> element = new DirectAddressTable.Element<>(4, "four");
         int key = 4;
 
         // when
@@ -85,7 +84,7 @@ public class Chapter11Test {
     @Test
     public void shouldDeleteFromDirectAddressTable() {
         // given
-        ZeroBasedIndexedArray<Element<String>> directAddressTable = getExemplaryDirectAddressTable();
+        DirectAddressTable<String> directAddressTable = getExemplaryDirectAddressTable();
 
         // when
         Chapter11.directAddressDelete(directAddressTable, directAddressTable.at(1));
@@ -97,11 +96,11 @@ public class Chapter11Test {
     @Test
     public void shouldFindMaximumInDirectAddressTable() {
         // given
-        ZeroBasedIndexedArray<Element<String>> directAddressTable = getExemplaryDirectAddressTable();
-        Element<String> expectedMaximum = new Element<>(3, "three");
+        DirectAddressTable<String> directAddressTable = getExemplaryDirectAddressTable();
+        DirectAddressTable.Element<String> expectedMaximum = new DirectAddressTable.Element<>(3, "three");
 
         // when
-        Element<String> actualMaximum = Chapter11.directAddressMaximum(directAddressTable);
+        DirectAddressTable.Element<String> actualMaximum = Chapter11.directAddressMaximum(directAddressTable);
 
         // then
         assertNotNull(actualMaximum);
@@ -112,10 +111,10 @@ public class Chapter11Test {
     @Test
     public void shouldNotFindMaximumInEmptyDirectAddressTable() {
         // given
-        ZeroBasedIndexedArray<Element<String>> directAddressTable = ZeroBasedIndexedArray.withLength(5);
+        DirectAddressTable<String> directAddressTable = new DirectAddressTable<>(5);
 
         // when
-        Element<String> actualMaximum = Chapter11.directAddressMaximum(directAddressTable);
+        DirectAddressTable.Element<String> actualMaximum = Chapter11.directAddressMaximum(directAddressTable);
 
         // then
         assertNull(actualMaximum);
@@ -254,9 +253,9 @@ public class Chapter11Test {
         hugeArray.T.set(56, 1);
         hugeArray.T.set(23, 2);
         hugeArray.T.set(10, 3);
-        hugeArray.S.set(1, new Element<>(56, "fiftySix"));
-        hugeArray.S.set(2, new Element<>(23, "twentyThree"));
-        hugeArray.S.set(3, new Element<>(10, "ten"));
+        hugeArray.S.set(1, new HugeArray.Element<>(56, "fiftySix"));
+        hugeArray.S.set(2, new HugeArray.Element<>(23, "twentyThree"));
+        hugeArray.S.set(3, new HugeArray.Element<>(10, "ten"));
         hugeArray.S.top = 3;
         return hugeArray;
     }
@@ -265,10 +264,10 @@ public class Chapter11Test {
     public void shouldFindElementInHugeArray() {
         // given
         HugeArray<String> hugeArray = getExemplaryHugeArray();
-        Element<String> element = new Element<>(23, "twentyThree");
+        HugeArray.Element<String> element = new HugeArray.Element<>(23, "twentyThree");
 
         // when
-        Element<String> actualFoundElement = Chapter11.hugeArraySearch(hugeArray, element.key);
+        HugeArray.Element<String> actualFoundElement = Chapter11.hugeArraySearch(hugeArray, element.key);
 
         // then
         assertNotNull(actualFoundElement);
@@ -283,7 +282,7 @@ public class Chapter11Test {
         int key = 66;
 
         // when
-        Element<String> actualFoundElement = Chapter11.hugeArraySearch(hugeArray, key);
+        HugeArray.Element<String> actualFoundElement = Chapter11.hugeArraySearch(hugeArray, key);
 
         // then
         assertNull(actualFoundElement);
@@ -293,7 +292,7 @@ public class Chapter11Test {
     public void shouldInsertIntoHugeArray() {
         // given
         HugeArray<String> hugeArray = getExemplaryHugeArray();
-        Element<String> element = new Element<>(66, "sixtySix");
+        HugeArray.Element<String> element = new HugeArray.Element<>(66, "sixtySix");
         int hugeArraySize = hugeArray.S.top;
 
         // when
@@ -310,7 +309,7 @@ public class Chapter11Test {
     public void shouldDeleteFromHugeArray() {
         // given
         HugeArray<String> hugeArray = getExemplaryHugeArray();
-        Element<String> element = new Element<>(56, "fiftySix");
+        HugeArray.Element<String> element = new HugeArray.Element<>(56, "fiftySix");
         int hugeArraySize = hugeArray.S.top;
 
         // when
@@ -411,7 +410,7 @@ public class Chapter11Test {
     public void shouldInsertOntoFreePositionInHashTableWithFreeList() {
         // given
         HashTableWithFreeList<String> hashTableWithFreeList = getExemplaryHashTableWithFreeList();
-        Element<String> element = new Element<>(43, "fortyThree");
+        HashTableWithFreeList.Element<String> element = new HashTableWithFreeList.Element<>(43, "fortyThree");
         int expectedPosition = 3;
         int expectedFreeListHeadPosition = 0;
 
@@ -420,7 +419,7 @@ public class Chapter11Test {
 
         // then
         assertEquals(expectedPosition, actualPosition);
-        assertEquals(element, hashTableWithFreeList.at(expectedPosition).element);
+        assertEquals(element, hashTableWithFreeList.at(expectedPosition));
         assertNull(hashTableWithFreeList.at(expectedPosition).prev);
         assertNull(hashTableWithFreeList.at(expectedPosition).next);
         assertEquals(Integer.valueOf(expectedFreeListHeadPosition), hashTableWithFreeList.free);
@@ -437,18 +436,24 @@ public class Chapter11Test {
         );
         hashTableWithFreeList.free = 3;
         hashTableWithFreeList.at(0).prev = 3;
-        hashTableWithFreeList.at(1).element = new Element<>(17, "seventeen");
+        hashTableWithFreeList.at(1).key = 17;
+        hashTableWithFreeList.at(1).data = "seventeen";
         hashTableWithFreeList.at(1).next = 5;
-        hashTableWithFreeList.at(2).element = new Element<>(23, "twentyThree");
+        hashTableWithFreeList.at(2).key = 23;
+        hashTableWithFreeList.at(2).data = "twentyThree";
         hashTableWithFreeList.at(2).prev = 7;
         hashTableWithFreeList.at(3).next = 0;
-        hashTableWithFreeList.at(4).element = new Element<>(1, "one");
+        hashTableWithFreeList.at(4).key = 1;
+        hashTableWithFreeList.at(4).data = "one";
         hashTableWithFreeList.at(4).prev = 5;
-        hashTableWithFreeList.at(5).element = new Element<>(9, "nine");
+        hashTableWithFreeList.at(5).key = 9;
+        hashTableWithFreeList.at(5).data = "nine";
         hashTableWithFreeList.at(5).next = 4;
         hashTableWithFreeList.at(5).prev = 1;
-        hashTableWithFreeList.at(6).element = new Element<>(6, "six");
-        hashTableWithFreeList.at(7).element = new Element<>(15, "fifteen");
+        hashTableWithFreeList.at(6).key = 6;
+        hashTableWithFreeList.at(6).data = "six";
+        hashTableWithFreeList.at(7).key = 15;
+        hashTableWithFreeList.at(7).data = "fifteen";
         hashTableWithFreeList.at(7).next = 2;
         return hashTableWithFreeList;
     }
@@ -457,7 +462,7 @@ public class Chapter11Test {
     public void shouldInsertOntoTakenPositionWithEligibleElementInHashTableWithFreeList() {
         // given
         HashTableWithFreeList<String> hashTableWithFreeList = getExemplaryHashTableWithFreeList();
-        Element<String> element = new Element<>(25, "twentyFive");
+        HashTableWithFreeList.Element<String> element = new HashTableWithFreeList.Element<>(25, "twentyFive");
         int expectedPosition = 3;
         int expectedFreeListHeadPosition = 0;
 
@@ -466,7 +471,7 @@ public class Chapter11Test {
 
         // then
         assertEquals(expectedPosition, actualPosition);
-        assertEquals(element, hashTableWithFreeList.at(expectedPosition).element);
+        assertEquals(element, hashTableWithFreeList.at(expectedPosition));
         assertEquals(Integer.valueOf(1), hashTableWithFreeList.at(expectedPosition).prev);
         assertEquals(Integer.valueOf(5), hashTableWithFreeList.at(expectedPosition).next);
         assertEquals(Integer.valueOf(expectedFreeListHeadPosition), hashTableWithFreeList.free);
@@ -476,19 +481,19 @@ public class Chapter11Test {
     public void shouldInsertOntoTakenPositionWithNoneligibleElementInHashTableWithFreeList() {
         // given
         HashTableWithFreeList<String> hashTableWithFreeList = getExemplaryHashTableWithFreeList();
-        Element<String> element = new Element<>(13, "thirteen");
+        HashTableWithFreeList.Element<String> element = new HashTableWithFreeList.Element<>(13, "thirteen");
         int expectedPosition = 5;
         int expectedFreeListHeadPosition = 0;
         int freeListPosition = 3;
-        Element<String> noneligibleElement = hashTableWithFreeList.at(expectedPosition).element;
+        HashTableWithFreeList.Element<String> noneligibleElement = hashTableWithFreeList.at(expectedPosition);
 
         // when
         int actualPosition = Chapter11.inPlaceChainedHashInsert(hashTableWithFreeList, element);
 
         // then
         assertEquals(expectedPosition, actualPosition);
-        assertEquals(element, hashTableWithFreeList.at(expectedPosition).element);
-        assertEquals(noneligibleElement, hashTableWithFreeList.at(freeListPosition).element);
+        assertEquals(element, hashTableWithFreeList.at(expectedPosition));
+        assertEquals(noneligibleElement, hashTableWithFreeList.at(freeListPosition));
         assertEquals(Integer.valueOf(expectedFreeListHeadPosition), hashTableWithFreeList.free);
     }
 
@@ -504,7 +509,7 @@ public class Chapter11Test {
                 }
         );
         hashTableWithFreeList.free = null;
-        Element<String> element = new Element<>(25, "twentyFive");
+        HashTableWithFreeList.Element<String> element = new HashTableWithFreeList.Element<>(25, "twentyFive");
 
         try {
             // when
@@ -554,7 +559,6 @@ public class Chapter11Test {
         Chapter11.inPlaceChainedHashDelete(hashTableWithFreeList, position);
 
         // then
-        assertNull(hashTableWithFreeList.at(position).element);
         assertNull(hashTableWithFreeList.at(position).prev);
         assertEquals(Integer.valueOf(freeListPosition), hashTableWithFreeList.at(position).next);
         assertEquals(Integer.valueOf(position), hashTableWithFreeList.free);
