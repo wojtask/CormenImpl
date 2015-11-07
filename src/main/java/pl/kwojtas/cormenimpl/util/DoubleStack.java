@@ -10,17 +10,17 @@ public class DoubleStack<E> extends Array<E> {
     /**
      * The index of the element at the top of the first stack.
      */
-    public int top1;
+    public int leftTop;
 
     /**
      * The index of the element at the top of the second stack.
      */
-    public int top2;
+    public int rightTop;
 
     private DoubleStack(Array<E> array) {
         super(array);
-        this.top1 = 0;
-        this.top2 = array.length + 1;
+        this.leftTop = 0;
+        this.rightTop = array.length + 1;
     }
 
     /**

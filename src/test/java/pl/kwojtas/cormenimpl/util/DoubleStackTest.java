@@ -13,8 +13,8 @@ public class DoubleStackTest {
         DoubleStack<String> doubleStack = DoubleStack.withLength(length);
 
         assertEquals(length, doubleStack.length);
-        assertEquals(0, doubleStack.top1);
-        assertEquals(length + 1, doubleStack.top2);
+        assertEquals(0, doubleStack.leftTop);
+        assertEquals(length + 1, doubleStack.rightTop);
     }
 
 }

@@ -127,8 +127,8 @@ public final class Chapter10 {
      * @param <E> the type of elements in {@code A}
      */
     public static <E> void firstStackPush(DoubleStack<E> A, E x) {
-        A.top1++;
-        A.set(A.top1, x);
+        A.leftTop++;
+        A.set(A.leftTop, x);
     }
 
     /**
@@ -144,8 +144,8 @@ public final class Chapter10 {
         if (firstStackEmpty(A)) {
             throw new RuntimeException("underflow");
         }
-        A.top1--;
-        return A.at(A.top1 + 1);
+        A.leftTop--;
+        return A.at(A.leftTop + 1);
     }
 
     /**
@@ -157,7 +157,7 @@ public final class Chapter10 {
      * @return {@code true} if the first stack is empty, or {@code false} otherwise
      */
     public static <E> boolean firstStackEmpty(DoubleStack<E> A) {
-        return A.top1 == 0;
+        return A.leftTop == 0;
     }
 
     /**
@@ -169,8 +169,8 @@ public final class Chapter10 {
      * @param <E> the type of elements in {@code A}
      */
     public static <E> void secondStackPush(DoubleStack<E> A, E x) {
-        A.top2--;
-        A.set(A.top2, x);
+        A.rightTop--;
+        A.set(A.rightTop, x);
     }
 
     /**
@@ -186,8 +186,8 @@ public final class Chapter10 {
         if (secondStackEmpty(A)) {
             throw new RuntimeException("underflow");
         }
-        A.top2++;
-        return A.at(A.top2 - 1);
+        A.rightTop++;
+        return A.at(A.rightTop - 1);
     }
 
     /**
@@ -199,7 +199,7 @@ public final class Chapter10 {
      * @return {@code true} if the second stack is empty, or {@code false} otherwise
      */
     public static <E> boolean secondStackEmpty(DoubleStack<E> A) {
-        return A.top2 == A.length + 1;
+        return A.rightTop == A.length + 1;
     }
 
     /**

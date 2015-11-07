@@ -233,36 +233,36 @@ public class Chapter10Test {
     @Test
     public void shouldInsertToFirstStackOfDoubleStack() {
         DoubleStack<String> doubleStack = DoubleStack.withLength(6);
-        doubleStack.top1 = 2;
-        doubleStack.top2 = 4;
+        doubleStack.leftTop = 2;
+        doubleStack.rightTop = 4;
         String element = "xyz";
-        int top1BeforeInserting = doubleStack.top1;
+        int top1BeforeInserting = doubleStack.leftTop;
 
         Chapter10.firstStackPush(doubleStack, element);
 
-        assertEquals(top1BeforeInserting + 1, doubleStack.top1);
-        assertEquals(element, doubleStack.at(doubleStack.top1));
+        assertEquals(top1BeforeInserting + 1, doubleStack.leftTop);
+        assertEquals(element, doubleStack.at(doubleStack.leftTop));
     }
 
     @Test
     public void shouldDeleteFromFirstStackOfDoubleStack() {
         DoubleStack<String> doubleStack = DoubleStack.withLength(6);
         doubleStack.set(2, "xyz");
-        doubleStack.top1 = 2;
-        doubleStack.top2 = 4;
-        int top1BeforeDeleting = doubleStack.top1;
+        doubleStack.leftTop = 2;
+        doubleStack.rightTop = 4;
+        int top1BeforeDeleting = doubleStack.leftTop;
         String expectedElement = "xyz";
 
         String actualElement = Chapter10.firstStackPop(doubleStack);
 
-        assertEquals(top1BeforeDeleting - 1, doubleStack.top1);
+        assertEquals(top1BeforeDeleting - 1, doubleStack.leftTop);
         assertEquals(expectedElement, actualElement);
     }
 
     @Test(expected = RuntimeException.class)
     public void shouldThrowExceptionWhenDeletingFromEmptyFirstStackOfDoubleStack() {
         DoubleStack<String> doubleStack = DoubleStack.withLength(6);
-        doubleStack.top2 = 3;
+        doubleStack.rightTop = 3;
 
         try {
             Chapter10.firstStackPop(doubleStack);
@@ -284,7 +284,7 @@ public class Chapter10Test {
     @Test
     public void shouldDetectNonemptyFirstStackOfDoubleStack() {
         DoubleStack<String> doubleStack = DoubleStack.withLength(6);
-        doubleStack.top1 = 2;
+        doubleStack.leftTop = 2;
 
         boolean actualEmpty = Chapter10.firstStackEmpty(doubleStack);
 
@@ -294,36 +294,36 @@ public class Chapter10Test {
     @Test
     public void shouldInsertToSecondStackOfDoubleStack() {
         DoubleStack<String> doubleStack = DoubleStack.withLength(6);
-        doubleStack.top1 = 2;
-        doubleStack.top2 = 4;
+        doubleStack.leftTop = 2;
+        doubleStack.rightTop = 4;
         String element = "xyz";
-        int top2BeforeInserting = doubleStack.top2;
+        int top2BeforeInserting = doubleStack.rightTop;
 
         Chapter10.secondStackPush(doubleStack, element);
 
-        assertEquals(top2BeforeInserting - 1, doubleStack.top2);
-        assertEquals(element, doubleStack.at(doubleStack.top2));
+        assertEquals(top2BeforeInserting - 1, doubleStack.rightTop);
+        assertEquals(element, doubleStack.at(doubleStack.rightTop));
     }
 
     @Test
     public void shouldDeleteFromSecondStackOfDoubleStack() {
         DoubleStack<String> doubleStack = DoubleStack.withLength(6);
         doubleStack.set(4, "xyz");
-        doubleStack.top1 = 2;
-        doubleStack.top2 = 4;
-        int top2BeforeDeleting = doubleStack.top2;
+        doubleStack.leftTop = 2;
+        doubleStack.rightTop = 4;
+        int top2BeforeDeleting = doubleStack.rightTop;
         String expectedElement = "xyz";
 
         String actualElement = Chapter10.secondStackPop(doubleStack);
 
-        assertEquals(top2BeforeDeleting + 1, doubleStack.top2);
+        assertEquals(top2BeforeDeleting + 1, doubleStack.rightTop);
         assertEquals(expectedElement, actualElement);
     }
 
     @Test(expected = RuntimeException.class)
     public void shouldThrowExceptionWhenDeletingFromEmptySecondStackOfDoubleStack() {
         DoubleStack<String> doubleStack = DoubleStack.withLength(6);
-        doubleStack.top1 = 4;
+        doubleStack.leftTop = 4;
 
         try {
             Chapter10.secondStackPop(doubleStack);
@@ -345,7 +345,7 @@ public class Chapter10Test {
     @Test
     public void shouldDetectNonemptySecondStackOfDoubleStack() {
         DoubleStack<String> doubleStack = DoubleStack.withLength(6);
-        doubleStack.top2 = 3;
+        doubleStack.rightTop = 3;
 
         boolean actualEmpty = Chapter10.secondStackEmpty(doubleStack);
 
