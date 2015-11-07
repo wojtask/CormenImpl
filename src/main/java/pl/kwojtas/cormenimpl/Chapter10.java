@@ -891,15 +891,13 @@ public final class Chapter10 {
                 }
                 if (L.prev.at(x) != null) {
                     L.next.set(L.prev.at(x), x);
+                } else {
+                    L.free = x;
                 }
                 if (x_ != null) {
                     L.next.set(x_, y);
-                }
-                if (L.L.equals(x)) {
+                } else {
                     L.L = y;
-                }
-                if (L.free.equals(y)) {
-                    L.free = x;
                 }
                 x_ = y;
                 x = L.next.at(y);
