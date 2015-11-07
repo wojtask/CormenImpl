@@ -3,7 +3,7 @@ CormenImpl
 
 **CormenImpl** provides implementations of algorithms and data structures from *Introduction to Algorithms*, ed. 2
 by Thomas H. Cormen, Charles E. Leiserson, Ronald L. Rivest and Clifford Stein.
-It also provides implementations from *Introduction to Algorithms – Solutions to exercises and problems* by Krzysztof Wojtas.
+It also provides implementations from *Introduction to Algorithms – Solutions to exercises and problems* by Krzysztof Wojtas, that can be found [here] (https://github.com/wojtask/CormenSol) (in Polish).
 
 ### Project objectives
 
