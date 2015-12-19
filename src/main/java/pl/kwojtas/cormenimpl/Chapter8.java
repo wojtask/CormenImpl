@@ -332,7 +332,7 @@ public final class Chapter8 {
         }
         ZeroBasedIndexedArray<Integer> C_ = new ZeroBasedIndexedArray<>(C);
         int i = 1;
-        while (i <= A.length) {
+        while (i <= A.length - 1) {
             int key = A.at(i);
             if (C_.at(key - 1) < i && i <= C_.at(key)) {
                 i++;
