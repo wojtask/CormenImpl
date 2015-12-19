@@ -330,11 +330,11 @@ public final class Chapter8 {
         for (int i = 1; i <= k; i++) {
             C.set(i, C.at(i) + C.at(i - 1));
         }
-        ZeroBasedIndexedArray<Integer> positions = new ZeroBasedIndexedArray<>(C);
+        ZeroBasedIndexedArray<Integer> C_ = new ZeroBasedIndexedArray<>(C);
         int i = 1;
         while (i <= A.length) {
             int key = A.at(i);
-            if (positions.at(key - 1) < i && i <= positions.at(key)) {
+            if (C_.at(key - 1) < i && i <= C_.at(key)) {
                 i++;
             } else {
                 A.exch(i, C.at(key));
