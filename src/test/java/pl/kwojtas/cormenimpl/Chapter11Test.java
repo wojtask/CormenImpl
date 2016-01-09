@@ -403,6 +403,22 @@ public class Chapter11Test {
         assertEquals(expectedFreeListHeadPosition, hashTableWithFreeList.F);
     }
 
+    @Test
+    public void shouldInsertOntoFreePositionInHashTableWithFreeList2() {
+        HashTableWithFreeList<String> hashTableWithFreeList = getExemplaryHashTableWithFreeList();
+        HashTableWithFreeList.Element<String> element = new HashTableWithFreeList.Element<>(16, "sixteen");
+        int expectedPosition = 0;
+        int expectedFreeListHeadPosition = 3;
+
+        int actualPosition = Chapter11.inPlaceChainedHashInsert(hashTableWithFreeList, element);
+
+        assertEquals(expectedPosition, actualPosition);
+        assertEquals(element, hashTableWithFreeList.at(expectedPosition).element);
+        assertEquals(hashTableWithFreeList.length, hashTableWithFreeList.at(expectedPosition).prev);
+        assertEquals(-1, hashTableWithFreeList.at(expectedPosition).next);
+        assertEquals(expectedFreeListHeadPosition, hashTableWithFreeList.F);
+    }
+
     private HashTableWithFreeList<String> getExemplaryHashTableWithFreeList() {
         HashTableWithFreeList<String> hashTableWithFreeList = HashTableWithFreeList.withLengthAndHashFunction(8,
                 new HashFunction() {
@@ -460,6 +476,23 @@ public class Chapter11Test {
         HashTableWithFreeList<String> hashTableWithFreeList = getExemplaryHashTableWithFreeList();
         HashTableWithFreeList.Element<String> element = new HashTableWithFreeList.Element<>(13, "thirteen");
         int expectedPosition = 5;
+        int expectedFreeListHeadPosition = 0;
+        int freeListPosition = 3;
+        HashTableWithFreeList.Element<String> noneligibleElement = hashTableWithFreeList.at(expectedPosition).element;
+
+        int actualPosition = Chapter11.inPlaceChainedHashInsert(hashTableWithFreeList, element);
+
+        assertEquals(expectedPosition, actualPosition);
+        assertEquals(element, hashTableWithFreeList.at(expectedPosition).element);
+        assertEquals(noneligibleElement, hashTableWithFreeList.at(freeListPosition).element);
+        assertEquals(expectedFreeListHeadPosition, hashTableWithFreeList.F);
+    }
+
+    @Test
+    public void shouldInsertOntoTakenPositionWithNoneligibleElementInHashTableWithFreeList2() {
+        HashTableWithFreeList<String> hashTableWithFreeList = getExemplaryHashTableWithFreeList();
+        HashTableWithFreeList.Element<String> element = new HashTableWithFreeList.Element<>(20, "twenty");
+        int expectedPosition = 4;
         int expectedFreeListHeadPosition = 0;
         int freeListPosition = 3;
         HashTableWithFreeList.Element<String> noneligibleElement = hashTableWithFreeList.at(expectedPosition).element;
