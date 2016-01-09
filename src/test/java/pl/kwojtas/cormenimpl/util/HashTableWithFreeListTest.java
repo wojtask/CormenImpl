@@ -20,8 +20,7 @@ public class HashTableWithFreeListTest {
 
         assertEquals(length, hashTableWithFreeList.length);
         assertEquals(h, hashTableWithFreeList.h);
-        assertEquals(Integer.valueOf(0), hashTableWithFreeList.free);
+        assertEquals(0, hashTableWithFreeList.F);
     }
 
 }
-

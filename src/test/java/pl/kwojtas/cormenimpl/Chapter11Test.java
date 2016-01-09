@@ -397,10 +397,10 @@ public class Chapter11Test {
         int actualPosition = Chapter11.inPlaceChainedHashInsert(hashTableWithFreeList, element);
 
         assertEquals(expectedPosition, actualPosition);
-        assertEquals(element, hashTableWithFreeList.at(expectedPosition));
-        assertNull(hashTableWithFreeList.at(expectedPosition).prev);
-        assertNull(hashTableWithFreeList.at(expectedPosition).next);
-        assertEquals(Integer.valueOf(expectedFreeListHeadPosition), hashTableWithFreeList.free);
+        assertEquals(element, hashTableWithFreeList.at(expectedPosition).element);
+        assertEquals(hashTableWithFreeList.length, hashTableWithFreeList.at(expectedPosition).prev);
+        assertEquals(-1, hashTableWithFreeList.at(expectedPosition).next);
+        assertEquals(expectedFreeListHeadPosition, hashTableWithFreeList.F);
     }
 
     private HashTableWithFreeList<String> getExemplaryHashTableWithFreeList() {
@@ -412,27 +412,29 @@ public class Chapter11Test {
                     }
                 }
         );
-        hashTableWithFreeList.free = 3;
+        hashTableWithFreeList.F = 3;
+        hashTableWithFreeList.at(0).next = -1;
         hashTableWithFreeList.at(0).prev = 3;
-        hashTableWithFreeList.at(1).key = 17;
-        hashTableWithFreeList.at(1).data = "seventeen";
+        hashTableWithFreeList.at(1).element = new HashTableWithFreeList.Element<>(17, "seventeen");
         hashTableWithFreeList.at(1).next = 5;
-        hashTableWithFreeList.at(2).key = 23;
-        hashTableWithFreeList.at(2).data = "twentyThree";
-        hashTableWithFreeList.at(2).prev = 7;
+        hashTableWithFreeList.at(1).prev = 8;
+        hashTableWithFreeList.at(2).element = new HashTableWithFreeList.Element<>(23, "twentyThree");
+        hashTableWithFreeList.at(2).next = -1;
+        hashTableWithFreeList.at(2).prev = 8;
         hashTableWithFreeList.at(3).next = 0;
-        hashTableWithFreeList.at(4).key = 1;
-        hashTableWithFreeList.at(4).data = "one";
-        hashTableWithFreeList.at(4).prev = 5;
-        hashTableWithFreeList.at(5).key = 9;
-        hashTableWithFreeList.at(5).data = "nine";
+        hashTableWithFreeList.at(3).prev = -1;
+        hashTableWithFreeList.at(4).element = new HashTableWithFreeList.Element<>(1, "one");
+        hashTableWithFreeList.at(4).next = -1;
+        hashTableWithFreeList.at(4).prev = 8;
+        hashTableWithFreeList.at(5).element = new HashTableWithFreeList.Element<>(9, "nine");
         hashTableWithFreeList.at(5).next = 4;
-        hashTableWithFreeList.at(5).prev = 1;
-        hashTableWithFreeList.at(6).key = 6;
-        hashTableWithFreeList.at(6).data = "six";
-        hashTableWithFreeList.at(7).key = 15;
-        hashTableWithFreeList.at(7).data = "fifteen";
+        hashTableWithFreeList.at(5).prev = 8;
+        hashTableWithFreeList.at(6).element = new HashTableWithFreeList.Element<>(6, "six");
+        hashTableWithFreeList.at(6).next = -1;
+        hashTableWithFreeList.at(6).prev = 8;
+        hashTableWithFreeList.at(7).element = new HashTableWithFreeList.Element<>(15, "fifteen");
         hashTableWithFreeList.at(7).next = 2;
+        hashTableWithFreeList.at(7).prev = 8;
         return hashTableWithFreeList;
     }
 
@@ -440,16 +442,17 @@ public class Chapter11Test {
     public void shouldInsertOntoTakenPositionWithEligibleElementInHashTableWithFreeList() {
         HashTableWithFreeList<String> hashTableWithFreeList = getExemplaryHashTableWithFreeList();
         HashTableWithFreeList.Element<String> element = new HashTableWithFreeList.Element<>(25, "twentyFive");
-        int expectedPosition = 3;
+        int expectedPosition = 1;
         int expectedFreeListHeadPosition = 0;
+        int freeListPosition = hashTableWithFreeList.F;
 
         int actualPosition = Chapter11.inPlaceChainedHashInsert(hashTableWithFreeList, element);
 
         assertEquals(expectedPosition, actualPosition);
-        assertEquals(element, hashTableWithFreeList.at(expectedPosition));
-        assertEquals(Integer.valueOf(1), hashTableWithFreeList.at(expectedPosition).prev);
-        assertEquals(Integer.valueOf(5), hashTableWithFreeList.at(expectedPosition).next);
-        assertEquals(Integer.valueOf(expectedFreeListHeadPosition), hashTableWithFreeList.free);
+        assertEquals(element, hashTableWithFreeList.at(expectedPosition).element);
+        assertEquals(hashTableWithFreeList.length, hashTableWithFreeList.at(expectedPosition).prev);
+        assertEquals(freeListPosition, hashTableWithFreeList.at(expectedPosition).next);
+        assertEquals(expectedFreeListHeadPosition, hashTableWithFreeList.F);
     }
 
     @Test
@@ -459,14 +462,14 @@ public class Chapter11Test {
         int expectedPosition = 5;
         int expectedFreeListHeadPosition = 0;
         int freeListPosition = 3;
-        HashTableWithFreeList.Element<String> noneligibleElement = hashTableWithFreeList.at(expectedPosition);
+        HashTableWithFreeList.Element<String> noneligibleElement = hashTableWithFreeList.at(expectedPosition).element;
 
         int actualPosition = Chapter11.inPlaceChainedHashInsert(hashTableWithFreeList, element);
 
         assertEquals(expectedPosition, actualPosition);
-        assertEquals(element, hashTableWithFreeList.at(expectedPosition));
-        assertEquals(noneligibleElement, hashTableWithFreeList.at(freeListPosition));
-        assertEquals(Integer.valueOf(expectedFreeListHeadPosition), hashTableWithFreeList.free);
+        assertEquals(element, hashTableWithFreeList.at(expectedPosition).element);
+        assertEquals(noneligibleElement, hashTableWithFreeList.at(freeListPosition).element);
+        assertEquals(expectedFreeListHeadPosition, hashTableWithFreeList.F);
     }
 
     @Test(expected = RuntimeException.class)
@@ -479,7 +482,7 @@ public class Chapter11Test {
                     }
                 }
         );
-        hashTableWithFreeList.free = null;
+        hashTableWithFreeList.F = -1;
         HashTableWithFreeList.Element<String> element = new HashTableWithFreeList.Element<>(25, "twentyFive");
 
         try {
@@ -514,14 +517,15 @@ public class Chapter11Test {
     @Test
     public void shouldDeleteFromHashTableWithFreeList() {
         HashTableWithFreeList<String> hashTableWithFreeList = getExemplaryHashTableWithFreeList();
-        int position = 5;
-        int freeListPosition = hashTableWithFreeList.free;
+        int elementPosition = 5;
+        HashTableWithFreeList.Element<String> element = hashTableWithFreeList.at(elementPosition).element;
+        int freeListPosition = hashTableWithFreeList.F;
 
-        Chapter11.inPlaceChainedHashDelete(hashTableWithFreeList, position);
+        Chapter11.inPlaceChainedHashDelete(hashTableWithFreeList, element);
 
-        assertNull(hashTableWithFreeList.at(position).prev);
-        assertEquals(Integer.valueOf(freeListPosition), hashTableWithFreeList.at(position).next);
-        assertEquals(Integer.valueOf(position), hashTableWithFreeList.free);
+        assertEquals(-1, hashTableWithFreeList.at(elementPosition).prev);
+        assertEquals(elementPosition, hashTableWithFreeList.F);
+        assertEquals(freeListPosition, hashTableWithFreeList.at(elementPosition).next);
     }
 
     @Test

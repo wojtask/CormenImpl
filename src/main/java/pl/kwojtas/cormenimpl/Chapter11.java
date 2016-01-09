@@ -271,73 +271,80 @@ public final class Chapter11 {
      * @return the index in {@code T} allocated for {@code x}
      */
     public static <E> int inPlaceChainedHashInsert(HashTableWithFreeList<E> T, HashTableWithFreeList.Element<E> x) {
-        int position = T.h.compute(x.key);
-        if (T.at(position).data == null) {
-            allocateHashTableNode(T, position);
-            T.at(position).next = T.at(position).prev = null;
-            T.set(position, x);
-            return position;
-        }
-        HashTableWithFreeList.Element<E> otherElement = T.at(position);
-        int otherElementPosition = T.h.compute(otherElement.key);
-        if (otherElementPosition == position) {
-            int newPosition = allocateHashTableNode(T, T.free);
-            T.set(newPosition, x);
-            T.at(newPosition).prev = position;
-            T.at(newPosition).next = otherElement.next;
-            otherElement.next = newPosition;
-            return newPosition;
+        int hash = T.h.compute(x.key);
+        if (isHashTablePositionFree(T, hash)) {
+            allocateHashTablePosition(T, hash);
+            T.at(hash).element = x;
+            T.at(hash).prev = T.length;
+            T.at(hash).next = -1;
         } else {
-            int newPosition = allocateHashTableNode(T, T.free);
-            T.set(newPosition, otherElement);
-            if (otherElement.prev != null) {
-                T.at(otherElement.prev).next = newPosition;
+            HashTableWithFreeList.Element<E> otherElement = T.at(hash).element;
+            int otherElementHash = T.h.compute(otherElement.key);
+            int otherElementNewPosition = allocateHashTablePosition(T, T.F);
+            T.at(otherElementNewPosition).element = otherElement;
+            T.at(otherElementNewPosition).prev = T.length;
+            T.at(otherElementNewPosition).next = T.at(hash).next;
+            T.at(hash).element = x;
+            if (otherElementHash == hash) {
+                T.at(hash).next = otherElementNewPosition;
+            } else {
+                while (T.at(otherElementHash).next != hash) {
+                    otherElementHash = T.at(otherElementHash).next;
+                }
+                T.at(otherElementHash).next = otherElementNewPosition;
+                T.at(hash).next = -1;
             }
-            if (otherElement.next != null) {
-                T.at(otherElement.next).prev = newPosition;
-            }
-            T.set(position, x);
-            return position;
         }
+        return hash;
     }
 
-    private static <E> int allocateHashTableNode(HashTableWithFreeList<E> T, Integer position) {
-        if (T.free == null) {
+    private static <E> boolean isHashTablePositionFree(HashTableWithFreeList<E> T, int i) {
+        return T.at(i).prev < T.length;
+    }
+
+    private static <E> int allocateHashTablePosition(HashTableWithFreeList<E> T, int i) {
+        if (T.F == -1) {
             throw new RuntimeException("overflow");
         }
-        HashTableWithFreeList.Element<E> element = T.at(position);
-        if (element.next != null) {
-            T.at(element.next).prev = element.prev;
+        HashTableWithFreeList.Position<E> position = T.at(i);
+        if (position.next != -1) {
+            T.at(position.next).prev = position.prev;
         }
-        if (T.free.equals(position)) {
-            T.free = element.next;
+        if (position.prev != -1) {
+            T.at(position.prev).next = position.next;
         }
-        return position;
+        if (T.F == i) {
+            T.F = position.next;
+        }
+        return i;
     }
 
     /**
      * Deletes an element from a hash table using an in-place chaining for collision resolution.
      * <p>Solution to exercise 11.2-4.</p>
      *
-     * @param T        the hash table using an in-place chaining for collision resolution
-     * @param position the position of the element to delete
-     * @param <E>      the type of elements' values in {@code T}
+     * @param T   the hash table using an in-place chaining for collision resolution
+     * @param x   the element in {@code T} to delete
+     * @param <E> the type of elements' values in {@code T}
      */
-    public static <E> void inPlaceChainedHashDelete(HashTableWithFreeList<E> T, int position) {
-        HashTableWithFreeList.Element<E> element = T.at(position);
-        if (element.prev != null) {
-            T.at(element.prev).next = element.next;
+    public static <E> void inPlaceChainedHashDelete(HashTableWithFreeList<E> T, HashTableWithFreeList.Element<E> x) {
+        int hash = T.h.compute(x.key);
+        int previousPosition = -1;
+        int positionToDelete = hash;
+        while (!T.at(positionToDelete).element.equals(x)) {
+            previousPosition = positionToDelete;
+            positionToDelete = T.at(positionToDelete).next;
         }
-        if (element.next != null) {
-            T.at(element.next).prev = element.prev;
+        T.at(positionToDelete).element = null;
+        T.at(positionToDelete).prev = -1;
+        T.at(positionToDelete).next = T.F;
+        if (T.F != -1) {
+            T.at(T.F).prev = positionToDelete;
         }
-        element.data = null;
-        element.prev = null;
-        element.next = T.free;
-        if (T.free != null) {
-            T.at(T.free).prev = position;
+        T.F = positionToDelete;
+        if (previousPosition != -1) {
+            T.at(previousPosition).next = T.at(positionToDelete).next;
         }
-        T.free = position;
     }
 
     /**
@@ -350,9 +357,9 @@ public final class Chapter11 {
      * @return the element of key {@code k} in {@code T}, or {@code null} if {@code T} does not contain such element
      */
     public static <E> Integer inPlaceChainedHashSearch(HashTableWithFreeList<E> T, int k) {
-        Integer position = T.h.compute(k);
-        while (position != null && T.at(position) != null) {
-            if (T.at(position).key == k) {
+        int position = T.h.compute(k);
+        while (position != -1 && !isHashTablePositionFree(T, position)) {
+            if (T.at(position).element.key == k) {
                 return position;
             }
             position = T.at(position).next;
