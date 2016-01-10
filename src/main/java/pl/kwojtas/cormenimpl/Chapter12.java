@@ -293,29 +293,40 @@ public final class Chapter12 {
     }
 
     /**
-     * Inserts a node into a binary search tree - a recursive version.
-     * <p><span style="font-variant:small-caps;">Recursive-Tree-Insert</span> from solution to exercise 12.3-1.</p>
+     * Inserts a node into a binary search tree using a recursive version of Tree-Insert.
+     * <p><span style="font-variant:small-caps;">Tree-Insert'</span> from solution to exercise 12.3-1.</p>
      *
      * @param T   the binary search tree
-     * @param x   the root of tree {@code T}
      * @param z   the node to insert
      * @param <E> the type of keys in {@code T}
      */
-    public static <E extends Comparable<? super E>> void recursiveTreeInsert(BinaryTree<E> T, BinaryTree.Node<E> x, BinaryTree.Node<E> z) {
-        if (x == null) {
+    public static <E extends Comparable<? super E>> void treeInsert_(BinaryTree<E> T, BinaryTree.Node<E> z) {
+        if (T.root == null) {
             T.root = z;
-            return;
+        } else {
+            recursiveTreeInsert(T.root, z);
         }
+    }
+
+    /**
+     * Inserts a node into a binary search tree - a recursive version.
+     * <p><span style="font-variant:small-caps;">Recursive-Tree-Insert</span> from solution to exercise 12.3-1.</p>
+     *
+     * @param x   the root of the subtree to insert to
+     * @param z   the node to insert
+     * @param <E> the type of keys in {@code T}
+     */
+    static <E extends Comparable<? super E>> void recursiveTreeInsert(BinaryTree.Node<E> x, BinaryTree.Node<E> z) {
         if (less(z.key, x.key)) {
             if (x.left != null) {
-                recursiveTreeInsert(T, x.left, z);
+                recursiveTreeInsert(x.left, z);
             } else {
                 x.left = z;
                 z.p = x;
             }
         } else {
             if (x.right != null) {
-                recursiveTreeInsert(T, x.right, z);
+                recursiveTreeInsert(x.right, z);
             } else {
                 x.right = z;
                 z.p = x;

@@ -408,7 +408,7 @@ public class Chapter12Test {
         BinaryTree<Integer> tree = new BinaryTree<>();
         BinaryTree.Node<Integer> nodeToInsert = new BinaryTree.Node<>(12);
 
-        Chapter12.recursiveTreeInsert(tree, tree.root, nodeToInsert);
+        Chapter12.treeInsert_(tree, nodeToInsert);
 
         assertEquals(Integer.valueOf(12), nodeToInsert.key);
         assertNull(nodeToInsert.left);
@@ -422,7 +422,7 @@ public class Chapter12Test {
         BinaryTree<Integer> tree = getExemplaryBinaryTree();
         BinaryTree.Node<Integer> nodeToInsert = new BinaryTree.Node<>(12);
 
-        Chapter12.recursiveTreeInsert(tree, tree.root, nodeToInsert);
+        Chapter12.treeInsert_(tree, nodeToInsert);
 
         assertEquals(Integer.valueOf(12), nodeToInsert.key);
         assertNull(nodeToInsert.left);
@@ -439,7 +439,7 @@ public class Chapter12Test {
         BinaryTree<Integer> tree = getExemplaryBinaryTree();
         BinaryTree.Node<Integer> nodeToInsert = new BinaryTree.Node<>(18);
 
-        Chapter12.recursiveTreeInsert(tree, tree.root, nodeToInsert);
+        Chapter12.treeInsert_(tree, nodeToInsert);
 
         assertEquals(Integer.valueOf(18), nodeToInsert.key);
         assertNull(nodeToInsert.left);
