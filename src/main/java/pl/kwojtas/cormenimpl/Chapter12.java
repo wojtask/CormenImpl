@@ -371,8 +371,7 @@ public final class Chapter12 {
         } else {
             y.p.right = y.right;
         }
-        z.left.p = y;
-        z.right.p = y;
+        z.left.p = z.right.p = y;
         if (z.p != null) {
             if (z == z.p.left) {
                 z.p.left = y;
