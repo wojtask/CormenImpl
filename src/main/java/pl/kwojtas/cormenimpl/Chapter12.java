@@ -358,30 +358,20 @@ public final class Chapter12 {
      * @param <E> the type of keys in {@code T}
      */
     public static <E> void safeTreeDelete(BinaryTree<E> T, BinaryTree.Node<E> z) {
-        if (z.left == null || z.right == null) {
-            treeDelete(T, z);
-            return;
-        }
-        BinaryTree.Node<E> y = treeSuccessor(z);
-        if (y.right != null) {
-            y.right.p = y.p;
-        }
-        if (y == y.p.left) {
-            y.p.left = y.right;
-        } else {
-            y.p.right = y.right;
-        }
-        z.left.p = z.right.p = y;
-        if (z.p != null) {
-            if (z == z.p.left) {
-                z.p.left = y;
-            } else {
-                z.p.right = y;
+        BinaryTree.Node<E> y = treeDelete(T, z);
+        if (y != z) {
+            z.left.p = z.right.p = y;
+            if (z.p != null) {
+                if (z == z.p.left) {
+                    z.p.left = y;
+                } else {
+                    z.p.right = y;
+                }
             }
+            y.p = z.p;
+            y.left = z.left;
+            y.right = z.right;
         }
-        y.p = z.p;
-        y.left = z.left;
-        y.right = z.right;
     }
 
     /**
