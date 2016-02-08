@@ -1,6 +1,6 @@
 package pl.kwojtas.cormenimpl;
 
-import pl.kwojtas.cormenimpl.util.RedBlackTree;
+import pl.kwojtas.cormenimpl.datastructure.RedBlackTree;
 
 /**
  * Implements algorithms from Chapter 13.

@@ -1,8 +1,8 @@
 package pl.kwojtas.cormenimpl;
 
 import org.junit.Test;
-import pl.kwojtas.cormenimpl.util.Array;
-import pl.kwojtas.cormenimpl.util.Point2D;
+import pl.kwojtas.cormenimpl.datastructure.Array;
+import pl.kwojtas.cormenimpl.datastructure.Point2D;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;

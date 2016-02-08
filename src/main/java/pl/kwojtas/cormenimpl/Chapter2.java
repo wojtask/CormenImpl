@@ -1,10 +1,10 @@
 package pl.kwojtas.cormenimpl;
 
-import pl.kwojtas.cormenimpl.util.Array;
-import pl.kwojtas.cormenimpl.util.ZeroBasedIndexedArray;
+import pl.kwojtas.cormenimpl.datastructure.Array;
+import pl.kwojtas.cormenimpl.datastructure.ZeroBasedIndexedArray;
 
-import static pl.kwojtas.cormenimpl.util.Util.greater;
-import static pl.kwojtas.cormenimpl.util.Util.less;
+import static pl.kwojtas.cormenimpl.Fundamental.greater;
+import static pl.kwojtas.cormenimpl.Fundamental.less;
 
 /**
  * Implements algorithms from Chapter 2.

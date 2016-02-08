@@ -1,7 +1,7 @@
 package pl.kwojtas.cormenimpl;
 
 import org.junit.Test;
-import pl.kwojtas.cormenimpl.util.RedBlackTree;
+import pl.kwojtas.cormenimpl.datastructure.RedBlackTree;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -9,8 +9,8 @@ import java.lang.reflect.Modifier;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import static pl.kwojtas.cormenimpl.util.RedBlackTree.Color.BLACK;
-import static pl.kwojtas.cormenimpl.util.RedBlackTree.Color.RED;
+import static pl.kwojtas.cormenimpl.datastructure.RedBlackTree.Color.BLACK;
+import static pl.kwojtas.cormenimpl.datastructure.RedBlackTree.Color.RED;
 
 public class Chapter13Test {
 

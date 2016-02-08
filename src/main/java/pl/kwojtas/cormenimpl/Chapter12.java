@@ -1,12 +1,12 @@
 package pl.kwojtas.cormenimpl;
 
-import pl.kwojtas.cormenimpl.util.Array;
-import pl.kwojtas.cormenimpl.util.BinaryTree;
-import pl.kwojtas.cormenimpl.util.RadixTree;
+import pl.kwojtas.cormenimpl.datastructure.Array;
+import pl.kwojtas.cormenimpl.datastructure.BinaryTree;
+import pl.kwojtas.cormenimpl.datastructure.RadixTree;
 
-import static pl.kwojtas.cormenimpl.util.Util.leq;
-import static pl.kwojtas.cormenimpl.util.Util.less;
-import static pl.kwojtas.cormenimpl.util.Util.random;
+import static pl.kwojtas.cormenimpl.Fundamental.leq;
+import static pl.kwojtas.cormenimpl.Fundamental.less;
+import static pl.kwojtas.cormenimpl.Fundamental.random;
 
 /**
  * Implements algorithms from Chapter 12.

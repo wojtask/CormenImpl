@@ -1,9 +1,9 @@
 package pl.kwojtas.cormenimpl;
 
-import pl.kwojtas.cormenimpl.util.Array;
-import pl.kwojtas.cormenimpl.util.Pair;
-import pl.kwojtas.cormenimpl.util.Point2D;
-import pl.kwojtas.cormenimpl.util.ZeroBasedIndexedArray;
+import pl.kwojtas.cormenimpl.datastructure.Array;
+import pl.kwojtas.cormenimpl.datastructure.Pair;
+import pl.kwojtas.cormenimpl.datastructure.Point2D;
+import pl.kwojtas.cormenimpl.datastructure.ZeroBasedIndexedArray;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -11,11 +11,11 @@ import java.util.Set;
 import static java.lang.Math.abs;
 import static pl.kwojtas.cormenimpl.Chapter2.insertionSort;
 import static pl.kwojtas.cormenimpl.Chapter7.randomizedPartition;
-import static pl.kwojtas.cormenimpl.util.Util.ceil;
-import static pl.kwojtas.cormenimpl.util.Util.greater;
-import static pl.kwojtas.cormenimpl.util.Util.less;
-import static pl.kwojtas.cormenimpl.util.Util.max;
-import static pl.kwojtas.cormenimpl.util.Util.min;
+import static pl.kwojtas.cormenimpl.Fundamental.ceil;
+import static pl.kwojtas.cormenimpl.Fundamental.greater;
+import static pl.kwojtas.cormenimpl.Fundamental.less;
+import static pl.kwojtas.cormenimpl.Fundamental.max;
+import static pl.kwojtas.cormenimpl.Fundamental.min;
 
 /**
  * Implements algorithms from Chapter 9.

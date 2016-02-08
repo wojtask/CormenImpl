@@ -1,10 +1,10 @@
 package pl.kwojtas.cormenimpl;
 
-import pl.kwojtas.cormenimpl.util.Array;
-import pl.kwojtas.cormenimpl.util.List;
-import pl.kwojtas.cormenimpl.util.Pair;
-import pl.kwojtas.cormenimpl.util.Point2D;
-import pl.kwojtas.cormenimpl.util.ZeroBasedIndexedArray;
+import pl.kwojtas.cormenimpl.datastructure.Array;
+import pl.kwojtas.cormenimpl.datastructure.List;
+import pl.kwojtas.cormenimpl.datastructure.Pair;
+import pl.kwojtas.cormenimpl.datastructure.Point2D;
+import pl.kwojtas.cormenimpl.datastructure.ZeroBasedIndexedArray;
 
 import static java.lang.Math.max;
 import static java.lang.Math.sqrt;

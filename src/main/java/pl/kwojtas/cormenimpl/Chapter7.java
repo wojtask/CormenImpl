@@ -1,14 +1,14 @@
 package pl.kwojtas.cormenimpl;
 
-import pl.kwojtas.cormenimpl.util.Array;
-import pl.kwojtas.cormenimpl.util.Interval;
-import pl.kwojtas.cormenimpl.util.Pair;
+import pl.kwojtas.cormenimpl.datastructure.Array;
+import pl.kwojtas.cormenimpl.datastructure.Interval;
+import pl.kwojtas.cormenimpl.datastructure.Pair;
 
 import static pl.kwojtas.cormenimpl.Chapter2.insertionSort;
 import static pl.kwojtas.cormenimpl.Chapter5.random;
-import static pl.kwojtas.cormenimpl.util.Util.greater;
-import static pl.kwojtas.cormenimpl.util.Util.leq;
-import static pl.kwojtas.cormenimpl.util.Util.less;
+import static pl.kwojtas.cormenimpl.Fundamental.greater;
+import static pl.kwojtas.cormenimpl.Fundamental.leq;
+import static pl.kwojtas.cormenimpl.Fundamental.less;
 
 /**
  * Implements algorithms from Chapter 7.

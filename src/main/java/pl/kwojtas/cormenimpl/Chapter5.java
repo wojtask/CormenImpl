@@ -1,7 +1,6 @@
 package pl.kwojtas.cormenimpl;
 
-import pl.kwojtas.cormenimpl.util.Array;
-import pl.kwojtas.cormenimpl.util.Util;
+import pl.kwojtas.cormenimpl.datastructure.Array;
 
 import java.util.Random;
 
@@ -27,7 +26,7 @@ public final class Chapter5 {
     public static int random(int a, int b) {
         while (a < b) {
             int mid = (a + b) / 2;
-            if (Util.random() == 0) {
+            if (Fundamental.random() == 0) {
                 a = mid + 1;
             } else {
                 b = mid;
@@ -196,7 +195,7 @@ public final class Chapter5 {
         int i = 1;
         int j = 1;
         for (int k = p; k <= r; k++) {
-            if (keysL.at(i) < keysR.at(j) || (keysL.at(i).equals(keysR.at(j)) && Util.random() == 0)) {
+            if (keysL.at(i) < keysR.at(j) || (keysL.at(i).equals(keysR.at(j)) && Fundamental.random() == 0)) {
                 A.set(k, L.at(i));
                 keys.set(k, keysL.at(i));
                 i++;

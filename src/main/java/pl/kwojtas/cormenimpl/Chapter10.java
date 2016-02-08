@@ -1,26 +1,26 @@
 package pl.kwojtas.cormenimpl;
 
-import pl.kwojtas.cormenimpl.util.Array;
-import pl.kwojtas.cormenimpl.util.BinaryTree;
-import pl.kwojtas.cormenimpl.util.CircularList;
-import pl.kwojtas.cormenimpl.util.Deque;
-import pl.kwojtas.cormenimpl.util.DoubleStack;
-import pl.kwojtas.cormenimpl.util.List;
-import pl.kwojtas.cormenimpl.util.ListWithSentinel;
-import pl.kwojtas.cormenimpl.util.MultiaryTree;
-import pl.kwojtas.cormenimpl.util.MultipleArrayList;
-import pl.kwojtas.cormenimpl.util.Queue;
-import pl.kwojtas.cormenimpl.util.SingleArrayList;
-import pl.kwojtas.cormenimpl.util.SinglyLinkedList;
-import pl.kwojtas.cormenimpl.util.SinglyLinkedListWithTail;
-import pl.kwojtas.cormenimpl.util.Stack;
-import pl.kwojtas.cormenimpl.util.XorLinkedList;
+import pl.kwojtas.cormenimpl.datastructure.Array;
+import pl.kwojtas.cormenimpl.datastructure.BinaryTree;
+import pl.kwojtas.cormenimpl.datastructure.CircularList;
+import pl.kwojtas.cormenimpl.datastructure.Deque;
+import pl.kwojtas.cormenimpl.datastructure.DoubleStack;
+import pl.kwojtas.cormenimpl.datastructure.List;
+import pl.kwojtas.cormenimpl.datastructure.ListWithSentinel;
+import pl.kwojtas.cormenimpl.datastructure.MultiaryTree;
+import pl.kwojtas.cormenimpl.datastructure.MultipleArrayList;
+import pl.kwojtas.cormenimpl.datastructure.Queue;
+import pl.kwojtas.cormenimpl.datastructure.SingleArrayList;
+import pl.kwojtas.cormenimpl.datastructure.SinglyLinkedList;
+import pl.kwojtas.cormenimpl.datastructure.SinglyLinkedListWithTail;
+import pl.kwojtas.cormenimpl.datastructure.Stack;
+import pl.kwojtas.cormenimpl.datastructure.XorLinkedList;
 
 import static pl.kwojtas.cormenimpl.Chapter5.random;
 import static pl.kwojtas.cormenimpl.Chapter6.mergeSortedLists;
-import static pl.kwojtas.cormenimpl.util.Util.greater;
-import static pl.kwojtas.cormenimpl.util.Util.leq;
-import static pl.kwojtas.cormenimpl.util.Util.less;
+import static pl.kwojtas.cormenimpl.Fundamental.greater;
+import static pl.kwojtas.cormenimpl.Fundamental.leq;
+import static pl.kwojtas.cormenimpl.Fundamental.less;
 
 /**
  * Implements algorithms and data structures from Chapter 10.

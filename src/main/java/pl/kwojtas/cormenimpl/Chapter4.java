@@ -1,6 +1,6 @@
 package pl.kwojtas.cormenimpl;
 
-import pl.kwojtas.cormenimpl.util.Array;
+import pl.kwojtas.cormenimpl.datastructure.Array;
 
 /**
  * Implements algorithms from Chapter 4.

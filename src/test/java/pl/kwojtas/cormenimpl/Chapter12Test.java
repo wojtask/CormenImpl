@@ -6,9 +6,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
-import pl.kwojtas.cormenimpl.util.Array;
-import pl.kwojtas.cormenimpl.util.BinaryTree;
-import pl.kwojtas.cormenimpl.util.Util;
+import pl.kwojtas.cormenimpl.datastructure.Array;
+import pl.kwojtas.cormenimpl.datastructure.BinaryTree;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
@@ -27,7 +26,7 @@ import static pl.kwojtas.cormenimpl.TestUtil.assertShuffled;
 import static pl.kwojtas.cormenimpl.TestUtil.assertSorted;
 
 @RunWith(PowerMockRunner.class)
-@PrepareForTest({Util.class})
+@PrepareForTest({Fundamental.class})
 public class Chapter12Test {
 
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
@@ -551,8 +550,8 @@ public class Chapter12Test {
     public void shouldDeleteNodeWithTwoChildrenFromTreeUsingFairTreeDeleteBySplicingOutItsPredecessor() {
         BinaryTree<Integer> tree = getExemplaryBinaryTree();
         int exemplaryTreeSize = tree.getSize();
-        mockStatic(Util.class);
-        when(Util.random()).thenReturn(0);
+        mockStatic(Fundamental.class);
+        when(Fundamental.random()).thenReturn(0);
 
         BinaryTree.Node<Integer> actualDeletedNode = Chapter12.fairTreeDelete(tree, tree.root.right); // a node with two children (predecessor's key = 11)
 
@@ -566,8 +565,8 @@ public class Chapter12Test {
     public void shouldDeleteNodeWithTwoChildrenFromTreeUsingFairTreeDeleteBySplicingOutItsSuccessor() {
         BinaryTree<Integer> tree = getExemplaryBinaryTree();
         int exemplaryTreeSize = tree.getSize();
-        mockStatic(Util.class);
-        when(Util.random()).thenReturn(1);
+        mockStatic(Fundamental.class);
+        when(Fundamental.random()).thenReturn(1);
 
         BinaryTree.Node<Integer> actualDeletedNode = Chapter12.fairTreeDelete(tree, tree.root.right); // a node with two children (successor's key = 19)
 

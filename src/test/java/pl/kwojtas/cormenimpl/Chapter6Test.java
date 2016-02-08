@@ -3,12 +3,12 @@ package pl.kwojtas.cormenimpl;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import pl.kwojtas.cormenimpl.util.Array;
-import pl.kwojtas.cormenimpl.util.Heap;
-import pl.kwojtas.cormenimpl.util.PriorityQueueWithRanks;
-import pl.kwojtas.cormenimpl.util.PriorityQueueWithRanks.KeyWithRank;
-import pl.kwojtas.cormenimpl.util.SinglyLinkedList;
-import pl.kwojtas.cormenimpl.util.Young;
+import pl.kwojtas.cormenimpl.datastructure.Array;
+import pl.kwojtas.cormenimpl.datastructure.Heap;
+import pl.kwojtas.cormenimpl.datastructure.PriorityQueueWithRanks;
+import pl.kwojtas.cormenimpl.datastructure.PriorityQueueWithRanks.KeyWithRank;
+import pl.kwojtas.cormenimpl.datastructure.SinglyLinkedList;
+import pl.kwojtas.cormenimpl.datastructure.Young;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -20,7 +20,7 @@ import static org.junit.Assert.assertTrue;
 import static pl.kwojtas.cormenimpl.TestUtil.assertArrayEquals;
 import static pl.kwojtas.cormenimpl.TestUtil.assertShuffled;
 import static pl.kwojtas.cormenimpl.TestUtil.assertSorted;
-import static pl.kwojtas.cormenimpl.util.Util.ceil;
+import static pl.kwojtas.cormenimpl.Fundamental.ceil;
 
 public class Chapter6Test {
 

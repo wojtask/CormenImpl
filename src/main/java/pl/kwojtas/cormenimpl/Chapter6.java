@@ -1,17 +1,17 @@
 package pl.kwojtas.cormenimpl;
 
-import pl.kwojtas.cormenimpl.util.Array;
-import pl.kwojtas.cormenimpl.util.Heap;
-import pl.kwojtas.cormenimpl.util.Pair;
-import pl.kwojtas.cormenimpl.util.PriorityQueueWithRanks;
-import pl.kwojtas.cormenimpl.util.SinglyLinkedList;
-import pl.kwojtas.cormenimpl.util.Young;
+import pl.kwojtas.cormenimpl.datastructure.Array;
+import pl.kwojtas.cormenimpl.datastructure.Heap;
+import pl.kwojtas.cormenimpl.datastructure.Pair;
+import pl.kwojtas.cormenimpl.datastructure.PriorityQueueWithRanks;
+import pl.kwojtas.cormenimpl.datastructure.SinglyLinkedList;
+import pl.kwojtas.cormenimpl.datastructure.Young;
 
 import static java.lang.Math.max;
 import static java.lang.Math.sqrt;
-import static pl.kwojtas.cormenimpl.util.Util.ceil;
-import static pl.kwojtas.cormenimpl.util.Util.greater;
-import static pl.kwojtas.cormenimpl.util.Util.less;
+import static pl.kwojtas.cormenimpl.Fundamental.ceil;
+import static pl.kwojtas.cormenimpl.Fundamental.greater;
+import static pl.kwojtas.cormenimpl.Fundamental.less;
 
 /**
  * Implements algorithms and data structures from Chapter 6.

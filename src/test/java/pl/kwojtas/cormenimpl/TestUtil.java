@@ -1,13 +1,13 @@
 package pl.kwojtas.cormenimpl;
 
-import pl.kwojtas.cormenimpl.util.Array;
+import pl.kwojtas.cormenimpl.datastructure.Array;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import static pl.kwojtas.cormenimpl.util.Util.leq;
+import static pl.kwojtas.cormenimpl.Fundamental.leq;
 
 public class TestUtil {
 

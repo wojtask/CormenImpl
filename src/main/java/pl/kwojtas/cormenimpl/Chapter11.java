@@ -1,12 +1,12 @@
 package pl.kwojtas.cormenimpl;
 
-import pl.kwojtas.cormenimpl.util.ChainedHashTable;
-import pl.kwojtas.cormenimpl.util.DirectAddressTable;
-import pl.kwojtas.cormenimpl.util.HashFunction;
-import pl.kwojtas.cormenimpl.util.HashTableWithFreeList;
-import pl.kwojtas.cormenimpl.util.HashTableWithOpenAddressing;
-import pl.kwojtas.cormenimpl.util.HugeArray;
-import pl.kwojtas.cormenimpl.util.ZeroBasedIndexedArray;
+import pl.kwojtas.cormenimpl.datastructure.ChainedHashTable;
+import pl.kwojtas.cormenimpl.datastructure.DirectAddressTable;
+import pl.kwojtas.cormenimpl.datastructure.HashFunction;
+import pl.kwojtas.cormenimpl.datastructure.HashTableWithFreeList;
+import pl.kwojtas.cormenimpl.datastructure.HashTableWithOpenAddressing;
+import pl.kwojtas.cormenimpl.datastructure.HugeArray;
+import pl.kwojtas.cormenimpl.datastructure.ZeroBasedIndexedArray;
 
 import static pl.kwojtas.cormenimpl.Chapter10.pop;
 import static pl.kwojtas.cormenimpl.Chapter10.push;

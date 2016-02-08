@@ -1,7 +1,7 @@
 package pl.kwojtas.cormenimpl;
 
 import org.junit.Test;
-import pl.kwojtas.cormenimpl.util.Array;
+import pl.kwojtas.cormenimpl.datastructure.Array;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
