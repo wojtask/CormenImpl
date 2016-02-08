@@ -65,4 +65,16 @@ public class Chapter13Test {
         assertEquals(Integer.valueOf(xKey), tree.root.right.left.key);
     }
 
+    @Test
+    public void shouldRightRotateTree() {
+        RedBlackTree<Integer> tree = getExemplaryRedBlackTree();
+        int xKey = 11;
+        int yKey = 8;
+
+        Chapter13.rightRotate(tree, tree.root.right);
+
+        assertEquals(Integer.valueOf(yKey), tree.root.right.key);
+        assertEquals(Integer.valueOf(xKey), tree.root.right.right.key);
+    }
+
 }
