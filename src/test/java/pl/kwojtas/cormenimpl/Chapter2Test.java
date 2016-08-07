@@ -46,7 +46,7 @@ public class Chapter2Test {
         Chapter2.nonincreasingInsertionSort(array);
 
         assertShuffled(original, array);
-        assertSorted(array, Comparator.<Integer>reverseOrder());
+        assertSorted(array, Comparator.reverseOrder());
     }
 
     @Test

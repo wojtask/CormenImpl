@@ -9,12 +9,7 @@ public class ChainedHashTableTest {
     @Test
     public void shouldCreateEmptyChainedHashTable() {
         int length = 6;
-        HashFunction h = new HashFunction() {
-            @Override
-            public int compute(int key) {
-                return key % length;
-            }
-        };
+        HashFunction h = key -> key % length;
 
         ChainedHashTable<String> chainedHashTable = ChainedHashTable.withLengthAndHashFunction(length, h);
 

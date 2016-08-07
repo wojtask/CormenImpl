@@ -9,12 +9,7 @@ public class HashTableWithOpenAddressingTest {
     @Test
     public void shouldCreateEmptyHashTableWithOpenAddressing() {
         int length = 6;
-        HashProbingFunction h = new HashProbingFunction() {
-            @Override
-            public int compute(int key, int i) {
-                return (key + i) % length;
-            }
-        };
+        HashProbingFunction h = (key, i) -> (key + i) % length;
 
         HashTableWithOpenAddressing hashTableWithOpenAddressing
                 = HashTableWithOpenAddressing.withLengthAndHashFunction(length, h);

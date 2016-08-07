@@ -3,7 +3,8 @@ package pl.kwojtas.cormenimpl.util;
 /**
  * Defines an interface of a hash function.
  */
-public abstract class HashFunction {
+@FunctionalInterface
+public interface HashFunction {
 
     /**
      * Computes a value of the hash function.
@@ -11,6 +12,6 @@ public abstract class HashFunction {
      * @param key the argument of the hash function
      * @return the value of the hash function for {@code key}
      */
-    public abstract int compute(int key);
+    int compute(int key);
 
 }

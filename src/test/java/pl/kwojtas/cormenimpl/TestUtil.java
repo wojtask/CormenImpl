@@ -48,7 +48,7 @@ public class TestUtil {
     }
 
     public static <E extends Comparable<? super E>> void sortArray(Array<E> array) {
-        sortArray(array, Comparator.<E>naturalOrder());
+        sortArray(array, Comparator.naturalOrder());
     }
 
     public static <E extends Comparable<? super E>> void assertSorted(Array<E> array) {

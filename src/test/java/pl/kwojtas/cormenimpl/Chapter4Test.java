@@ -31,7 +31,7 @@ public class Chapter4Test {
         Integer actualMissingInteger = Chapter4.findMissingInteger(array);
 
         assertNotNull(actualMissingInteger);
-        sortArray(original, Comparator.<Integer>naturalOrder());
+        sortArray(original, Comparator.naturalOrder());
         int i = 1;
         while (i <= original.length && original.at(i) == i - 1) {
             i++;

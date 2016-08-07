@@ -9,12 +9,7 @@ public class HashTableWithFreeListTest {
     @Test
     public void shouldCreateEmptyHashTableWithFreeList() {
         int length = 6;
-        HashFunction h = new HashFunction() {
-            @Override
-            public int compute(int key) {
-                return key % length;
-            }
-        };
+        HashFunction h = key -> key % length;
 
         HashTableWithFreeList<String> hashTableWithFreeList = HashTableWithFreeList.withLengthAndHashFunction(length, h);
 

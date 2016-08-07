@@ -6,7 +6,6 @@ import org.junit.rules.ExpectedException;
 import pl.kwojtas.cormenimpl.util.ChainedHashTable;
 import pl.kwojtas.cormenimpl.util.DirectAddressTable;
 import pl.kwojtas.cormenimpl.util.HashFunction;
-import pl.kwojtas.cormenimpl.util.HashProbingFunction;
 import pl.kwojtas.cormenimpl.util.HashTableWithFreeList;
 import pl.kwojtas.cormenimpl.util.HashTableWithOpenAddressing;
 import pl.kwojtas.cormenimpl.util.HugeArray;
@@ -299,14 +298,7 @@ public class Chapter11Test {
     }
 
     private ChainedHashTable<String> getExemplaryChainedHashTable() {
-        ChainedHashTable<String> chainedHashTable = ChainedHashTable.withLengthAndHashFunction(5,
-                new HashFunction() {
-                    @Override
-                    public int compute(int key) {
-                        return key % 5;
-                    }
-                }
-        );
+        ChainedHashTable<String> chainedHashTable = ChainedHashTable.withLengthAndHashFunction(5, key -> key % 5);
         ChainedHashTable.Element<String> x35 = new ChainedHashTable.Element<>(35, "thirtyFive");
         ChainedHashTable.Element<String> x51 = new ChainedHashTable.Element<>(51, "fiftyOne");
         ChainedHashTable.Element<String> x16 = new ChainedHashTable.Element<>(16, "sixteen");
@@ -425,14 +417,8 @@ public class Chapter11Test {
     }
 
     private HashTableWithFreeList<String> getExemplaryHashTableWithFreeList() {
-        HashTableWithFreeList<String> hashTableWithFreeList = HashTableWithFreeList.withLengthAndHashFunction(8,
-                new HashFunction() {
-                    @Override
-                    public int compute(int key) {
-                        return key % 8;
-                    }
-                }
-        );
+        HashTableWithFreeList<String> hashTableWithFreeList =
+                HashTableWithFreeList.withLengthAndHashFunction(8, key -> key % 8);
         hashTableWithFreeList.F = 3;
         hashTableWithFreeList.at(0).next = -1;
         hashTableWithFreeList.at(0).prev = 3;
@@ -512,14 +498,8 @@ public class Chapter11Test {
 
     @Test
     public void shouldThrowExceptionWhenInsertingIntoFullHashTableWithFreeList() {
-        HashTableWithFreeList<String> hashTableWithFreeList = HashTableWithFreeList.withLengthAndHashFunction(8,
-                new HashFunction() {
-                    @Override
-                    public int compute(int key) {
-                        return key % 8;
-                    }
-                }
-        );
+        HashTableWithFreeList<String> hashTableWithFreeList =
+                HashTableWithFreeList.withLengthAndHashFunction(8, key -> key % 8);
         hashTableWithFreeList.F = -1;
         HashTableWithFreeList.Element<String> element = new HashTableWithFreeList.Element<>(25, "twentyFive");
 
@@ -565,15 +545,8 @@ public class Chapter11Test {
 
     @Test
     public void shouldInsertIntoHashTableWithProbing() {
-        HashTableWithOpenAddressing hashTableWithOpenAddressing = HashTableWithOpenAddressing.withLengthAndHashFunction(5,
-                new HashProbingFunction() {
-                    @Override
-                    public int compute(int key, int i) {
-                        int primaryHashValue = key % 5;
-                        return (primaryHashValue + i) % 5;
-                    }
-                }
-        );
+        HashTableWithOpenAddressing hashTableWithOpenAddressing =
+                HashTableWithOpenAddressing.withLengthAndHashFunction(5, (key, i) -> (key % 5 + i) % 5);
         hashTableWithOpenAddressing.set(new ZeroBasedIndexedArray<>(35, 51, null, 38, null));
         int key = 45;
 
@@ -585,15 +558,8 @@ public class Chapter11Test {
 
     @Test
     public void shouldThrowExceptionWhenInsertingIntoFullHashTableWithProbing() {
-        HashTableWithOpenAddressing hashTableWithOpenAddressing = HashTableWithOpenAddressing.withLengthAndHashFunction(5,
-                new HashProbingFunction() {
-                    @Override
-                    public int compute(int key, int i) {
-                        int primaryHashValue = key % 5;
-                        return (primaryHashValue + i) % 5;
-                    }
-                }
-        );
+        HashTableWithOpenAddressing hashTableWithOpenAddressing =
+                HashTableWithOpenAddressing.withLengthAndHashFunction(5, (key, i) -> (key % 5 + i) % 5);
         hashTableWithOpenAddressing.set(new ZeroBasedIndexedArray<>(35, 51, 45, 38, 16));
         int key = 32;
 
@@ -604,15 +570,8 @@ public class Chapter11Test {
 
     @Test
     public void shouldFindElementInHashTableWithProbing() {
-        HashTableWithOpenAddressing hashTableWithOpenAddressing = HashTableWithOpenAddressing.withLengthAndHashFunction(5,
-                new HashProbingFunction() {
-                    @Override
-                    public int compute(int key, int i) {
-                        int primaryHashValue = key % 5;
-                        return (primaryHashValue + i) % 5;
-                    }
-                }
-        );
+        HashTableWithOpenAddressing hashTableWithOpenAddressing =
+                HashTableWithOpenAddressing.withLengthAndHashFunction(5, (key, i) -> (key % 5 + i) % 5);
         hashTableWithOpenAddressing.set(new ZeroBasedIndexedArray<>(35, 51, 45, 38, null));
         int key = 45;
 
@@ -623,15 +582,8 @@ public class Chapter11Test {
 
     @Test
     public void shouldNotFindNonexistentElementInHashTableWithProbing() {
-        HashTableWithOpenAddressing hashTableWithOpenAddressing = HashTableWithOpenAddressing.withLengthAndHashFunction(5,
-                new HashProbingFunction() {
-                    @Override
-                    public int compute(int key, int i) {
-                        int primaryHashValue = key % 5;
-                        return (primaryHashValue + i) % 5;
-                    }
-                }
-        );
+        HashTableWithOpenAddressing hashTableWithOpenAddressing =
+                HashTableWithOpenAddressing.withLengthAndHashFunction(5, (key, i) -> (key % 5 + i) % 5);
         hashTableWithOpenAddressing.set(new ZeroBasedIndexedArray<>(35, 51, 45, 38, null));
         int key = 26;
 
@@ -642,15 +594,8 @@ public class Chapter11Test {
 
     @Test
     public void shouldDeleteFromHashTableWithProbing() {
-        HashTableWithOpenAddressing hashTableWithOpenAddressing = HashTableWithOpenAddressing.withLengthAndHashFunction(5,
-                new HashProbingFunction() {
-                    @Override
-                    public int compute(int key, int i) {
-                        int primaryHashValue = key % 5;
-                        return (primaryHashValue + i) % 5;
-                    }
-                }
-        );
+        HashTableWithOpenAddressing hashTableWithOpenAddressing =
+                HashTableWithOpenAddressing.withLengthAndHashFunction(5, (key, i) -> (key % 5 + i) % 5);
         hashTableWithOpenAddressing.set(new ZeroBasedIndexedArray<>(35, 51, 45, 38, null));
         int key = 45;
 
@@ -661,15 +606,8 @@ public class Chapter11Test {
 
     @Test
     public void shouldNotDeleteNonexistentElementFromHashTableWithProbing() {
-        HashTableWithOpenAddressing hashTableWithOpenAddressing = HashTableWithOpenAddressing.withLengthAndHashFunction(5,
-                new HashProbingFunction() {
-                    @Override
-                    public int compute(int key, int i) {
-                        int primaryHashValue = key % 5;
-                        return (primaryHashValue + i) % 5;
-                    }
-                }
-        );
+        HashTableWithOpenAddressing hashTableWithOpenAddressing =
+                HashTableWithOpenAddressing.withLengthAndHashFunction(5, (key, i) -> (key % 5 + i) % 5);
         hashTableWithOpenAddressing.set(new ZeroBasedIndexedArray<>(35, 51, 45, 38, 3));
         int key = 23;
 
@@ -682,15 +620,8 @@ public class Chapter11Test {
 
     @Test
     public void shouldInsertIntoHashTableWithProbingUsingHashInsert_() {
-        HashTableWithOpenAddressing hashTableWithOpenAddressing = HashTableWithOpenAddressing.withLengthAndHashFunction(5,
-                new HashProbingFunction() {
-                    @Override
-                    public int compute(int key, int i) {
-                        int primaryHashValue = key % 5;
-                        return (primaryHashValue + i) % 5;
-                    }
-                }
-        );
+        HashTableWithOpenAddressing hashTableWithOpenAddressing =
+                HashTableWithOpenAddressing.withLengthAndHashFunction(5, (key, i) -> (key % 5 + i) % 5);
         hashTableWithOpenAddressing.set(new ZeroBasedIndexedArray<>(35, 51, DELETED, 38, DELETED));
         int key = 45;
 
@@ -702,15 +633,8 @@ public class Chapter11Test {
 
     @Test
     public void shouldThrowExceptionWhenInsertingIntoFullHashTableWithProbingUsingHashInsert_() {
-        HashTableWithOpenAddressing hashTableWithOpenAddressing = HashTableWithOpenAddressing.withLengthAndHashFunction(5,
-                new HashProbingFunction() {
-                    @Override
-                    public int compute(int key, int i) {
-                        int primaryHashValue = key % 5;
-                        return (primaryHashValue + i) % 5;
-                    }
-                }
-        );
+        HashTableWithOpenAddressing hashTableWithOpenAddressing =
+                HashTableWithOpenAddressing.withLengthAndHashFunction(5, (key, i) -> (key % 5 + i) % 5);
         hashTableWithOpenAddressing.set(new ZeroBasedIndexedArray<>(35, 51, 45, 38, 16));
         int key = 32;
 
@@ -722,12 +646,7 @@ public class Chapter11Test {
     @Test
     public void shouldFindElementUsingQuadraticProbing() {
         ZeroBasedIndexedArray<Integer> hashTable = new ZeroBasedIndexedArray<>(24, null, 34, 35, 51, null, 27, null);
-        HashFunction h = new HashFunction() {
-            @Override
-            public int compute(int key) {
-                return key % hashTable.length;
-            }
-        };
+        HashFunction h = key -> key % hashTable.length;
         int key = 27;
 
         Integer actualPosition = Chapter11.quadraticProbingSearch(hashTable, key, h);
@@ -738,12 +657,7 @@ public class Chapter11Test {
     @Test
     public void shouldNotFindNonexistentElementUsingQuadraticProbing() {
         ZeroBasedIndexedArray<Integer> hashTable = new ZeroBasedIndexedArray<>(24, null, 34, 35, 51, null, 27, null);
-        HashFunction h = new HashFunction() {
-            @Override
-            public int compute(int key) {
-                return key % hashTable.length;
-            }
-        };
+        HashFunction h = key -> key % hashTable.length;
         int key = 43;
 
         Integer actualPosition = Chapter11.quadraticProbingSearch(hashTable, key, h);
@@ -754,12 +668,7 @@ public class Chapter11Test {
     @Test
     public void shouldNotFindNonexistentElementInFullHashTableUsingQuadraticProbing() {
         ZeroBasedIndexedArray<Integer> hashTable = new ZeroBasedIndexedArray<>(24, 9, 34, 35, 51, 13, 27, 20);
-        HashFunction h = new HashFunction() {
-            @Override
-            public int compute(int key) {
-                return key % hashTable.length;
-            }
-        };
+        HashFunction h = key -> key % hashTable.length;
         int key = 43;
 
         Integer actualPosition = Chapter11.quadraticProbingSearch(hashTable, key, h);
