@@ -30,7 +30,7 @@ public class Matrix<E> {
         this.data = (E[][]) new Object[rows.length][];
         for (int i = 0; i < rows.length; i++) {
             if (rows[i].length != rows[0].length) {
-                throw new RuntimeException("Different sizes of rows");
+                throw new IllegalStateException("Different sizes of rows");
             }
             this.data[i] = (E[]) new Object[rows[i].length];
             for (int j = 0; j < rows[i].length; j++) {
@@ -51,7 +51,7 @@ public class Matrix<E> {
         this.data = (E[][]) new Object[rows.length][];
         for (int i = 0; i < rows.length; i++) {
             if (rows.at(i + 1).length != rows.at(1).length) {
-                throw new RuntimeException("Different sizes of rows");
+                throw new IllegalStateException("Different sizes of rows");
             }
             this.data[i] = (E[]) new Object[rows.at(i + 1).length];
             for (int j = 0; j < rows.at(i + 1).length; j++) {
@@ -67,11 +67,11 @@ public class Matrix<E> {
      *
      * @param row the row number to return
      * @return an array representing row {@code row}
-     * @throws RuntimeException if {@code row < 1} or {@code row > rows}
+     * @throws IllegalStateException if {@code row < 1} or {@code row > rows}
      */
     public Array<E> row(int row) {
         if (row < 1 || row > rows) {
-            throw new RuntimeException("Row index out of bound");
+            throw new IllegalStateException("Row index out of bound");
         }
         return new Array<>(data[row - 1]);
     }
@@ -82,11 +82,11 @@ public class Matrix<E> {
      * @param row    the row of the element to return
      * @param column the column of the element to return
      * @return the element in row {@code row} and column {@code column}
-     * @throws RuntimeException if {@code row < 1} or {@code row > rows} or {@code column < 1} or {@code column > columns}
+     * @throws IllegalStateException if {@code row < 1} or {@code row > rows} or {@code column < 1} or {@code column > columns}
      */
     public E at(int row, int column) {
         if (row < 1 || row > rows || column < 1 || column > columns) {
-            throw new RuntimeException("Row index or column index out of bound");
+            throw new IllegalStateException("Row index or column index out of bound");
         }
         return data[row - 1][column - 1];
     }
@@ -97,11 +97,11 @@ public class Matrix<E> {
      * @param row     the row of the element to set
      * @param column  the column of the element to set
      * @param element the new element
-     * @throws RuntimeException if {@code row < 1} or {@code row > rows} or {@code column < 1} or {@code column > columns}
+     * @throws IllegalStateException if {@code row < 1} or {@code row > rows} or {@code column < 1} or {@code column > columns}
      */
     public void set(int row, int column, E element) {
         if (row < 1 || row > rows || column < 1 || column > columns) {
-            throw new RuntimeException("Row index or column index out of bound");
+            throw new IllegalStateException("Row index or column index out of bound");
         }
         data[row - 1][column - 1] = element;
     }

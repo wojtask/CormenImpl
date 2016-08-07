@@ -1,11 +1,16 @@
 package pl.kwojtas.cormenimpl.util;
 
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import static org.junit.Assert.assertEquals;
 import static pl.kwojtas.cormenimpl.TestUtil.assertArrayEquals;
 
 public class MatrixTest {
+
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
 
     @Test
     public void shouldCreateMatrixFromGivenRows() {
@@ -20,17 +25,14 @@ public class MatrixTest {
         assertArrayEquals(row2, matrix.row(2));
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test
     public void shouldThrowExceptionWhenCreatingMatrixFromRowsOfDifferentSizes() {
         Array<String> row1 = new Array<>("aaa", "bbb", "ccc");
         Array<String> row2 = new Array<>("ddd", "eee");
 
-        try {
-            new Matrix<>(row1, row2);
-        } catch (RuntimeException e) {
-            assertEquals("Different sizes of rows", e.getMessage());
-            throw e;
-        }
+        thrown.expect(IllegalStateException.class);
+        thrown.expectMessage("Different sizes of rows");
+        new Matrix<>(row1, row2);
     }
 
     @Test
@@ -46,16 +48,13 @@ public class MatrixTest {
         }
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test
     public void shouldThrowExceptionWhenCreatingMatrixFromArrayOfRowsOfDifferentSizes() {
         Array<Array<String>> rows = new Array<>(new Array<>("aaa", "bbb", "ccc"), new Array<>("ddd", "eee"));
 
-        try {
-            new Matrix<>(rows);
-        } catch (RuntimeException e) {
-            assertEquals("Different sizes of rows", e.getMessage());
-            throw e;
-        }
+        thrown.expect(IllegalStateException.class);
+        thrown.expectMessage("Different sizes of rows");
+        new Matrix<>(rows);
     }
 
     @Test
@@ -69,16 +68,13 @@ public class MatrixTest {
         assertArrayEquals(row2, actualRow);
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test
     public void shouldThrowExceptionWhenAccessingInvalidRowFromMatrix() {
         Matrix<String> matrix = new Matrix<>(new Array<>("aaa", "bbb", "ccc"), new Array<>("ddd", "eee", "fff"));
 
-        try {
-            matrix.row(5);
-        } catch (RuntimeException e) {
-            assertEquals("Row index out of bound", e.getMessage());
-            throw e;
-        }
+        thrown.expect(IllegalStateException.class);
+        thrown.expectMessage("Row index out of bound");
+        matrix.row(5);
     }
 
     @Test
@@ -90,16 +86,13 @@ public class MatrixTest {
         assertEquals("ddd", actualElement);
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test
     public void shouldThrowExceptionWhenAccessingInvalidPositionInMatrix() {
         Matrix<String> matrix = new Matrix<>(new Array<>("aaa", "bbb", "ccc"), new Array<>("ddd", "eee", "fff"));
 
-        try {
-            matrix.at(1, 5);
-        } catch (RuntimeException e) {
-            assertEquals("Row index or column index out of bound", e.getMessage());
-            throw e;
-        }
+        thrown.expect(IllegalStateException.class);
+        thrown.expectMessage("Row index or column index out of bound");
+        matrix.at(1, 5);
     }
 
     @Test
@@ -112,16 +105,13 @@ public class MatrixTest {
         assertEquals(newElement, matrix.at(1, 3));
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test
     public void shouldThrowExceptionWhenSettingOnInvalidPositionInMatrix() {
         Matrix<String> matrix = new Matrix<>(new Array<>("aaa", "bbb", "ccc"), new Array<>("ddd", "eee", "fff"));
 
-        try {
-            matrix.set(1, 5, "xyz");
-        } catch (RuntimeException e) {
-            assertEquals("Row index or column index out of bound", e.getMessage());
-            throw e;
-        }
+        thrown.expect(IllegalStateException.class);
+        thrown.expectMessage("Row index or column index out of bound");
+        matrix.set(1, 5, "xyz");
     }
 
     @Test

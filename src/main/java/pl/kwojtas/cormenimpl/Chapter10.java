@@ -62,11 +62,11 @@ public final class Chapter10 {
      * @param S   the stack
      * @param <E> the type of elements in {@code S}
      * @return the element deleted from the top of {@code S}
-     * @throws RuntimeException if {@code S} is empty
+     * @throws IllegalStateException if {@code S} is empty
      */
     public static <E> E pop(Stack<E> S) {
         if (stackEmpty(S)) {
-            throw new RuntimeException("underflow");
+            throw new IllegalStateException("underflow");
         }
         S.top--;
         return S.at(S.top + 1);
@@ -79,14 +79,14 @@ public final class Chapter10 {
      * @param Q   the queue
      * @param x   the element to insert
      * @param <E> the type of elements in {@code Q}
-     * @throws RuntimeException if {@code Q} is full
+     * @throws IllegalStateException if {@code Q} is full
      */
     public static <E> void enqueue(Queue<E> Q, E x) {
         if (Q.head == Q.tail + 1) {
-            throw new RuntimeException("overflow");
+            throw new IllegalStateException("overflow");
         }
         if (Q.head == 1 && Q.tail == Q.length) {
-            throw new RuntimeException("overflow");
+            throw new IllegalStateException("overflow");
         }
         Q.set(Q.tail, x);
         if (Q.tail == Q.length) {
@@ -103,11 +103,11 @@ public final class Chapter10 {
      * @param Q   the queue
      * @param <E> the type of elements in {@code Q}
      * @return the element deleted from the head of {@code Q}
-     * @throws RuntimeException if {@code Q} is empty
+     * @throws IllegalStateException if {@code Q} is empty
      */
     public static <E> E dequeue(Queue<E> Q) {
         if (queueEmpty(Q)) {
-            throw new RuntimeException("underflow");
+            throw new IllegalStateException("underflow");
         }
         E x = Q.at(Q.head);
         if (Q.head == Q.length) {
@@ -138,11 +138,11 @@ public final class Chapter10 {
      * @param A   the array containing two stacks
      * @param <E> the type of elements in {@code A}
      * @return the element deleted from the top of the first stack
-     * @throws RuntimeException if the first stack is empty
+     * @throws IllegalStateException if the first stack is empty
      */
     public static <E> E firstStackPop(DoubleStack<E> A) {
         if (firstStackEmpty(A)) {
-            throw new RuntimeException("underflow");
+            throw new IllegalStateException("underflow");
         }
         A.leftTop--;
         return A.at(A.leftTop + 1);
@@ -180,11 +180,11 @@ public final class Chapter10 {
      * @param A   the array containing two stacks
      * @param <E> the type of elements in {@code A}
      * @return the deleted element from the top of the second stack
-     * @throws RuntimeException if the second stack is empty
+     * @throws IllegalStateException if the second stack is empty
      */
     public static <E> E secondStackPop(DoubleStack<E> A) {
         if (secondStackEmpty(A)) {
-            throw new RuntimeException("underflow");
+            throw new IllegalStateException("underflow");
         }
         A.rightTop++;
         return A.at(A.rightTop - 1);
@@ -304,11 +304,11 @@ public final class Chapter10 {
      * @param S2  the second stack
      * @param <E> the type of elements in {@code S1} and {@code S2}
      * @return the element deleted from the queue
-     * @throws RuntimeException if the queue is empty
+     * @throws IllegalStateException if the queue is empty
      */
     public static <E> E dequeueOnStacks(Stack<E> S1, Stack<E> S2) {
         if (stackEmpty(S1)) {
-            throw new RuntimeException("underflow");
+            throw new IllegalStateException("underflow");
         }
         while (!stackEmpty(S1)) {
             push(S2, pop(S1));
@@ -341,11 +341,11 @@ public final class Chapter10 {
      * @param Q2  the second queue
      * @param <E> the type of elements on the stack
      * @return the element deleted from the stack
-     * @throws RuntimeException if the stack is empty
+     * @throws IllegalStateException if the stack is empty
      */
     public static <E> E popOnQueues(Queue<E> Q1, Queue<E> Q2) {
         if (queueEmpty(Q1)) {
-            throw new RuntimeException("underflow");
+            throw new IllegalStateException("underflow");
         }
         E x = null;
         while (!queueEmpty(Q1)) {
@@ -514,7 +514,7 @@ public final class Chapter10 {
      */
     public static <E> E singlyLinkedListPop(SinglyLinkedList<E> L) {
         if (L.head == null) {
-            throw new RuntimeException("underflow");
+            throw new IllegalStateException("underflow");
         }
         SinglyLinkedList.Node<E> x = L.head;
         L.head = x.next;
@@ -546,11 +546,11 @@ public final class Chapter10 {
      * @param L   the singly linked list
      * @param <E> the type of elements in {@code L}
      * @return the element deleted from the queue
-     * @throws RuntimeException if the queue is empty
+     * @throws IllegalStateException if the queue is empty
      */
     public static <E> E singlyLinkedListDequeue(SinglyLinkedListWithTail<E> L) {
         if (L.head == null) {
-            throw new RuntimeException("underflow");
+            throw new IllegalStateException("underflow");
         }
         SinglyLinkedListWithTail.Node<E> x = L.head;
         L.head = x.next;
@@ -759,11 +759,11 @@ public final class Chapter10 {
      * @param L   the list in the multiple-array representation
      * @param <E> the type of elements in {@code L}
      * @return the index of the allocated object in {@code L}
-     * @throws RuntimeException if {@code L} is full
+     * @throws IllegalStateException if {@code L} is full
      */
     public static <E> int allocateObject(MultipleArrayList<E> L) {
         if (L.free == null) {
-            throw new RuntimeException("out of space");
+            throw new IllegalStateException("out of space");
         }
         int x = L.free;
         L.free = L.next.at(x);
@@ -789,11 +789,11 @@ public final class Chapter10 {
      *
      * @param A the list in the single-array representation
      * @return the index of the allocated object in {@code A}
-     * @throws RuntimeException if {@code A} is full
+     * @throws IllegalStateException if {@code A} is full
      */
     public static int singleArrayAllocateObject(SingleArrayList A) {
         if (A.free == null) {
-            throw new RuntimeException("out of space");
+            throw new IllegalStateException("out of space");
         }
         int x = A.free;
         A.free = A.at(x + 1);
@@ -1071,11 +1071,11 @@ public final class Chapter10 {
      *
      * @param L the sorted singly linked list representing the mergeable min-heap
      * @return the smallest element of the mergeable min-heap
-     * @throws RuntimeException if the mergeable min-heap is empty
+     * @throws IllegalStateException if the mergeable min-heap is empty
      */
     public static int sortedListHeapExtractMin(SinglyLinkedList<Integer> L) {
         if (L.head == null) {
-            throw new RuntimeException("heap underflow");
+            throw new IllegalStateException("heap underflow");
         }
         int minimum = L.head.key;
         L.head = L.head.next;
@@ -1155,11 +1155,11 @@ public final class Chapter10 {
      *
      * @param L the singly linked list representing the mergeable min-heap
      * @return the smallest element of the mergeable min-heap
-     * @throws RuntimeException if the mergeable min-heap is empty
+     * @throws IllegalStateException if the mergeable min-heap is empty
      */
     public static int listHeapExtractMin(SinglyLinkedListWithTail<Integer> L) {
         if (L.head == null) {
-            throw new RuntimeException("heap underflow");
+            throw new IllegalStateException("heap underflow");
         }
         int minimum = L.head.key;
         L.head = L.head.next;

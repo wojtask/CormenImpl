@@ -17,12 +17,12 @@ public class Heap<E> extends Array<E> {
      *
      * @param array         the array of initial elements
      * @param initialLength the length of the heap's underlying array
-     * @throws RuntimeException if the {@code array} is longer than {@code initialLength}
+     * @throws IllegalStateException if the {@code array} is longer than {@code initialLength}
      */
     public Heap(Array<E> array, int initialLength) {
         super(Array.withLength(initialLength));
         if (array.length > initialLength) {
-            throw new RuntimeException("Array is larger than initial length");
+            throw new IllegalStateException("Array is larger than initial length");
         }
         for (int i = 1; i <= array.length; i++) {
             set(i, array.at(i));

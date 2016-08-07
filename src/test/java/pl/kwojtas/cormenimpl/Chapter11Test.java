@@ -1,6 +1,8 @@
 package pl.kwojtas.cormenimpl;
 
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import pl.kwojtas.cormenimpl.util.ChainedHashTable;
 import pl.kwojtas.cormenimpl.util.DirectAddressTable;
 import pl.kwojtas.cormenimpl.util.HashFunction;
@@ -22,6 +24,9 @@ import static org.junit.Assert.assertTrue;
 import static pl.kwojtas.cormenimpl.Chapter11.DELETED;
 
 public class Chapter11Test {
+
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
 
     @Test
     public void shouldHavePrivateConstructor() throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
@@ -505,7 +510,7 @@ public class Chapter11Test {
         assertEquals(expectedFreeListHeadPosition, hashTableWithFreeList.F);
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test
     public void shouldThrowExceptionWhenInsertingIntoFullHashTableWithFreeList() {
         HashTableWithFreeList<String> hashTableWithFreeList = HashTableWithFreeList.withLengthAndHashFunction(8,
                 new HashFunction() {
@@ -518,12 +523,9 @@ public class Chapter11Test {
         hashTableWithFreeList.F = -1;
         HashTableWithFreeList.Element<String> element = new HashTableWithFreeList.Element<>(25, "twentyFive");
 
-        try {
-            Chapter11.inPlaceChainedHashInsert(hashTableWithFreeList, element);
-        } catch (RuntimeException e) {
-            assertEquals("overflow", e.getMessage());
-            throw e;
-        }
+        thrown.expect(IllegalStateException.class);
+        thrown.expectMessage("overflow");
+        Chapter11.inPlaceChainedHashInsert(hashTableWithFreeList, element);
     }
 
     @Test
@@ -581,7 +583,7 @@ public class Chapter11Test {
         assertEquals(Integer.valueOf(key), hashTableWithOpenAddressing.at(2));
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test
     public void shouldThrowExceptionWhenInsertingIntoFullHashTableWithProbing() {
         HashTableWithOpenAddressing hashTableWithOpenAddressing = HashTableWithOpenAddressing.withLengthAndHashFunction(5,
                 new HashProbingFunction() {
@@ -595,12 +597,9 @@ public class Chapter11Test {
         hashTableWithOpenAddressing.set(new ZeroBasedIndexedArray<>(35, 51, 45, 38, 16));
         int key = 32;
 
-        try {
-            Chapter11.hashInsert(hashTableWithOpenAddressing, key);
-        } catch (RuntimeException e) {
-            assertEquals("hash table overflow", e.getMessage());
-            throw e;
-        }
+        thrown.expect(IllegalStateException.class);
+        thrown.expectMessage("hash table overflow");
+        Chapter11.hashInsert(hashTableWithOpenAddressing, key);
     }
 
     @Test
@@ -701,7 +700,7 @@ public class Chapter11Test {
         assertEquals(Integer.valueOf(key), hashTableWithOpenAddressing.at(2));
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test
     public void shouldThrowExceptionWhenInsertingIntoFullHashTableWithProbingUsingHashInsert_() {
         HashTableWithOpenAddressing hashTableWithOpenAddressing = HashTableWithOpenAddressing.withLengthAndHashFunction(5,
                 new HashProbingFunction() {
@@ -715,12 +714,9 @@ public class Chapter11Test {
         hashTableWithOpenAddressing.set(new ZeroBasedIndexedArray<>(35, 51, 45, 38, 16));
         int key = 32;
 
-        try {
-            Chapter11.hashInsert_(hashTableWithOpenAddressing, key);
-        } catch (RuntimeException e) {
-            assertEquals("hash table overflow", e.getMessage());
-            throw e;
-        }
+        thrown.expect(IllegalStateException.class);
+        thrown.expectMessage("hash table overflow");
+        Chapter11.hashInsert_(hashTableWithOpenAddressing, key);
     }
 
     @Test

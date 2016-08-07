@@ -3,7 +3,9 @@ package pl.kwojtas.cormenimpl;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
@@ -45,6 +47,9 @@ import static pl.kwojtas.cormenimpl.TestUtil.assertShuffled;
 public class Chapter10Test {
 
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
 
     @Before
     public void setUpOutStream() {
@@ -114,16 +119,13 @@ public class Chapter10Test {
         assertEquals(expectedElement, actualElement);
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test
     public void shouldThrowExceptionWhenDeletingFromEmptyStack() {
         Stack<String> stack = Stack.withLength(6);
 
-        try {
-            Chapter10.pop(stack);
-        } catch (RuntimeException e) {
-            assertEquals("underflow", e.getMessage());
-            throw e;
-        }
+        thrown.expect(IllegalStateException.class);
+        thrown.expectMessage("underflow");
+        Chapter10.pop(stack);
     }
 
     @Test
@@ -153,34 +155,28 @@ public class Chapter10Test {
         assertEquals(element, queue.at(queue.length));
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test
     public void shouldThrowExceptionWhenInsertingToFullQueue() {
         Queue<String> queue = Queue.withLength(6);
         queue.head = 3;
         queue.tail = 2;
         String element = "xyz";
 
-        try {
-            Chapter10.enqueue(queue, element);
-        } catch (RuntimeException e) {
-            assertEquals("overflow", e.getMessage());
-            throw e;
-        }
+        thrown.expect(IllegalStateException.class);
+        thrown.expectMessage("overflow");
+        Chapter10.enqueue(queue, element);
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test
     public void shouldThrowExceptionWhenInsertingToFullQueueWithTailEqualsLength() {
         Queue<String> queue = Queue.withLength(6);
         queue.head = 1;
         queue.tail = 6;
         String element = "xyz";
 
-        try {
-            Chapter10.enqueue(queue, element);
-        } catch (RuntimeException e) {
-            assertEquals("overflow", e.getMessage());
-            throw e;
-        }
+        thrown.expect(IllegalStateException.class);
+        thrown.expectMessage("overflow");
+        Chapter10.enqueue(queue, element);
     }
 
     @Test
@@ -198,16 +194,13 @@ public class Chapter10Test {
         assertEquals(expectedElement, actualElement);
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test
     public void shouldThrowExceptionWhenDeletingFromEmptyQueue() {
         Queue<String> queue = Queue.withLength(6);
 
-        try {
-            Chapter10.dequeue(queue);
-        } catch (RuntimeException e) {
-            assertEquals("underflow", e.getMessage());
-            throw e;
-        }
+        thrown.expect(IllegalStateException.class);
+        thrown.expectMessage("underflow");
+        Chapter10.dequeue(queue);
     }
 
     @Test
@@ -259,17 +252,14 @@ public class Chapter10Test {
         assertEquals(expectedElement, actualElement);
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test
     public void shouldThrowExceptionWhenDeletingFromEmptyFirstStackOfDoubleStack() {
         DoubleStack<String> doubleStack = DoubleStack.withLength(6);
         doubleStack.rightTop = 3;
 
-        try {
-            Chapter10.firstStackPop(doubleStack);
-        } catch (RuntimeException e) {
-            assertEquals("underflow", e.getMessage());
-            throw e;
-        }
+        thrown.expect(IllegalStateException.class);
+        thrown.expectMessage("underflow");
+        Chapter10.firstStackPop(doubleStack);
     }
 
     @Test
@@ -320,17 +310,14 @@ public class Chapter10Test {
         assertEquals(expectedElement, actualElement);
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test
     public void shouldThrowExceptionWhenDeletingFromEmptySecondStackOfDoubleStack() {
         DoubleStack<String> doubleStack = DoubleStack.withLength(6);
         doubleStack.leftTop = 4;
 
-        try {
-            Chapter10.secondStackPop(doubleStack);
-        } catch (RuntimeException e) {
-            assertEquals("underflow", e.getMessage());
-            throw e;
-        }
+        thrown.expect(IllegalStateException.class);
+        thrown.expectMessage("underflow");
+        Chapter10.secondStackPop(doubleStack);
     }
 
     @Test
@@ -493,17 +480,14 @@ public class Chapter10Test {
         assertEquals(expectedElement, actualElement);
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test
     public void shouldThrowExceptionWhenDeletingFromEmptyQueueOnStacks() {
         Stack<String> stack1 = Stack.withLength(4);
         Stack<String> stack2 = Stack.withLength(4);
 
-        try {
-            Chapter10.dequeueOnStacks(stack1, stack2);
-        } catch (RuntimeException e) {
-            assertEquals("underflow", e.getMessage());
-            throw e;
-        }
+        thrown.expect(IllegalStateException.class);
+        thrown.expectMessage("underflow");
+        Chapter10.dequeueOnStacks(stack1, stack2);
     }
 
     @Test
@@ -539,17 +523,14 @@ public class Chapter10Test {
         assertEquals(expectedElement, actualElement);
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test
     public void shouldThrowExceptionWhenDeletingFromEmptyStackOnQueues() {
         Queue<String> queue1 = Queue.withLength(4);
         Queue<String> queue2 = Queue.withLength(4);
 
-        try {
-            Chapter10.popOnQueues(queue1, queue2);
-        } catch (RuntimeException e) {
-            assertEquals("underflow", e.getMessage());
-            throw e;
-        }
+        thrown.expect(IllegalStateException.class);
+        thrown.expectMessage("underflow");
+        Chapter10.popOnQueues(queue1, queue2);
     }
 
     @Test
@@ -738,16 +719,13 @@ public class Chapter10Test {
         }
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test
     public void shouldThrowExceptionWhenDeletingFromEmptyStackOnSinglyLinkedList() {
         SinglyLinkedList<Integer> list = new SinglyLinkedList<>();
 
-        try {
-            Chapter10.singlyLinkedListPop(list);
-        } catch (RuntimeException e) {
-            assertEquals("underflow", e.getMessage());
-            throw e;
-        }
+        thrown.expect(IllegalStateException.class);
+        thrown.expectMessage("underflow");
+        Chapter10.singlyLinkedListPop(list);
     }
 
     @Test
@@ -806,16 +784,13 @@ public class Chapter10Test {
         assertNull(list.head);
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test
     public void shouldThrowExceptionWhenDeletingFromEmptyQueueOnSinglyLinkedListWithTail() {
         SinglyLinkedListWithTail<Integer> list = new SinglyLinkedListWithTail<>();
 
-        try {
-            Chapter10.singlyLinkedListDequeue(list);
-        } catch (RuntimeException e) {
-            assertEquals("underflow", e.getMessage());
-            throw e;
-        }
+        thrown.expect(IllegalStateException.class);
+        thrown.expectMessage("underflow");
+        Chapter10.singlyLinkedListDequeue(list);
     }
 
     @Test
@@ -1085,7 +1060,7 @@ public class Chapter10Test {
         assertEquals(Integer.valueOf(3), multipleArrayList.free);
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test
     public void shouldNotAllocateObjectOnFullMultipleArrayList() {
         MultipleArrayList<String> multipleArrayList = new MultipleArrayList<>(
                 new Array<>(4, 1, null, 5, 3),
@@ -1095,12 +1070,9 @@ public class Chapter10Test {
                 null
         );
 
-        try {
-            Chapter10.allocateObject(multipleArrayList);
-        } catch (RuntimeException e) {
-            assertEquals("out of space", e.getMessage());
-            throw e;
-        }
+        thrown.expect(IllegalStateException.class);
+        thrown.expectMessage("out of space");
+        Chapter10.allocateObject(multipleArrayList);
     }
 
     @Test
@@ -1133,7 +1105,7 @@ public class Chapter10Test {
         assertEquals(Integer.valueOf(7), singleArrayList.free);
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test
     public void shouldNotAllocateObjectOnFullSingleArrayList() {
         SingleArrayList singleArrayList = new SingleArrayList(
                 new Array<>(100, 10, 4, 200, 1, null, 300, null, 13, 400, 13, 1, 500, 7, 10),
@@ -1141,12 +1113,9 @@ public class Chapter10Test {
                 null
         );
 
-        try {
-            Chapter10.singleArrayAllocateObject(singleArrayList);
-        } catch (RuntimeException e) {
-            assertEquals("out of space", e.getMessage());
-            throw e;
-        }
+        thrown.expect(IllegalStateException.class);
+        thrown.expectMessage("out of space");
+        Chapter10.singleArrayAllocateObject(singleArrayList);
     }
 
     @Test
@@ -1196,7 +1165,7 @@ public class Chapter10Test {
         }
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test
     public void shouldNotAllocateObjectOnFullCompactList() {
         MultipleArrayList<String> multipleArrayList = new MultipleArrayList<>(
                 new Array<>(3, 1, 5, null, 4),
@@ -1206,12 +1175,9 @@ public class Chapter10Test {
                 null
         );
 
-        try {
-            Chapter10.compactListAllocateObject(multipleArrayList);
-        } catch (RuntimeException e) {
-            assertEquals("out of space", e.getMessage());
-            throw e;
-        }
+        thrown.expect(IllegalStateException.class);
+        thrown.expectMessage("out of space");
+        Chapter10.compactListAllocateObject(multipleArrayList);
     }
 
     @Test
@@ -1501,16 +1467,13 @@ public class Chapter10Test {
         assertArrayEquals(original.toArray(), sortedList.toArray());
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test
     public void shouldThrowExceptionWhenExtractingMinimumFromEmptyHeapOnSortedList() {
         SinglyLinkedList<Integer> sortedList = new SinglyLinkedList<>();
 
-        try {
-            Chapter10.sortedListHeapExtractMin(sortedList);
-        } catch (RuntimeException e) {
-            assertEquals("heap underflow", e.getMessage());
-            throw e;
-        }
+        thrown.expect(IllegalStateException.class);
+        thrown.expectMessage("heap underflow");
+        Chapter10.sortedListHeapExtractMin(sortedList);
     }
 
     @Test
@@ -1589,16 +1552,13 @@ public class Chapter10Test {
         assertArrayEquals(original.toArray(), list.toArray());
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test
     public void shouldThrowExceptionWhenExtractingMinimumFromEmptyHeapOnList() {
         SinglyLinkedListWithTail<Integer> list = new SinglyLinkedListWithTail<>();
 
-        try {
-            Chapter10.listHeapExtractMin(list);
-        } catch (RuntimeException e) {
-            assertEquals("heap underflow", e.getMessage());
-            throw e;
-        }
+        thrown.expect(IllegalStateException.class);
+        thrown.expectMessage("heap underflow");
+        Chapter10.listHeapExtractMin(list);
     }
 
     @Test

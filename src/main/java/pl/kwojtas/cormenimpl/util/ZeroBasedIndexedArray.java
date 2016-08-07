@@ -51,11 +51,11 @@ public class ZeroBasedIndexedArray<E> {
      *
      * @param position the position of the element to return
      * @return the element at position {@code position}
-     * @throws RuntimeException if {@code position < 1} or {@code position > length}
+     * @throws IllegalStateException if {@code position < 1} or {@code position > length}
      */
     public E at(int position) {
         if (position < 0 || position > length - 1) {
-            throw new RuntimeException("Array index out of bound");
+            throw new IllegalStateException("Array index out of bound");
         }
         return data[position];
     }
@@ -65,11 +65,11 @@ public class ZeroBasedIndexedArray<E> {
      *
      * @param position the position of the element to set
      * @param element  the new element
-     * @throws RuntimeException if {@code position < 1} or {@code position > length}
+     * @throws IllegalStateException if {@code position < 1} or {@code position > length}
      */
     public void set(int position, E element) {
         if (position < 0 || position > length - 1) {
-            throw new RuntimeException("Array index out of bound");
+            throw new IllegalStateException("Array index out of bound");
         }
         data[position] = element;
     }

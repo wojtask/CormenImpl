@@ -1,10 +1,15 @@
 package pl.kwojtas.cormenimpl.util;
 
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import static org.junit.Assert.assertEquals;
 
 public class IntervalTest {
+
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
 
     @Test
     public void shouldCreateIntervalFromLowerAndUpperBounds() {
@@ -17,17 +22,14 @@ public class IntervalTest {
         assertEquals(upperBound, interval.b, 1e-7);
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test
     public void shouldNotCreateIntervalWhenLowerBoundIsGreaterThanUpperBound() {
         double lowerBound = -1.0;
         double upperBound = -1.1;
 
-        try {
-            new Interval(lowerBound, upperBound);
-        } catch (RuntimeException e) {
-            assertEquals("Lower bound greater than upper bound", e.getMessage());
-            throw e;
-        }
+        thrown.expect(IllegalStateException.class);
+        thrown.expectMessage("Lower bound greater than upper bound");
+        new Interval(lowerBound, upperBound);
     }
 
 }

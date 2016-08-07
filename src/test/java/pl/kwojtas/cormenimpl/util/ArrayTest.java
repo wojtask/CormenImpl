@@ -1,11 +1,16 @@
 package pl.kwojtas.cormenimpl.util;
 
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import static org.junit.Assert.assertEquals;
 import static pl.kwojtas.cormenimpl.TestUtil.assertArrayEquals;
 
 public class ArrayTest {
+
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
 
     @Test
     public void shouldCreateArrayWithInitialContents() {
@@ -45,16 +50,13 @@ public class ArrayTest {
         assertEquals("bbb", actualElement);
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test
     public void shouldThrowExceptionWhenAccessingInvalidPositionInArray() {
         Array<String> array = new Array<>("aaa", "bbb", "ccc");
 
-        try {
-            array.at(5);
-        } catch (RuntimeException e) {
-            assertEquals("Array index out of bound", e.getMessage());
-            throw e;
-        }
+        thrown.expect(IllegalStateException.class);
+        thrown.expectMessage("Array index out of bound");
+        array.at(5);
     }
 
     @Test
@@ -67,16 +69,13 @@ public class ArrayTest {
         assertEquals(newElement, array.at(3));
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test
     public void shouldThrowExceptionWhenSettingOnInvalidPositionInArray() {
         Array<String> array = new Array<>("aaa", "bbb", "ccc");
 
-        try {
-            array.set(5, "xyz");
-        } catch (RuntimeException e) {
-            assertEquals("Array index out of bound", e.getMessage());
-            throw e;
-        }
+        thrown.expect(IllegalStateException.class);
+        thrown.expectMessage("Array index out of bound");
+        array.set(5, "xyz");
     }
 
     @Test

@@ -1,10 +1,15 @@
 package pl.kwojtas.cormenimpl.util;
 
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import static org.junit.Assert.assertEquals;
 
 public class ZeroBasedIndexedArrayTest {
+
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
 
     @Test
     public void shouldCreateZeroBasedIndexedArrayWithInitialContents() {
@@ -47,16 +52,13 @@ public class ZeroBasedIndexedArrayTest {
         assertEquals("ccc", actualElement);
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test
     public void shouldThrowExceptionWhenAccessingInvalidPositionInZeroBasedIndexedArray() {
         ZeroBasedIndexedArray<String> zeroBasedIndexedArray = new ZeroBasedIndexedArray<>("aaa", "bbb", "ccc");
 
-        try {
-            zeroBasedIndexedArray.at(5);
-        } catch (RuntimeException e) {
-            assertEquals("Array index out of bound", e.getMessage());
-            throw e;
-        }
+        thrown.expect(IllegalStateException.class);
+        thrown.expectMessage("Array index out of bound");
+        zeroBasedIndexedArray.at(5);
     }
 
     @Test
@@ -69,16 +71,13 @@ public class ZeroBasedIndexedArrayTest {
         assertEquals(newElement, zeroBasedIndexedArray.at(0));
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test
     public void shouldThrowExceptionWhenSettingOnInvalidPositionInZeroBasedIndexedArray() {
         ZeroBasedIndexedArray<String> zeroBasedIndexedArray = new ZeroBasedIndexedArray<>("aaa", "bbb", "ccc");
 
-        try {
-            zeroBasedIndexedArray.set(5, "xyz");
-        } catch (RuntimeException e) {
-            assertEquals("Array index out of bound", e.getMessage());
-            throw e;
-        }
+        thrown.expect(IllegalStateException.class);
+        thrown.expectMessage("Array index out of bound");
+        zeroBasedIndexedArray.set(5, "xyz");
     }
 
     @Test

@@ -186,11 +186,11 @@ public final class Chapter6 {
      *
      * @param A the max-heap
      * @return the largest element in {@code A}
-     * @throws RuntimeException if {@code A} is empty
+     * @throws IllegalStateException if {@code A} is empty
      */
     public static int heapExtractMax(Heap<Integer> A) {
         if (A.heapSize < 1) {
-            throw new RuntimeException("heap underflow");
+            throw new IllegalStateException("heap underflow");
         }
         int max = A.at(1);
         A.set(1, A.at(A.heapSize));
@@ -206,11 +206,11 @@ public final class Chapter6 {
      * @param A   the max-heap
      * @param i   the index of the key in {@code A} to be increased
      * @param key the new key
-     * @throws RuntimeException if {@code key} is smaller than {@code A[i]}
+     * @throws IllegalStateException if {@code key} is smaller than {@code A[i]}
      */
     public static void heapIncreaseKey(Heap<Integer> A, int i, int key) {
         if (key < A.at(i)) {
-            throw new RuntimeException("new key is smaller than current key");
+            throw new IllegalStateException("new key is smaller than current key");
         }
         A.set(i, key);
         while (i > 1 && A.at(parent(i)) < A.at(i)) {
@@ -249,11 +249,11 @@ public final class Chapter6 {
      *
      * @param A the min-heap
      * @return the smallest element in {@code A}
-     * @throws RuntimeException if {@code A} is empty
+     * @throws IllegalStateException if {@code A} is empty
      */
     public static int heapExtractMin(Heap<Integer> A) {
         if (A.heapSize < 1) {
-            throw new RuntimeException("heap underflow");
+            throw new IllegalStateException("heap underflow");
         }
         int min = A.at(1);
         A.set(1, A.at(A.heapSize));
@@ -269,11 +269,11 @@ public final class Chapter6 {
      * @param A   the min-heap
      * @param i   the index of the key in {@code A} to be decreased
      * @param key the new key
-     * @throws RuntimeException if {@code key} is larger than {@code A[i]}
+     * @throws IllegalStateException if {@code key} is larger than {@code A[i]}
      */
     public static void heapDecreaseKey(Heap<Integer> A, int i, int key) {
         if (key > A.at(i)) {
-            throw new RuntimeException("new key is larger than current key");
+            throw new IllegalStateException("new key is larger than current key");
         }
         A.set(i, key);
         while (i > 1 && A.at(parent(i)) > A.at(i)) {
@@ -564,11 +564,11 @@ public final class Chapter6 {
      * @param A the multiary max-heap
      * @param d the arity of {@code A}
      * @return the largest element in {@code A}
-     * @throws RuntimeException if {@code A} is empty
+     * @throws IllegalStateException if {@code A} is empty
      */
     public static int multiaryHeapExtractMax(Heap<Integer> A, int d) {
         if (A.heapSize < 1) {
-            throw new RuntimeException("heap underflow");
+            throw new IllegalStateException("heap underflow");
         }
         int max = A.at(1);
         A.set(1, A.at(A.heapSize));
@@ -624,7 +624,7 @@ public final class Chapter6 {
      * @param d the arity of {@code A}
      * @param i the index of the key in {@code A} to be increased
      * @param k the new key
-     * @throws RuntimeException if {@code k} is smaller than {@code A[i]}
+     * @throws IllegalStateException if {@code k} is smaller than {@code A[i]}
      */
     public static void multiaryHeapIncreaseKey(Heap<Integer> A, int d, int i, int k) {
         A.set(i, max(A.at(i), k));

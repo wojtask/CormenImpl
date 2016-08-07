@@ -1,11 +1,16 @@
 package pl.kwojtas.cormenimpl.util;
 
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import static org.junit.Assert.assertEquals;
 import static pl.kwojtas.cormenimpl.TestUtil.assertArrayEquals;
 
 public class HeapTest {
+
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
 
     @Test
     public void shouldCreateHeapFromExistingArrayAndGivenLength() {
@@ -21,17 +26,14 @@ public class HeapTest {
         }
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test
     public void shouldThrowExceptionWhenCreatingHeapFromExistingArrayLargerThanHeapLength() {
         Array<String> array = new Array<>("aaa", "bbb", "ccc");
         int capacity = 2;
 
-        try {
-            new Heap<>(array, capacity);
-        } catch (RuntimeException e) {
-            assertEquals("Array is larger than initial length", e.getMessage());
-            throw e;
-        }
+        thrown.expect(IllegalStateException.class);
+        thrown.expectMessage("Array is larger than initial length");
+        new Heap<>(array, capacity);
     }
 
     @Test

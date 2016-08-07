@@ -1,6 +1,8 @@
 package pl.kwojtas.cormenimpl;
 
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import pl.kwojtas.cormenimpl.util.Array;
 import pl.kwojtas.cormenimpl.util.Heap;
 import pl.kwojtas.cormenimpl.util.PriorityQueueWithRanks;
@@ -21,6 +23,9 @@ import static pl.kwojtas.cormenimpl.TestUtil.assertSorted;
 import static pl.kwojtas.cormenimpl.util.Util.ceil;
 
 public class Chapter6Test {
+
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
 
     @Test
     public void shouldHavePrivateConstructor() throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
@@ -118,15 +123,11 @@ public class Chapter6Test {
         assertTrue(found);
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test
     public void shouldThrowExceptionWhenExtractingMaximumFromEmptyHeap() {
-
-        try {
-            Chapter6.heapExtractMax(Heap.withLength(3));
-        } catch (RuntimeException e) {
-            assertEquals("heap underflow", e.getMessage());
-            throw e;
-        }
+        thrown.expect(IllegalStateException.class);
+        thrown.expectMessage("heap underflow");
+        Chapter6.heapExtractMax(Heap.withLength(3));
     }
 
     @Test
@@ -149,19 +150,16 @@ public class Chapter6Test {
         }
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test
     public void shouldThrowExceptionWhenIncreasingKeyInMaxHeapWithSmallerNumber() {
         Array<Integer> array = new Array<>(27, 7, 20, 4, 6, 13, 17, 0, 3, 2, 1, 5, 11, 10);
         Heap<Integer> heap = new Heap<>(array);
         int position = 3;
         int newKey = 16;
 
-        try {
-            Chapter6.heapIncreaseKey(heap, position, newKey);
-        } catch (RuntimeException e) {
-            assertEquals("new key is smaller than current key", e.getMessage());
-            throw e;
-        }
+        thrown.expect(IllegalStateException.class);
+        thrown.expectMessage("new key is smaller than current key");
+        Chapter6.heapIncreaseKey(heap, position, newKey);
     }
 
     @Test
@@ -210,15 +208,11 @@ public class Chapter6Test {
         }
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test
     public void shouldThrowExceptionWhenExtractingMinimumFromEmptyHeap() {
-
-        try {
-            Chapter6.heapExtractMin(Heap.withLength(3));
-        } catch (RuntimeException e) {
-            assertEquals("heap underflow", e.getMessage());
-            throw e;
-        }
+        thrown.expect(IllegalStateException.class);
+        thrown.expectMessage("heap underflow");
+        Chapter6.heapExtractMin(Heap.withLength(3));
     }
 
     @Test
@@ -241,19 +235,16 @@ public class Chapter6Test {
         }
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test
     public void shouldThrowExceptionWhenDecreasingKeyInMinHeapWithLargerNumber() {
         Array<Integer> array = new Array<>(0, 6, 1, 11, 7, 3, 2, 27, 13, 17, 20, 10, 4, 5);
         Heap<Integer> heap = new Heap<>(array);
         int position = 4;
         int newKey = 12;
 
-        try {
-            Chapter6.heapDecreaseKey(heap, position, newKey);
-        } catch (RuntimeException e) {
-            assertEquals("new key is larger than current key", e.getMessage());
-            throw e;
-        }
+        thrown.expect(IllegalStateException.class);
+        thrown.expectMessage("new key is larger than current key");
+        Chapter6.heapDecreaseKey(heap, position, newKey);
     }
 
     @Test
@@ -461,16 +452,13 @@ public class Chapter6Test {
         }
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test
     public void shouldThrowExceptionWhenExtractingMaximumFromEmptyMultiaryHeap() {
         int degree = 4;
 
-        try {
-            Chapter6.multiaryHeapExtractMax(Heap.withLength(6), degree);
-        } catch (RuntimeException e) {
-            assertEquals("heap underflow", e.getMessage());
-            throw e;
-        }
+        thrown.expect(IllegalStateException.class);
+        thrown.expectMessage("heap underflow");
+        Chapter6.multiaryHeapExtractMax(Heap.withLength(6), degree);
     }
 
     @Test

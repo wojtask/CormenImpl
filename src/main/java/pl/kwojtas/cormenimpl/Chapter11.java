@@ -304,7 +304,7 @@ public final class Chapter11 {
 
     private static <E> int allocateHashTablePosition(HashTableWithFreeList<E> T, int i) {
         if (T.F == -1) {
-            throw new RuntimeException("overflow");
+            throw new IllegalStateException("overflow");
         }
         HashTableWithFreeList.Position<E> position = T.at(i);
         if (position.next != -1) {
@@ -374,7 +374,7 @@ public final class Chapter11 {
      * @param T the hash table using open addressing
      * @param k the key of the element to insert
      * @return the position in {@code T} allocated for the inserted element
-     * @throws RuntimeException if {@code T} is full
+     * @throws IllegalStateException if {@code T} is full
      */
     public static int hashInsert(HashTableWithOpenAddressing T, int k) {
         int m = T.length;
@@ -388,7 +388,7 @@ public final class Chapter11 {
                 i++;
             }
         } while (i != m);
-        throw new RuntimeException("hash table overflow");
+        throw new IllegalStateException("hash table overflow");
     }
 
     /**
@@ -443,7 +443,7 @@ public final class Chapter11 {
      * @param T the hash table using open addressing
      * @param k the key of the element to insert
      * @return the position in {@code T} allocated for the inserted element
-     * @throws RuntimeException if {@code T} is full
+     * @throws IllegalStateException if {@code T} is full
      */
     public static int hashInsert_(HashTableWithOpenAddressing T, int k) {
         int m = T.length;
@@ -457,7 +457,7 @@ public final class Chapter11 {
                 i++;
             }
         } while (i != m);
-        throw new RuntimeException("hash table overflow");
+        throw new IllegalStateException("hash table overflow");
     }
 
     /**
