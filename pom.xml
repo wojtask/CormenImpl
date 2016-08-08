@@ -11,8 +11,8 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <junit.version>4.12</junit.version>
-        <powermock.version>1.6.3</powermock.version>
-        <maven.compiler.plugin.version>3.3</maven.compiler.plugin.version>
+        <powermock.version>1.6.5</powermock.version>
+        <maven.compiler.plugin.version>3.5.1</maven.compiler.plugin.version>
     </properties>
 
     <dependencies>
