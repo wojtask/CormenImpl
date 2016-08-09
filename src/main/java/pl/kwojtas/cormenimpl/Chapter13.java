@@ -143,4 +143,147 @@ public final class Chapter13 {
         T.root.color = RedBlackTree.Color.BLACK;
     }
 
+    /**
+     * Deletes a node from a red-black tree.
+     * <p><span style="font-variant:small-caps;">RB-Delete</span> from subchapter 13.4.</p>
+     *
+     * @param T   the red-black tree
+     * @param z   the node to delete
+     * @param <E> the type of keys in {@code T}
+     * @return the node deleted from {@code T}
+     */
+    public static <E> RedBlackTree.Node<E> rbDelete(RedBlackTree<E> T, RedBlackTree.Node<E> z) {
+        RedBlackTree.Node<E> y;
+        if (z.left == T.nil || z.right == T.nil) {
+            y = z;
+        } else {
+            y = rbTreeSuccessor(T, z);
+        }
+        RedBlackTree.Node<E> x;
+        if (y.left != T.nil) {
+            x = y.left;
+        } else {
+            x = y.right;
+        }
+        x.p = y.p;
+        if (y.p == T.nil) {
+            T.root = x;
+        } else {
+            if (y == y.p.left) {
+                y.p.left = x;
+            } else {
+                y.p.right = x;
+            }
+        }
+        if (y != z) {
+            z.key = y.key;
+        }
+        if (y.color == RedBlackTree.Color.BLACK) {
+            rbDeleteFixup(T, x);
+        }
+        return y;
+    }
+
+    /**
+     * Restores the red-black properties after deleting a node from a red-black tree by
+     * <span style="font-variant:small-caps;">RB-Delete</span>.
+     * <p><span style="font-variant:small-caps;">RB-Delete-Fixup</span> from subchapter 13.4.</p>
+     *
+     * @param T   the red-black tree
+     * @param x   the node that may violate the red-black properties
+     * @param <E> the type of keys in {@code T}
+     */
+    static <E> void rbDeleteFixup(RedBlackTree<E> T, RedBlackTree.Node<E> x) {
+        while (x != T.root && x.color == RedBlackTree.Color.BLACK) {
+            RedBlackTree.Node<E> w;
+            if (x == x.p.left) {
+                w = x.p.right;
+                if (w.color == RedBlackTree.Color.RED) {
+                    w.color = RedBlackTree.Color.BLACK;
+                    x.p.color = RedBlackTree.Color.RED;
+                    leftRotate(T, x.p);
+                    w = x.p.right;
+                }
+                if (w.left.color == RedBlackTree.Color.BLACK && w.right.color == RedBlackTree.Color.BLACK) {
+                    w.color = RedBlackTree.Color.RED;
+                    x = x.p;
+                } else {
+                    if (w.right.color == RedBlackTree.Color.BLACK) {
+                        w.left.color = RedBlackTree.Color.BLACK;
+                        w.color = RedBlackTree.Color.RED;
+                        rightRotate(T, w);
+                        w = x.p.right;
+                    }
+                    w.color = x.p.color;
+                    x.p.color = RedBlackTree.Color.BLACK;
+                    w.right.color = RedBlackTree.Color.BLACK;
+                    leftRotate(T, x.p);
+                    x = T.root;
+                }
+            } else {
+                w = x.p.left;
+                if (w.color == RedBlackTree.Color.RED) {
+                    w.color = RedBlackTree.Color.BLACK;
+                    x.p.color = RedBlackTree.Color.RED;
+                    rightRotate(T, x.p);
+                    w = x.p.left;
+                }
+                if (w.left.color == RedBlackTree.Color.BLACK && w.right.color == RedBlackTree.Color.BLACK) {
+                    w.color = RedBlackTree.Color.RED;
+                    x = x.p;
+                } else {
+                    if (w.left.color == RedBlackTree.Color.BLACK) {
+                        w.right.color = RedBlackTree.Color.BLACK;
+                        w.color = RedBlackTree.Color.RED;
+                        leftRotate(T, w);
+                        w = x.p.left;
+                    }
+                    w.color = x.p.color;
+                    x.p.color = RedBlackTree.Color.BLACK;
+                    w.left.color = RedBlackTree.Color.BLACK;
+                    rightRotate(T, x.p);
+                    x = T.root;
+                }
+            }
+        }
+        x.color = RedBlackTree.Color.BLACK;
+    }
+
+    /**
+     * Returns the node with the smallest key in a non-empty red-black tree.
+     * <p>Chapter 13.</p>
+     *
+     * @param T   the red-black tree
+     * @param x   the root of {@code T}
+     * @param <E> the type of keys in {@code T}
+     * @return the node with the smallest key in {@code T}
+     */
+    public static <E> RedBlackTree.Node<E> rbTreeMinimum(RedBlackTree<E> T, RedBlackTree.Node<E> x) {
+        while (x.left != T.nil) {
+            x = x.left;
+        }
+        return x;
+    }
+
+    /**
+     * Returns the node's successor in a non-empty red-black search tree.
+     * <p>Chapter 13.</p>
+     *
+     * @param T   the red-black tree
+     * @param x   the node of the {@code T}
+     * @param <E> the type of keys in {@code T}
+     * @return the successor of {@code x} in {@code T}, or {@code null} if {@code x} has the largest key in {@code T}
+     */
+    public static <E> RedBlackTree.Node<E> rbTreeSuccessor(RedBlackTree<E> T, RedBlackTree.Node<E> x) {
+        if (x.right != T.nil) {
+            return rbTreeMinimum(T, x.right);
+        }
+        RedBlackTree.Node<E> y = x.p;
+        while (y != T.nil && x == y.right) {
+            x = y;
+            y = y.p;
+        }
+        return y;
+    }
+
 }

@@ -182,4 +182,67 @@ public class Chapter13Test {
         y.key = leftBlackHeight;
     }
 
+    @Test
+    public void shouldDeleteLeafFromTree() {
+        RedBlackTree<Integer> tree = getExemplaryRedBlackTree();
+
+        RedBlackTree.Node<Integer> actualDeletedNode = Chapter13.rbDelete(tree, tree.root.left.right.left); // a leaf
+
+        assertRedBlackTree(tree);
+        Array<Integer> expectedElements = new Array<>(1, 2, 7, 9, 11, 14, 15);
+        Array<Integer> actualElements = tree.toArray();
+        assertArrayEquals(expectedElements, actualElements);
+        assertEquals(Integer.valueOf(5), actualDeletedNode.key);
+    }
+
+    @Test
+    public void shouldDeleteNodeWithOneChildFromTree() {
+        RedBlackTree<Integer> tree = getExemplaryRedBlackTree();
+
+        RedBlackTree.Node<Integer> actualDeletedNode = Chapter13.rbDelete(tree, tree.root.right); // a node with one child
+
+        assertRedBlackTree(tree);
+        Array<Integer> expectedElements = new Array<>(1, 2, 5, 7, 9, 11, 15);
+        Array<Integer> actualElements = tree.toArray();
+        assertArrayEquals(expectedElements, actualElements);
+        assertEquals(Integer.valueOf(14), actualDeletedNode.key);
+    }
+
+    @Test
+    public void shouldDeleteNodeWithTwoChildrenFromTree() {
+        RedBlackTree<Integer> tree = getExemplaryRedBlackTree();
+
+        RedBlackTree.Node<Integer> actualDeletedNode = Chapter13.rbDelete(tree, tree.root.left); // a node with two children (successor's key = 5)
+
+        assertRedBlackTree(tree);
+        Array<Integer> expectedElements = new Array<>(1, 5, 7, 9, 11, 14, 15);
+        Array<Integer> actualElements = tree.toArray();
+        assertArrayEquals(expectedElements, actualElements);
+        assertEquals(Integer.valueOf(5), actualDeletedNode.key);
+    }
+
+    @Test
+    public void shouldDeleteNodeWithTwoChildrenFromTree2() {
+        RedBlackTree<Integer> tree = getExemplaryRedBlackTree();
+
+        RedBlackTree.Node<Integer> actualDeletedNode = Chapter13.rbDelete(tree, tree.root.left.right); // a node with two children (successor's key = 9)
+
+        assertRedBlackTree(tree);
+        Array<Integer> expectedElements = new Array<>(1, 2, 5, 9, 11, 14, 15);
+        Array<Integer> actualElements = tree.toArray();
+        assertArrayEquals(expectedElements, actualElements);
+        assertEquals(Integer.valueOf(9), actualDeletedNode.key);
+    }
+
+    @Test
+    public void shouldDeleteRootFromTree() {
+        RedBlackTree<Integer> tree = new RedBlackTree<>();
+        tree.root = new RedBlackTree.Node<>(10, BLACK, tree);
+
+        RedBlackTree.Node<Integer> actualDeletedNode = Chapter13.rbDelete(tree, tree.root);
+
+        assertEquals(Integer.valueOf(10), actualDeletedNode.key);
+        assertEquals(tree.nil, tree.root);
+    }
+
 }

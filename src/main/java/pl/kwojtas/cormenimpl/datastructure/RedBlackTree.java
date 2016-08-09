@@ -1,5 +1,7 @@
 package pl.kwojtas.cormenimpl.datastructure;
 
+import pl.kwojtas.cormenimpl.Chapter13;
+
 /**
  * Implements a red-black tree.
  *
@@ -109,32 +111,13 @@ public class RedBlackTree<E> {
             return array;
         }
         int n = getSize();
-        RedBlackTree.Node<E> x = rbTreeMinimum(root);
+        RedBlackTree.Node<E> x = Chapter13.rbTreeMinimum(this, root);
         array.set(1, x.key);
         for (int i = 2; i <= n; i++) {
-            x = rbTreeSuccessor(x);
+            x = Chapter13.rbTreeSuccessor(this, x);
             array.set(i, x.key);
         }
         return array;
-    }
-
-    Node<E> rbTreeMinimum(Node<E> x) {
-        while (x.left != nil) {
-            x = x.left;
-        }
-        return x;
-    }
-
-    Node<E> rbTreeSuccessor(Node<E> x) {
-        if (x.right != nil) {
-            return rbTreeMinimum(x.right);
-        }
-        RedBlackTree.Node<E> y = x.p;
-        while (y != nil && x == y.right) {
-            x = y;
-            y = y.p;
-        }
-        return y;
     }
 
 }
