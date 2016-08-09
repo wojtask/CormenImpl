@@ -22,6 +22,8 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.powermock.api.mockito.PowerMockito.mockStatic;
 import static org.powermock.api.mockito.PowerMockito.when;
+import static pl.kwojtas.cormenimpl.Fundamental.geq;
+import static pl.kwojtas.cormenimpl.Fundamental.leq;
 import static pl.kwojtas.cormenimpl.TestUtil.assertShuffled;
 import static pl.kwojtas.cormenimpl.TestUtil.assertSorted;
 
@@ -61,7 +63,7 @@ public class Chapter12Test {
         x3.p = x1;     //          4     14
         x2.left = x4;  //         /      / \
         x4.p = x2;     //        /      /   \
-        x3.left = x5;  //       2      11   19
+        x3.left = x5;  //       1      11   19
         x5.p = x3;     //                     \
         x3.right = x6; //                      \
         x6.p = x3;     //                      20
@@ -144,9 +146,6 @@ public class Chapter12Test {
 
         assertNotNull(actualFoundNode);
         assertEquals(Integer.valueOf(key), actualFoundNode.key);
-        while (actualFoundNode != tree.root) {
-            actualFoundNode = actualFoundNode.p;
-        }
     }
 
     @Test
@@ -168,9 +167,6 @@ public class Chapter12Test {
 
         assertNotNull(actualFoundNode);
         assertEquals(Integer.valueOf(key), actualFoundNode.key);
-        while (actualFoundNode != tree.root) {
-            actualFoundNode = actualFoundNode.p;
-        }
     }
 
     @Test
@@ -191,9 +187,6 @@ public class Chapter12Test {
 
         assertNotNull(actualMinimum);
         assertEquals(Integer.valueOf(1), actualMinimum.key);
-        while (actualMinimum != tree.root) {
-            actualMinimum = actualMinimum.p;
-        }
     }
 
     @Test
@@ -204,9 +197,6 @@ public class Chapter12Test {
 
         assertNotNull(actualMaximum);
         assertEquals(Integer.valueOf(20), actualMaximum.key);
-        while (actualMaximum != tree.root) {
-            actualMaximum = actualMaximum.p;
-        }
     }
 
     @Test
@@ -217,9 +207,6 @@ public class Chapter12Test {
 
         assertNotNull(actualSuccessor);
         assertEquals(Integer.valueOf(11), actualSuccessor.key);
-        while (actualSuccessor != tree.root) {
-            actualSuccessor = actualSuccessor.p;
-        }
     }
 
     @Test
@@ -240,9 +227,6 @@ public class Chapter12Test {
 
         assertNotNull(actualMinimum);
         assertEquals(Integer.valueOf(1), actualMinimum.key);
-        while (actualMinimum != tree.root) {
-            actualMinimum = actualMinimum.p;
-        }
     }
 
     @Test
@@ -253,9 +237,6 @@ public class Chapter12Test {
 
         assertNotNull(actualMaximum);
         assertEquals(Integer.valueOf(20), actualMaximum.key);
-        while (actualMaximum != tree.root) {
-            actualMaximum = actualMaximum.p;
-        }
     }
 
     @Test
@@ -267,9 +248,6 @@ public class Chapter12Test {
 
         assertNotNull(actualPredecessor);
         assertEquals(Integer.valueOf(10), actualPredecessor.key);
-        while (actualPredecessor != tree.root) {
-            actualPredecessor = actualPredecessor.p;
-        }
     }
 
     @Test
@@ -280,9 +258,6 @@ public class Chapter12Test {
 
         assertNotNull(actualPredecessor);
         assertEquals(Integer.valueOf(4), actualPredecessor.key);
-        while (actualPredecessor != tree.root) {
-            actualPredecessor = actualPredecessor.p;
-        }
     }
 
     @Test
@@ -312,11 +287,9 @@ public class Chapter12Test {
 
         Chapter12.treeInsert(tree, nodeToInsert);
 
-        assertEquals(Integer.valueOf(12), nodeToInsert.key);
-        assertNull(nodeToInsert.left);
-        assertNull(nodeToInsert.right);
-        assertNull(nodeToInsert.p);
-        assertEquals(tree.root, nodeToInsert);
+        Array<Integer> actualElements = tree.toArray();
+        Array<Integer> expectedElements = new Array<>(12);
+        TestUtil.assertArrayEquals(actualElements, expectedElements);
     }
 
     @Test
@@ -326,13 +299,30 @@ public class Chapter12Test {
 
         Chapter12.treeInsert(tree, nodeToInsert);
 
-        assertEquals(Integer.valueOf(12), nodeToInsert.key);
-        assertNull(nodeToInsert.left);
-        assertNull(nodeToInsert.right);
-        assertEquals(nodeToInsert, nodeToInsert.p.right); // for the particular tree the new node will be right son of its parent
-        assertEquals(Integer.valueOf(11), nodeToInsert.p.key); // and its parent will be the node of key = 11
-        while (nodeToInsert != tree.root) {
-            nodeToInsert = nodeToInsert.p;
+        Array<Integer> actualElements = tree.toArray();
+        Array<Integer> expectedElements = new Array<>(1, 4, 10, 11, 12, 14, 19, 20);
+        TestUtil.assertArrayEquals(actualElements, expectedElements);
+        assertBinarySearchTree(tree);
+    }
+
+    private <E extends Comparable<? super E>> void assertBinarySearchTree(BinaryTree<E> T) {
+        assertBinarySearchTree(T, T.root);
+    }
+
+    private <E extends Comparable<? super E>> void assertBinarySearchTree(BinaryTree<E> T, BinaryTree.Node<E> x) {
+        if (x.left != null) {
+            Array<E> leftElements = T.toArray(x.left);
+            for (int i = 1; i <= leftElements.length; i++) {
+                assertTrue(leq(leftElements.at(i), x.key));
+            }
+            assertBinarySearchTree(T, x.left);
+        }
+        if (x.right != null) {
+            Array<E> rightElements = T.toArray(x.right);
+            for (int i = 1; i <= rightElements.length; i++) {
+                assertTrue(geq(rightElements.at(i), x.key));
+            }
+            assertBinarySearchTree(T, x.right);
         }
     }
 
@@ -343,52 +333,49 @@ public class Chapter12Test {
 
         Chapter12.treeInsert(tree, nodeToInsert);
 
-        assertEquals(Integer.valueOf(18), nodeToInsert.key);
-        assertNull(nodeToInsert.left);
-        assertNull(nodeToInsert.right);
-        assertEquals(nodeToInsert, nodeToInsert.p.left); // for the particular tree the new node will be left son of its parent
-        assertEquals(Integer.valueOf(19), nodeToInsert.p.key); // and its parent will be the node of key = 11
-        while (nodeToInsert != tree.root) {
-            nodeToInsert = nodeToInsert.p;
-        }
+        Array<Integer> actualElements = tree.toArray();
+        Array<Integer> expectedElements = new Array<>(1, 4, 10, 11, 14, 18, 19, 20);
+        TestUtil.assertArrayEquals(actualElements, expectedElements);
+        assertBinarySearchTree(tree);
     }
 
     @Test
     public void shouldDeleteLeafFromTree() {
         BinaryTree<Integer> tree = getExemplaryBinaryTree();
-        int exemplaryTreeSize = tree.getSize();
 
         BinaryTree.Node<Integer> actualDeletedNode = Chapter12.treeDelete(tree, tree.root.right.left); // a leaf
 
         assertEquals(Integer.valueOf(11), actualDeletedNode.key);
-        assertNull(tree.root.right.left);
-        assertEquals(exemplaryTreeSize - 1, tree.getSize());
+        Array<Integer> actualElements = tree.toArray();
+        Array<Integer> expectedElements = new Array<>(1, 4, 10, 14, 19, 20);
+        TestUtil.assertArrayEquals(actualElements, expectedElements);
+        assertBinarySearchTree(tree);
     }
 
     @Test
     public void shouldDeleteNodeWithOneChildFromTree() {
         BinaryTree<Integer> tree = getExemplaryBinaryTree();
-        int exemplaryTreeSize = tree.getSize();
 
         BinaryTree.Node<Integer> actualDeletedNode = Chapter12.treeDelete(tree, tree.root.left); // a node with one child
 
         assertEquals(Integer.valueOf(4), actualDeletedNode.key);
-        assertNotNull(tree.root.left);
-        assertEquals(Integer.valueOf(1), tree.root.left.key);
-        assertEquals(exemplaryTreeSize - 1, tree.getSize());
+        Array<Integer> actualElements = tree.toArray();
+        Array<Integer> expectedElements = new Array<>(1, 10, 11, 14, 19, 20);
+        TestUtil.assertArrayEquals(actualElements, expectedElements);
+        assertBinarySearchTree(tree);
     }
 
     @Test
     public void shouldDeleteNodeWithTwoChildrenFromTree() {
         BinaryTree<Integer> tree = getExemplaryBinaryTree();
-        int exemplaryTreeSize = tree.getSize();
 
         BinaryTree.Node<Integer> actualDeletedNode = Chapter12.treeDelete(tree, tree.root.right); // a node with two children (successor's key = 19)
 
         assertEquals(Integer.valueOf(19), actualDeletedNode.key);
-        assertNotNull(tree.root.right);
-        assertEquals(Integer.valueOf(19), tree.root.right.key);
-        assertEquals(exemplaryTreeSize - 1, tree.getSize());
+        Array<Integer> actualElements = tree.toArray();
+        Array<Integer> expectedElements = new Array<>(1, 4, 10, 11, 19, 20);
+        TestUtil.assertArrayEquals(actualElements, expectedElements);
+        assertBinarySearchTree(tree);
     }
 
     @Test
@@ -409,11 +396,9 @@ public class Chapter12Test {
 
         Chapter12.treeInsert_(tree, nodeToInsert);
 
-        assertEquals(Integer.valueOf(12), nodeToInsert.key);
-        assertNull(nodeToInsert.left);
-        assertNull(nodeToInsert.right);
-        assertNull(nodeToInsert.p);
-        assertEquals(tree.root, nodeToInsert);
+        Array<Integer> actualElements = tree.toArray();
+        Array<Integer> expectedElements = new Array<>(12);
+        TestUtil.assertArrayEquals(actualElements, expectedElements);
     }
 
     @Test
@@ -423,14 +408,10 @@ public class Chapter12Test {
 
         Chapter12.treeInsert_(tree, nodeToInsert);
 
-        assertEquals(Integer.valueOf(12), nodeToInsert.key);
-        assertNull(nodeToInsert.left);
-        assertNull(nodeToInsert.right);
-        assertEquals(nodeToInsert, nodeToInsert.p.right); // for the particular tree the new node will be right son of its parent
-        assertEquals(Integer.valueOf(11), nodeToInsert.p.key); // and its parent will be the node of key = 11
-        while (nodeToInsert != tree.root) {
-            nodeToInsert = nodeToInsert.p;
-        }
+        Array<Integer> actualElements = tree.toArray();
+        Array<Integer> expectedElements = new Array<>(1, 4, 10, 11, 12, 14, 19, 20);
+        TestUtil.assertArrayEquals(actualElements, expectedElements);
+        assertBinarySearchTree(tree);
     }
 
     @Test
@@ -440,14 +421,10 @@ public class Chapter12Test {
 
         Chapter12.treeInsert_(tree, nodeToInsert);
 
-        assertEquals(Integer.valueOf(18), nodeToInsert.key);
-        assertNull(nodeToInsert.left);
-        assertNull(nodeToInsert.right);
-        assertEquals(nodeToInsert, nodeToInsert.p.left); // for the particular tree the new node will be left son of its parent
-        assertEquals(Integer.valueOf(19), nodeToInsert.p.key); // and its parent will be the node of key = 19
-        while (nodeToInsert != tree.root) {
-            nodeToInsert = nodeToInsert.p;
-        }
+        Array<Integer> actualElements = tree.toArray();
+        Array<Integer> expectedElements = new Array<>(1, 4, 10, 11, 14, 18, 19, 20);
+        TestUtil.assertArrayEquals(actualElements, expectedElements);
+        assertBinarySearchTree(tree);
     }
 
     @Test
@@ -464,36 +441,37 @@ public class Chapter12Test {
     @Test
     public void shouldDeleteLeafFromTreeUsingSafeTreeDelete() {
         BinaryTree<Integer> tree = getExemplaryBinaryTree();
-        int exemplaryTreeSize = tree.getSize();
 
         Chapter12.safeTreeDelete(tree, tree.root.right.left); // a leaf
 
-        assertNull(tree.root.right.left);
-        assertEquals(exemplaryTreeSize - 1, tree.getSize());
+        Array<Integer> actualElements = tree.toArray();
+        Array<Integer> expectedElements = new Array<>(1, 4, 10, 14, 19, 20);
+        TestUtil.assertArrayEquals(actualElements, expectedElements);
+        assertBinarySearchTree(tree);
     }
 
     @Test
     public void shouldDeleteNodeWithTwoChildrenFromTreeUsingSafeTreeDelete() {
         BinaryTree<Integer> tree = getExemplaryBinaryTree();
-        int exemplaryTreeSize = tree.getSize();
 
         Chapter12.safeTreeDelete(tree, tree.root.right); // a node with two children (successor's key = 19)
 
-        assertNotNull(tree.root.right);
-        assertEquals(Integer.valueOf(19), tree.root.right.key);
-        assertEquals(exemplaryTreeSize - 1, tree.getSize());
+        Array<Integer> actualElements = tree.toArray();
+        Array<Integer> expectedElements = new Array<>(1, 4, 10, 11, 19, 20);
+        TestUtil.assertArrayEquals(actualElements, expectedElements);
+        assertBinarySearchTree(tree);
     }
 
     @Test
     public void shouldDeleteNodeWithTwoChildrenFromTreeUsingSafeTreeDelete2() {
         BinaryTree<Integer> tree = getExemplaryBinaryTreeForSafeDelete();
-        int exemplaryTreeSize = tree.getSize();
 
         Chapter12.safeTreeDelete(tree, tree.root.left); // a node with two children (successor's key = 6)
 
-        assertNotNull(tree.root.left);
-        assertEquals(Integer.valueOf(6), tree.root.left.key);
-        assertEquals(exemplaryTreeSize - 1, tree.getSize());
+        Array<Integer> actualElements = tree.toArray();
+        Array<Integer> expectedElements = new Array<>(2, 6, 7, 8, 9, 10);
+        TestUtil.assertArrayEquals(actualElements, expectedElements);
+        assertBinarySearchTree(tree);
     }
 
     private BinaryTree<Integer> getExemplaryBinaryTreeForSafeDelete() {
@@ -524,56 +502,74 @@ public class Chapter12Test {
     @Test
     public void shouldDeleteLeafFromTreeUsingFairTreeDelete() {
         BinaryTree<Integer> tree = getExemplaryBinaryTree();
-        int exemplaryTreeSize = tree.getSize();
 
         BinaryTree.Node<Integer> actualDeletedNode = Chapter12.fairTreeDelete(tree, tree.root.right.left); // a leaf
 
         assertEquals(Integer.valueOf(11), actualDeletedNode.key);
-        assertNull(tree.root.right.left);
-        assertEquals(exemplaryTreeSize - 1, tree.getSize());
+        Array<Integer> actualElements = tree.toArray();
+        Array<Integer> expectedElements = new Array<>(1, 4, 10, 14, 19, 20);
+        TestUtil.assertArrayEquals(actualElements, expectedElements);
+        assertBinarySearchTree(tree);
     }
 
     @Test
     public void shouldDeleteNodeWithOneChildFromTreeUsingFairTreeDelete() {
         BinaryTree<Integer> tree = getExemplaryBinaryTree();
-        int exemplaryTreeSize = tree.getSize();
 
         BinaryTree.Node<Integer> actualDeletedNode = Chapter12.fairTreeDelete(tree, tree.root.left); // a node with one child
 
         assertEquals(Integer.valueOf(4), actualDeletedNode.key);
-        assertNotNull(tree.root.left);
-        assertEquals(Integer.valueOf(1), tree.root.left.key);
-        assertEquals(exemplaryTreeSize - 1, tree.getSize());
+        Array<Integer> actualElements = tree.toArray();
+        Array<Integer> expectedElements = new Array<>(1, 10, 11, 14, 19, 20);
+        TestUtil.assertArrayEquals(actualElements, expectedElements);
+        assertBinarySearchTree(tree);
     }
 
     @Test
     public void shouldDeleteNodeWithTwoChildrenFromTreeUsingFairTreeDeleteBySplicingOutItsPredecessor() {
         BinaryTree<Integer> tree = getExemplaryBinaryTree();
-        int exemplaryTreeSize = tree.getSize();
         mockStatic(Fundamental.class);
         when(Fundamental.random()).thenReturn(0);
+        when(Fundamental.leq(1, 10)).thenReturn(true);
+        when(Fundamental.leq(4, 10)).thenReturn(true);
+        when(Fundamental.leq(1, 4)).thenReturn(true);
+        when(Fundamental.geq(11, 10)).thenReturn(true);
+        when(Fundamental.geq(19, 10)).thenReturn(true);
+        when(Fundamental.geq(20, 10)).thenReturn(true);
+        when(Fundamental.geq(19, 11)).thenReturn(true);
+        when(Fundamental.geq(20, 11)).thenReturn(true);
+        when(Fundamental.geq(20, 19)).thenReturn(true);
 
         BinaryTree.Node<Integer> actualDeletedNode = Chapter12.fairTreeDelete(tree, tree.root.right); // a node with two children (predecessor's key = 11)
 
         assertEquals(Integer.valueOf(11), actualDeletedNode.key);
-        assertNotNull(tree.root.right);
-        assertEquals(Integer.valueOf(11), tree.root.right.key);
-        assertEquals(exemplaryTreeSize - 1, tree.getSize());
+        Array<Integer> actualElements = tree.toArray();
+        Array<Integer> expectedElements = new Array<>(1, 4, 10, 11, 19, 20);
+        TestUtil.assertArrayEquals(actualElements, expectedElements);
+        assertBinarySearchTree(tree);
     }
 
     @Test
     public void shouldDeleteNodeWithTwoChildrenFromTreeUsingFairTreeDeleteBySplicingOutItsSuccessor() {
         BinaryTree<Integer> tree = getExemplaryBinaryTree();
-        int exemplaryTreeSize = tree.getSize();
         mockStatic(Fundamental.class);
         when(Fundamental.random()).thenReturn(1);
+        when(Fundamental.leq(1, 10)).thenReturn(true);
+        when(Fundamental.leq(4, 10)).thenReturn(true);
+        when(Fundamental.leq(1, 4)).thenReturn(true);
+        when(Fundamental.leq(11, 19)).thenReturn(true);
+        when(Fundamental.geq(11, 10)).thenReturn(true);
+        when(Fundamental.geq(19, 10)).thenReturn(true);
+        when(Fundamental.geq(20, 10)).thenReturn(true);
+        when(Fundamental.geq(20, 19)).thenReturn(true);
 
         BinaryTree.Node<Integer> actualDeletedNode = Chapter12.fairTreeDelete(tree, tree.root.right); // a node with two children (successor's key = 19)
 
         assertEquals(Integer.valueOf(19), actualDeletedNode.key);
-        assertNotNull(tree.root.right);
-        assertEquals(Integer.valueOf(19), tree.root.right.key);
-        assertEquals(exemplaryTreeSize - 1, tree.getSize());
+        Array<Integer> actualElements = tree.toArray();
+        Array<Integer> expectedElements = new Array<>(1, 4, 10, 11, 19, 20);
+        TestUtil.assertArrayEquals(actualElements, expectedElements);
+        assertBinarySearchTree(tree);
     }
 
     @Test

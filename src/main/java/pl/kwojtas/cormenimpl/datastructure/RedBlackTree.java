@@ -101,21 +101,31 @@ public class RedBlackTree<E> {
     }
 
     /**
-     * Transforms the red-black to an array.
+     * Transforms the tree to an array.
      *
-     * @return the array containing all the elements in the red-black tree
+     * @return the sorted array containing all the elements in the tree
      */
     public Array<E> toArray() {
-        Array<E> array = Array.withLength(getSize());
-        if (root == nil) {
-            return array;
+        return toArray(root);
+    }
+
+    /**
+     * Transforms the subtree to an array.
+     *
+     * @param x the root of the subtree
+     * @return the sorted array containing all the elements in the subtree rooted in {@code x}
+     */
+    public Array<E> toArray(Node<E> x) {
+        if (x == nil) {
+            return new Array<>();
         }
-        int n = getSize();
-        RedBlackTree.Node<E> x = Chapter13.rbTreeMinimum(this, root);
-        array.set(1, x.key);
+        int n = getSize(x);
+        Array<E> array = Array.withLength(n);
+        RedBlackTree.Node<E> y = Chapter13.rbTreeMinimum(this, x);
+        array.set(1, y.key);
         for (int i = 2; i <= n; i++) {
-            x = Chapter13.rbTreeSuccessor(this, x);
-            array.set(i, x.key);
+            y = Chapter13.rbTreeSuccessor(this, y);
+            array.set(i, y.key);
         }
         return array;
     }

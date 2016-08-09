@@ -266,7 +266,7 @@ public final class Chapter13 {
     }
 
     /**
-     * Returns the node's successor in a non-empty red-black search tree.
+     * Returns the node's successor in a non-empty red-black tree.
      * <p>Chapter 13.</p>
      *
      * @param T   the red-black tree

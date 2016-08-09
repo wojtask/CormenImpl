@@ -130,18 +130,24 @@ public class Chapter13Test {
         assertRedBlackProperty5(tree);
     }
 
-    private <E extends Comparable<? super E>> void assertBinarySearchTree(RedBlackTree<E> tree) {
-        assertBinarySearchTree(tree.root, tree.nil);
+    private <E extends Comparable<? super E>> void assertBinarySearchTree(RedBlackTree<E> T) {
+        assertBinarySearchTree(T, T.root);
     }
 
-    private <E extends Comparable<? super E>> void assertBinarySearchTree(RedBlackTree.Node<E> x, RedBlackTree.Node<E> nil) {
-        if (x.left != nil) {
-            assertTrue(leq(x.left.key, x.key));
-            assertBinarySearchTree(x.left, nil);
+    private <E extends Comparable<? super E>> void assertBinarySearchTree(RedBlackTree<E> T, RedBlackTree.Node<E> x) {
+        if (x.left != T.nil) {
+            Array<E> leftElements = T.toArray(x.left);
+            for (int i = 1; i <= leftElements.length; i++) {
+                assertTrue(leq(leftElements.at(i), x.key));
+            }
+            assertBinarySearchTree(T, x.left);
         }
-        if (x.right != nil) {
-            assertTrue(geq(x.right.key, x.key));
-            assertBinarySearchTree(x.right, nil);
+        if (x.right != T.nil) {
+            Array<E> rightElements = T.toArray(x.right);
+            for (int i = 1; i <= rightElements.length; i++) {
+                assertTrue(geq(rightElements.at(i), x.key));
+            }
+            assertBinarySearchTree(T, x.right);
         }
     }
 
