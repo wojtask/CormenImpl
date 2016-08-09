@@ -79,7 +79,7 @@ public class RedBlackTree<E> {
      * Creates an empty red-black tree.
      */
     public RedBlackTree() {
-        this.root = this.nil = new Node<>();
+        root = nil = new Node<>();
     }
 
     /**
@@ -92,10 +92,49 @@ public class RedBlackTree<E> {
     }
 
     private int getSize(Node<E> x) {
-        if (x == null) {
+        if (x == nil) {
             return 0;
         }
         return 1 + getSize(x.left) + getSize(x.right);
+    }
+
+    /**
+     * Transforms the red-black to an array.
+     *
+     * @return the array containing all the elements in the red-black tree
+     */
+    public Array<E> toArray() {
+        Array<E> array = Array.withLength(getSize());
+        if (root == nil) {
+            return array;
+        }
+        int n = getSize();
+        RedBlackTree.Node<E> x = rbTreeMinimum(root);
+        array.set(1, x.key);
+        for (int i = 2; i <= n; i++) {
+            x = rbTreeSuccessor(x);
+            array.set(i, x.key);
+        }
+        return array;
+    }
+
+    Node<E> rbTreeMinimum(Node<E> x) {
+        while (x.left != nil) {
+            x = x.left;
+        }
+        return x;
+    }
+
+    Node<E> rbTreeSuccessor(Node<E> x) {
+        if (x.right != nil) {
+            return rbTreeMinimum(x.right);
+        }
+        RedBlackTree.Node<E> y = x.p;
+        while (y != nil && x == y.right) {
+            x = y;
+            y = y.p;
+        }
+        return y;
     }
 
 }
