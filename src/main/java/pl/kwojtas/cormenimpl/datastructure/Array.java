@@ -30,8 +30,9 @@ public class Array<E> {
     /**
      * Creates an array from given elements.
      *
-     * @param <E>    the type of elements in the new array
+     * @param <E>      the type of elements in the new array
      * @param elements the initial contents of the array
+     * @return the array containing elements from {@code elements}
      */
     @SafeVarargs
     public static <E> Array<E> of(E... elements) {
@@ -52,7 +53,7 @@ public class Array<E> {
     }
 
     /**
-     * Creates an array of a given length.
+     * Returns an array of a given length.
      *
      * @param length the length of the new array
      * @param <E>    the type of elements in the new array
@@ -64,9 +65,10 @@ public class Array<E> {
     }
 
     /**
-     * Creates an array by copying an existing array.
+     * Returns a copy of an existing array.
      *
      * @param otherArray the array to be copied
+     * @return the copy of {@code otherArray}
      */
     public static <E> Array<E> copyOf(Array<E> otherArray) {
         return new Array<>(otherArray);

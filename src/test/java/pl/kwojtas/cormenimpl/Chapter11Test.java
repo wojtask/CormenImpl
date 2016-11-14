@@ -108,7 +108,7 @@ public class Chapter11Test {
 
     @Test
     public void shouldFindElementInBitVector() {
-        ZeroBasedIndexedArray<Integer> bitVector = new ZeroBasedIndexedArray<>(1, 1, 0, 1, 0);
+        ZeroBasedIndexedArray<Integer> bitVector = ZeroBasedIndexedArray.of(1, 1, 0, 1, 0);
         int key = 3;
 
         int actualFound = Chapter11.bitVectorSearch(bitVector, key);
@@ -118,7 +118,7 @@ public class Chapter11Test {
 
     @Test
     public void shouldNotFindNonexistentElementInBitVector() {
-        ZeroBasedIndexedArray<Integer> bitVector = new ZeroBasedIndexedArray<>(1, 1, 0, 1, 0);
+        ZeroBasedIndexedArray<Integer> bitVector = ZeroBasedIndexedArray.of(1, 1, 0, 1, 0);
         int key = 2;
 
         int actualFound = Chapter11.bitVectorSearch(bitVector, key);
@@ -128,7 +128,7 @@ public class Chapter11Test {
 
     @Test
     public void shouldInsertIntoBitVector() {
-        ZeroBasedIndexedArray<Integer> bitVector = new ZeroBasedIndexedArray<>(1, 1, 0, 1, 0);
+        ZeroBasedIndexedArray<Integer> bitVector = ZeroBasedIndexedArray.of(1, 1, 0, 1, 0);
         int key = 4;
 
         Chapter11.bitVectorInsert(bitVector, key);
@@ -138,7 +138,7 @@ public class Chapter11Test {
 
     @Test
     public void shouldDeleteFromBitVector() {
-        ZeroBasedIndexedArray<Integer> bitVector = new ZeroBasedIndexedArray<>(1, 1, 0, 1, 0);
+        ZeroBasedIndexedArray<Integer> bitVector = ZeroBasedIndexedArray.of(1, 1, 0, 1, 0);
         int key = 1;
 
         Chapter11.bitVectorDelete(bitVector, key);
@@ -547,7 +547,7 @@ public class Chapter11Test {
     public void shouldInsertIntoHashTableWithProbing() {
         HashTableWithOpenAddressing hashTableWithOpenAddressing =
                 HashTableWithOpenAddressing.withLengthAndHashFunction(5, (key, i) -> (key % 5 + i) % 5);
-        hashTableWithOpenAddressing.set(new ZeroBasedIndexedArray<>(35, 51, null, 38, null));
+        hashTableWithOpenAddressing.set(ZeroBasedIndexedArray.of(35, 51, null, 38, null));
         int key = 45;
 
         int actualPosition = Chapter11.hashInsert(hashTableWithOpenAddressing, key);
@@ -560,7 +560,7 @@ public class Chapter11Test {
     public void shouldThrowExceptionWhenInsertingIntoFullHashTableWithProbing() {
         HashTableWithOpenAddressing hashTableWithOpenAddressing =
                 HashTableWithOpenAddressing.withLengthAndHashFunction(5, (key, i) -> (key % 5 + i) % 5);
-        hashTableWithOpenAddressing.set(new ZeroBasedIndexedArray<>(35, 51, 45, 38, 16));
+        hashTableWithOpenAddressing.set(ZeroBasedIndexedArray.of(35, 51, 45, 38, 16));
         int key = 32;
 
         thrown.expect(IllegalStateException.class);
@@ -572,7 +572,7 @@ public class Chapter11Test {
     public void shouldFindElementInHashTableWithProbing() {
         HashTableWithOpenAddressing hashTableWithOpenAddressing =
                 HashTableWithOpenAddressing.withLengthAndHashFunction(5, (key, i) -> (key % 5 + i) % 5);
-        hashTableWithOpenAddressing.set(new ZeroBasedIndexedArray<>(35, 51, 45, 38, null));
+        hashTableWithOpenAddressing.set(ZeroBasedIndexedArray.of(35, 51, 45, 38, null));
         int key = 45;
 
         Integer actualPosition = Chapter11.hashSearch(hashTableWithOpenAddressing, key);
@@ -584,7 +584,7 @@ public class Chapter11Test {
     public void shouldNotFindNonexistentElementInHashTableWithProbing() {
         HashTableWithOpenAddressing hashTableWithOpenAddressing =
                 HashTableWithOpenAddressing.withLengthAndHashFunction(5, (key, i) -> (key % 5 + i) % 5);
-        hashTableWithOpenAddressing.set(new ZeroBasedIndexedArray<>(35, 51, 45, 38, null));
+        hashTableWithOpenAddressing.set(ZeroBasedIndexedArray.of(35, 51, 45, 38, null));
         int key = 26;
 
         Integer actualPosition = Chapter11.hashSearch(hashTableWithOpenAddressing, key);
@@ -596,7 +596,7 @@ public class Chapter11Test {
     public void shouldDeleteFromHashTableWithProbing() {
         HashTableWithOpenAddressing hashTableWithOpenAddressing =
                 HashTableWithOpenAddressing.withLengthAndHashFunction(5, (key, i) -> (key % 5 + i) % 5);
-        hashTableWithOpenAddressing.set(new ZeroBasedIndexedArray<>(35, 51, 45, 38, null));
+        hashTableWithOpenAddressing.set(ZeroBasedIndexedArray.of(35, 51, 45, 38, null));
         int key = 45;
 
         Chapter11.hashDelete(hashTableWithOpenAddressing, key);
@@ -608,7 +608,7 @@ public class Chapter11Test {
     public void shouldNotDeleteNonexistentElementFromHashTableWithProbing() {
         HashTableWithOpenAddressing hashTableWithOpenAddressing =
                 HashTableWithOpenAddressing.withLengthAndHashFunction(5, (key, i) -> (key % 5 + i) % 5);
-        hashTableWithOpenAddressing.set(new ZeroBasedIndexedArray<>(35, 51, 45, 38, 3));
+        hashTableWithOpenAddressing.set(ZeroBasedIndexedArray.of(35, 51, 45, 38, 3));
         int key = 23;
 
         Chapter11.hashDelete(hashTableWithOpenAddressing, key);
@@ -622,7 +622,7 @@ public class Chapter11Test {
     public void shouldInsertIntoHashTableWithProbingUsingHashInsert_() {
         HashTableWithOpenAddressing hashTableWithOpenAddressing =
                 HashTableWithOpenAddressing.withLengthAndHashFunction(5, (key, i) -> (key % 5 + i) % 5);
-        hashTableWithOpenAddressing.set(new ZeroBasedIndexedArray<>(35, 51, DELETED, 38, DELETED));
+        hashTableWithOpenAddressing.set(ZeroBasedIndexedArray.of(35, 51, DELETED, 38, DELETED));
         int key = 45;
 
         int actualPosition = Chapter11.hashInsert_(hashTableWithOpenAddressing, key);
@@ -635,7 +635,7 @@ public class Chapter11Test {
     public void shouldThrowExceptionWhenInsertingIntoFullHashTableWithProbingUsingHashInsert_() {
         HashTableWithOpenAddressing hashTableWithOpenAddressing =
                 HashTableWithOpenAddressing.withLengthAndHashFunction(5, (key, i) -> (key % 5 + i) % 5);
-        hashTableWithOpenAddressing.set(new ZeroBasedIndexedArray<>(35, 51, 45, 38, 16));
+        hashTableWithOpenAddressing.set(ZeroBasedIndexedArray.of(35, 51, 45, 38, 16));
         int key = 32;
 
         thrown.expect(IllegalStateException.class);
@@ -645,7 +645,7 @@ public class Chapter11Test {
 
     @Test
     public void shouldFindElementUsingQuadraticProbing() {
-        ZeroBasedIndexedArray<Integer> hashTable = new ZeroBasedIndexedArray<>(24, null, 34, 35, 51, null, 27, null);
+        ZeroBasedIndexedArray<Integer> hashTable = ZeroBasedIndexedArray.of(24, null, 34, 35, 51, null, 27, null);
         HashFunction h = key -> key % hashTable.length;
         int key = 27;
 
@@ -656,7 +656,7 @@ public class Chapter11Test {
 
     @Test
     public void shouldNotFindNonexistentElementUsingQuadraticProbing() {
-        ZeroBasedIndexedArray<Integer> hashTable = new ZeroBasedIndexedArray<>(24, null, 34, 35, 51, null, 27, null);
+        ZeroBasedIndexedArray<Integer> hashTable = ZeroBasedIndexedArray.of(24, null, 34, 35, 51, null, 27, null);
         HashFunction h = key -> key % hashTable.length;
         int key = 43;
 
@@ -667,7 +667,7 @@ public class Chapter11Test {
 
     @Test
     public void shouldNotFindNonexistentElementInFullHashTableUsingQuadraticProbing() {
-        ZeroBasedIndexedArray<Integer> hashTable = new ZeroBasedIndexedArray<>(24, 9, 34, 35, 51, 13, 27, 20);
+        ZeroBasedIndexedArray<Integer> hashTable = ZeroBasedIndexedArray.of(24, 9, 34, 35, 51, 13, 27, 20);
         HashFunction h = key -> key % hashTable.length;
         int key = 43;
 

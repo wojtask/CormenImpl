@@ -15,7 +15,7 @@ public class ZeroBasedIndexedArrayTest {
     public void shouldCreateZeroBasedIndexedArrayWithInitialContents() {
         String[] contents = new String[]{"aaa", "bbb", "ccc"};
 
-        ZeroBasedIndexedArray<String> zeroBasedIndexedArray = new ZeroBasedIndexedArray<>(contents);
+        ZeroBasedIndexedArray<String> zeroBasedIndexedArray = ZeroBasedIndexedArray.of(contents);
 
         assertEquals(contents.length, zeroBasedIndexedArray.length);
         for (int i = 0; i <= zeroBasedIndexedArray.length - 1; i++) {
@@ -33,7 +33,7 @@ public class ZeroBasedIndexedArrayTest {
 
     @Test
     public void shouldCreateZeroBasedIndexedArrayByCopyingOtherZeroBasedIndexedArray() {
-        ZeroBasedIndexedArray<String> otherZeroBasedIndexedArray = new ZeroBasedIndexedArray<>("aaa", "bbb", "ccc");
+        ZeroBasedIndexedArray<String> otherZeroBasedIndexedArray = ZeroBasedIndexedArray.of("aaa", "bbb", "ccc");
 
         ZeroBasedIndexedArray<String> zeroBasedIndexedArray = new ZeroBasedIndexedArray<>(otherZeroBasedIndexedArray);
 
@@ -45,7 +45,7 @@ public class ZeroBasedIndexedArrayTest {
 
     @Test
     public void shouldReturnElementFromZeroBasedIndexedArray() {
-        ZeroBasedIndexedArray<String> zeroBasedIndexedArray = new ZeroBasedIndexedArray<>("aaa", "bbb", "ccc");
+        ZeroBasedIndexedArray<String> zeroBasedIndexedArray = ZeroBasedIndexedArray.of("aaa", "bbb", "ccc");
 
         String actualElement = zeroBasedIndexedArray.at(2);
 
@@ -54,7 +54,7 @@ public class ZeroBasedIndexedArrayTest {
 
     @Test
     public void shouldThrowExceptionWhenAccessingInvalidPositionInZeroBasedIndexedArray() {
-        ZeroBasedIndexedArray<String> zeroBasedIndexedArray = new ZeroBasedIndexedArray<>("aaa", "bbb", "ccc");
+        ZeroBasedIndexedArray<String> zeroBasedIndexedArray = ZeroBasedIndexedArray.of("aaa", "bbb", "ccc");
 
         thrown.expect(IllegalStateException.class);
         thrown.expectMessage("Array index out of bound");
@@ -63,7 +63,7 @@ public class ZeroBasedIndexedArrayTest {
 
     @Test
     public void shouldSetElementInZeroBasedIndexedArray() {
-        ZeroBasedIndexedArray<String> zeroBasedIndexedArray = new ZeroBasedIndexedArray<>("aaa", "bbb", "ccc");
+        ZeroBasedIndexedArray<String> zeroBasedIndexedArray = ZeroBasedIndexedArray.of("aaa", "bbb", "ccc");
         String newElement = "xyz";
 
         zeroBasedIndexedArray.set(0, newElement);
@@ -73,7 +73,7 @@ public class ZeroBasedIndexedArrayTest {
 
     @Test
     public void shouldThrowExceptionWhenSettingOnInvalidPositionInZeroBasedIndexedArray() {
-        ZeroBasedIndexedArray<String> zeroBasedIndexedArray = new ZeroBasedIndexedArray<>("aaa", "bbb", "ccc");
+        ZeroBasedIndexedArray<String> zeroBasedIndexedArray = ZeroBasedIndexedArray.of("aaa", "bbb", "ccc");
 
         thrown.expect(IllegalStateException.class);
         thrown.expectMessage("Array index out of bound");
@@ -82,7 +82,7 @@ public class ZeroBasedIndexedArrayTest {
 
     @Test
     public void shouldSetZeroBasedIndexedArrayContentsByCopyingOtherZeroBasedIndexedArray() {
-        ZeroBasedIndexedArray<String> otherZeroBasedIndexedArray = new ZeroBasedIndexedArray<>("aaa", "bbb", "ccc");
+        ZeroBasedIndexedArray<String> otherZeroBasedIndexedArray = ZeroBasedIndexedArray.of("aaa", "bbb", "ccc");
         ZeroBasedIndexedArray<String> zeroBasedIndexedArray = ZeroBasedIndexedArray.withLength(otherZeroBasedIndexedArray.length);
 
         zeroBasedIndexedArray.set(otherZeroBasedIndexedArray);
@@ -96,7 +96,7 @@ public class ZeroBasedIndexedArrayTest {
     @Test
     public void shouldSetZeroBasedIndexedArrayContentsByCopyingItself() {
         String[] contents = new String[]{"aaa", "bbb", "ccc"};
-        ZeroBasedIndexedArray<String> zeroBasedIndexedArray = new ZeroBasedIndexedArray<>(contents);
+        ZeroBasedIndexedArray<String> zeroBasedIndexedArray = ZeroBasedIndexedArray.of(contents);
 
         zeroBasedIndexedArray.set(zeroBasedIndexedArray);
 
@@ -108,7 +108,7 @@ public class ZeroBasedIndexedArrayTest {
 
     @Test
     public void shouldExchangeTwoElementsInZeroBasedIndexedArray() {
-        ZeroBasedIndexedArray<String> zeroBasedIndexedArray = new ZeroBasedIndexedArray<>("aaa", "bbb", "ccc");
+        ZeroBasedIndexedArray<String> zeroBasedIndexedArray = ZeroBasedIndexedArray.of("aaa", "bbb", "ccc");
 
         zeroBasedIndexedArray.exch(0, 2);
 

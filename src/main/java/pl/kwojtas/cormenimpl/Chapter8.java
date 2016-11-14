@@ -330,7 +330,7 @@ public final class Chapter8 {
         for (int i = 1; i <= k; i++) {
             C.set(i, C.at(i) + C.at(i - 1));
         }
-        ZeroBasedIndexedArray<Integer> C_ = new ZeroBasedIndexedArray<>(C);
+        ZeroBasedIndexedArray<Integer> C_ = ZeroBasedIndexedArray.copyOf(C);
         int i = 1;
         while (i <= A.length - 1) {
             int key = A.at(i);

@@ -209,7 +209,7 @@ public class Chapter2Test {
 
     @Test
     public void shouldEvaluatePolynomialUsingHornersRule() {
-        ZeroBasedIndexedArray<Double> coefficients = new ZeroBasedIndexedArray<>(-1.5, 3.2, 1.6, 3.4, -5.0, 0.0, -1.0, 1.0);
+        ZeroBasedIndexedArray<Double> coefficients = ZeroBasedIndexedArray.of(-1.5, 3.2, 1.6, 3.4, -5.0, 0.0, -1.0, 1.0);
         double x = -2.0;
         double expectedResult = -300.7;
         double delta = 1e-15;
@@ -221,7 +221,7 @@ public class Chapter2Test {
 
     @Test
     public void shouldEvaluatePolynomialNaively() {
-        ZeroBasedIndexedArray<Double> coefficients = new ZeroBasedIndexedArray<>(-1.5, 3.2, 1.6, 3.4, -5.0, 0.0, -1.0, 1.0);
+        ZeroBasedIndexedArray<Double> coefficients = ZeroBasedIndexedArray.of(-1.5, 3.2, 1.6, 3.4, -5.0, 0.0, -1.0, 1.0);
         double x = -2.0;
         double expectedResult = -300.7;
         double delta = 1e-15;
