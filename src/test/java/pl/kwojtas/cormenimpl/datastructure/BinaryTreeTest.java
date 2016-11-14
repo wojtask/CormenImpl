@@ -48,8 +48,7 @@ public class BinaryTreeTest {
 
         Array<String> actualArray = tree.toArray();
 
-        Array<String> expectedArray = Array.of();
-        assertArrayEquals(expectedArray, actualArray);
+        assertArrayEquals(Array.emptyArray(), actualArray);
     }
 
 }

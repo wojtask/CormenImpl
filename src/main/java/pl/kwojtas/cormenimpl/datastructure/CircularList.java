@@ -75,7 +75,7 @@ public class CircularList<E> extends SinglyLinkedList<E> {
      */
     public Array<E> toArray() {
         if (head == null) {
-            return Array.of();
+            return Array.emptyArray();
         }
         Array<E> array = Array.withLength(getLength());
         array.set(1, head.key);

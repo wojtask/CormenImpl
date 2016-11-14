@@ -48,7 +48,7 @@ public class PriorityQueueWithRanks<E> extends Heap<PriorityQueueWithRanks.KeyWi
      * @param initialLength an initial length of the priority queue
      */
     public PriorityQueueWithRanks(int initialLength) {
-        super(Array.of(), initialLength);
+        super(Array.emptyArray(), initialLength);
         currentRank = 1;
     }
 
