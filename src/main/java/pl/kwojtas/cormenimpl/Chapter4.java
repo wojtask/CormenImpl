@@ -94,7 +94,7 @@ public final class Chapter4 {
                 oddRows.at(i / 2).set(j, A.at(i).at(j));
             }
         }
-        Array<Array<Double>> A_ = new Array<>(oddRows);
+        Array<Array<Double>> A_ = Array.copyOf(oddRows);
         return mongeLeftmostMinimaIndices(A_);
     }
 

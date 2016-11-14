@@ -56,9 +56,9 @@ public class MultipleArrayList<E> {
      * @param otherList the list to be copied
      */
     public MultipleArrayList(MultipleArrayList<E> otherList) {
-        next = new Array<>(otherList.next);
-        key = new Array<>(otherList.key);
-        prev = new Array<>(otherList.prev);
+        next = Array.copyOf(otherList.next);
+        key = Array.copyOf(otherList.key);
+        prev = Array.copyOf(otherList.prev);
         L = otherList.L;
         free = otherList.free;
     }

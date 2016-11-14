@@ -412,7 +412,7 @@ public final class Chapter9 {
     }
 
     private static <E extends Comparable<? super E>> void partitionAroundMedianWithWeights(Array<E> A, Array<Double> w, int p, int r) {
-        E x = select(new Array<>(A), p, r, (p + r) / 2);
+        E x = select(Array.copyOf(A), p, r, (p + r) / 2);
         int q = p;
         while (!A.at(q).equals(x)) {
             q++;
@@ -439,8 +439,8 @@ public final class Chapter9 {
             X.set(i, A.at(i).x);
             Y.set(i, A.at(i).y);
         }
-        double xp = weightedMedian(X, new Array<>(w), 1, n);
-        double yp = weightedMedian(Y, new Array<>(w), 1, n);
+        double xp = weightedMedian(X, Array.copyOf(w), 1, n);
+        double yp = weightedMedian(Y, Array.copyOf(w), 1, n);
         return new Point2D(xp, yp);
     }
 

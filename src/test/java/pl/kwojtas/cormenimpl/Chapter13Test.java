@@ -91,7 +91,7 @@ public class Chapter13Test {
         Chapter13.rbInsert(tree, newNode);
 
         assertRedBlackTree(tree);
-        Array<Integer> expectedElements = new Array<>(15);
+        Array<Integer> expectedElements = Array.of(15);
         Array<Integer> actualElements = tree.toArray();
         assertArrayEquals(expectedElements, actualElements);
     }
@@ -104,7 +104,7 @@ public class Chapter13Test {
         Chapter13.rbInsert(tree, newNode);
 
         assertRedBlackTree(tree);
-        Array<Integer> expectedElements = new Array<>(1, 2, 4, 5, 7, 9, 11, 14, 15);
+        Array<Integer> expectedElements = Array.of(1, 2, 4, 5, 7, 9, 11, 14, 15);
         Array<Integer> actualElements = tree.toArray();
         assertArrayEquals(expectedElements, actualElements);
     }
@@ -117,7 +117,7 @@ public class Chapter13Test {
         Chapter13.rbInsert(tree, newNode);
 
         assertRedBlackTree(tree);
-        Array<Integer> expectedElements = new Array<>(1, 3, 7, 9, 13, 14, 15, 16, 18);
+        Array<Integer> expectedElements = Array.of(1, 3, 7, 9, 13, 14, 15, 16, 18);
         Array<Integer> actualElements = tree.toArray();
         assertArrayEquals(expectedElements, actualElements);
     }
@@ -195,7 +195,7 @@ public class Chapter13Test {
         RedBlackTree.Node<Integer> actualDeletedNode = Chapter13.rbDelete(tree, tree.root.left.right.left); // a leaf
 
         assertRedBlackTree(tree);
-        Array<Integer> expectedElements = new Array<>(1, 2, 7, 9, 11, 14, 15);
+        Array<Integer> expectedElements = Array.of(1, 2, 7, 9, 11, 14, 15);
         Array<Integer> actualElements = tree.toArray();
         assertArrayEquals(expectedElements, actualElements);
         assertEquals(Integer.valueOf(5), actualDeletedNode.key);
@@ -208,7 +208,7 @@ public class Chapter13Test {
         RedBlackTree.Node<Integer> actualDeletedNode = Chapter13.rbDelete(tree, tree.root.right); // a node with one child
 
         assertRedBlackTree(tree);
-        Array<Integer> expectedElements = new Array<>(1, 2, 5, 7, 9, 11, 15);
+        Array<Integer> expectedElements = Array.of(1, 2, 5, 7, 9, 11, 15);
         Array<Integer> actualElements = tree.toArray();
         assertArrayEquals(expectedElements, actualElements);
         assertEquals(Integer.valueOf(14), actualDeletedNode.key);
@@ -221,7 +221,7 @@ public class Chapter13Test {
         RedBlackTree.Node<Integer> actualDeletedNode = Chapter13.rbDelete(tree, tree.root.left); // a node with two children (successor's key = 5)
 
         assertRedBlackTree(tree);
-        Array<Integer> expectedElements = new Array<>(1, 5, 7, 9, 11, 14, 15);
+        Array<Integer> expectedElements = Array.of(1, 5, 7, 9, 11, 14, 15);
         Array<Integer> actualElements = tree.toArray();
         assertArrayEquals(expectedElements, actualElements);
         assertEquals(Integer.valueOf(5), actualDeletedNode.key);
@@ -234,7 +234,7 @@ public class Chapter13Test {
         RedBlackTree.Node<Integer> actualDeletedNode = Chapter13.rbDelete(tree, tree.root.left.right); // a node with two children (successor's key = 9)
 
         assertRedBlackTree(tree);
-        Array<Integer> expectedElements = new Array<>(1, 2, 5, 9, 11, 14, 15);
+        Array<Integer> expectedElements = Array.of(1, 2, 5, 9, 11, 14, 15);
         Array<Integer> actualElements = tree.toArray();
         assertArrayEquals(expectedElements, actualElements);
         assertEquals(Integer.valueOf(9), actualDeletedNode.key);

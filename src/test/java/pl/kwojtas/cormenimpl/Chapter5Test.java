@@ -43,8 +43,8 @@ public class Chapter5Test {
 
     @Test
     public void shouldPermuteArrayBySorting() {
-        Array<Integer> array = new Array<>(5, 7, 9, 2, 6, 8, 6, 6, 3, 1, 7, 8);
-        Array<Integer> original = new Array<>(array);
+        Array<Integer> array = Array.of(5, 7, 9, 2, 6, 8, 6, 6, 3, 1, 7, 8);
+        Array<Integer> original = Array.copyOf(array);
 
         Chapter5.permuteBySorting(array);
 
@@ -53,8 +53,8 @@ public class Chapter5Test {
 
     @Test
     public void shouldRandomizeArrayInPlace() {
-        Array<Integer> array = new Array<>(5, 7, 9, 2, 6, 8, 6, 6, 3, 1, 7, 8);
-        Array<Integer> original = new Array<>(array);
+        Array<Integer> array = Array.of(5, 7, 9, 2, 6, 8, 6, 6, 3, 1, 7, 8);
+        Array<Integer> original = Array.copyOf(array);
 
         Chapter5.randomizeInPlace(array);
 
@@ -63,8 +63,8 @@ public class Chapter5Test {
 
     @Test
     public void shouldRandomizeArrayInPlaceUsingAlternativeMethod() {
-        Array<Integer> array = new Array<>(5, 7, 9, 2, 6, 8, 6, 6, 3, 1, 7, 8);
-        Array<Integer> original = new Array<>(array);
+        Array<Integer> array = Array.of(5, 7, 9, 2, 6, 8, 6, 6, 3, 1, 7, 8);
+        Array<Integer> original = Array.copyOf(array);
 
         Chapter5.randomizeInPlace_(array);
 
@@ -73,8 +73,8 @@ public class Chapter5Test {
 
     @Test
     public void shouldPermuteArrayUniformlyBySorting() {
-        Array<Integer> array = new Array<>(5, 7, 9, 2, 6, 8, 6, 6, 3, 1, 7, 8);
-        Array<Integer> original = new Array<>(array);
+        Array<Integer> array = Array.of(5, 7, 9, 2, 6, 8, 6, 6, 3, 1, 7, 8);
+        Array<Integer> original = Array.copyOf(array);
 
         Chapter5.permuteUniformlyBySorting(array);
 
@@ -83,8 +83,8 @@ public class Chapter5Test {
 
     @Test
     public void shouldFindKeyUsingRandomSearch() {
-        Array<Integer> array = new Array<>(5, 7, 9, 2, 6, 8, 6, 6, 3, 1, 7, 8);
-        Array<Integer> original = new Array<>(array);
+        Array<Integer> array = Array.of(5, 7, 9, 2, 6, 8, 6, 6, 3, 1, 7, 8);
+        Array<Integer> original = Array.copyOf(array);
         int key = 6;
 
         Integer actualIndex = Chapter5.randomSearch(array, key);
@@ -96,7 +96,7 @@ public class Chapter5Test {
 
     @Test
     public void shouldNotFindNonexistentKeyUsingRandomSearch() {
-        Array<Integer> array = new Array<>(5, 7, 9, 2, 6, 8, 6, 6, 3, 1, 7, 8);
+        Array<Integer> array = Array.of(5, 7, 9, 2, 6, 8, 6, 6, 3, 1, 7, 8);
         int key = 4;
 
         Integer actualIndex = Chapter5.randomSearch(array, key);

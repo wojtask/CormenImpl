@@ -47,7 +47,7 @@ public class Heap<E> extends Array<E> {
      * @return the empty heap with an underlying array of length {@code length}
      */
     public static <E> Heap<E> withLength(int length) {
-        return new Heap<>(new Array<>(), length);
+        return new Heap<>(Array.of(), length);
     }
 
 }

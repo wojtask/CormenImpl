@@ -38,7 +38,7 @@ public class BinaryTreeTest {
 
         Array<String> actualArray = tree.toArray();
 
-        Array<String> expectedArray = new Array<>("1", "2", "3", "4");
+        Array<String> expectedArray = Array.of("1", "2", "3", "4");
         assertArrayEquals(expectedArray, actualArray);
     }
 
@@ -48,7 +48,7 @@ public class BinaryTreeTest {
 
         Array<String> actualArray = tree.toArray();
 
-        Array<String> expectedArray = new Array<>();
+        Array<String> expectedArray = Array.of();
         assertArrayEquals(expectedArray, actualArray);
     }
 

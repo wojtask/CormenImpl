@@ -71,7 +71,7 @@ public class ListTest {
 
         Array<String> actualArray = list.toArray();
 
-        assertArrayEquals(new Array<>(contents), actualArray);
+        assertArrayEquals(Array.of(contents), actualArray);
     }
 
 }

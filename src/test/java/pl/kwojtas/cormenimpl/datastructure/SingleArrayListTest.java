@@ -10,7 +10,7 @@ public class SingleArrayListTest {
 
     @Test
     public void shouldCreateSingleArrayList() {
-        Array<Integer> A = new Array<>(100, 10, 4, 200, 1, null, 300, null, 13, 400, 13, 1, 500, 7, 10);
+        Array<Integer> A = Array.of(100, 10, 4, 200, 1, null, 300, null, 13, 400, 13, 1, 500, 7, 10);
         Integer L = 4;
 
         SingleArrayList singleArrayList = new SingleArrayList(A, L, null);

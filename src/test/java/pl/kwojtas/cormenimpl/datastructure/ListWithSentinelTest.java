@@ -72,7 +72,7 @@ public class ListWithSentinelTest {
 
         Array<String> actualArray = listWithSentinel.toArray();
 
-        assertArrayEquals(new Array<>(contents), actualArray);
+        assertArrayEquals(Array.of(contents), actualArray);
     }
 
 }

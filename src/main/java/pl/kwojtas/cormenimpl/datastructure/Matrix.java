@@ -73,7 +73,7 @@ public class Matrix<E> {
         if (row < 1 || row > rows) {
             throw new IllegalStateException("Row index out of bound");
         }
-        return new Array<>(data[row - 1]);
+        return Array.of(data[row - 1]);
     }
 
     /**

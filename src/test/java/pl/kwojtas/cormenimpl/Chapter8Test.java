@@ -25,8 +25,8 @@ public class Chapter8Test {
 
     @Test
     public void shouldSortArrayUsingCountingSort() {
-        Array<Integer> array = new Array<>(6, 0, 2, 0, 1, 3, 4, 6, 1, 3, 2);
-        Array<Integer> original = new Array<>(array);
+        Array<Integer> array = Array.of(6, 0, 2, 0, 1, 3, 4, 6, 1, 3, 2);
+        Array<Integer> original = Array.copyOf(array);
         Array<Integer> actualSorted = Array.withLength(array.length);
         int boundary = 6;
 
@@ -38,8 +38,8 @@ public class Chapter8Test {
 
     @Test
     public void shouldSortArrayUsingNonStableCountingSort() {
-        Array<Integer> array = new Array<>(6, 0, 2, 0, 1, 3, 4, 6, 1, 3, 2);
-        Array<Integer> original = new Array<>(array);
+        Array<Integer> array = Array.of(6, 0, 2, 0, 1, 3, 4, 6, 1, 3, 2);
+        Array<Integer> original = Array.copyOf(array);
         Array<Integer> actualSorted = Array.withLength(array.length);
         int boundary = 6;
 
@@ -51,8 +51,8 @@ public class Chapter8Test {
 
     @Test
     public void shouldCountNumbersInRangeBeingEntirelyOutsideArray() {
-        Array<Integer> array = new Array<>(6, 0, 2, 0, 1, 3, 4, 6, 1, 3, 2);
-        Array<Integer> original = new Array<>(array);
+        Array<Integer> array = Array.of(6, 0, 2, 0, 1, 3, 4, 6, 1, 3, 2);
+        Array<Integer> original = Array.copyOf(array);
         int boundary = 6;
         int a = -2;
         int b = -1;
@@ -64,8 +64,8 @@ public class Chapter8Test {
 
     @Test
     public void shouldCountNumbersInRangeBeingEntirelyInsideArray() {
-        Array<Integer> array = new Array<>(6, 0, 2, 0, 1, 3, 4, 6, 1, 3, 2);
-        Array<Integer> original = new Array<>(array);
+        Array<Integer> array = Array.of(6, 0, 2, 0, 1, 3, 4, 6, 1, 3, 2);
+        Array<Integer> original = Array.copyOf(array);
         int boundary = 6;
         int a = 1;
         int b = 5;
@@ -77,8 +77,8 @@ public class Chapter8Test {
 
     @Test
     public void shouldCountNumbersInRangeWithLowerBoundOutsideArray() {
-        Array<Integer> array = new Array<>(6, 0, 2, 0, 1, 3, 4, 6, 1, 3, 2);
-        Array<Integer> original = new Array<>(array);
+        Array<Integer> array = Array.of(6, 0, 2, 0, 1, 3, 4, 6, 1, 3, 2);
+        Array<Integer> original = Array.copyOf(array);
         int boundary = 6;
         int a = -2;
         int b = 3;
@@ -90,8 +90,8 @@ public class Chapter8Test {
 
     @Test
     public void shouldCountNumbersInRangeWithUpperBoundOutsideArray() {
-        Array<Integer> array = new Array<>(6, 0, 2, 0, 1, 3, 4, 6, 1, 3, 2);
-        Array<Integer> original = new Array<>(array);
+        Array<Integer> array = Array.of(6, 0, 2, 0, 1, 3, 4, 6, 1, 3, 2);
+        Array<Integer> original = Array.copyOf(array);
         int boundary = 6;
         int a = 3;
         int b = 12;
@@ -103,8 +103,8 @@ public class Chapter8Test {
 
     @Test
     public void shouldCountNumbersInRangeWithBoundsOutsideArray() {
-        Array<Integer> array = new Array<>(6, 0, 2, 0, 1, 3, 4, 6, 1, 3, 2);
-        Array<Integer> original = new Array<>(array);
+        Array<Integer> array = Array.of(6, 0, 2, 0, 1, 3, 4, 6, 1, 3, 2);
+        Array<Integer> original = Array.copyOf(array);
         int boundary = 6;
         int a = -4;
         int b = 16;
@@ -126,8 +126,8 @@ public class Chapter8Test {
 
     @Test
     public void shouldSortArrayUsingRadixSort() {
-        Array<Integer> array = new Array<>(24015, 44036, 14014, 62027, 55033, 19012, 63032);
-        Array<Integer> original = new Array<>(array);
+        Array<Integer> array = Array.of(24015, 44036, 14014, 62027, 55033, 19012, 63032);
+        Array<Integer> original = Array.copyOf(array);
         int digits = 5;
 
         Chapter8.radixSort(array, digits);
@@ -138,8 +138,8 @@ public class Chapter8Test {
 
     @Test
     public void shouldSortNNumbersLessThanNSquare() {
-        Array<Integer> array = new Array<>(15, 56, 25, 66, 23, 92, 2, 45, 7, 39);
-        Array<Integer> original = new Array<>(array);
+        Array<Integer> array = Array.of(15, 56, 25, 66, 23, 92, 2, 45, 7, 39);
+        Array<Integer> original = Array.copyOf(array);
 
         Chapter8.lessThanSquareSort(array);
 
@@ -149,8 +149,8 @@ public class Chapter8Test {
 
     @Test
     public void shouldSortArrayUsingBucketSort() {
-        Array<Double> array = new Array<>(.15, .92, .56, .25, .66, .23, .9, .2, .45, .7, .39, .99, .3, .01, .33, .91, .65, .33, .21, .67, .16, .22);
-        Array<Double> original = new Array<>(array);
+        Array<Double> array = Array.of(.15, .92, .56, .25, .66, .23, .9, .2, .45, .7, .39, .99, .3, .01, .33, .91, .65, .33, .21, .67, .16, .22);
+        Array<Double> original = Array.copyOf(array);
 
         Chapter8.bucketSort(array);
 
@@ -160,11 +160,11 @@ public class Chapter8Test {
 
     @Test
     public void shouldSortPointsInUnitCircle() {
-        Array<Point2D> array = new Array<>(new Point2D(.15, .79), new Point2D(.92, .16), new Point2D(.56, .06), new Point2D(.25, .33),
+        Array<Point2D> array = Array.of(new Point2D(.15, .79), new Point2D(.92, .16), new Point2D(.56, .06), new Point2D(.25, .33),
                 new Point2D(.66, .15), new Point2D(.23, .81), new Point2D(.69, .72), new Point2D(.2, .37), new Point2D(.45, .88),
                 new Point2D(.7, .07), new Point2D(.39, .55), new Point2D(.99, .04), new Point2D(.3, .49), new Point2D(.01, .68),
                 new Point2D(.33, .08), new Point2D(.91, .4));
-        Array<Point2D> original = new Array<>(array);
+        Array<Point2D> original = Array.copyOf(array);
 
         Chapter8.pointsSort(array);
 
@@ -178,8 +178,8 @@ public class Chapter8Test {
 
     @Test
     public void shouldSortArrayUsingBitwiseSort() {
-        Array<Integer> array = new Array<>(1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 0);
-        Array<Integer> original = new Array<>(array);
+        Array<Integer> array = Array.of(1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 0);
+        Array<Integer> original = Array.copyOf(array);
 
         Chapter8.bitwiseSort(array);
 
@@ -189,8 +189,8 @@ public class Chapter8Test {
 
     @Test
     public void shouldSortArrayUsingCountingSortInPlace() {
-        Array<Integer> array = new Array<>(7, 1, 3, 1, 2, 4, 5, 7, 2, 4, 3);
-        Array<Integer> original = new Array<>(array);
+        Array<Integer> array = Array.of(7, 1, 3, 1, 2, 4, 5, 7, 2, 4, 3);
+        Array<Integer> original = Array.copyOf(array);
         int boundary = 7;
 
         Chapter8.countingSortInPlace(array, boundary);
@@ -201,8 +201,8 @@ public class Chapter8Test {
 
     @Test
     public void shouldSortVariableLengthIntegers() {
-        Array<Integer> array = new Array<>(235, -510207, 455, 0, 90199239, 317, 63534, -102, 301, 42342352, -100234, -231, -331, -66, 1, 3002, -1123581321);
-        Array<Integer> original = new Array<>(array);
+        Array<Integer> array = Array.of(235, -510207, 455, 0, 90199239, 317, 63534, -102, 301, 42342352, -100234, -231, -331, -66, 1, 3002, -1123581321);
+        Array<Integer> original = Array.copyOf(array);
 
         Chapter8.variableLengthIntegersSort(array);
 
@@ -212,8 +212,8 @@ public class Chapter8Test {
 
     @Test
     public void shouldSortVariableLengthNonnegativeIntegers() {
-        Array<Integer> array = new Array<>(44456, 23, 86734563, 222414667, 3, 235, 5666642, 3425, 80033, 234252566, 11, 900, 559311146, 1123451255, 3, 2341);
-        Array<Integer> original = new Array<>(array);
+        Array<Integer> array = Array.of(44456, 23, 86734563, 222414667, 3, 235, 5666642, 3425, 80033, 234252566, 11, 900, 559311146, 1123451255, 3, 2341);
+        Array<Integer> original = Array.copyOf(array);
 
         Chapter8.variableLengthIntegersSort(array);
 
@@ -223,9 +223,9 @@ public class Chapter8Test {
 
     @Test
     public void shouldSortVariableLengthStrings() {
-        Array<String> array = new Array<>("lorem", "ipsum", "dolor", "sit", "amet", "consectetur", "adipiscing", "elit", "sed", "do",
+        Array<String> array = Array.of("lorem", "ipsum", "dolor", "sit", "amet", "consectetur", "adipiscing", "elit", "sed", "do",
                 "eiusmod", "tempor", "incididunt", "ut", "labore", "et", "dolore", "magna", "aliqua");
-        Array<String> original = new Array<>(array);
+        Array<String> original = Array.copyOf(array);
 
         Chapter8.variableLengthStringsSort(array, 1);
 
@@ -235,10 +235,10 @@ public class Chapter8Test {
 
     @Test
     public void shouldGroupJugsUsingJugsGroup() {
-        Array<Double> jugs1 = new Array<>(5.0, 7.0, 9.0, 2.0, 6.0, 8.0, 6.0, 6.0, 3.0, 1.0, 7.0, 8.0);
-        Array<Double> jugs2 = new Array<>(6.0, 5.0, 9.0, 7.0, 3.0, 8.0, 2.0, 6.0, 8.0, 6.0, 7.0, 1.0);
-        Array<Double> originalJugs1 = new Array<>(jugs1);
-        Array<Double> originalJugs2 = new Array<>(jugs2);
+        Array<Double> jugs1 = Array.of(5.0, 7.0, 9.0, 2.0, 6.0, 8.0, 6.0, 6.0, 3.0, 1.0, 7.0, 8.0);
+        Array<Double> jugs2 = Array.of(6.0, 5.0, 9.0, 7.0, 3.0, 8.0, 2.0, 6.0, 8.0, 6.0, 7.0, 1.0);
+        Array<Double> originalJugs1 = Array.copyOf(jugs1);
+        Array<Double> originalJugs2 = Array.copyOf(jugs2);
 
         Chapter8.jugsGroup(jugs1, jugs2);
 
@@ -251,10 +251,10 @@ public class Chapter8Test {
 
     @Test
     public void shouldGroupJugsUsingJugsSort() {
-        Array<Double> jugs1 = new Array<>(5.0, 7.0, 9.0, 2.0, 6.0, 8.0, 6.0, 6.0, 3.0, 1.0, 7.0, 8.0);
-        Array<Double> jugs2 = new Array<>(6.0, 5.0, 9.0, 7.0, 3.0, 8.0, 2.0, 6.0, 8.0, 6.0, 7.0, 1.0);
-        Array<Double> originalJugs1 = new Array<>(jugs1);
-        Array<Double> originalJugs2 = new Array<>(jugs2);
+        Array<Double> jugs1 = Array.of(5.0, 7.0, 9.0, 2.0, 6.0, 8.0, 6.0, 6.0, 3.0, 1.0, 7.0, 8.0);
+        Array<Double> jugs2 = Array.of(6.0, 5.0, 9.0, 7.0, 3.0, 8.0, 2.0, 6.0, 8.0, 6.0, 7.0, 1.0);
+        Array<Double> originalJugs1 = Array.copyOf(jugs1);
+        Array<Double> originalJugs2 = Array.copyOf(jugs2);
 
         Chapter8.jugsMatch(jugs1, jugs2, 1, jugs1.length);
 
@@ -267,8 +267,8 @@ public class Chapter8Test {
 
     @Test
     public void shouldRearrangeArrayByAverages() {
-        Array<Integer> array = new Array<>(5, 7, 9, 2, 6, 8, 6, 6, 3, 1, 7, 8);
-        Array<Integer> original = new Array<>(array);
+        Array<Integer> array = Array.of(5, 7, 9, 2, 6, 8, 6, 6, 3, 1, 7, 8);
+        Array<Integer> original = Array.copyOf(array);
         int k = 6;
 
         Chapter8.averageSort(array, k, 1, array.length);

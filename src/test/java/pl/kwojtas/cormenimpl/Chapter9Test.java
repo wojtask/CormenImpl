@@ -39,8 +39,8 @@ public class Chapter9Test {
 
     @Test
     public void shouldFindMinimum() {
-        Array<Integer> array = new Array<>(5, 7, 9, 2, 6, 8, 6, 6, 3, 1, 7, 8);
-        Array<Integer> original = new Array<>(array);
+        Array<Integer> array = Array.of(5, 7, 9, 2, 6, 8, 6, 6, 3, 1, 7, 8);
+        Array<Integer> original = Array.copyOf(array);
 
         int actualMinimum = Chapter9.minimum(array);
 
@@ -51,8 +51,8 @@ public class Chapter9Test {
 
     @Test
     public void shouldFindMinimumAndMaximumForArrayOfEvenSize() {
-        Array<Integer> array = new Array<>(5, 7, 9, 2, 6, 8, 6, 6, 3, 1, 7, 8);
-        Array<Integer> original = new Array<>(array);
+        Array<Integer> array = Array.of(5, 7, 9, 2, 6, 8, 6, 6, 3, 1, 7, 8);
+        Array<Integer> original = Array.copyOf(array);
 
         Pair<Integer, Integer> actualMinimumMaximum = Chapter9.minimumMaximum(array);
 
@@ -65,8 +65,8 @@ public class Chapter9Test {
 
     @Test
     public void shouldFindMinimumAndMaximumForArrayOfEvenSize2() {
-        Array<Integer> array = new Array<>(7, 5, 2, 9, 6, 8, 6, 6, 3, 1, 7, 8);
-        Array<Integer> original = new Array<>(array);
+        Array<Integer> array = Array.of(7, 5, 2, 9, 6, 8, 6, 6, 3, 1, 7, 8);
+        Array<Integer> original = Array.copyOf(array);
 
         Pair<Integer, Integer> actualMinimumMaximum = Chapter9.minimumMaximum(array);
 
@@ -79,8 +79,8 @@ public class Chapter9Test {
 
     @Test
     public void shouldFindMinimumAndMaximumForArrayOfOddSize() {
-        Array<Integer> array = new Array<>(3, 5, 2, 6, 6, 5, 1, 8, 9, 4, 7, 4, 2);
-        Array<Integer> original = new Array<>(array);
+        Array<Integer> array = Array.of(3, 5, 2, 6, 6, 5, 1, 8, 9, 4, 7, 4, 2);
+        Array<Integer> original = Array.copyOf(array);
 
         Pair<Integer, Integer> actualMinimumMaximum = Chapter9.minimumMaximum(array);
 
@@ -93,8 +93,8 @@ public class Chapter9Test {
 
     @Test
     public void shouldFindOrderStatisticUsingRandomizedSelectAtTheFirstRecursionLevel() {
-        Array<Integer> array = new Array<>(5, 7, 9, 2, 6, 8, 6, 6, 3, 1, 7, 8);
-        Array<Integer> original = new Array<>(array);
+        Array<Integer> array = Array.of(5, 7, 9, 2, 6, 8, 6, 6, 3, 1, 7, 8);
+        Array<Integer> original = Array.copyOf(array);
         int order = 4;
         mockStatic(Chapter5.class);
         when(Chapter5.random(1, array.length)).thenReturn(1);
@@ -106,8 +106,8 @@ public class Chapter9Test {
 
     @Test
     public void shouldFindOrderStatisticUsingRandomizedSelectByCallingItRecursively() {
-        Array<Integer> array = new Array<>(5, 7, 9, 2, 6, 8, 6, 6, 3, 1, 7, 8);
-        Array<Integer> original = new Array<>(array);
+        Array<Integer> array = Array.of(5, 7, 9, 2, 6, 8, 6, 6, 3, 1, 7, 8);
+        Array<Integer> original = Array.copyOf(array);
         int order = 8;
         mockStatic(Chapter5.class);
         when(Chapter5.random(1, array.length)).thenReturn(5);
@@ -135,8 +135,8 @@ public class Chapter9Test {
 
     @Test
     public void shouldFindOrderStatisticUsingIterativeRandomizedSelectAtTheFirstAttempt() {
-        Array<Integer> array = new Array<>(5, 7, 9, 2, 6, 8, 6, 6, 3, 1, 7, 8);
-        Array<Integer> original = new Array<>(array);
+        Array<Integer> array = Array.of(5, 7, 9, 2, 6, 8, 6, 6, 3, 1, 7, 8);
+        Array<Integer> original = Array.copyOf(array);
         int order = 4;
         mockStatic(Chapter5.class);
         when(Chapter5.random(1, array.length)).thenReturn(1);
@@ -148,8 +148,8 @@ public class Chapter9Test {
 
     @Test
     public void shouldFindOrderStatisticUsingIterativeRandomizedSelectByDividingArray() {
-        Array<Integer> array = new Array<>(5, 7, 9, 2, 6, 8, 6, 6, 3, 1, 7, 8);
-        Array<Integer> original = new Array<>(array);
+        Array<Integer> array = Array.of(5, 7, 9, 2, 6, 8, 6, 6, 3, 1, 7, 8);
+        Array<Integer> original = Array.copyOf(array);
         int order = 8;
         mockStatic(Chapter5.class);
         when(Chapter5.random(1, array.length)).thenReturn(5);
@@ -163,8 +163,8 @@ public class Chapter9Test {
 
     @Test
     public void shouldFindOrderStatisticUsingSelect() {
-        Array<Integer> array = new Array<>(5, 7, 9, 2, 6, 8, 6, 6, 3, 1, 7, 8);
-        Array<Integer> original = new Array<>(array);
+        Array<Integer> array = Array.of(5, 7, 9, 2, 6, 8, 6, 6, 3, 1, 7, 8);
+        Array<Integer> original = Array.copyOf(array);
         int order = 7;
 
         int actualOrderStatistic = Chapter9.select(array, 1, array.length, order);
@@ -174,8 +174,8 @@ public class Chapter9Test {
 
     @Test
     public void shouldSortArrayUsingBestCaseQuicksort() {
-        Array<Integer> array = new Array<>(5, 7, 9, 2, 6, 8, 6, 6, 3, 1, 7, 8);
-        Array<Integer> original = new Array<>(array);
+        Array<Integer> array = Array.of(5, 7, 9, 2, 6, 8, 6, 6, 3, 1, 7, 8);
+        Array<Integer> original = Array.copyOf(array);
 
         Chapter9.bestCaseQuicksort(array, 1, array.length);
 
@@ -185,8 +185,8 @@ public class Chapter9Test {
 
     @Test
     public void shouldFindOrderStatisticUsingSelectUsingMedianSubroutineInSingleElementArray() {
-        Array<Integer> array = new Array<>(5);
-        Array<Integer> original = new Array<>(array);
+        Array<Integer> array = Array.of(5);
+        Array<Integer> original = Array.copyOf(array);
         int order = 1;
 
         int actualOrderStatistic = Chapter9.selectUsingMedianSubroutine(array, 1, 1, order);
@@ -196,8 +196,8 @@ public class Chapter9Test {
 
     @Test
     public void shouldFindOrderStatisticUsingSelectUsingMedianSubroutine() {
-        Array<Integer> array = new Array<>(5, 7, 9, 2, 6, 8, 6, 6, 3, 1, 7, 8);
-        Array<Integer> original = new Array<>(array);
+        Array<Integer> array = Array.of(5, 7, 9, 2, 6, 8, 6, 6, 3, 1, 7, 8);
+        Array<Integer> original = Array.copyOf(array);
         int order = 6;
 
         int actualOrderStatistic = Chapter9.selectUsingMedianSubroutine(array, 1, array.length, order);
@@ -207,8 +207,8 @@ public class Chapter9Test {
 
     @Test
     public void shouldFindOrderStatisticUsingSelectUsingMedianSubroutine2() {
-        Array<Integer> array = new Array<>(5, 7, 9, 2, 6, 8, 6, 6, 3, 1, 7, 8);
-        Array<Integer> original = new Array<>(array);
+        Array<Integer> array = Array.of(5, 7, 9, 2, 6, 8, 6, 6, 3, 1, 7, 8);
+        Array<Integer> original = Array.copyOf(array);
         int order = 4;
 
         int actualOrderStatistic = Chapter9.selectUsingMedianSubroutine(array, 1, array.length, order);
@@ -218,8 +218,8 @@ public class Chapter9Test {
 
     @Test
     public void shouldFindOrderStatisticUsingSelectUsingMedianSubroutine3() {
-        Array<Integer> array = new Array<>(5, 7, 9, 2, 6, 8, 6, 6, 3, 1, 7, 8);
-        Array<Integer> original = new Array<>(array);
+        Array<Integer> array = Array.of(5, 7, 9, 2, 6, 8, 6, 6, 3, 1, 7, 8);
+        Array<Integer> original = Array.copyOf(array);
         int order = 8;
 
         int actualOrderStatistic = Chapter9.selectUsingMedianSubroutine(array, 1, array.length, order);
@@ -229,7 +229,7 @@ public class Chapter9Test {
 
     @Test
     public void shouldReturnEmptySetOfQuantilesOfFirstOrder() {
-        Array<Integer> array = new Array<>(5, 0, 7, 9, 4, 2, 6, 8, 3, 1);
+        Array<Integer> array = Array.of(5, 0, 7, 9, 4, 2, 6, 8, 3, 1);
         int order = 1;
 
         Set<Integer> actualQuantiles = Chapter9.quantiles(array, 1, array.length, order);
@@ -240,7 +240,7 @@ public class Chapter9Test {
 
     @Test
     public void shouldReturnMedianAsQuantileOfSecondOrder() {
-        Array<Integer> array = new Array<>(5, 0, 7, 9, 4, 2, 6, 8, 3, 1);
+        Array<Integer> array = Array.of(5, 0, 7, 9, 4, 2, 6, 8, 3, 1);
         int order = 2;
 
         Set<Integer> actualQuantiles = Chapter9.quantiles(array, 1, array.length, order);
@@ -253,8 +253,8 @@ public class Chapter9Test {
 
     @Test
     public void shouldFindQuantilesOfAverageOrder() {
-        Array<Integer> array = new Array<>(5, 0, 7, 9, 4, 2, 6, 8, 3, 1);
-        Array<Integer> original = new Array<>(array);
+        Array<Integer> array = Array.of(5, 0, 7, 9, 4, 2, 6, 8, 3, 1);
+        Array<Integer> original = Array.copyOf(array);
         int order = 5;
 
         Set<Integer> actualQuantiles = Chapter9.quantiles(array, 1, array.length, order);
@@ -289,8 +289,8 @@ public class Chapter9Test {
 
     @Test
     public void shouldReturnAllElementsAsQuantilesOfHighestOrder() {
-        Array<Integer> array = new Array<>(5, 0, 7, 9, 4, 2, 6, 8, 3, 1);
-        Array<Integer> original = new Array<>(array);
+        Array<Integer> array = Array.of(5, 0, 7, 9, 4, 2, 6, 8, 3, 1);
+        Array<Integer> original = Array.copyOf(array);
         int order = array.length + 1;
 
         Set<Integer> actualQuantiles = Chapter9.quantiles(array, 1, array.length, order);
@@ -304,7 +304,7 @@ public class Chapter9Test {
 
     @Test
     public void shouldReturnMedianAsMedianProximityOf1() {
-        Array<Integer> array = new Array<>(5, 0, 15, 17, 4, 2, 6, 16, 3, 1);
+        Array<Integer> array = Array.of(5, 0, 15, 17, 4, 2, 6, 16, 3, 1);
         int proximitySize = 1;
         int expectedMedian = 4;
 
@@ -318,8 +318,8 @@ public class Chapter9Test {
 
     @Test
     public void shouldFindMedianProximity() {
-        Array<Integer> array = new Array<>(5, 0, 15, 17, 4, 2, 6, 16, 3, 1);
-        Array<Integer> original = new Array<>(array);
+        Array<Integer> array = Array.of(5, 0, 15, 17, 4, 2, 6, 16, 3, 1);
+        Array<Integer> original = Array.copyOf(array);
         int proximitySize = 4;
 
         Set<Integer> actualMedianProximity = Chapter9.medianProximity(array, proximitySize);
@@ -340,10 +340,10 @@ public class Chapter9Test {
 
     @Test
     public void shouldFindMedianOfTwoArraysOfOneElementEach() {
-        Array<Integer> array1 = new Array<>(1);
-        Array<Integer> array2 = new Array<>(2);
-        Array<Integer> original1 = new Array<>(array1);
-        Array<Integer> original2 = new Array<>(array2);
+        Array<Integer> array1 = Array.of(1);
+        Array<Integer> array2 = Array.of(2);
+        Array<Integer> original1 = Array.copyOf(array1);
+        Array<Integer> original2 = Array.copyOf(array2);
 
         int actualMedian = Chapter9.twoArraysMedian(array1, 1, 1, array2, 1, 1);
 
@@ -352,10 +352,10 @@ public class Chapter9Test {
 
     @Test
     public void shouldFindMedianOfTwoArrays() {
-        Array<Integer> array1 = new Array<>(1, 2, 3, 5, 6, 6, 6, 7, 7, 8, 8, 9);
-        Array<Integer> array2 = new Array<>(1, 1, 5, 6, 7, 8, 8, 8, 9, 9, 9, 9);
-        Array<Integer> original1 = new Array<>(array1);
-        Array<Integer> original2 = new Array<>(array2);
+        Array<Integer> array1 = Array.of(1, 2, 3, 5, 6, 6, 6, 7, 7, 8, 8, 9);
+        Array<Integer> array2 = Array.of(1, 1, 5, 6, 7, 8, 8, 8, 9, 9, 9, 9);
+        Array<Integer> original1 = Array.copyOf(array1);
+        Array<Integer> original2 = Array.copyOf(array2);
 
         int actualMedian = Chapter9.twoArraysMedian(array1, 1, array1.length, array2, 1, array2.length);
 
@@ -377,10 +377,10 @@ public class Chapter9Test {
 
     @Test
     public void shouldFindWeightedMedianUsingSorting() {
-        Array<Integer> array = new Array<>(0, 1, 2, 3, 4, 5, 6, 7, 8, 9);
-        Array<Double> weights = new Array<>(0.05, 0.05, 0.1, 0.2, 0.02, 0.1, 0.03, 0.05, 0.3, 0.1);
-        Array<Integer> originalArray = new Array<>(array);
-        Array<Double> originalWeights = new Array<>(weights);
+        Array<Integer> array = Array.of(0, 1, 2, 3, 4, 5, 6, 7, 8, 9);
+        Array<Double> weights = Array.of(0.05, 0.05, 0.1, 0.2, 0.02, 0.1, 0.03, 0.05, 0.3, 0.1);
+        Array<Integer> originalArray = Array.copyOf(array);
+        Array<Double> originalWeights = Array.copyOf(weights);
 
         double actualWeightedMedian = Chapter9.weightedMedianUsingSorting(array, weights);
 
@@ -403,10 +403,10 @@ public class Chapter9Test {
 
     @Test
     public void shouldFindWeightedMedianInSingleElementArray() {
-        Array<Integer> array = new Array<>(6);
-        Array<Double> weights = new Array<>(1.0);
-        Array<Integer> originalArray = new Array<>(array);
-        Array<Double> originalWeights = new Array<>(weights);
+        Array<Integer> array = Array.of(6);
+        Array<Double> weights = Array.of(1.0);
+        Array<Integer> originalArray = Array.copyOf(array);
+        Array<Double> originalWeights = Array.copyOf(weights);
 
         double actualWeightedMedian = Chapter9.weightedMedian(array, weights, 1, 1);
 
@@ -415,10 +415,10 @@ public class Chapter9Test {
 
     @Test
     public void shouldFindWeightedMedian() {
-        Array<Integer> array = new Array<>(0, 1, 2, 3, 4, 5, 6, 7, 8, 9);
-        Array<Double> weights = new Array<>(0.05, 0.05, 0.1, 0.2, 0.02, 0.1, 0.03, 0.05, 0.3, 0.1);
-        Array<Integer> originalArray = new Array<>(array);
-        Array<Double> originalWeights = new Array<>(weights);
+        Array<Integer> array = Array.of(0, 1, 2, 3, 4, 5, 6, 7, 8, 9);
+        Array<Double> weights = Array.of(0.05, 0.05, 0.1, 0.2, 0.02, 0.1, 0.03, 0.05, 0.3, 0.1);
+        Array<Integer> originalArray = Array.copyOf(array);
+        Array<Double> originalWeights = Array.copyOf(weights);
 
         double actualWeightedMedian = Chapter9.weightedMedian(array, weights, 1, array.length);
 
@@ -427,11 +427,11 @@ public class Chapter9Test {
 
     @Test
     public void shouldFindPostOfficeLocation() {
-        Array<Point2D> points = new Array<>(new Point2D(1.0, 1.0), new Point2D(1.0, 3.0), new Point2D(1.0, 5.0), new Point2D(3.0, 1.0),
+        Array<Point2D> points = Array.of(new Point2D(1.0, 1.0), new Point2D(1.0, 3.0), new Point2D(1.0, 5.0), new Point2D(3.0, 1.0),
                 new Point2D(3.0, 5.0), new Point2D(5.0, 1.0), new Point2D(5.0, 3.0), new Point2D(5.0, 5.0));
-        Array<Double> weights = new Array<>(0.1, 0.1, 0.2, 0.02, 0.2, 0.3, 0.05, 0.03);
-        Array<Point2D> originalPoints = new Array<>(points);
-        Array<Double> originalWeights = new Array<>(weights);
+        Array<Double> weights = Array.of(0.1, 0.1, 0.2, 0.02, 0.2, 0.3, 0.05, 0.03);
+        Array<Point2D> originalPoints = Array.copyOf(points);
+        Array<Double> originalWeights = Array.copyOf(weights);
 
         Point2D actualLocation = Chapter9.postOfficeLocation2D(points, weights);
 
@@ -453,8 +453,8 @@ public class Chapter9Test {
 
     @Test
     public void shouldFindOrderStatisticUsingSmallOrderSelect() {
-        Array<Integer> array = new Array<>(5, 12, 1, 0, 13, 12, 0, 10, 9, 1, 4, 3, 16, 15, 19, 6, 11, 20, 2);
-        Array<Integer> original = new Array<>(array);
+        Array<Integer> array = Array.of(5, 12, 1, 0, 13, 12, 0, 10, 9, 1, 4, 3, 16, 15, 19, 6, 11, 20, 2);
+        Array<Integer> original = Array.copyOf(array);
         int order = 3;
 
         int actualOrderStatistic = Chapter9.smallOrderSelect(array, order);
@@ -464,8 +464,8 @@ public class Chapter9Test {
 
     @Test
     public void shouldFindOrderStatisticUsingSmallOrderSelect2() {
-        Array<Integer> array = new Array<>(5, 12, 1, 0, 13, 12, 0, 10, 9, 1, 4, 3, 16, 15, 19, 6, 11, 20, 2);
-        Array<Integer> original = new Array<>(array);
+        Array<Integer> array = Array.of(5, 12, 1, 0, 13, 12, 0, 10, 9, 1, 4, 3, 16, 15, 19, 6, 11, 20, 2);
+        Array<Integer> original = Array.copyOf(array);
         int order = 7;
 
         int actualOrderStatistic = Chapter9.smallOrderSelect(array, order);
@@ -475,8 +475,8 @@ public class Chapter9Test {
 
     @Test
     public void shouldFindOrderStatisticUsingSmallOrderSelectInSingleElementArray() {
-        Array<Integer> array = new Array<>(44);
-        Array<Integer> original = new Array<>(array);
+        Array<Integer> array = Array.of(44);
+        Array<Integer> original = Array.copyOf(array);
         int order = 1;
 
         int actualOrderStatistic = Chapter9.smallOrderSelect(array, order);

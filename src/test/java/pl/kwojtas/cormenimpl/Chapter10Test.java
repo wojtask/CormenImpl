@@ -1047,9 +1047,9 @@ public class Chapter10Test {
     @Test
     public void shouldAllocateObjectOnMultipleArrayList() {
         MultipleArrayList<String> multipleArrayList = new MultipleArrayList<>(
-                new Array<>(4, 1, null, null, 3),
+                Array.of(4, 1, null, null, 3),
                 null,
-                new Array<>(2, null, 5, 1, null),
+                Array.of(2, null, 5, 1, null),
                 2,
                 5
         );
@@ -1063,9 +1063,9 @@ public class Chapter10Test {
     @Test
     public void shouldNotAllocateObjectOnFullMultipleArrayList() {
         MultipleArrayList<String> multipleArrayList = new MultipleArrayList<>(
-                new Array<>(4, 1, null, 5, 3),
+                Array.of(4, 1, null, 5, 3),
                 null,
-                new Array<>(2, null, 5, 1, 4),
+                Array.of(2, null, 5, 1, 4),
                 2,
                 null
         );
@@ -1078,9 +1078,9 @@ public class Chapter10Test {
     @Test
     public void shouldFreeObjectOnMultipleArrayList() {
         MultipleArrayList<String> multipleArrayList = new MultipleArrayList<>(
-                new Array<>(4, 1, null, null, 3),
+                Array.of(4, 1, null, null, 3),
                 null,
-                new Array<>(2, null, 5, 1, null),
+                Array.of(2, null, 5, 1, null),
                 2,
                 5
         );
@@ -1094,7 +1094,7 @@ public class Chapter10Test {
     @Test
     public void shouldAllocateObjectOnSingleArrayList() {
         SingleArrayList singleArrayList = new SingleArrayList(
-                new Array<>(100, 10, 4, 200, 1, null, 300, null, 13, 400, null, 1, 500, 7, null),
+                Array.of(100, 10, 4, 200, 1, null, 300, null, 13, 400, null, 1, 500, 7, null),
                 4,
                 13
         );
@@ -1108,7 +1108,7 @@ public class Chapter10Test {
     @Test
     public void shouldNotAllocateObjectOnFullSingleArrayList() {
         SingleArrayList singleArrayList = new SingleArrayList(
-                new Array<>(100, 10, 4, 200, 1, null, 300, null, 13, 400, 13, 1, 500, 7, 10),
+                Array.of(100, 10, 4, 200, 1, null, 300, null, 13, 400, 13, 1, 500, 7, 10),
                 4,
                 null
         );
@@ -1121,7 +1121,7 @@ public class Chapter10Test {
     @Test
     public void shouldFreeObjectOnSingleArrayList() {
         SingleArrayList singleArrayList = new SingleArrayList(
-                new Array<>(100, 10, 4, 200, 1, null, 300, null, 13, 400, null, 1, 500, 7, null),
+                Array.of(100, 10, 4, 200, 1, null, 300, null, 13, 400, null, 1, 500, 7, null),
                 4,
                 13
         );
@@ -1135,9 +1135,9 @@ public class Chapter10Test {
     @Test
     public void shouldAllocateObjectOnCompactList() {
         MultipleArrayList<String> multipleArrayList = new MultipleArrayList<>(
-                new Array<>(3, 1, null, 5, null),
-                new Array<>("aaa", "bbb", "ccc", "ddd", "eee"),
-                new Array<>(2, null, 1, null, null),
+                Array.of(3, 1, null, 5, null),
+                Array.of("aaa", "bbb", "ccc", "ddd", "eee"),
+                Array.of(2, null, 1, null, null),
                 2,
                 4
         );
@@ -1168,9 +1168,9 @@ public class Chapter10Test {
     @Test
     public void shouldNotAllocateObjectOnFullCompactList() {
         MultipleArrayList<String> multipleArrayList = new MultipleArrayList<>(
-                new Array<>(3, 1, 5, null, 4),
-                new Array<>("aaa", "bbb", "ccc", "ddd", "eee"),
-                new Array<>(2, null, 1, null, null),
+                Array.of(3, 1, 5, null, 4),
+                Array.of("aaa", "bbb", "ccc", "ddd", "eee"),
+                Array.of(2, null, 1, null, null),
                 2,
                 null
         );
@@ -1183,9 +1183,9 @@ public class Chapter10Test {
     @Test
     public void shouldFreeObjectOnCompactList() {
         MultipleArrayList<String> multipleArrayList = new MultipleArrayList<>(
-                new Array<>(3, 1, null, 5, null),
-                new Array<>("aaa", "bbb", "ccc", "ddd", "eee"),
-                new Array<>(2, null, 1, null, null),
+                Array.of(3, 1, null, 5, null),
+                Array.of("aaa", "bbb", "ccc", "ddd", "eee"),
+                Array.of(2, null, 1, null, null),
                 2,
                 4
         );
@@ -1204,9 +1204,9 @@ public class Chapter10Test {
     @Test
     public void shouldFreeObjectAtTheEndOfCompactList() {
         MultipleArrayList<String> multipleArrayList = new MultipleArrayList<>(
-                new Array<>(3, 1, null, 5, null),
-                new Array<>("aaa", "bbb", "ccc", "ddd", "eee"),
-                new Array<>(2, null, 1, null, null),
+                Array.of(3, 1, null, 5, null),
+                Array.of("aaa", "bbb", "ccc", "ddd", "eee"),
+                Array.of(2, null, 1, null, null),
                 2,
                 4
         );
@@ -1225,9 +1225,9 @@ public class Chapter10Test {
     @Test
     public void shouldFreeObjectOnFullCompactList() {
         MultipleArrayList<String> multipleArrayList = new MultipleArrayList<>(
-                new Array<>(4, 1, null, 3, 2),
-                new Array<>("aaa", "bbb", "ccc", "ddd", "eee"),
-                new Array<>(2, 5, 4, 1, null),
+                Array.of(4, 1, null, 3, 2),
+                Array.of("aaa", "bbb", "ccc", "ddd", "eee"),
+                Array.of(2, 5, 4, 1, null),
                 5,
                 null
         );
@@ -1246,9 +1246,9 @@ public class Chapter10Test {
     @Test
     public void shouldCompactifyNonemptyList() {
         MultipleArrayList<String> multipleArrayList = new MultipleArrayList<>(
-                new Array<>(9, 8, null, 1, 2, null, 5, 10, 6, 3),
+                Array.of(9, 8, null, 1, 2, null, 5, 10, 6, 3),
                 Array.withLength(10),
-                new Array<>(4, 5, 10, null, 7, 9, null, 2, 1, 8),
+                Array.of(4, 5, 10, null, 7, 9, null, 2, 1, 8),
                 7,
                 4
         );
@@ -1264,9 +1264,9 @@ public class Chapter10Test {
     @Test
     public void shouldCompactifyEmptyList() {
         MultipleArrayList<String> multipleArrayList = new MultipleArrayList<>(
-                new Array<>(3, 1, 5, 2, null),
+                Array.of(3, 1, 5, 2, null),
                 Array.withLength(5),
-                new Array<>(null, null, null, null, null),
+                Array.of(null, null, null, null, null),
                 null,
                 4
         );
@@ -1660,9 +1660,9 @@ public class Chapter10Test {
     @Test
     public void shouldFindElementAfterJumpsInCompactList() {
         MultipleArrayList<String> multipleArrayList = new MultipleArrayList<>(
-                new Array<>(6, 4, null, 5, 1, 3, 8, 9, 10, 11),
-                new Array<>("ddd", "aaa", "fff", "bbb", "ccc", "eee", null, null, null, null),
-                new Array<>(5, null, 6, 2, 4, 1, null, null, null, null),
+                Array.of(6, 4, null, 5, 1, 3, 8, 9, 10, 11),
+                Array.of("ddd", "aaa", "fff", "bbb", "ccc", "eee", null, null, null, null),
+                Array.of(5, null, 6, 2, 4, 1, null, null, null, null),
                 2,
                 7
         );
@@ -1677,9 +1677,9 @@ public class Chapter10Test {
     @Test
     public void shouldFindElementByJumpingOnItInCompactList() {
         MultipleArrayList<String> multipleArrayList = new MultipleArrayList<>(
-                new Array<>(6, 4, null, 5, 1, 3, 8, 9, 10, 11),
-                new Array<>("ddd", "aaa", "fff", "bbb", "ccc", "eee", null, null, null, null),
-                new Array<>(5, null, 6, 2, 4, 1, null, null, null, null),
+                Array.of(6, 4, null, 5, 1, 3, 8, 9, 10, 11),
+                Array.of("ddd", "aaa", "fff", "bbb", "ccc", "eee", null, null, null, null),
+                Array.of(5, null, 6, 2, 4, 1, null, null, null, null),
                 2,
                 7
         );
@@ -1694,9 +1694,9 @@ public class Chapter10Test {
     @Test
     public void shouldNotFindNonexistentElementInCompactList() {
         MultipleArrayList<String> multipleArrayList = new MultipleArrayList<>(
-                new Array<>(6, 4, null, 5, 1, 3, 8, 9, 10, 11),
-                new Array<>("ddd", "aaa", "fff", "bbb", "ccc", "eee", null, null, null, null),
-                new Array<>(5, null, 6, 2, 4, 1, null, null, null, null),
+                Array.of(6, 4, null, 5, 1, 3, 8, 9, 10, 11),
+                Array.of("ddd", "aaa", "fff", "bbb", "ccc", "eee", null, null, null, null),
+                Array.of(5, null, 6, 2, 4, 1, null, null, null, null),
                 2,
                 7
         );

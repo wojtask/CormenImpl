@@ -16,7 +16,7 @@ public class ArrayTest {
     public void shouldCreateArrayWithInitialContents() {
         String[] contents = new String[]{"aaa", "bbb", "ccc"};
 
-        Array<String> array = new Array<>(contents);
+        Array<String> array = Array.of(contents);
 
         assertEquals(contents.length, array.length);
         for (int i = 1; i <= array.length; i++) {
@@ -34,16 +34,16 @@ public class ArrayTest {
 
     @Test
     public void shouldCreateArrayByCopyingOtherArray() {
-        Array<String> otherArray = new Array<>("aaa", "bbb", "ccc");
+        Array<String> otherArray = Array.of("aaa", "bbb", "ccc");
 
-        Array<String> array = new Array<>(otherArray);
+        Array<String> array = Array.copyOf(otherArray);
 
         assertArrayEquals(otherArray, array);
     }
 
     @Test
     public void shouldReturnElementFromArray() {
-        Array<String> array = new Array<>("aaa", "bbb", "ccc");
+        Array<String> array = Array.of("aaa", "bbb", "ccc");
 
         String actualElement = array.at(2);
 
@@ -52,7 +52,7 @@ public class ArrayTest {
 
     @Test
     public void shouldThrowExceptionWhenAccessingInvalidPositionInArray() {
-        Array<String> array = new Array<>("aaa", "bbb", "ccc");
+        Array<String> array = Array.of("aaa", "bbb", "ccc");
 
         thrown.expect(IllegalStateException.class);
         thrown.expectMessage("Array index out of bound");
@@ -61,7 +61,7 @@ public class ArrayTest {
 
     @Test
     public void shouldSetElementInArray() {
-        Array<String> array = new Array<>("aaa", "bbb", "ccc");
+        Array<String> array = Array.of("aaa", "bbb", "ccc");
         String newElement = "xyz";
 
         array.set(3, newElement);
@@ -71,7 +71,7 @@ public class ArrayTest {
 
     @Test
     public void shouldThrowExceptionWhenSettingOnInvalidPositionInArray() {
-        Array<String> array = new Array<>("aaa", "bbb", "ccc");
+        Array<String> array = Array.of("aaa", "bbb", "ccc");
 
         thrown.expect(IllegalStateException.class);
         thrown.expectMessage("Array index out of bound");
@@ -80,7 +80,7 @@ public class ArrayTest {
 
     @Test
     public void shouldSetArrayContentsByCopyingOtherArray() {
-        Array<String> otherArray = new Array<>("aaa", "bbb", "ccc");
+        Array<String> otherArray = Array.of("aaa", "bbb", "ccc");
         Array<String> array = Array.withLength(otherArray.length);
 
         array.set(otherArray);
@@ -91,7 +91,7 @@ public class ArrayTest {
     @Test
     public void shouldSetArrayContentsByCopyingItself() {
         String[] contents = new String[]{"aaa", "bbb", "ccc"};
-        Array<String> array = new Array<>(contents);
+        Array<String> array = Array.of(contents);
 
         array.set(array);
 
@@ -103,7 +103,7 @@ public class ArrayTest {
 
     @Test
     public void shouldExchangeTwoElementsInArray() {
-        Array<String> array = new Array<>("aaa", "bbb", "ccc");
+        Array<String> array = Array.of("aaa", "bbb", "ccc");
 
         array.exch(1, 3);
 

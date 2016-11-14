@@ -29,8 +29,8 @@ public class Chapter2Test {
 
     @Test
     public void shouldSortArrayUsingInsertionSort() {
-        Array<Integer> array = new Array<>(5, 7, 9, 2, 6, 8, 6, 6, 3, 1, 7, 8);
-        Array<Integer> original = new Array<>(array);
+        Array<Integer> array = Array.of(5, 7, 9, 2, 6, 8, 6, 6, 3, 1, 7, 8);
+        Array<Integer> original = Array.copyOf(array);
 
         Chapter2.insertionSort(array);
 
@@ -40,8 +40,8 @@ public class Chapter2Test {
 
     @Test
     public void shouldSortArrayInNonincreasingOrderUsingInsertionSort() {
-        Array<Integer> array = new Array<>(5, 7, 9, 2, 6, 8, 6, 6, 3, 1, 7, 8);
-        Array<Integer> original = new Array<>(array);
+        Array<Integer> array = Array.of(5, 7, 9, 2, 6, 8, 6, 6, 3, 1, 7, 8);
+        Array<Integer> original = Array.copyOf(array);
 
         Chapter2.nonincreasingInsertionSort(array);
 
@@ -51,8 +51,8 @@ public class Chapter2Test {
 
     @Test
     public void shouldFindKeyUsingLinearSearch() {
-        Array<Integer> array = new Array<>(5, 7, 9, 2, 6, 1, 6, 6, 3, 1, 7, 8);
-        Array<Integer> original = new Array<>(array);
+        Array<Integer> array = Array.of(5, 7, 9, 2, 6, 1, 6, 6, 3, 1, 7, 8);
+        Array<Integer> original = Array.copyOf(array);
         int key = 6;
 
         Integer actualIndex = Chapter2.linearSearch(array, key);
@@ -64,7 +64,7 @@ public class Chapter2Test {
 
     @Test
     public void shouldNotFindNonexistentKeyUsingLinearSearch() {
-        Array<Integer> array = new Array<>(5, 7, 9, 2, 6, 1, 6, 6, 3, 1, 7, 8);
+        Array<Integer> array = Array.of(5, 7, 9, 2, 6, 1, 6, 6, 3, 1, 7, 8);
         int key = 4;
 
         Integer actualIndex = Chapter2.linearSearch(array, key);
@@ -74,8 +74,8 @@ public class Chapter2Test {
 
     @Test
     public void shouldAddTwoNumbersInBinary() {
-        Array<Integer> firstNumberBits = new Array<>(0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 1);
-        Array<Integer> secondNumberBits = new Array<>(0, 1, 1, 1, 1, 0, 0, 1, 0, 1, 1);
+        Array<Integer> firstNumberBits = Array.of(0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 1);
+        Array<Integer> secondNumberBits = Array.of(0, 1, 1, 1, 1, 0, 0, 1, 0, 1, 1);
         int a = bitsToNumber(firstNumberBits);
         int b = bitsToNumber(secondNumberBits);
         int bitsLength = firstNumberBits.length;
@@ -98,8 +98,8 @@ public class Chapter2Test {
 
     @Test
     public void shouldSortArrayUsingSelectionSort() {
-        Array<Integer> array = new Array<>(5, 7, 9, 2, 6, 8, 6, 6, 3, 1, 7, 8);
-        Array<Integer> original = new Array<>(array);
+        Array<Integer> array = Array.of(5, 7, 9, 2, 6, 8, 6, 6, 3, 1, 7, 8);
+        Array<Integer> original = Array.copyOf(array);
 
         Chapter2.selectionSort(array);
 
@@ -109,8 +109,8 @@ public class Chapter2Test {
 
     @Test
     public void shouldSortArrayUsingMergeSort() {
-        Array<Integer> array = new Array<>(5, 7, 9, 2, 6, 8, 6, 6, 3, 1, 7, 8);
-        Array<Integer> original = new Array<>(array);
+        Array<Integer> array = Array.of(5, 7, 9, 2, 6, 8, 6, 6, 3, 1, 7, 8);
+        Array<Integer> original = Array.copyOf(array);
 
         Chapter2.mergeSort(array, 1, array.length);
 
@@ -120,8 +120,8 @@ public class Chapter2Test {
 
     @Test
     public void shouldMergeArrayUsingMerge_() {
-        Array<Integer> array = new Array<>(2, 5, 7, 9, 1, 3, 6, 6, 6, 7, 8, 8);
-        Array<Integer> original = new Array<>(array);
+        Array<Integer> array = Array.of(2, 5, 7, 9, 1, 3, 6, 6, 6, 7, 8, 8);
+        Array<Integer> original = Array.copyOf(array);
         int mid = 4;
 
         Chapter2.merge_(array, 1, mid, array.length);
@@ -132,8 +132,8 @@ public class Chapter2Test {
 
     @Test
     public void shouldFindKeyUsingRecursiveBinarySearch() {
-        Array<Integer> array = new Array<>(1, 2, 3, 5, 6, 6, 6, 7, 7, 8, 8, 9);
-        Array<Integer> original = new Array<>(array);
+        Array<Integer> array = Array.of(1, 2, 3, 5, 6, 6, 6, 7, 7, 8, 8, 9);
+        Array<Integer> original = Array.copyOf(array);
         int key = 3;
 
         Integer actualIndex = Chapter2.recursiveBinarySearch(array, key, 1, array.length);
@@ -145,7 +145,7 @@ public class Chapter2Test {
 
     @Test
     public void shouldNotFindNonexistentKeyUsingRecursiveBinarySearch() {
-        Array<Integer> array = new Array<>(1, 2, 3, 5, 6, 6, 6, 7, 7, 8, 8, 9);
+        Array<Integer> array = Array.of(1, 2, 3, 5, 6, 6, 6, 7, 7, 8, 8, 9);
         int key = 4;
 
         Integer actualIndex = Chapter2.recursiveBinarySearch(array, key, 1, array.length);
@@ -155,8 +155,8 @@ public class Chapter2Test {
 
     @Test
     public void shouldFindKeyUsingIterativeBinarySearch() {
-        Array<Integer> array = new Array<>(1, 2, 3, 5, 6, 6, 6, 7, 7, 8, 8, 9);
-        Array<Integer> original = new Array<>(array);
+        Array<Integer> array = Array.of(1, 2, 3, 5, 6, 6, 6, 7, 7, 8, 8, 9);
+        Array<Integer> original = Array.copyOf(array);
         int key = 3;
 
         Integer actualIndex = Chapter2.iterativeBinarySearch(array, key);
@@ -168,7 +168,7 @@ public class Chapter2Test {
 
     @Test
     public void shouldNotFindNonexistentKeyUsingIterativeBinarySearch() {
-        Array<Integer> array = new Array<>(1, 2, 3, 5, 6, 6, 6, 7, 7, 8, 8, 9);
+        Array<Integer> array = Array.of(1, 2, 3, 5, 6, 6, 6, 7, 7, 8, 8, 9);
         int key = 4;
 
         Integer actualIndex = Chapter2.iterativeBinarySearch(array, key);
@@ -178,7 +178,7 @@ public class Chapter2Test {
 
     @Test
     public void shouldFindSum() {
-        Array<Integer> array = new Array<>(5, 7, 9, 2, 6, 1, 6, 6, 3, 1, 7, 8);
+        Array<Integer> array = Array.of(5, 7, 9, 2, 6, 1, 6, 6, 3, 1, 7, 8);
         int sum = 17;
 
         boolean sumFound = Chapter2.sumSearch(array, sum);
@@ -188,7 +188,7 @@ public class Chapter2Test {
 
     @Test
     public void shouldNotFindNonexistentSum() {
-        Array<Integer> array = new Array<>(5, 7, 9, 2, 6, 1, 6, 6, 3, 1, 7, 8);
+        Array<Integer> array = Array.of(5, 7, 9, 2, 6, 1, 6, 6, 3, 1, 7, 8);
         int sum = 18;
 
         boolean sumFound = Chapter2.sumSearch(array, sum);
@@ -198,8 +198,8 @@ public class Chapter2Test {
 
     @Test
     public void shouldSortArrayUsingBubbleSort() {
-        Array<Integer> array = new Array<>(5, 7, 9, 2, 6, 8, 6, 6, 3, 1, 7, 8);
-        Array<Integer> original = new Array<>(array);
+        Array<Integer> array = Array.of(5, 7, 9, 2, 6, 8, 6, 6, 3, 1, 7, 8);
+        Array<Integer> original = Array.copyOf(array);
 
         Chapter2.bubbleSort(array);
 
@@ -233,8 +233,8 @@ public class Chapter2Test {
 
     @Test
     public void shouldCountInversions() {
-        Array<Integer> array = new Array<>(5, 7, 9, 2, 6, 8, 6, 6, 3, 1, 7, 8);
-        Array<Integer> original = new Array<>(array);
+        Array<Integer> array = Array.of(5, 7, 9, 2, 6, 8, 6, 6, 3, 1, 7, 8);
+        Array<Integer> original = Array.copyOf(array);
 
         int actualInversions = Chapter2.countInversions(array, 1, array.length);
 

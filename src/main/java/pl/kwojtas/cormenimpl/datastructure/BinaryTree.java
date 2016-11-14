@@ -84,7 +84,7 @@ public class BinaryTree<E> {
      */
     public Array<E> toArray(Node<E> x) {
         if (x == null) {
-            return new Array<>();
+            return Array.of();
         }
         int n = getSize(x);
         Array<E> array = Array.withLength(n);

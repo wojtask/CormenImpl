@@ -1092,7 +1092,7 @@ public final class Chapter10 {
      * @return the sorted singly linked list representing the union of {@code L1} and {@code L2}
      */
     public static SinglyLinkedList<Integer> sortedListMinHeapUnion(SinglyLinkedList<Integer> L1, SinglyLinkedList<Integer> L2) {
-        SinglyLinkedList<Integer> L = mergeSortedLists(new Array<>(L1, L2));
+        SinglyLinkedList<Integer> L = mergeSortedLists(Array.of(L1, L2));
         SinglyLinkedList.Node<Integer> x = L.head;
         while (x != null) {
             SinglyLinkedList.Node<Integer> y = x.next;
@@ -1234,7 +1234,7 @@ public final class Chapter10 {
         }
         listMergesort(L1);
         listMergesort(L2);
-        SinglyLinkedList<Integer> mergedList = mergeSortedLists(new Array<>(L1, L2));
+        SinglyLinkedList<Integer> mergedList = mergeSortedLists(Array.of(L1, L2));
         L.head = mergedList.head;
     }
 

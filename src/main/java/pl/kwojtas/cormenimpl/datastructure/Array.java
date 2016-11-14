@@ -1,5 +1,9 @@
 package pl.kwojtas.cormenimpl.datastructure;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+
 /**
  * Implements a 1-based indexed array.
  *
@@ -7,12 +11,21 @@ package pl.kwojtas.cormenimpl.datastructure;
  */
 public class Array<E> {
 
-    private E[] data;
+    private java.util.List<E> data;
 
     /**
      * The number of elements in the array.
      */
     public int length;
+
+    private Array(java.util.List<E> initialData) {
+        this.data = initialData;
+        this.length = initialData.size();
+    }
+
+    protected Array(Array<E> otherArray) {
+        set(otherArray);
+    }
 
     /**
      * Creates an array from given elements.
@@ -20,9 +33,9 @@ public class Array<E> {
      * @param elements the initial contents of the array
      */
     @SafeVarargs
-    public Array(E... elements) {
-        this.data = elements;
-        this.length = elements.length;
+    public static <E> Array<E> of(E... elements) {
+        java.util.List<E> initialData = Arrays.asList(elements);
+        return new Array<>(initialData);
     }
 
     /**
@@ -32,9 +45,9 @@ public class Array<E> {
      * @param <E>    the type of elements in the new array
      * @return the array of length {@code length} filled with {@code null}s
      */
-    @SuppressWarnings("unchecked")
     public static <E> Array<E> withLength(int length) {
-        return new Array<>((E[]) new Object[length]);
+        java.util.List<E> initialData = new ArrayList<>(Collections.nCopies(length, null));
+        return new Array<>(initialData);
     }
 
     /**
@@ -42,8 +55,8 @@ public class Array<E> {
      *
      * @param otherArray the array to be copied
      */
-    public Array(Array<E> otherArray) {
-        set(otherArray);
+    public static <E> Array<E> copyOf(Array<E> otherArray) {
+        return new Array<>(otherArray);
     }
 
     /**
@@ -57,7 +70,7 @@ public class Array<E> {
         if (position < 1 || position > length) {
             throw new IllegalStateException("Array index out of bound");
         }
-        return data[position - 1];
+        return data.get(position - 1);
     }
 
     /**
@@ -68,10 +81,10 @@ public class Array<E> {
      * @throws IllegalStateException if {@code position < 1} or {@code position > length}
      */
     public void set(int position, E element) {
-        if (position < 1 || position > length) {
+        if (position < 1 || position > data.size()) {
             throw new IllegalStateException("Array index out of bound");
         }
-        data[position - 1] = element;
+        data.set(position - 1, element);
     }
 
     /**
@@ -79,13 +92,11 @@ public class Array<E> {
      *
      * @param otherArray the array to be copied
      */
-    @SuppressWarnings("unchecked")
     public void set(Array<E> otherArray) {
         if (this == otherArray) {
             return;
         }
-        this.data = (E[]) new Object[otherArray.length];
-        System.arraycopy(otherArray.data, 0, data, 0, otherArray.length);
+        this.data = new ArrayList<>(otherArray.data);
         this.length = otherArray.length;
     }
 

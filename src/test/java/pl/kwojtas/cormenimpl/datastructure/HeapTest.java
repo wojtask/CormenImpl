@@ -14,7 +14,7 @@ public class HeapTest {
 
     @Test
     public void shouldCreateHeapFromExistingArrayAndGivenLength() {
-        Array<String> array = new Array<>("aaa", "bbb", "ccc");
+        Array<String> array = Array.of("aaa", "bbb", "ccc");
         int length = 9;
 
         Heap<String> heap = new Heap<>(array, length);
@@ -28,7 +28,7 @@ public class HeapTest {
 
     @Test
     public void shouldThrowExceptionWhenCreatingHeapFromExistingArrayLargerThanHeapLength() {
-        Array<String> array = new Array<>("aaa", "bbb", "ccc");
+        Array<String> array = Array.of("aaa", "bbb", "ccc");
         int capacity = 2;
 
         thrown.expect(IllegalStateException.class);
@@ -38,7 +38,7 @@ public class HeapTest {
 
     @Test
     public void shouldCreateHeapFromExistingArray() {
-        Array<String> otherArray = new Array<>("aaa", "bbb", "ccc");
+        Array<String> otherArray = Array.of("aaa", "bbb", "ccc");
 
         Heap<String> heap = new Heap<>(otherArray);
 

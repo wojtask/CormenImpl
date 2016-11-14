@@ -31,8 +31,8 @@ public class Chapter7Test {
 
     @Test
     public void shouldSortArrayUsingQuicksort() {
-        Array<Integer> array = new Array<>(5, 7, 9, 2, 6, 8, 6, 6, 3, 1, 7, 8);
-        Array<Integer> original = new Array<>(array);
+        Array<Integer> array = Array.of(5, 7, 9, 2, 6, 8, 6, 6, 3, 1, 7, 8);
+        Array<Integer> original = Array.copyOf(array);
 
         Chapter7.quicksort(array, 1, array.length);
 
@@ -42,8 +42,8 @@ public class Chapter7Test {
 
     @Test
     public void shouldSortArrayUsingRandomizedQuicksort() {
-        Array<Integer> array = new Array<>(5, 7, 9, 2, 6, 8, 6, 6, 3, 1, 7, 8);
-        Array<Integer> original = new Array<>(array);
+        Array<Integer> array = Array.of(5, 7, 9, 2, 6, 8, 6, 6, 3, 1, 7, 8);
+        Array<Integer> original = Array.copyOf(array);
 
         Chapter7.randomizedQuicksort(array, 1, array.length);
 
@@ -53,8 +53,8 @@ public class Chapter7Test {
 
     @Test
     public void shouldSortArrayUsingQuicksortWithInsertionSortForSmallArrays() {
-        Array<Integer> array = new Array<>(5, 7, 9, 2, 6, 8, 6, 6, 3, 1, 7, 8);
-        Array<Integer> original = new Array<>(array);
+        Array<Integer> array = Array.of(5, 7, 9, 2, 6, 8, 6, 6, 3, 1, 7, 8);
+        Array<Integer> original = Array.copyOf(array);
         int threshold = 2;
 
         Chapter7.sortNearlySorted(array, 1, array.length, threshold);
@@ -65,8 +65,8 @@ public class Chapter7Test {
 
     @Test
     public void shouldSortArrayUsingHoareQuicksort() {
-        Array<Integer> array = new Array<>(5, 7, 9, 2, 6, 8, 6, 6, 3, 1, 7, 8);
-        Array<Integer> original = new Array<>(array);
+        Array<Integer> array = Array.of(5, 7, 9, 2, 6, 8, 6, 6, 3, 1, 7, 8);
+        Array<Integer> original = Array.copyOf(array);
 
         Chapter7.hoareQuicksort(array, 1, array.length);
 
@@ -76,8 +76,8 @@ public class Chapter7Test {
 
     @Test
     public void shouldSortArrayUsingStoogeSort() {
-        Array<Integer> array = new Array<>(5, 7, 9, 2, 6, 8, 6, 6, 3, 1, 7, 8);
-        Array<Integer> original = new Array<>(array);
+        Array<Integer> array = Array.of(5, 7, 9, 2, 6, 8, 6, 6, 3, 1, 7, 8);
+        Array<Integer> original = Array.copyOf(array);
 
         Chapter7.stoogeSort(array, 1, array.length);
 
@@ -87,8 +87,8 @@ public class Chapter7Test {
 
     @Test
     public void shouldSortArrayUsingQuicksort_() {
-        Array<Integer> array = new Array<>(5, 7, 9, 2, 6, 8, 6, 6, 3, 1, 7, 8);
-        Array<Integer> original = new Array<>(array);
+        Array<Integer> array = Array.of(5, 7, 9, 2, 6, 8, 6, 6, 3, 1, 7, 8);
+        Array<Integer> original = Array.copyOf(array);
 
         Chapter7.quicksort_(array, 1, array.length);
 
@@ -98,8 +98,8 @@ public class Chapter7Test {
 
     @Test
     public void shouldSortArrayUsingQuicksort__() {
-        Array<Integer> array = new Array<>(5, 7, 9, 2, 6, 8, 6, 6, 3, 1, 7, 8);
-        Array<Integer> original = new Array<>(array);
+        Array<Integer> array = Array.of(5, 7, 9, 2, 6, 8, 6, 6, 3, 1, 7, 8);
+        Array<Integer> original = Array.copyOf(array);
 
         Chapter7.quicksort__(array, 1, array.length);
 
@@ -109,8 +109,8 @@ public class Chapter7Test {
 
     @Test
     public void shouldPartitionArrayUsingMedianOf3PartitionAsFirstPickedElement() {
-        Array<Integer> array = new Array<>(5, 7, 9, 2, 6, 8, 6, 6, 3, 1, 7, 8);
-        Array<Integer> original = new Array<>(array);
+        Array<Integer> array = Array.of(5, 7, 9, 2, 6, 8, 6, 6, 3, 1, 7, 8);
+        Array<Integer> original = Array.copyOf(array);
         mockStatic(Chapter5.class);
         when(Chapter5.random(1, array.length)).thenReturn(7, 2, 10);
 
@@ -123,8 +123,8 @@ public class Chapter7Test {
 
     @Test
     public void shouldPartitionArrayUsingMedianOf3PartitionAsSecondPickedElement() {
-        Array<Integer> array = new Array<>(5, 7, 9, 2, 6, 8, 6, 6, 3, 1, 7, 8);
-        Array<Integer> original = new Array<>(array);
+        Array<Integer> array = Array.of(5, 7, 9, 2, 6, 8, 6, 6, 3, 1, 7, 8);
+        Array<Integer> original = Array.copyOf(array);
         mockStatic(Chapter5.class);
         when(Chapter5.random(1, array.length)).thenReturn(2, 7, 10);
 
@@ -137,8 +137,8 @@ public class Chapter7Test {
 
     @Test
     public void shouldPartitionArrayUsingMedianOf3PartitionAsThirdPickedElement() {
-        Array<Integer> array = new Array<>(5, 7, 9, 2, 6, 8, 6, 6, 3, 1, 7, 8);
-        Array<Integer> original = new Array<>(array);
+        Array<Integer> array = Array.of(5, 7, 9, 2, 6, 8, 6, 6, 3, 1, 7, 8);
+        Array<Integer> original = Array.copyOf(array);
         mockStatic(Chapter5.class);
         when(Chapter5.random(1, array.length)).thenReturn(10, 2, 7);
 
@@ -160,7 +160,7 @@ public class Chapter7Test {
 
     @Test
     public void shouldSortIntervalsUsingFuzzySort() {
-        Array<Interval> intervals = new Array<>(
+        Array<Interval> intervals = Array.of(
                 new Interval(5.0, 7.0),
                 new Interval(2.0, 9.0),
                 new Interval(6.0, 8.0),
@@ -168,7 +168,7 @@ public class Chapter7Test {
                 new Interval(1.0, 3.0),
                 new Interval(7.0, 8.0)
         );
-        Array<Interval> original = new Array<>(intervals);
+        Array<Interval> original = Array.copyOf(intervals);
 
         Chapter7.fuzzySort(intervals, 1, intervals.length);
 

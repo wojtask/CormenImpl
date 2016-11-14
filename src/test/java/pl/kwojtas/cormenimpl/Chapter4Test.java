@@ -25,8 +25,8 @@ public class Chapter4Test {
 
     @Test
     public void shouldFindMissingInteger() {
-        Array<Integer> array = new Array<>(12, 1, 6, 11, 4, 3, 0, 10, 13, 7, 5, 2, 9);
-        Array<Integer> original = new Array<>(array);
+        Array<Integer> array = Array.of(12, 1, 6, 11, 4, 3, 0, 10, 13, 7, 5, 2, 9);
+        Array<Integer> original = Array.copyOf(array);
 
         Integer actualMissingInteger = Chapter4.findMissingInteger(array);
 
@@ -45,16 +45,16 @@ public class Chapter4Test {
 
     @Test
     public void shouldGetLeftmostMinimaIndicesOfMongeArray() {
-        Array<Array<Double>> mongeArray = new Array<>(
-                new Array<>(10.0, 17.0, 13.0, 28.0, 23.0),
-                new Array<>(17.0, 22.0, 16.0, 29.0, 23.0),
-                new Array<>(24.0, 28.0, 22.0, 34.0, 24.0),
-                new Array<>(11.0, 13.0, 6.0, 17.0, 7.0),
-                new Array<>(45.0, 44.0, 32.0, 37.0, 23.0),
-                new Array<>(36.0, 33.0, 19.0, 21.0, 6.0),
-                new Array<>(75.0, 66.0, 51.0, 53.0, 34.0)
+        Array<Array<Double>> mongeArray = Array.of(
+                Array.of(10.0, 17.0, 13.0, 28.0, 23.0),
+                Array.of(17.0, 22.0, 16.0, 29.0, 23.0),
+                Array.of(24.0, 28.0, 22.0, 34.0, 24.0),
+                Array.of(11.0, 13.0, 6.0, 17.0, 7.0),
+                Array.of(45.0, 44.0, 32.0, 37.0, 23.0),
+                Array.of(36.0, 33.0, 19.0, 21.0, 6.0),
+                Array.of(75.0, 66.0, 51.0, 53.0, 34.0)
         );
-        Array<Array<Double>> original = new Array<>(mongeArray);
+        Array<Array<Double>> original = Array.copyOf(mongeArray);
 
         Array<Integer> actualLeftmostMinimaIndices = Chapter4.mongeLeftmostMinimaIndices(mongeArray);
 

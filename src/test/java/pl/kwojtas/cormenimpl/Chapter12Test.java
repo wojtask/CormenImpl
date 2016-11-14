@@ -288,7 +288,7 @@ public class Chapter12Test {
         Chapter12.treeInsert(tree, nodeToInsert);
 
         Array<Integer> actualElements = tree.toArray();
-        Array<Integer> expectedElements = new Array<>(12);
+        Array<Integer> expectedElements = Array.of(12);
         TestUtil.assertArrayEquals(actualElements, expectedElements);
     }
 
@@ -300,7 +300,7 @@ public class Chapter12Test {
         Chapter12.treeInsert(tree, nodeToInsert);
 
         Array<Integer> actualElements = tree.toArray();
-        Array<Integer> expectedElements = new Array<>(1, 4, 10, 11, 12, 14, 19, 20);
+        Array<Integer> expectedElements = Array.of(1, 4, 10, 11, 12, 14, 19, 20);
         TestUtil.assertArrayEquals(actualElements, expectedElements);
         assertBinarySearchTree(tree);
     }
@@ -334,7 +334,7 @@ public class Chapter12Test {
         Chapter12.treeInsert(tree, nodeToInsert);
 
         Array<Integer> actualElements = tree.toArray();
-        Array<Integer> expectedElements = new Array<>(1, 4, 10, 11, 14, 18, 19, 20);
+        Array<Integer> expectedElements = Array.of(1, 4, 10, 11, 14, 18, 19, 20);
         TestUtil.assertArrayEquals(actualElements, expectedElements);
         assertBinarySearchTree(tree);
     }
@@ -347,7 +347,7 @@ public class Chapter12Test {
 
         assertEquals(Integer.valueOf(11), actualDeletedNode.key);
         Array<Integer> actualElements = tree.toArray();
-        Array<Integer> expectedElements = new Array<>(1, 4, 10, 14, 19, 20);
+        Array<Integer> expectedElements = Array.of(1, 4, 10, 14, 19, 20);
         TestUtil.assertArrayEquals(actualElements, expectedElements);
         assertBinarySearchTree(tree);
     }
@@ -360,7 +360,7 @@ public class Chapter12Test {
 
         assertEquals(Integer.valueOf(4), actualDeletedNode.key);
         Array<Integer> actualElements = tree.toArray();
-        Array<Integer> expectedElements = new Array<>(1, 10, 11, 14, 19, 20);
+        Array<Integer> expectedElements = Array.of(1, 10, 11, 14, 19, 20);
         TestUtil.assertArrayEquals(actualElements, expectedElements);
         assertBinarySearchTree(tree);
     }
@@ -373,7 +373,7 @@ public class Chapter12Test {
 
         assertEquals(Integer.valueOf(19), actualDeletedNode.key);
         Array<Integer> actualElements = tree.toArray();
-        Array<Integer> expectedElements = new Array<>(1, 4, 10, 11, 19, 20);
+        Array<Integer> expectedElements = Array.of(1, 4, 10, 11, 19, 20);
         TestUtil.assertArrayEquals(actualElements, expectedElements);
         assertBinarySearchTree(tree);
     }
@@ -397,7 +397,7 @@ public class Chapter12Test {
         Chapter12.treeInsert_(tree, nodeToInsert);
 
         Array<Integer> actualElements = tree.toArray();
-        Array<Integer> expectedElements = new Array<>(12);
+        Array<Integer> expectedElements = Array.of(12);
         TestUtil.assertArrayEquals(actualElements, expectedElements);
     }
 
@@ -409,7 +409,7 @@ public class Chapter12Test {
         Chapter12.treeInsert_(tree, nodeToInsert);
 
         Array<Integer> actualElements = tree.toArray();
-        Array<Integer> expectedElements = new Array<>(1, 4, 10, 11, 12, 14, 19, 20);
+        Array<Integer> expectedElements = Array.of(1, 4, 10, 11, 12, 14, 19, 20);
         TestUtil.assertArrayEquals(actualElements, expectedElements);
         assertBinarySearchTree(tree);
     }
@@ -422,14 +422,14 @@ public class Chapter12Test {
         Chapter12.treeInsert_(tree, nodeToInsert);
 
         Array<Integer> actualElements = tree.toArray();
-        Array<Integer> expectedElements = new Array<>(1, 4, 10, 11, 14, 18, 19, 20);
+        Array<Integer> expectedElements = Array.of(1, 4, 10, 11, 14, 18, 19, 20);
         TestUtil.assertArrayEquals(actualElements, expectedElements);
         assertBinarySearchTree(tree);
     }
 
     @Test
     public void shouldSortArrayUsingInorderSort() {
-        Array<Integer> array = new Array<>(5, 7, 9, 2, 6, 8, 6, 6, 3, 1, 7, 8);
+        Array<Integer> array = Array.of(5, 7, 9, 2, 6, 8, 6, 6, 3, 1, 7, 8);
 
         Chapter12.inorderSort(array);
 
@@ -445,7 +445,7 @@ public class Chapter12Test {
         Chapter12.safeTreeDelete(tree, tree.root.right.left); // a leaf
 
         Array<Integer> actualElements = tree.toArray();
-        Array<Integer> expectedElements = new Array<>(1, 4, 10, 14, 19, 20);
+        Array<Integer> expectedElements = Array.of(1, 4, 10, 14, 19, 20);
         TestUtil.assertArrayEquals(actualElements, expectedElements);
         assertBinarySearchTree(tree);
     }
@@ -457,7 +457,7 @@ public class Chapter12Test {
         Chapter12.safeTreeDelete(tree, tree.root.right); // a node with two children (successor's key = 19)
 
         Array<Integer> actualElements = tree.toArray();
-        Array<Integer> expectedElements = new Array<>(1, 4, 10, 11, 19, 20);
+        Array<Integer> expectedElements = Array.of(1, 4, 10, 11, 19, 20);
         TestUtil.assertArrayEquals(actualElements, expectedElements);
         assertBinarySearchTree(tree);
     }
@@ -469,7 +469,7 @@ public class Chapter12Test {
         Chapter12.safeTreeDelete(tree, tree.root.left); // a node with two children (successor's key = 6)
 
         Array<Integer> actualElements = tree.toArray();
-        Array<Integer> expectedElements = new Array<>(2, 6, 7, 8, 9, 10);
+        Array<Integer> expectedElements = Array.of(2, 6, 7, 8, 9, 10);
         TestUtil.assertArrayEquals(actualElements, expectedElements);
         assertBinarySearchTree(tree);
     }
@@ -507,7 +507,7 @@ public class Chapter12Test {
 
         assertEquals(Integer.valueOf(11), actualDeletedNode.key);
         Array<Integer> actualElements = tree.toArray();
-        Array<Integer> expectedElements = new Array<>(1, 4, 10, 14, 19, 20);
+        Array<Integer> expectedElements = Array.of(1, 4, 10, 14, 19, 20);
         TestUtil.assertArrayEquals(actualElements, expectedElements);
         assertBinarySearchTree(tree);
     }
@@ -520,7 +520,7 @@ public class Chapter12Test {
 
         assertEquals(Integer.valueOf(4), actualDeletedNode.key);
         Array<Integer> actualElements = tree.toArray();
-        Array<Integer> expectedElements = new Array<>(1, 10, 11, 14, 19, 20);
+        Array<Integer> expectedElements = Array.of(1, 10, 11, 14, 19, 20);
         TestUtil.assertArrayEquals(actualElements, expectedElements);
         assertBinarySearchTree(tree);
     }
@@ -544,7 +544,7 @@ public class Chapter12Test {
 
         assertEquals(Integer.valueOf(11), actualDeletedNode.key);
         Array<Integer> actualElements = tree.toArray();
-        Array<Integer> expectedElements = new Array<>(1, 4, 10, 11, 19, 20);
+        Array<Integer> expectedElements = Array.of(1, 4, 10, 11, 19, 20);
         TestUtil.assertArrayEquals(actualElements, expectedElements);
         assertBinarySearchTree(tree);
     }
@@ -567,7 +567,7 @@ public class Chapter12Test {
 
         assertEquals(Integer.valueOf(19), actualDeletedNode.key);
         Array<Integer> actualElements = tree.toArray();
-        Array<Integer> expectedElements = new Array<>(1, 4, 10, 11, 19, 20);
+        Array<Integer> expectedElements = Array.of(1, 4, 10, 11, 19, 20);
         TestUtil.assertArrayEquals(actualElements, expectedElements);
         assertBinarySearchTree(tree);
     }
@@ -585,7 +585,7 @@ public class Chapter12Test {
 
     @Test
     public void shouldSortBitStringsUsingRadixTree() {
-        Array<String> array = new Array<>("1011", "10", "011", "100", "0");
+        Array<String> array = Array.of("1011", "10", "011", "100", "0");
 
         Chapter12.bitStringsSort(array);
 
@@ -596,8 +596,8 @@ public class Chapter12Test {
 
     @Test
     public void shouldSortArrayUsingTreeBuildingQuicksort() {
-        Array<Integer> array = new Array<>(5, 7, 9, 2, 6, 8, 6, 6, 3, 1, 7, 8);
-        Array<Integer> original = new Array<>(array);
+        Array<Integer> array = Array.of(5, 7, 9, 2, 6, 8, 6, 6, 3, 1, 7, 8);
+        Array<Integer> original = Array.copyOf(array);
 
         Chapter12.treeBuildingQuicksort(array, 1, array.length);
 

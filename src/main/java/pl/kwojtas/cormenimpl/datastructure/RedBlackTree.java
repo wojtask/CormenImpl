@@ -117,7 +117,7 @@ public class RedBlackTree<E> {
      */
     public Array<E> toArray(Node<E> x) {
         if (x == nil) {
-            return new Array<>();
+            return Array.of();
         }
         int n = getSize(x);
         Array<E> array = Array.withLength(n);

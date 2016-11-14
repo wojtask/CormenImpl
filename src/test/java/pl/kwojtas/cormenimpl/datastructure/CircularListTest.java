@@ -74,7 +74,7 @@ public class CircularListTest {
 
         Array<String> actualArray = circularList.toArray();
 
-        assertArrayEquals(new Array<>(contents), actualArray);
+        assertArrayEquals(Array.of(contents), actualArray);
     }
 
     @Test
@@ -83,7 +83,7 @@ public class CircularListTest {
 
         Array<String> actualArray = circularList.toArray();
 
-        assertArrayEquals(new Array<>(), actualArray);
+        assertArrayEquals(Array.of(), actualArray);
     }
 
 }

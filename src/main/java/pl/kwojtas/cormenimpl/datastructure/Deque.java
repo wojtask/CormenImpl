@@ -1,5 +1,7 @@
 package pl.kwojtas.cormenimpl.datastructure;
 
+import java.util.ArrayList;
+
 /**
  * Implements a deque.
  *

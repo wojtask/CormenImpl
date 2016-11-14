@@ -6,7 +6,6 @@ import org.junit.rules.ExpectedException;
 import pl.kwojtas.cormenimpl.datastructure.ChainedHashTable;
 import pl.kwojtas.cormenimpl.datastructure.DirectAddressTable;
 import pl.kwojtas.cormenimpl.datastructure.HashFunction;
-import pl.kwojtas.cormenimpl.datastructure.HashProbingFunction;
 import pl.kwojtas.cormenimpl.datastructure.HashTableWithFreeList;
 import pl.kwojtas.cormenimpl.datastructure.HashTableWithOpenAddressing;
 import pl.kwojtas.cormenimpl.datastructure.HugeArray;

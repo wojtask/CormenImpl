@@ -246,7 +246,7 @@ public final class Chapter7 {
         int i1 = random(p, r);
         int i2 = random(p, r);
         int i3 = random(p, r);
-        Array<E> pivots = new Array<>(A.at(i1), A.at(i2), A.at(i3));
+        Array<E> pivots = Array.of(A.at(i1), A.at(i2), A.at(i3));
         insertionSort(pivots);
         E median = pivots.at(2);
         if (median.equals(A.at(i1))) {

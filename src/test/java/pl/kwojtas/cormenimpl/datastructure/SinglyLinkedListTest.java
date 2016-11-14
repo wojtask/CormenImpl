@@ -65,7 +65,7 @@ public class SinglyLinkedListTest {
 
         Array<String> actualArray = singlyLinkedList.toArray();
 
-        assertArrayEquals(new Array<>(contents), actualArray);
+        assertArrayEquals(Array.of(contents), actualArray);
     }
 
 }

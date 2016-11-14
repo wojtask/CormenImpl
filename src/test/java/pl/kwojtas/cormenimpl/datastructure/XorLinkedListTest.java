@@ -69,7 +69,7 @@ public class XorLinkedListTest {
     @Test
     public void shouldTransformXorLinkedListToArray() {
         XorLinkedList<String> xorLinkedList = getExemplaryXorLinkedList();
-        Array<String> expectedArray = new Array<>("aaa", "bbb", "ccc");
+        Array<String> expectedArray = Array.of("aaa", "bbb", "ccc");
 
         Array<String> actualArray = xorLinkedList.toArray();
 
