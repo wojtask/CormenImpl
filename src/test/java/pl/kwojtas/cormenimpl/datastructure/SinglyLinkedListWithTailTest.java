@@ -10,7 +10,7 @@ public class SinglyLinkedListWithTailTest {
     @Test
     public void shouldCreateSinglyLinkedListWithTailWithInitialContents() {
 
-        SinglyLinkedListWithTail<String> singlyLinkedListWithTail = new SinglyLinkedListWithTail<>("aaa", "bbb", "ccc");
+        SinglyLinkedListWithTail<String> singlyLinkedListWithTail = SinglyLinkedListWithTail.of("aaa", "bbb", "ccc");
 
         assertEquals("aaa", singlyLinkedListWithTail.head.key);
         assertEquals("bbb", singlyLinkedListWithTail.head.next.key);
@@ -30,9 +30,9 @@ public class SinglyLinkedListWithTailTest {
 
     @Test
     public void shouldCreateSinglyLinkedListWithTailFromExistingSinglyLinkedListWithTail() {
-        SinglyLinkedListWithTail<String> otherSinglyLinkedListWithTail = new SinglyLinkedListWithTail<>("aaa", "bbb", "ccc");
+        SinglyLinkedListWithTail<String> otherSinglyLinkedListWithTail = SinglyLinkedListWithTail.of("aaa", "bbb", "ccc");
 
-        SinglyLinkedListWithTail<String> singlyLinkedListWithTail = new SinglyLinkedListWithTail<>(otherSinglyLinkedListWithTail);
+        SinglyLinkedListWithTail<String> singlyLinkedListWithTail = SinglyLinkedListWithTail.copyOf(otherSinglyLinkedListWithTail);
 
         assertEquals("aaa", singlyLinkedListWithTail.head.key);
         assertEquals("bbb", singlyLinkedListWithTail.head.next.key);
@@ -45,7 +45,7 @@ public class SinglyLinkedListWithTailTest {
     public void shouldCreateEmptySinglyLinkedListWithTailFromExistingEmptySinglyLinkedListWithTail() {
         SinglyLinkedListWithTail<String> otherSinglyLinkedListWithTail = new SinglyLinkedListWithTail<>();
 
-        SinglyLinkedListWithTail<String> singlyLinkedListWithTail = new SinglyLinkedListWithTail<>(otherSinglyLinkedListWithTail);
+        SinglyLinkedListWithTail<String> singlyLinkedListWithTail = SinglyLinkedListWithTail.copyOf(otherSinglyLinkedListWithTail);
 
         assertNull(singlyLinkedListWithTail.head);
         assertNull(singlyLinkedListWithTail.tail);

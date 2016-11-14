@@ -11,7 +11,7 @@ public class ListTest {
     @Test
     public void shouldCreateListWithInitialContents() {
 
-        List<String> list = new List<>("aaa", "bbb", "ccc");
+        List<String> list = List.of("aaa", "bbb", "ccc");
 
         assertEquals("aaa", list.head.key);
         assertEquals("bbb", list.head.next.key);
@@ -25,16 +25,16 @@ public class ListTest {
     @Test
     public void shouldCreateEmptyList() {
 
-        List<String> list = new List<>();
+        List<String> list = List.emptyList();
 
         assertNull(list.head);
     }
 
     @Test
     public void shouldCreateListFromExistingList() {
-        List<String> otherList = new List<>("aaa", "bbb", "ccc");
+        List<String> otherList = List.of("aaa", "bbb", "ccc");
 
-        List<String> list = new List<>(otherList);
+        List<String> list = List.copyOf(otherList);
 
         assertEquals("aaa", list.head.key);
         assertEquals("bbb", list.head.next.key);
@@ -47,9 +47,9 @@ public class ListTest {
 
     @Test
     public void shouldCreateEmptyListFromExistingEmptyList() {
-        List<String> otherList = new List<>();
+        List<String> otherList = List.emptyList();
 
-        List<String> list = new List<>(otherList);
+        List<String> list = List.copyOf(otherList);
 
         assertNull(list.head);
     }
@@ -57,7 +57,7 @@ public class ListTest {
     @Test
     public void shouldGetListLength() {
         String[] contents = new String[]{"aaa", "bbb", "ccc"};
-        List<String> list = new List<>(contents);
+        List<String> list = List.of(contents);
 
         int actualLength = list.getLength();
 
@@ -67,7 +67,7 @@ public class ListTest {
     @Test
     public void shouldTransformListToArray() {
         String[] contents = new String[]{"aaa", "bbb", "ccc"};
-        List<String> list = new List<>(contents);
+        List<String> list = List.of(contents);
 
         Array<String> actualArray = list.toArray();
 

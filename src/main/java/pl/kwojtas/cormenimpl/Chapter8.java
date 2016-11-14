@@ -170,7 +170,7 @@ public final class Chapter8 {
         int n = A.length;
         ZeroBasedIndexedArray<List<Double>> B = ZeroBasedIndexedArray.withLength(n);
         for (int i = 0; i <= n - 1; i++) {
-            B.set(i, new List<>());
+            B.set(i, List.emptyList());
         }
         for (int i = 1; i <= n; i++) {
             List.Node<Double> x = new List.Node<>(A.at(i));
@@ -234,7 +234,7 @@ public final class Chapter8 {
         int n = points.length;
         ZeroBasedIndexedArray<List<Pair<Point2D, Double>>> B = ZeroBasedIndexedArray.withLength(n);
         for (int i = 0; i <= n - 1; i++) {
-            B.set(i, new List<>());
+            B.set(i, List.emptyList());
         }
         for (int i = 1; i <= n; i++) {
             double distance = sqrt(points.at(i).x * points.at(i).x + points.at(i).y * points.at(i).y);

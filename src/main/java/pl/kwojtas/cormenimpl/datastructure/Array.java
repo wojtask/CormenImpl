@@ -27,6 +27,18 @@ public class Array<E> {
         set(otherArray);
     }
 
+    private static final Array EMPTY_ARRAY = new Array<>(Collections.emptyList());
+
+    /**
+     * Returns an empty array (an array containing 0 elements).
+     *
+     * @return the empty array
+     */
+    @SuppressWarnings("unchecked")
+    public static <E> Array<E> emptyArray() {
+        return EMPTY_ARRAY;
+    }
+
     /**
      * Creates an array from given elements.
      *
@@ -38,18 +50,6 @@ public class Array<E> {
     public static <E> Array<E> of(E... elements) {
         java.util.List<E> initialData = Arrays.asList(elements);
         return new Array<>(initialData);
-    }
-
-    private static final Array EMPTY_ARRAY = new Array<>(Collections.emptyList());
-
-    /**
-     * Returns an empty array (an array containing 0 elements).
-     *
-     * @return the empty array
-     */
-    @SuppressWarnings("unchecked")
-    public static <E> Array<E> emptyArray() {
-        return EMPTY_ARRAY;
     }
 
     /**

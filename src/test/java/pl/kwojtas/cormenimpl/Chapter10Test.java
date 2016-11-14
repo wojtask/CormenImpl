@@ -535,7 +535,7 @@ public class Chapter10Test {
 
     @Test
     public void shouldFindKeyOnList() {
-        List<Integer> list = new List<>(5, 7, 9, 2, 6, 1, 6, 6, 3, 1, 7, 8);
+        List<Integer> list = List.of(5, 7, 9, 2, 6, 1, 6, 6, 3, 1, 7, 8);
         int keyToFind = 6;
 
         List.Node<Integer> actualNode = Chapter10.listSearch(list, keyToFind);
@@ -546,7 +546,7 @@ public class Chapter10Test {
 
     @Test
     public void shouldNotFindNonexistentKeyOnList() {
-        List<Integer> list = new List<>(5, 7, 9, 2, 6, 1, 6, 6, 3, 1, 7, 8);
+        List<Integer> list = List.of(5, 7, 9, 2, 6, 1, 6, 6, 3, 1, 7, 8);
         int keyToFind = 4;
 
         List.Node<Integer> actualNode = Chapter10.listSearch(list, keyToFind);
@@ -556,8 +556,8 @@ public class Chapter10Test {
 
     @Test
     public void shouldInsertOntoList() {
-        List<Integer> list = new List<>(5, 7, 9, 2, 6, 1, 6, 6, 3, 1, 7, 8);
-        List<Integer> original = new List<>(list);
+        List<Integer> list = List.of(5, 7, 9, 2, 6, 1, 6, 6, 3, 1, 7, 8);
+        List<Integer> original = List.copyOf(list);
         int keyToInsert = 3;
 
         Chapter10.listInsert(list, new List.Node<>(keyToInsert));
@@ -569,8 +569,8 @@ public class Chapter10Test {
 
     @Test
     public void shouldDeleteElementInTheMiddleOfList() {
-        List<Integer> list = new List<>(5, 7, 9, 2, 6, 1, 6, 6, 3, 1, 7, 8);
-        List<Integer> original = new List<>(list);
+        List<Integer> list = List.of(5, 7, 9, 2, 6, 1, 6, 6, 3, 1, 7, 8);
+        List<Integer> original = List.copyOf(list);
         int keyToDelete = 6;
         List.Node<Integer> nodeToDelete = list.head.next.next.next.next; // first element on the list with key = 6
 
@@ -581,8 +581,8 @@ public class Chapter10Test {
 
     @Test
     public void shouldDeleteHeadFromList() {
-        List<Integer> list = new List<>(5, 7, 9, 2, 6, 1, 6, 6, 3, 1, 7, 8);
-        List<Integer> original = new List<>(list);
+        List<Integer> list = List.of(5, 7, 9, 2, 6, 1, 6, 6, 3, 1, 7, 8);
+        List<Integer> original = List.copyOf(list);
         int keyToDelete = 5;
         List.Node<Integer> nodeToDelete = list.head;
 
@@ -666,8 +666,8 @@ public class Chapter10Test {
 
     @Test
     public void shouldInsertOntoSinglyLinkedList() {
-        SinglyLinkedList<Integer> list = new SinglyLinkedList<>(5, 7, 9, 2, 6, 1, 6, 6, 3, 1, 7, 8);
-        SinglyLinkedList<Integer> original = new SinglyLinkedList<>(list);
+        SinglyLinkedList<Integer> list = SinglyLinkedList.of(5, 7, 9, 2, 6, 1, 6, 6, 3, 1, 7, 8);
+        SinglyLinkedList<Integer> original = SinglyLinkedList.copyOf(list);
         int keyToInsert = 3;
 
         Chapter10.singlyLinkedListInsert(list, new SinglyLinkedList.Node<>(keyToInsert));
@@ -679,8 +679,8 @@ public class Chapter10Test {
 
     @Test
     public void shouldDeleteFromSinglyLinkedList() {
-        SinglyLinkedList<Integer> list = new SinglyLinkedList<>(5, 7, 9, 2, 6, 1, 6, 6, 3, 1, 7, 8);
-        SinglyLinkedList<Integer> original = new SinglyLinkedList<>(list);
+        SinglyLinkedList<Integer> list = SinglyLinkedList.of(5, 7, 9, 2, 6, 1, 6, 6, 3, 1, 7, 8);
+        SinglyLinkedList<Integer> original = SinglyLinkedList.copyOf(list);
         int keyToDelete = 6;
         SinglyLinkedList.Node<Integer> nodeToDelete = list.head.next.next.next.next; // first element on the list with key = 6
 
@@ -691,8 +691,8 @@ public class Chapter10Test {
 
     @Test
     public void shouldInsertIntoStackOnSinglyLinkedList() {
-        SinglyLinkedList<Integer> list = new SinglyLinkedList<>(5, 7, 9, 2, 6, 1, 6, 6, 3, 1, 7, 8);
-        SinglyLinkedList<Integer> original = new SinglyLinkedList<>(list);
+        SinglyLinkedList<Integer> list = SinglyLinkedList.of(5, 7, 9, 2, 6, 1, 6, 6, 3, 1, 7, 8);
+        SinglyLinkedList<Integer> original = SinglyLinkedList.copyOf(list);
         int keyToInsert = 3;
 
         Chapter10.singlyLinkedListPush(list, keyToInsert);
@@ -704,8 +704,8 @@ public class Chapter10Test {
 
     @Test
     public void shouldDeleteFromStackOnSinglyLinkedList() {
-        SinglyLinkedList<Integer> list = new SinglyLinkedList<>(5, 7, 9, 2, 6, 1, 6, 6, 3, 1, 7, 8);
-        SinglyLinkedList<Integer> original = new SinglyLinkedList<>(list);
+        SinglyLinkedList<Integer> list = SinglyLinkedList.of(5, 7, 9, 2, 6, 1, 6, 6, 3, 1, 7, 8);
+        SinglyLinkedList<Integer> original = SinglyLinkedList.copyOf(list);
         int expectedElement = 5;
 
         Integer actualElement = Chapter10.singlyLinkedListPop(list);
@@ -721,7 +721,7 @@ public class Chapter10Test {
 
     @Test
     public void shouldThrowExceptionWhenDeletingFromEmptyStackOnSinglyLinkedList() {
-        SinglyLinkedList<Integer> list = new SinglyLinkedList<>();
+        SinglyLinkedList<Integer> list = SinglyLinkedList.emptyList();
 
         thrown.expect(IllegalStateException.class);
         thrown.expectMessage("underflow");
@@ -730,8 +730,8 @@ public class Chapter10Test {
 
     @Test
     public void shouldInsertIntoQueueOnSinglyLinkedListWithTail() {
-        SinglyLinkedListWithTail<Integer> list = new SinglyLinkedListWithTail<>(5, 7, 9, 2, 6, 1, 6, 6, 3, 1, 7, 8);
-        SinglyLinkedListWithTail<Integer> original = new SinglyLinkedListWithTail<>(list);
+        SinglyLinkedListWithTail<Integer> list = SinglyLinkedListWithTail.of(5, 7, 9, 2, 6, 1, 6, 6, 3, 1, 7, 8);
+        SinglyLinkedListWithTail<Integer> original = SinglyLinkedListWithTail.copyOf(list);
         int keyToInsert = 3;
 
         Chapter10.singlyLinkedListEnqueue(list, keyToInsert);
@@ -747,7 +747,7 @@ public class Chapter10Test {
 
     @Test
     public void shouldInsertIntoEmptyQueueOnSinglyLinkedListWithTail() {
-        SinglyLinkedListWithTail<Integer> list = new SinglyLinkedListWithTail<>();
+        SinglyLinkedListWithTail<Integer> list = SinglyLinkedListWithTail.of();
         int keyToInsert = 3;
 
         Chapter10.singlyLinkedListEnqueue(list, keyToInsert);
@@ -758,8 +758,8 @@ public class Chapter10Test {
 
     @Test
     public void shouldDeleteFromQueueOnSinglyLinkedListWithTail() {
-        SinglyLinkedListWithTail<Integer> list = new SinglyLinkedListWithTail<>(5, 7, 9, 2, 6, 1, 6, 6, 3, 1, 7, 8);
-        SinglyLinkedListWithTail<Integer> original = new SinglyLinkedListWithTail<>(list);
+        SinglyLinkedListWithTail<Integer> list = SinglyLinkedListWithTail.of(5, 7, 9, 2, 6, 1, 6, 6, 3, 1, 7, 8);
+        SinglyLinkedListWithTail<Integer> original = SinglyLinkedListWithTail.copyOf(list);
         int expectedElement = 5;
 
         Integer actualElement = Chapter10.singlyLinkedListDequeue(list);
@@ -775,7 +775,7 @@ public class Chapter10Test {
 
     @Test
     public void shouldDeleteTheOnlyElementFromQueueOnSinglyLinkedListWithTail() {
-        SinglyLinkedListWithTail<Integer> list = new SinglyLinkedListWithTail<>(5);
+        SinglyLinkedListWithTail<Integer> list = SinglyLinkedListWithTail.of(5);
         int expectedElement = 5;
 
         Integer actualElement = Chapter10.singlyLinkedListDequeue(list);
@@ -786,7 +786,7 @@ public class Chapter10Test {
 
     @Test
     public void shouldThrowExceptionWhenDeletingFromEmptyQueueOnSinglyLinkedListWithTail() {
-        SinglyLinkedListWithTail<Integer> list = new SinglyLinkedListWithTail<>();
+        SinglyLinkedListWithTail<Integer> list = SinglyLinkedListWithTail.of();
 
         thrown.expect(IllegalStateException.class);
         thrown.expectMessage("underflow");
@@ -930,8 +930,8 @@ public class Chapter10Test {
 
     @Test
     public void shouldReverseSinglyLinkedList() {
-        SinglyLinkedList<Integer> list = new SinglyLinkedList<>(5, 7, 9, 2, 6, 1, 6, 6, 3, 1, 7, 8);
-        SinglyLinkedList<Integer> original = new SinglyLinkedList<>(list);
+        SinglyLinkedList<Integer> list = SinglyLinkedList.of(5, 7, 9, 2, 6, 1, 6, 6, 3, 1, 7, 8);
+        SinglyLinkedList<Integer> original = SinglyLinkedList.copyOf(list);
 
         Chapter10.singlyLinkedListReverse(list);
 
@@ -1413,9 +1413,9 @@ public class Chapter10Test {
 
     @Test
     public void shouldInsertToEmptyHeapOnSortedList() {
-        SinglyLinkedList<Integer> sortedList = new SinglyLinkedList<>();
+        SinglyLinkedList<Integer> sortedList = SinglyLinkedList.emptyList();
         int key = 12;
-        SinglyLinkedList<Integer> expectedAfterInsertion = new SinglyLinkedList<>(12);
+        SinglyLinkedList<Integer> expectedAfterInsertion = SinglyLinkedList.of(12);
 
         Chapter10.sortedListMinHeapInsert(sortedList, key);
 
@@ -1424,9 +1424,9 @@ public class Chapter10Test {
 
     @Test
     public void shouldInsertAtTheBeginningOfHeapOnSortedList() {
-        SinglyLinkedList<Integer> sortedList = new SinglyLinkedList<>(2, 4, 8, 13, 14, 15);
+        SinglyLinkedList<Integer> sortedList = SinglyLinkedList.of(2, 4, 8, 13, 14, 15);
         int key = 1;
-        SinglyLinkedList<Integer> expectedAfterInsertion = new SinglyLinkedList<>(1, 2, 4, 8, 13, 14, 15);
+        SinglyLinkedList<Integer> expectedAfterInsertion = SinglyLinkedList.of(1, 2, 4, 8, 13, 14, 15);
 
         Chapter10.sortedListMinHeapInsert(sortedList, key);
 
@@ -1435,9 +1435,9 @@ public class Chapter10Test {
 
     @Test
     public void shouldInsertAtTheEndOfHeapOnSortedList() {
-        SinglyLinkedList<Integer> sortedList = new SinglyLinkedList<>(2, 4, 8, 13, 14, 15);
+        SinglyLinkedList<Integer> sortedList = SinglyLinkedList.of(2, 4, 8, 13, 14, 15);
         int key = 20;
-        SinglyLinkedList<Integer> expectedAfterInsertion = new SinglyLinkedList<>(2, 4, 8, 13, 14, 15, 20);
+        SinglyLinkedList<Integer> expectedAfterInsertion = SinglyLinkedList.of(2, 4, 8, 13, 14, 15, 20);
 
         Chapter10.sortedListMinHeapInsert(sortedList, key);
 
@@ -1446,9 +1446,9 @@ public class Chapter10Test {
 
     @Test
     public void shouldInsertInTheMiddleOfHeapOnSortedList() {
-        SinglyLinkedList<Integer> sortedList = new SinglyLinkedList<>(2, 4, 8, 13, 14, 15);
+        SinglyLinkedList<Integer> sortedList = SinglyLinkedList.of(2, 4, 8, 13, 14, 15);
         int key = 11;
-        SinglyLinkedList<Integer> expectedAfterInsertion = new SinglyLinkedList<>(2, 4, 8, 11, 13, 14, 15);
+        SinglyLinkedList<Integer> expectedAfterInsertion = SinglyLinkedList.of(2, 4, 8, 11, 13, 14, 15);
 
         Chapter10.sortedListMinHeapInsert(sortedList, key);
 
@@ -1457,8 +1457,8 @@ public class Chapter10Test {
 
     @Test
     public void shouldGetMinimumFromHeapOnSortedList() {
-        SinglyLinkedList<Integer> sortedList = new SinglyLinkedList<>(2, 4, 8, 13, 14, 15);
-        SinglyLinkedList<Integer> original = new SinglyLinkedList<>(sortedList);
+        SinglyLinkedList<Integer> sortedList = SinglyLinkedList.of(2, 4, 8, 13, 14, 15);
+        SinglyLinkedList<Integer> original = SinglyLinkedList.copyOf(sortedList);
         int expectedMinimum = 2;
 
         int actualMinimum = Chapter10.sortedListHeapMinimum(sortedList);
@@ -1469,7 +1469,7 @@ public class Chapter10Test {
 
     @Test
     public void shouldThrowExceptionWhenExtractingMinimumFromEmptyHeapOnSortedList() {
-        SinglyLinkedList<Integer> sortedList = new SinglyLinkedList<>();
+        SinglyLinkedList<Integer> sortedList = SinglyLinkedList.of();
 
         thrown.expect(IllegalStateException.class);
         thrown.expectMessage("heap underflow");
@@ -1478,8 +1478,8 @@ public class Chapter10Test {
 
     @Test
     public void shouldExtractMinimumFromHeapOnSortedList() {
-        SinglyLinkedList<Integer> sortedList = new SinglyLinkedList<>(2, 4, 8, 13, 14, 15);
-        SinglyLinkedList<Integer> expectedAfterExtraction = new SinglyLinkedList<>(4, 8, 13, 14, 15);
+        SinglyLinkedList<Integer> sortedList = SinglyLinkedList.of(2, 4, 8, 13, 14, 15);
+        SinglyLinkedList<Integer> expectedAfterExtraction = SinglyLinkedList.of(4, 8, 13, 14, 15);
         int expectedMinimum = 2;
 
         int actualMinimum = Chapter10.sortedListHeapExtractMin(sortedList);
@@ -1490,9 +1490,9 @@ public class Chapter10Test {
 
     @Test
     public void shouldMergeHeapsOnSortedLists() {
-        SinglyLinkedList<Integer> sortedList1 = new SinglyLinkedList<>(2, 4, 8, 13, 14, 15);
-        SinglyLinkedList<Integer> sortedList2 = new SinglyLinkedList<>(1, 2, 5, 6, 8, 12, 14);
-        SinglyLinkedList<Integer> expectedMerged = new SinglyLinkedList<>(1, 2, 4, 5, 6, 8, 12, 13, 14, 15);
+        SinglyLinkedList<Integer> sortedList1 = SinglyLinkedList.of(2, 4, 8, 13, 14, 15);
+        SinglyLinkedList<Integer> sortedList2 = SinglyLinkedList.of(1, 2, 5, 6, 8, 12, 14);
+        SinglyLinkedList<Integer> expectedMerged = SinglyLinkedList.of(1, 2, 4, 5, 6, 8, 12, 13, 14, 15);
 
         SinglyLinkedList<Integer> actualMerged = Chapter10.sortedListMinHeapUnion(sortedList1, sortedList2);
 
@@ -1509,9 +1509,9 @@ public class Chapter10Test {
 
     @Test
     public void shouldInsertToEmptyHeapOnList() {
-        SinglyLinkedListWithTail<Integer> list = new SinglyLinkedListWithTail<>();
+        SinglyLinkedListWithTail<Integer> list = SinglyLinkedListWithTail.of();
         int key = 12;
-        SinglyLinkedListWithTail<Integer> expectedAfterInsertion = new SinglyLinkedListWithTail<>(12);
+        SinglyLinkedListWithTail<Integer> expectedAfterInsertion = SinglyLinkedListWithTail.of(12);
 
         Chapter10.listMinHeapInsert(list, key);
 
@@ -1520,9 +1520,9 @@ public class Chapter10Test {
 
     @Test
     public void shouldInsertNewMinimumIntoHeapOnList() {
-        SinglyLinkedListWithTail<Integer> list = new SinglyLinkedListWithTail<>(2, 8, 12, 10, 6, 5, 3);
+        SinglyLinkedListWithTail<Integer> list = SinglyLinkedListWithTail.of(2, 8, 12, 10, 6, 5, 3);
         int key = 1;
-        SinglyLinkedListWithTail<Integer> expectedAfterInsertion = new SinglyLinkedListWithTail<>(1, 2, 8, 12, 10, 6, 5, 3);
+        SinglyLinkedListWithTail<Integer> expectedAfterInsertion = SinglyLinkedListWithTail.of(1, 2, 8, 12, 10, 6, 5, 3);
 
         Chapter10.listMinHeapInsert(list, key);
 
@@ -1531,9 +1531,9 @@ public class Chapter10Test {
 
     @Test
     public void shouldInsertElementNotBecomingMinimumIntoHeapOnList() {
-        SinglyLinkedListWithTail<Integer> list = new SinglyLinkedListWithTail<>(2, 8, 12, 10, 6, 5, 3);
+        SinglyLinkedListWithTail<Integer> list = SinglyLinkedListWithTail.of(2, 8, 12, 10, 6, 5, 3);
         int key = 7;
-        SinglyLinkedListWithTail<Integer> expectedAfterInsertion = new SinglyLinkedListWithTail<>(2, 7, 8, 12, 10, 6, 5, 3);
+        SinglyLinkedListWithTail<Integer> expectedAfterInsertion = SinglyLinkedListWithTail.of(2, 7, 8, 12, 10, 6, 5, 3);
 
         Chapter10.listMinHeapInsert(list, key);
 
@@ -1542,8 +1542,8 @@ public class Chapter10Test {
 
     @Test
     public void shouldGetMinimumFromHeapOnList() {
-        SinglyLinkedListWithTail<Integer> list = new SinglyLinkedListWithTail<>(2, 8, 12, 10, 6, 5, 3);
-        SinglyLinkedListWithTail<Integer> original = new SinglyLinkedListWithTail<>(list);
+        SinglyLinkedListWithTail<Integer> list = SinglyLinkedListWithTail.of(2, 8, 12, 10, 6, 5, 3);
+        SinglyLinkedListWithTail<Integer> original = SinglyLinkedListWithTail.copyOf(list);
         int expectedMinimum = 2;
 
         int actualMinimum = Chapter10.listHeapMinimum(list);
@@ -1554,7 +1554,7 @@ public class Chapter10Test {
 
     @Test
     public void shouldThrowExceptionWhenExtractingMinimumFromEmptyHeapOnList() {
-        SinglyLinkedListWithTail<Integer> list = new SinglyLinkedListWithTail<>();
+        SinglyLinkedListWithTail<Integer> list = SinglyLinkedListWithTail.of();
 
         thrown.expect(IllegalStateException.class);
         thrown.expectMessage("heap underflow");
@@ -1563,8 +1563,8 @@ public class Chapter10Test {
 
     @Test
     public void shouldExtractMinimumFromHeapOnList() {
-        SinglyLinkedListWithTail<Integer> list = new SinglyLinkedListWithTail<>(2, 8, 12, 10, 6, 5, 3);
-        SinglyLinkedListWithTail<Integer> expectedAfterExtraction = new SinglyLinkedListWithTail<>(3, 8, 12, 10, 6, 5);
+        SinglyLinkedListWithTail<Integer> list = SinglyLinkedListWithTail.of(2, 8, 12, 10, 6, 5, 3);
+        SinglyLinkedListWithTail<Integer> expectedAfterExtraction = SinglyLinkedListWithTail.of(3, 8, 12, 10, 6, 5);
         int expectedMinimum = 2;
 
         int actualMinimum = Chapter10.listHeapExtractMin(list);
@@ -1575,7 +1575,7 @@ public class Chapter10Test {
 
     @Test
     public void shouldExtractMinimumFromHeapOnListContainingOneElement() {
-        SinglyLinkedListWithTail<Integer> list = new SinglyLinkedListWithTail<>(13);
+        SinglyLinkedListWithTail<Integer> list = SinglyLinkedListWithTail.of(13);
         int expectedMinimum = 13;
 
         int actualMinimum = Chapter10.listHeapExtractMin(list);
@@ -1586,8 +1586,8 @@ public class Chapter10Test {
 
     @Test
     public void shouldMergeHeapsOnListsWhereFirstHeapIsEmpty() {
-        SinglyLinkedListWithTail<Integer> list1 = new SinglyLinkedListWithTail<>();
-        SinglyLinkedListWithTail<Integer> list2 = new SinglyLinkedListWithTail<>(3, 7, 4, 10, 6, 9);
+        SinglyLinkedListWithTail<Integer> list1 = SinglyLinkedListWithTail.of();
+        SinglyLinkedListWithTail<Integer> list2 = SinglyLinkedListWithTail.of(3, 7, 4, 10, 6, 9);
 
         SinglyLinkedList<Integer> actualMerged = Chapter10.listMinHeapUnion(list1, list2);
 
@@ -1596,8 +1596,8 @@ public class Chapter10Test {
 
     @Test
     public void shouldMergeHeapsOnListsWhereSecondHeapIsEmpty() {
-        SinglyLinkedListWithTail<Integer> list1 = new SinglyLinkedListWithTail<>(2, 8, 12, 10, 6, 5, 3);
-        SinglyLinkedListWithTail<Integer> list2 = new SinglyLinkedListWithTail<>();
+        SinglyLinkedListWithTail<Integer> list1 = SinglyLinkedListWithTail.of(2, 8, 12, 10, 6, 5, 3);
+        SinglyLinkedListWithTail<Integer> list2 = SinglyLinkedListWithTail.of();
 
         SinglyLinkedList<Integer> actualMerged = Chapter10.listMinHeapUnion(list1, list2);
 
@@ -1606,9 +1606,9 @@ public class Chapter10Test {
 
     @Test
     public void shouldMergeHeapsOnLists() {
-        SinglyLinkedListWithTail<Integer> list1 = new SinglyLinkedListWithTail<>(2, 8, 12, 10, 6, 5, 3);
-        SinglyLinkedListWithTail<Integer> list2 = new SinglyLinkedListWithTail<>(3, 7, 4, 10, 6, 9);
-        SinglyLinkedListWithTail<Integer> expectedMerged = new SinglyLinkedListWithTail<>(2, 3, 4, 5, 6, 7, 8, 9, 10, 12);
+        SinglyLinkedListWithTail<Integer> list1 = SinglyLinkedListWithTail.of(2, 8, 12, 10, 6, 5, 3);
+        SinglyLinkedListWithTail<Integer> list2 = SinglyLinkedListWithTail.of(3, 7, 4, 10, 6, 9);
+        SinglyLinkedListWithTail<Integer> expectedMerged = SinglyLinkedListWithTail.of(2, 3, 4, 5, 6, 7, 8, 9, 10, 12);
 
         SinglyLinkedList<Integer> actualMerged = Chapter10.listMinHeapUnion(list1, list2);
 
@@ -1617,8 +1617,8 @@ public class Chapter10Test {
 
     @Test
     public void shouldMergeDisjointHeapsOnListsWhereFirstHeapIsEmpty() {
-        SinglyLinkedListWithTail<Integer> list1 = new SinglyLinkedListWithTail<>();
-        SinglyLinkedListWithTail<Integer> list2 = new SinglyLinkedListWithTail<>(1, 13, 7, 17, 9, 11);
+        SinglyLinkedListWithTail<Integer> list1 = SinglyLinkedListWithTail.of();
+        SinglyLinkedListWithTail<Integer> list2 = SinglyLinkedListWithTail.of(1, 13, 7, 17, 9, 11);
 
         SinglyLinkedList<Integer> actualMerged = Chapter10.listMinHeapDisjointUnion(list1, list2);
 
@@ -1627,8 +1627,8 @@ public class Chapter10Test {
 
     @Test
     public void shouldMergeDisjointHeapsOnListsWhereSecondHeapIsEmpty() {
-        SinglyLinkedListWithTail<Integer> list1 = new SinglyLinkedListWithTail<>(2, 8, 12, 10, 6, 5, 3);
-        SinglyLinkedListWithTail<Integer> list2 = new SinglyLinkedListWithTail<>();
+        SinglyLinkedListWithTail<Integer> list1 = SinglyLinkedListWithTail.of(2, 8, 12, 10, 6, 5, 3);
+        SinglyLinkedListWithTail<Integer> list2 = SinglyLinkedListWithTail.of();
 
         SinglyLinkedList<Integer> actualMerged = Chapter10.listMinHeapDisjointUnion(list1, list2);
 
@@ -1637,9 +1637,9 @@ public class Chapter10Test {
 
     @Test
     public void shouldMergeDisjointHeapsOnLists() {
-        SinglyLinkedListWithTail<Integer> list1 = new SinglyLinkedListWithTail<>(2, 8, 12, 10, 6, 5, 3);
-        SinglyLinkedListWithTail<Integer> list2 = new SinglyLinkedListWithTail<>(1, 13, 7, 17, 9, 11);
-        SinglyLinkedListWithTail<Integer> expectedMerged = new SinglyLinkedListWithTail<>(1, 13, 7, 17, 9, 11, 2, 8, 12, 10, 6, 5, 3);
+        SinglyLinkedListWithTail<Integer> list1 = SinglyLinkedListWithTail.of(2, 8, 12, 10, 6, 5, 3);
+        SinglyLinkedListWithTail<Integer> list2 = SinglyLinkedListWithTail.of(1, 13, 7, 17, 9, 11);
+        SinglyLinkedListWithTail<Integer> expectedMerged = SinglyLinkedListWithTail.of(1, 13, 7, 17, 9, 11, 2, 8, 12, 10, 6, 5, 3);
 
         SinglyLinkedList<Integer> actualMerged = Chapter10.listMinHeapDisjointUnion(list1, list2);
 
@@ -1648,9 +1648,9 @@ public class Chapter10Test {
 
     @Test
     public void shouldMergeDisjointHeapsOnLists2() {
-        SinglyLinkedListWithTail<Integer> list1 = new SinglyLinkedListWithTail<>(1, 13, 7, 17, 9, 11);
-        SinglyLinkedListWithTail<Integer> list2 = new SinglyLinkedListWithTail<>(2, 8, 12, 10, 6, 5, 3);
-        SinglyLinkedListWithTail<Integer> expectedMerged = new SinglyLinkedListWithTail<>(1, 13, 7, 17, 9, 11, 2, 8, 12, 10, 6, 5, 3);
+        SinglyLinkedListWithTail<Integer> list1 = SinglyLinkedListWithTail.of(1, 13, 7, 17, 9, 11);
+        SinglyLinkedListWithTail<Integer> list2 = SinglyLinkedListWithTail.of(2, 8, 12, 10, 6, 5, 3);
+        SinglyLinkedListWithTail<Integer> expectedMerged = SinglyLinkedListWithTail.of(1, 13, 7, 17, 9, 11, 2, 8, 12, 10, 6, 5, 3);
 
         SinglyLinkedList<Integer> actualMerged = Chapter10.listMinHeapDisjointUnion(list1, list2);
 

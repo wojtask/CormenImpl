@@ -11,7 +11,7 @@ public class SinglyLinkedListTest {
     @Test
     public void shouldCreateSinglyLinkedListWithInitialContents() {
 
-        SinglyLinkedList<String> singlyLinkedList = new SinglyLinkedList<>("aaa", "bbb", "ccc");
+        SinglyLinkedList<String> singlyLinkedList = SinglyLinkedList.of("aaa", "bbb", "ccc");
 
         assertEquals("aaa", singlyLinkedList.head.key);
         assertEquals("bbb", singlyLinkedList.head.next.key);
@@ -29,9 +29,9 @@ public class SinglyLinkedListTest {
 
     @Test
     public void shouldCreateSinglyLinkedListFromExistingSinglyLinkedList() {
-        SinglyLinkedList<String> otherSinglyLinkedList = new SinglyLinkedList<>("aaa", "bbb", "ccc");
+        SinglyLinkedList<String> otherSinglyLinkedList = SinglyLinkedList.of("aaa", "bbb", "ccc");
 
-        SinglyLinkedList<String> singlyLinkedList = new SinglyLinkedList<>(otherSinglyLinkedList);
+        SinglyLinkedList<String> singlyLinkedList = SinglyLinkedList.copyOf(otherSinglyLinkedList);
 
         assertEquals("aaa", singlyLinkedList.head.key);
         assertEquals("bbb", singlyLinkedList.head.next.key);
@@ -43,7 +43,7 @@ public class SinglyLinkedListTest {
     public void shouldCreateEmptySinglyLinkedListFromExistingEmptySinglyLinkedList() {
         SinglyLinkedList<String> otherSinglyLinkedList = new SinglyLinkedList<>();
 
-        SinglyLinkedList<String> singlyLinkedList = new SinglyLinkedList<>(otherSinglyLinkedList);
+        SinglyLinkedList<String> singlyLinkedList = SinglyLinkedList.copyOf(otherSinglyLinkedList);
 
         assertNull(singlyLinkedList.head);
     }
@@ -51,7 +51,7 @@ public class SinglyLinkedListTest {
     @Test
     public void shouldGetSinglyLinkedListLength() {
         String[] contents = new String[]{"aaa", "bbb", "ccc"};
-        SinglyLinkedList<String> singlyLinkedList = new SinglyLinkedList<>(contents);
+        SinglyLinkedList<String> singlyLinkedList = SinglyLinkedList.of(contents);
 
         int actualLength = singlyLinkedList.getLength();
 
@@ -61,7 +61,7 @@ public class SinglyLinkedListTest {
     @Test
     public void shouldTransformSinglyLinkedListToArray() {
         String[] contents = new String[]{"aaa", "bbb", "ccc"};
-        SinglyLinkedList<String> singlyLinkedList = new SinglyLinkedList<>(contents);
+        SinglyLinkedList<String> singlyLinkedList = SinglyLinkedList.of(contents);
 
         Array<String> actualArray = singlyLinkedList.toArray();
 

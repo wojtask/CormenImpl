@@ -44,37 +44,55 @@ public class List<E> {
      */
     public Node<E> head;
 
+    private List() {
+    }
+
+    /**
+     * Returns an empty list (a list containing 0 elements).
+     *
+     * @return the empty doubly linked list
+     */
+    public static <E> List<E> emptyList() {
+        return new List<>();
+    }
+
     /**
      * Creates a list from given elements.
      *
+     * @param <E>      the type of elements in the new list
      * @param elements the initial contents of the list
+     * @return the doubly linked list containing elements from {@code elements}
      */
     @SafeVarargs
-    public List(E... elements) {
+    public static <E> List<E> of(E... elements) {
+        List<E> list = emptyList();
         if (elements.length == 0) {
-            return;
+            return list;
         }
-        head = new Node<>(elements[0]);
-        Node<E> x = head;
+        list.head = new Node<>(elements[0]);
+        Node<E> x = list.head;
         for (int i = 1; i < elements.length; i++) {
             Node<E> y = new Node<>(elements[i]);
             y.prev = x;
             x.next = y;
             x = y;
         }
+        return list;
     }
 
     /**
-     * Creates a doubly linked list by copying an existing doubly linked list.
+     * Returns a copy of an existing doubly linked list.
      *
      * @param otherList the list to be copied
+     * @return the copy of {@code otherList}
      */
-    public List(List<E> otherList) {
+    public static <E> List<E> copyOf(List<E> otherList) {
+        List<E> list = emptyList();
         if (otherList.head == null) {
-            return;
+            return list;
         }
-        head = new Node<>(otherList.head.key);
-        Node<E> x = head;
+        list.head = new Node<>(otherList.head.key);
+        Node<E> x = list.head;
         Node<E> z = otherList.head.next;
         while (z != null) {
             Node<E> y = new Node<>(z.key);
@@ -83,6 +101,7 @@ public class List<E> {
             x = y;
             z = z.next;
         }
+        return list;
     }
 
     /**

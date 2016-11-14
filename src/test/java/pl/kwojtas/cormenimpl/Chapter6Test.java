@@ -366,20 +366,20 @@ public class Chapter6Test {
     @Test
     public void shouldMergeSortedLists() {
         Array<SinglyLinkedList<Integer>> sortedLists = Array.of(
-                new SinglyLinkedList<>(14, 20, 22, 45, 46),
-                new SinglyLinkedList<>(4, 4, 23),
-                new SinglyLinkedList<>(1),
-                new SinglyLinkedList<>(5, 6, 12, 16, 18, 22, 24, 56, 67),
-                new SinglyLinkedList<>(1),
-                new SinglyLinkedList<>(4, 6, 20, 30),
-                new SinglyLinkedList<>(),
-                new SinglyLinkedList<>(68, 68, 68, 69),
-                new SinglyLinkedList<>(45),
-                new SinglyLinkedList<>(2, 34)
+                SinglyLinkedList.of(14, 20, 22, 45, 46),
+                SinglyLinkedList.of(4, 4, 23),
+                SinglyLinkedList.of(1),
+                SinglyLinkedList.of(5, 6, 12, 16, 18, 22, 24, 56, 67),
+                SinglyLinkedList.of(1),
+                SinglyLinkedList.of(4, 6, 20, 30),
+                SinglyLinkedList.of(),
+                SinglyLinkedList.of(68, 68, 68, 69),
+                SinglyLinkedList.of(45),
+                SinglyLinkedList.of(2, 34)
         );
         Array<SinglyLinkedList<Integer>> original = Array.withLength(sortedLists.length);
         for (int i = 1; i <= sortedLists.length; i++) {
-            original.set(i, new SinglyLinkedList<>(sortedLists.at(i)));
+            original.set(i, SinglyLinkedList.copyOf(sortedLists.at(i)));
         }
 
         SinglyLinkedList<Integer> actualMergedList = Chapter6.mergeSortedLists(sortedLists);

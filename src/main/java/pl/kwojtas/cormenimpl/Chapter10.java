@@ -659,7 +659,7 @@ public final class Chapter10 {
      * @param <E> the type of elements in {@code L}
      */
     public static <E> void singlyLinkedListReverse(SinglyLinkedList<E> L) {
-        SinglyLinkedList<E> L_ = new SinglyLinkedList<>();
+        SinglyLinkedList<E> L_ = SinglyLinkedList.emptyList();
         L_.head = null;
         while (L.head != null) {
             SinglyLinkedList.Node<E> x = L.head;
@@ -1020,7 +1020,7 @@ public final class Chapter10 {
      * @return the empty mergeable min-heap
      */
     public static SinglyLinkedList<Integer> sortedListMakeMinHeap() {
-        return new SinglyLinkedList<>();
+        return SinglyLinkedList.emptyList();
     }
 
     /**
@@ -1219,8 +1219,8 @@ public final class Chapter10 {
         if (L.head == null || L.head.next == null) {
             return;
         }
-        SinglyLinkedList<Integer> L1 = new SinglyLinkedList<>();
-        SinglyLinkedList<Integer> L2 = new SinglyLinkedList<>();
+        SinglyLinkedList<Integer> L1 = SinglyLinkedList.emptyList();
+        SinglyLinkedList<Integer> L2 = SinglyLinkedList.emptyList();
         SinglyLinkedList.Node<Integer> x = L.head;
         while (x != null) {
             SinglyLinkedList.Node<Integer> y = x.next;
