@@ -69,30 +69,37 @@ public class XorLinkedList<E> {
      */
     public Node<E> tail;
 
-    /**
-     * Creates an empty XOR linked list.
-     */
-    public XorLinkedList() {
+    private XorLinkedList() {
         addressToNode = new HashMap<>();
     }
 
     /**
-     * Creates a XOR linked list by copying an existing XOR linked list.
+     * Returns an empty list (a list containing 0 elements).
+     *
+     * @return the empty XOR linked list
+     */
+    public static <E> XorLinkedList<E> emptyList() {
+        return new XorLinkedList<>();
+    }
+
+    /**
+     * Returns a copy of an existing XOR linked list.
      *
      * @param otherList the list to be copied
+     * @return the copy of {@code otherList}
      */
-    public XorLinkedList(XorLinkedList<E> otherList) {
-        addressToNode = new HashMap<>();
+    public static <E> XorLinkedList<E> copyOf(XorLinkedList<E> otherList) {
+        XorLinkedList<E> list = emptyList();
         if (otherList.head == null) {
-            return;
+            return list;
         }
-        head = registerNode(otherList.head.key);
-        Node<E> x = head;
+        list.head = list.registerNode(otherList.head.key);
+        Node<E> x = list.head;
         Node<E> y = null;
         Node<E> x_ = otherList.byAddress(otherList.head.np);
         Node<E> y_ = otherList.head;
         while (x_ != null) {
-            Node<E> z = registerNode(x_.key);
+            Node<E> z = list.registerNode(x_.key);
             z.np = x.address;
             x.np = z.address ^ (y != null ? y.address : 0);
             y = x;
@@ -101,7 +108,8 @@ public class XorLinkedList<E> {
             y_ = x_;
             x_ = z_;
         }
-        tail = x;
+        list.tail = x;
+        return list;
     }
 
     /**

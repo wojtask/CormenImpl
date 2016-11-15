@@ -11,7 +11,7 @@ public class XorLinkedListTest {
     @Test
     public void shouldCreateEmptyXorLinkedList() {
 
-        XorLinkedList<String> xorLinkedList = new XorLinkedList<>();
+        XorLinkedList<String> xorLinkedList = XorLinkedList.emptyList();
 
         assertNull(xorLinkedList.head);
         assertNull(xorLinkedList.tail);
@@ -21,7 +21,7 @@ public class XorLinkedListTest {
     public void shouldCreateXorLinkedListByCopyingExistingXorLinkedList() {
         XorLinkedList<String> otherXorLinkedList = getExemplaryXorLinkedList();
 
-        XorLinkedList<String> xorLinkedList = new XorLinkedList<>(otherXorLinkedList);
+        XorLinkedList<String> xorLinkedList = XorLinkedList.copyOf(otherXorLinkedList);
 
         XorLinkedList.Node first = xorLinkedList.head;
         XorLinkedList.Node second = xorLinkedList.byAddress(first.np);
@@ -35,7 +35,7 @@ public class XorLinkedListTest {
     }
 
     private XorLinkedList<String> getExemplaryXorLinkedList() {
-        XorLinkedList<String> xorLinkedList = new XorLinkedList<>();
+        XorLinkedList<String> xorLinkedList = XorLinkedList.emptyList();
         XorLinkedList.Node<String> x1 = xorLinkedList.registerNode("aaa");
         XorLinkedList.Node<String> x2 = xorLinkedList.registerNode("bbb");
         XorLinkedList.Node<String> x3 = xorLinkedList.registerNode("ccc");
@@ -49,9 +49,9 @@ public class XorLinkedListTest {
 
     @Test
     public void shouldCreateEmptyXorLinkedListByCopyingExistingEmptyXorLinkedList() {
-        XorLinkedList<String> otherXorLinkedList = new XorLinkedList<>();
+        XorLinkedList<String> otherXorLinkedList = XorLinkedList.emptyList();
 
-        XorLinkedList<String> xorLinkedList = new XorLinkedList<>(otherXorLinkedList);
+        XorLinkedList<String> xorLinkedList = XorLinkedList.copyOf(otherXorLinkedList);
 
         assertNull(xorLinkedList.head);
         assertNull(xorLinkedList.tail);

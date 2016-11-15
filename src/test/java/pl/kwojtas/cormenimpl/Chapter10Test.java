@@ -955,7 +955,7 @@ public class Chapter10Test {
     }
 
     private XorLinkedList<String> getExemplaryXorLinkedList() {
-        XorLinkedList<String> xorLinkedList = new XorLinkedList<>();
+        XorLinkedList<String> xorLinkedList = XorLinkedList.emptyList();
         XorLinkedList.Node<String> x1 = xorLinkedList.registerNode("aaa");
         XorLinkedList.Node<String> x2 = xorLinkedList.registerNode("bbb");
         XorLinkedList.Node<String> x3 = xorLinkedList.registerNode("ccc");
@@ -981,7 +981,7 @@ public class Chapter10Test {
 
     @Test
     public void shouldInsertElementToEmptyXorLinkedList() {
-        XorLinkedList<String> xorLinkedList = new XorLinkedList<>();
+        XorLinkedList<String> xorLinkedList = XorLinkedList.emptyList();
         XorLinkedList.Node<String> nodeToInsert = xorLinkedList.registerNode("xyz");
 
         Chapter10.xorLinkedListInsert(xorLinkedList, nodeToInsert);
@@ -994,7 +994,7 @@ public class Chapter10Test {
     @Test
     public void shouldInsertElementToNonemptyXorLinkedList() {
         XorLinkedList<String> xorLinkedList = getExemplaryXorLinkedList();
-        XorLinkedList<String> original = new XorLinkedList<>(xorLinkedList);
+        XorLinkedList<String> original = XorLinkedList.copyOf(xorLinkedList);
         String keyToInsert = "xyz";
         XorLinkedList.Node<String> nodeToInsert = xorLinkedList.registerNode(keyToInsert);
 
@@ -1008,7 +1008,7 @@ public class Chapter10Test {
     @Test
     public void shouldDeleteFromBeginningOfXorLinkedList() {
         XorLinkedList<String> xorLinkedList = getExemplaryXorLinkedList();
-        XorLinkedList<String> original = new XorLinkedList<>(xorLinkedList);
+        XorLinkedList<String> original = XorLinkedList.copyOf(xorLinkedList);
         String keyToDelete = xorLinkedList.head.key;
 
         Chapter10.xorLinkedListDelete(xorLinkedList, xorLinkedList.head);
@@ -1019,7 +1019,7 @@ public class Chapter10Test {
     @Test
     public void shouldDeleteFromEndOfXorLinkedList() {
         XorLinkedList<String> xorLinkedList = getExemplaryXorLinkedList();
-        XorLinkedList<String> original = new XorLinkedList<>(xorLinkedList);
+        XorLinkedList<String> original = XorLinkedList.copyOf(xorLinkedList);
         XorLinkedList.Node<String> nodeToDelete = xorLinkedList.tail;
         String keyToDelete = xorLinkedList.tail.key;
 
@@ -1031,7 +1031,7 @@ public class Chapter10Test {
     @Test
     public void shouldReverseXorLinkedList() {
         XorLinkedList<String> xorLinkedList = getExemplaryXorLinkedList();
-        XorLinkedList<String> original = new XorLinkedList<>(xorLinkedList);
+        XorLinkedList<String> original = XorLinkedList.copyOf(xorLinkedList);
 
         Chapter10.xorLinkedListReverse(xorLinkedList);
 
