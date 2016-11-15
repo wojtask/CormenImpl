@@ -636,7 +636,7 @@ public final class Chapter10 {
      * @return the union of {@code S1} and {@code S2}
      */
     public static <E> CircularList<E> circularListsUnion(CircularList<E> S1, CircularList<E> S2) {
-        CircularList<E> S = new CircularList<>();
+        CircularList<E> S = CircularList.emptyList();
         if (S1.head != null && S2.head != null) {
             CircularList.Node<E> x = S1.head.next;
             S1.head.next = S2.head.next;

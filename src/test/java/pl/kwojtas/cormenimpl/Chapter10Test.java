@@ -795,8 +795,8 @@ public class Chapter10Test {
 
     @Test
     public void shouldInsertOntoCircularList() {
-        CircularList<Integer> list = new CircularList<>(5, 7, 9, 2, 6, 1, 6, 6, 3, 1, 7, 8);
-        CircularList<Integer> original = new CircularList<>(list);
+        CircularList<Integer> list = CircularList.of(5, 7, 9, 2, 6, 1, 6, 6, 3, 1, 7, 8);
+        CircularList<Integer> original = CircularList.copyOf(list);
         int keyToInsert = 3;
 
         Chapter10.circularListInsert(list, new CircularList.Node<>(keyToInsert));
@@ -813,7 +813,7 @@ public class Chapter10Test {
 
     @Test
     public void shouldInsertOntoEmptyCircularList() {
-        CircularList<Integer> list = new CircularList<>();
+        CircularList<Integer> list = CircularList.of();
         int keyToInsert = 3;
 
         Chapter10.circularListInsert(list, new CircularList.Node<>(keyToInsert));
@@ -824,8 +824,8 @@ public class Chapter10Test {
 
     @Test
     public void shouldDeleteFromCircularList() {
-        CircularList<Integer> list = new CircularList<>(5, 7, 9, 2, 6, 1, 6, 6, 3, 1, 7, 8);
-        CircularList<Integer> original = new CircularList<>(list);
+        CircularList<Integer> list = CircularList.of(5, 7, 9, 2, 6, 1, 6, 6, 3, 1, 7, 8);
+        CircularList<Integer> original = CircularList.copyOf(list);
         int keyToDelete = 6;
         CircularList.Node<Integer> nodeToDelete = list.head.next.next.next.next; // first element on the list with key = 6
 
@@ -836,8 +836,8 @@ public class Chapter10Test {
 
     @Test
     public void shouldDeleteHeadFromCircularList() {
-        CircularList<Integer> list = new CircularList<>(5, 7, 9, 2, 6, 1, 6, 6, 3, 1, 7, 8);
-        CircularList<Integer> original = new CircularList<>(list);
+        CircularList<Integer> list = CircularList.of(5, 7, 9, 2, 6, 1, 6, 6, 3, 1, 7, 8);
+        CircularList<Integer> original = CircularList.copyOf(list);
         int keyToDelete = 5;
         CircularList.Node<Integer> nodeToDelete = list.head;
 
@@ -848,7 +848,7 @@ public class Chapter10Test {
 
     @Test
     public void shouldDeleteHeadFromCircularListWithOneElement() {
-        CircularList<Integer> list = new CircularList<>(5);
+        CircularList<Integer> list = CircularList.of(5);
         CircularList.Node<Integer> nodeToDelete = list.head;
 
         Chapter10.circularListDelete(list, nodeToDelete);
@@ -858,7 +858,7 @@ public class Chapter10Test {
 
     @Test
     public void shouldFindKeyOnCircularList() {
-        CircularList<Integer> list = new CircularList<>(5, 7, 9, 2, 6, 1, 6, 6, 3, 1, 7, 8);
+        CircularList<Integer> list = CircularList.of(5, 7, 9, 2, 6, 1, 6, 6, 3, 1, 7, 8);
         int keyToFind = 6;
 
         CircularList.Node<Integer> actualNode = Chapter10.circularListSearch(list, keyToFind);
@@ -869,7 +869,7 @@ public class Chapter10Test {
 
     @Test
     public void shouldFindKeyInCircularListHead() {
-        CircularList<Integer> list = new CircularList<>(5, 7, 9, 2, 6, 1, 6, 6, 3, 1, 7, 8);
+        CircularList<Integer> list = CircularList.of(5, 7, 9, 2, 6, 1, 6, 6, 3, 1, 7, 8);
         int keyToFind = 5;
 
         CircularList.Node<Integer> actualNode = Chapter10.circularListSearch(list, keyToFind);
@@ -880,7 +880,7 @@ public class Chapter10Test {
 
     @Test
     public void shouldNotFindNonexistentKeyOnCircularList() {
-        CircularList<Integer> list = new CircularList<>(5, 7, 9, 2, 6, 1, 6, 6, 3, 1, 7, 8);
+        CircularList<Integer> list = CircularList.of(5, 7, 9, 2, 6, 1, 6, 6, 3, 1, 7, 8);
         int keyToFind = 4;
 
         CircularList.Node<Integer> actualNode = Chapter10.circularListSearch(list, keyToFind);
@@ -890,7 +890,7 @@ public class Chapter10Test {
 
     @Test
     public void shouldNotFindKeyOnEmptyCircularList() {
-        CircularList<Integer> list = new CircularList<>();
+        CircularList<Integer> list = CircularList.of();
         int keyToFind = 4;
 
         CircularList.Node<Integer> actualNode = Chapter10.circularListSearch(list, keyToFind);
@@ -900,8 +900,8 @@ public class Chapter10Test {
 
     @Test
     public void shouldUnionCircularLists() {
-        CircularList<Integer> list1 = new CircularList<>(12, 44, 26, 20, 67, 4, 21, 66, 35, 51, 13);
-        CircularList<Integer> list2 = new CircularList<>(55, 23, 2, 74, 30, 47);
+        CircularList<Integer> list1 = CircularList.of(12, 44, 26, 20, 67, 4, 21, 66, 35, 51, 13);
+        CircularList<Integer> list2 = CircularList.of(55, 23, 2, 74, 30, 47);
         Array<Integer> originalArray1 = list1.toArray();
         Array<Integer> originalArray2 = list2.toArray();
 
@@ -920,8 +920,8 @@ public class Chapter10Test {
 
     @Test
     public void shouldUnionEmptyCircularLists() {
-        CircularList<Integer> list1 = new CircularList<>();
-        CircularList<Integer> list2 = new CircularList<>();
+        CircularList<Integer> list1 = CircularList.of();
+        CircularList<Integer> list2 = CircularList.of();
 
         CircularList<Integer> actualMergedLists = Chapter10.circularListsUnion(list1, list2);
 

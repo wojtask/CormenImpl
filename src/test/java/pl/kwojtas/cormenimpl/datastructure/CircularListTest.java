@@ -11,7 +11,7 @@ public class CircularListTest {
     @Test
     public void shouldCreateCircularListWithInitialContents() {
 
-        CircularList<String> circularList = new CircularList<>("aaa", "bbb", "ccc");
+        CircularList<String> circularList = CircularList.of("aaa", "bbb", "ccc");
 
         assertEquals("aaa", circularList.head.key);
         assertEquals("bbb", circularList.head.next.key);
@@ -22,16 +22,16 @@ public class CircularListTest {
     @Test
     public void shouldCreateEmptyCircularList() {
 
-        CircularList<String> circularList = new CircularList<>();
+        CircularList<String> circularList = CircularList.of();
 
         assertNull(circularList.head);
     }
 
     @Test
     public void shouldCreateCircularListFromExistingCircularList() {
-        CircularList<String> otherCircularList = new CircularList<>("aaa", "bbb", "ccc");
+        CircularList<String> otherCircularList = CircularList.of("aaa", "bbb", "ccc");
 
-        CircularList<String> circularList = new CircularList<>(otherCircularList);
+        CircularList<String> circularList = CircularList.copyOf(otherCircularList);
 
         assertEquals("aaa", circularList.head.key);
         assertEquals("bbb", circularList.head.next.key);
@@ -41,9 +41,9 @@ public class CircularListTest {
 
     @Test
     public void shouldCreateEmptyCircularListFromExistingEmptyCircularList() {
-        CircularList<String> otherCircularList = new CircularList<>();
+        CircularList<String> otherCircularList = CircularList.of();
 
-        CircularList<String> circularList = new CircularList<>(otherCircularList);
+        CircularList<String> circularList = CircularList.copyOf(otherCircularList);
 
         assertNull(circularList.head);
     }
@@ -51,7 +51,7 @@ public class CircularListTest {
     @Test
     public void shouldGetCircularListLength() {
         String[] contents = new String[]{"aaa", "bbb", "ccc"};
-        CircularList<String> circularList = new CircularList<>(contents);
+        CircularList<String> circularList = CircularList.of(contents);
 
         int actualLength = circularList.getLength();
 
@@ -60,7 +60,7 @@ public class CircularListTest {
 
     @Test
     public void shouldGetEmptyCircularListLength() {
-        CircularList<String> circularList = new CircularList<>();
+        CircularList<String> circularList = CircularList.of();
 
         int actualLength = circularList.getLength();
 
@@ -70,7 +70,7 @@ public class CircularListTest {
     @Test
     public void shouldTransformCircularListToArray() {
         String[] contents = new String[]{"aaa", "bbb", "ccc"};
-        CircularList<String> circularList = new CircularList<>(contents);
+        CircularList<String> circularList = CircularList.of(contents);
 
         Array<String> actualArray = circularList.toArray();
 
@@ -79,7 +79,7 @@ public class CircularListTest {
 
     @Test
     public void shouldTransformEmptyCircularListToArray() {
-        CircularList<String> circularList = new CircularList<>();
+        CircularList<String> circularList = CircularList.of();
 
         Array<String> actualArray = circularList.toArray();
 

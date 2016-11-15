@@ -7,47 +7,67 @@ package pl.kwojtas.cormenimpl.datastructure;
  */
 public class CircularList<E> extends SinglyLinkedList<E> {
 
+    private CircularList() {
+    }
+
+    /**
+     * Returns an empty list (a list containing 0 elements).
+     *
+     * @return the empty singly linked circular list
+     */
+    public static <E> CircularList<E> emptyList() {
+        return new CircularList<>();
+    }
+
     /**
      * Creates a list from given elements.
      *
+     * @param <E>      the type of elements in the new list
      * @param elements the initial contents of the list
+     * @return the singly linked circular list containing elements from {@code elements}
      */
     @SafeVarargs
-    public CircularList(E... elements) {
+    public static <E> CircularList<E> of(E... elements) {
+        CircularList<E> list = emptyList();
         if (elements.length == 0) {
-            return;
+            return list;
         }
-        head = new Node<>(elements[0]);
-        head.next = head;
-        Node<E> x = head;
+        list.head = new Node<>(elements[0]);
+        list.head.next = list.head;
+        Node<E> x = list.head;
         for (int i = 1; i < elements.length; i++) {
             Node<E> y = new Node<>(elements[i]);
-            y.next = head;
+            y.next = list.head;
             x.next = y;
             x = y;
         }
+        return list;
     }
 
     /**
      * Creates a singly linked circular list by copying an existing singly linked circular list.
      *
+     * @param <E>       the type of elements in the new list
      * @param otherList the list to be copied
+     * @return the copy of {@code otherList}
      */
-    public CircularList(CircularList<E> otherList) {
+    public static <E> CircularList<E> copyOf(CircularList<E> otherList) {
+        CircularList<E> list = emptyList();
         if (otherList.head == null) {
-            return;
+            return list;
         }
-        head = new Node<>(otherList.head.key);
-        head.next = head;
-        Node<E> x = head;
+        list.head = new Node<>(otherList.head.key);
+        list.head.next = list.head;
+        Node<E> x = list.head;
         Node<E> z = otherList.head.next;
         while (z != otherList.head) {
             Node<E> y = new Node<>(z.key);
             x.next = y;
-            y.next = head;
+            y.next = list.head;
             x = y;
             z = z.next;
         }
+        return list;
     }
 
     /**

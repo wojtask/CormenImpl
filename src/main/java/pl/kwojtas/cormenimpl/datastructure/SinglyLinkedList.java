@@ -77,6 +77,7 @@ public class SinglyLinkedList<E> {
     /**
      * Returns a copy of an existing singly linked list.
      *
+     * @param <E>       the type of elements in the new list
      * @param otherList the list to be copied
      * @return the copy of {@code otherList}
      */
