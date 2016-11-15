@@ -27,7 +27,6 @@ public class Queue<E> extends Array<E> {
      * Creates an empty queue with an underlying array of a given length.
      *
      * @param length the length of the underlying array
-     * @param <E>    the type of elements in the new queue
      * @return the empty queue with an underlying array of length {@code length}
      */
     public static <E> Queue<E> withLength(int length) {

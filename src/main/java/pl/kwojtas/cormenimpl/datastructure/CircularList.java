@@ -22,7 +22,6 @@ public class CircularList<E> extends SinglyLinkedList<E> {
     /**
      * Creates a list from given elements.
      *
-     * @param <E>      the type of elements in the new list
      * @param elements the initial contents of the list
      * @return the singly linked circular list containing elements from {@code elements}
      */
@@ -47,7 +46,6 @@ public class CircularList<E> extends SinglyLinkedList<E> {
     /**
      * Creates a singly linked circular list by copying an existing singly linked circular list.
      *
-     * @param <E>       the type of elements in the new list
      * @param otherList the list to be copied
      * @return the copy of {@code otherList}
      */

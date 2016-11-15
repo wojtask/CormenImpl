@@ -1,7 +1,5 @@
 package pl.kwojtas.cormenimpl.datastructure;
 
-import java.util.ArrayList;
-
 /**
  * Implements a deque.
  *
@@ -29,7 +27,6 @@ public class Deque<E> extends Array<E> {
      * Creates an empty deque with an underlying array of a given length.
      *
      * @param length the length of the underlying array
-     * @param <E>    the type of elements in the new deque
      * @return the empty deque with an underlying array of length {@code length}
      */
     public static <E> Deque<E> withLength(int length) {

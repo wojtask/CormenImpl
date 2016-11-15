@@ -21,7 +21,6 @@ public class Stack<E> extends Array<E> {
      * Creates an empty stack with an underlying array of a given length.
      *
      * @param length the length of the underlying array
-     * @param <E>    the type of elements in the new stack
      * @return the empty stack with an underlying array of length {@code length}
      */
     public static <E> Stack<E> withLength(int length) {

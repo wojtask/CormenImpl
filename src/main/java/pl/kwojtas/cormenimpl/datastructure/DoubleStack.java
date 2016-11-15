@@ -27,7 +27,6 @@ public class DoubleStack<E> extends Array<E> {
      * Creates two empty stacks in an array of a given length.
      *
      * @param length the length of the underlying array
-     * @param <E>    the type of elements in the stacks
      * @return two empty stacks in an array of length {@code length}
      */
     public static <E> DoubleStack<E> withLength(int length) {

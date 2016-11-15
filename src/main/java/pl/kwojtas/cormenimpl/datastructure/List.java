@@ -59,7 +59,6 @@ public class List<E> {
     /**
      * Creates a list from given elements.
      *
-     * @param <E>      the type of elements in the new list
      * @param elements the initial contents of the list
      * @return the doubly linked list containing elements from {@code elements}
      */

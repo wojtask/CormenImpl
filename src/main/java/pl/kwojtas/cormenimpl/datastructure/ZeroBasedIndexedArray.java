@@ -30,7 +30,6 @@ public class ZeroBasedIndexedArray<E> {
     /**
      * Creates an array from given elements.
      *
-     * @param <E>      the type of elements in the new array
      * @param elements the initial contents of the array
      * @return the array containing elements from {@code elements}
      */
@@ -44,7 +43,6 @@ public class ZeroBasedIndexedArray<E> {
      * Returns an array of a given length.
      *
      * @param length the length of the new array
-     * @param <E>    the type of elements in the new array
      * @return the array of length {@code length} filled with {@code null}s
      */
     public static <E> ZeroBasedIndexedArray<E> withLength(int length) {

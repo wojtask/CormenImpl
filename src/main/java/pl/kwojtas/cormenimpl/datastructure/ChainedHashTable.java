@@ -61,7 +61,6 @@ public class ChainedHashTable<E> extends ZeroBasedIndexedArray<ChainedHashTable.
      *
      * @param length the length of the underlying array
      * @param h      the hash function of the new hash table
-     * @param <E>    the type of elements in the new hash table
      * @return the empty hash table with an underlying array of length {@code length} and with hash function {@code h}
      */
     public static <E> ChainedHashTable<E> withLengthAndHashFunction(int length, HashFunction h) {

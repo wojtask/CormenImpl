@@ -43,7 +43,6 @@ public class Heap<E> extends Array<E> {
      * Creates an empty heap with an underlying array of a given length.
      *
      * @param length the length of the underlying array
-     * @param <E>    the type of elements in the new heap
      * @return the empty heap with an underlying array of length {@code length}
      */
     public static <E> Heap<E> withLength(int length) {
