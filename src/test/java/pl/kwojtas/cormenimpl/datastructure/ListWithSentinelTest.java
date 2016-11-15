@@ -10,7 +10,7 @@ public class ListWithSentinelTest {
     @Test
     public void shouldCreateListWithSentinelWithInitialContents() {
 
-        ListWithSentinel<String> listWithSentinel = new ListWithSentinel<>("aaa", "bbb", "ccc");
+        ListWithSentinel<String> listWithSentinel = ListWithSentinel.of("aaa", "bbb", "ccc");
 
         assertEquals("aaa", listWithSentinel.nil.next.key);
         assertEquals("bbb", listWithSentinel.nil.next.next.key);
@@ -24,7 +24,7 @@ public class ListWithSentinelTest {
     @Test
     public void shouldCreateEmptyListWithSentinel() {
 
-        ListWithSentinel<String> listWithSentinel = new ListWithSentinel<>();
+        ListWithSentinel<String> listWithSentinel = ListWithSentinel.emptyList();
 
         assertEquals(listWithSentinel.nil, listWithSentinel.nil.next);
         assertEquals(listWithSentinel.nil, listWithSentinel.nil.prev);
@@ -32,9 +32,9 @@ public class ListWithSentinelTest {
 
     @Test
     public void shouldCreateListWithSentinelFromExistingListWithSentinel() {
-        ListWithSentinel<String> otherListWithSentinel = new ListWithSentinel<>("aaa", "bbb", "ccc");
+        ListWithSentinel<String> otherListWithSentinel = ListWithSentinel.of("aaa", "bbb", "ccc");
 
-        ListWithSentinel<String> listWithSentinel = new ListWithSentinel<>(otherListWithSentinel);
+        ListWithSentinel<String> listWithSentinel = ListWithSentinel.copyOf(otherListWithSentinel);
 
         assertEquals("aaa", listWithSentinel.nil.next.key);
         assertEquals("bbb", listWithSentinel.nil.next.next.key);
@@ -47,9 +47,9 @@ public class ListWithSentinelTest {
 
     @Test
     public void shouldCreateEmptyListWithSentinelFromExistingEmptyListWithSentinel() {
-        ListWithSentinel<String> otherListWithSentinel = new ListWithSentinel<>();
+        ListWithSentinel<String> otherListWithSentinel = ListWithSentinel.emptyList();
 
-        ListWithSentinel<String> listWithSentinel = new ListWithSentinel<>(otherListWithSentinel);
+        ListWithSentinel<String> listWithSentinel = ListWithSentinel.copyOf(otherListWithSentinel);
 
         assertEquals(listWithSentinel.nil, listWithSentinel.nil.next);
         assertEquals(listWithSentinel.nil, listWithSentinel.nil.prev);
@@ -58,7 +58,7 @@ public class ListWithSentinelTest {
     @Test
     public void shouldGetListWithSentinelLength() {
         String[] contents = new String[]{"aaa", "bbb", "ccc"};
-        ListWithSentinel<String> listWithSentinel = new ListWithSentinel<>(contents);
+        ListWithSentinel<String> listWithSentinel = ListWithSentinel.of(contents);
 
         int actualLength = listWithSentinel.getLength();
 
@@ -68,7 +68,7 @@ public class ListWithSentinelTest {
     @Test
     public void shouldTransformListWithSentinelToArray() {
         String[] contents = new String[]{"aaa", "bbb", "ccc"};
-        ListWithSentinel<String> listWithSentinel = new ListWithSentinel<>(contents);
+        ListWithSentinel<String> listWithSentinel = ListWithSentinel.of(contents);
 
         Array<String> actualArray = listWithSentinel.toArray();
 

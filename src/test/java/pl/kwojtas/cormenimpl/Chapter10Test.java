@@ -612,8 +612,8 @@ public class Chapter10Test {
 
     @Test
     public void shouldDeleteFromListWithSentinel() {
-        ListWithSentinel<Integer> list = new ListWithSentinel<>(5, 7, 9, 2, 6, 1, 6, 6, 3, 1, 7, 8);
-        ListWithSentinel<Integer> original = new ListWithSentinel<>(list);
+        ListWithSentinel<Integer> list = ListWithSentinel.of(5, 7, 9, 2, 6, 1, 6, 6, 3, 1, 7, 8);
+        ListWithSentinel<Integer> original = ListWithSentinel.copyOf(list);
         int keyToDelete = 2;
         ListWithSentinel.Node<Integer> nodeToDelete = list.nil.next.next.next.next; // element with key = 2
 
@@ -624,7 +624,7 @@ public class Chapter10Test {
 
     @Test
     public void shouldFindKeyOnListWithSentinel() {
-        ListWithSentinel<Integer> list = new ListWithSentinel<>(5, 7, 9, 2, 6, 1, 6, 6, 3, 1, 7, 8);
+        ListWithSentinel<Integer> list = ListWithSentinel.of(5, 7, 9, 2, 6, 1, 6, 6, 3, 1, 7, 8);
         int keyToFind = 6;
 
         ListWithSentinel.Node<Integer> actualNode = Chapter10.listSearch_(list, keyToFind);
@@ -635,7 +635,7 @@ public class Chapter10Test {
 
     @Test
     public void shouldNotFindNonexistentKeyOnListWithSentinel() {
-        ListWithSentinel<Integer> list = new ListWithSentinel<>(5, 7, 9, 2, 6, 1, 6, 6, 3, 1, 7, 8);
+        ListWithSentinel<Integer> list = ListWithSentinel.of(5, 7, 9, 2, 6, 1, 6, 6, 3, 1, 7, 8);
         int keyToFind = 4;
 
         ListWithSentinel.Node<Integer> actualNode = Chapter10.listSearch_(list, keyToFind);
@@ -645,8 +645,8 @@ public class Chapter10Test {
 
     @Test
     public void shouldInsertOntoListWithSentinel() {
-        ListWithSentinel<Integer> list = new ListWithSentinel<>(5, 7, 9, 2, 6, 1, 6, 6, 3, 1, 7, 8);
-        ListWithSentinel<Integer> original = new ListWithSentinel<>(list);
+        ListWithSentinel<Integer> list = ListWithSentinel.of(5, 7, 9, 2, 6, 1, 6, 6, 3, 1, 7, 8);
+        ListWithSentinel<Integer> original = ListWithSentinel.copyOf(list);
         int keyToInsert = 3;
 
         Chapter10.listInsert_(list, new ListWithSentinel.Node<>(keyToInsert));
