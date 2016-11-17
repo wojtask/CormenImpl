@@ -31,6 +31,14 @@ public class ListTest {
     }
 
     @Test
+    public void shouldCreateEmptyListUsingOf() {
+
+        List<String> list = List.of();
+
+        assertNull(list.head);
+    }
+
+    @Test
     public void shouldCreateListFromExistingList() {
         List<String> otherList = List.of("aaa", "bbb", "ccc");
 

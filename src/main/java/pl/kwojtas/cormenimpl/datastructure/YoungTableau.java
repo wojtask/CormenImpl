@@ -37,13 +37,13 @@ public class YoungTableau extends Matrix<Integer> {
     @SafeVarargs
     public static YoungTableau ofDimensionsAndRows(int nRows, int nColumns, Array<Integer>... rows) {
         if (rows.length > nRows) {
-            throw new IllegalStateException("The first dimension is smaller than number of nRows");
+            throw new IllegalStateException("The first dimension is smaller than number of rows");
         }
         YoungTableau youngTableau = new YoungTableau(nRows, nColumns);
         for (int i = 1; i <= rows.length; i++) {
             Array<Integer> row = rows[i - 1];
             if (row.length > nColumns) {
-                throw new IllegalStateException("The second dimension is smaller than one of nRows");
+                throw new IllegalStateException("The second dimension is smaller than one of rows");
             }
             for (int j = 1; j <= row.length; j++) {
                 youngTableau.set(i, j, row.at(j));

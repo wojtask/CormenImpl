@@ -64,7 +64,7 @@ public class Chapter13Test {
         x3.p = x1;     //      3 B    16 R
         x2.left = x4;  //     /       / \
         x4.p = x2;     //    /       /   \
-        x3.left = x5; //   1 R     13 B  18 B
+        x3.left = x5;  //   1 R    13 B  18 B
         x5.p = x3;     //          / \
         x3.right = x6; //         /   \
         x6.p = x3;     //        9 R   14 R

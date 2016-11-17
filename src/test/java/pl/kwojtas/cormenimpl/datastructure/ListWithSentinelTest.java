@@ -31,6 +31,15 @@ public class ListWithSentinelTest {
     }
 
     @Test
+    public void shouldCreateEmptyListWithSentinelUsingOf() {
+
+        ListWithSentinel<String> listWithSentinel = ListWithSentinel.of();
+
+        assertEquals(listWithSentinel.nil, listWithSentinel.nil.next);
+        assertEquals(listWithSentinel.nil, listWithSentinel.nil.prev);
+    }
+
+    @Test
     public void shouldCreateListWithSentinelFromExistingListWithSentinel() {
         ListWithSentinel<String> otherListWithSentinel = ListWithSentinel.of("aaa", "bbb", "ccc");
 
