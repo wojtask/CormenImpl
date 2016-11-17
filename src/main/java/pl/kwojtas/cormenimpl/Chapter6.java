@@ -5,7 +5,7 @@ import pl.kwojtas.cormenimpl.datastructure.Heap;
 import pl.kwojtas.cormenimpl.datastructure.Pair;
 import pl.kwojtas.cormenimpl.datastructure.PriorityQueueWithRanks;
 import pl.kwojtas.cormenimpl.datastructure.SinglyLinkedList;
-import pl.kwojtas.cormenimpl.datastructure.Young;
+import pl.kwojtas.cormenimpl.datastructure.YoungTableau;
 
 import static java.lang.Math.max;
 import static java.lang.Math.sqrt;
@@ -639,13 +639,13 @@ public final class Chapter6 {
      * <p><span style="font-variant:small-caps;">Young-Extract-Min</span> from solution to problem 6-3(c).</p>
      *
      * @param Y the Young tableau
-     * @param m the number of rows in {@code Y}
-     * @param n the number of columns in {@code Y}
+     * @param m the number of nRows in {@code Y}
+     * @param n the number of nColumns in {@code Y}
      * @param i the row index of the current element
      * @param j the column index of the current element
      * @return the smallest element in {@code Y}
      */
-    static int youngExtractMin(Young Y, int m, int n, int i, int j) {
+    static int youngExtractMin(YoungTableau Y, int m, int n, int i, int j) {
         if (i == m && j == n) {
             int min = Y.at(i, j);
             Y.set(i, j, Integer.MAX_VALUE);
@@ -670,7 +670,7 @@ public final class Chapter6 {
      * @param i the row index of the current element
      * @param j the column index of the current element
      */
-    static void youngify(Young Y, int i, int j) {
+    static void youngify(YoungTableau Y, int i, int j) {
         int i_ = i, j_ = j;
         if (i > 1 && Y.at(i - 1, j) > Y.at(i_, j_)) {
             i_ = i - 1;
@@ -691,11 +691,11 @@ public final class Chapter6 {
      * <p><span style="font-variant:small-caps;">Young-Insert</span> from solution to problem 6-3(d).</p>
      *
      * @param Y   the Young tableau
-     * @param m   the number of rows in {@code Y}
-     * @param n   the number of columns in {@code Y}
+     * @param m   the number of nRows in {@code Y}
+     * @param n   the number of nColumns in {@code Y}
      * @param key the key to insert
      */
-    static void youngInsert(Young Y, int m, int n, int key) {
+    static void youngInsert(YoungTableau Y, int m, int n, int key) {
         Y.set(m, n, key);
         youngify(Y, m, n);
     }
@@ -708,7 +708,7 @@ public final class Chapter6 {
      */
     public static void youngSort(Array<Integer> A) {
         int n = (int) sqrt(A.length);
-        Young Y = new Young(n, n);
+        YoungTableau Y = YoungTableau.emptyOfDimensions(n, n);
         for (int i = 1; i <= n * n; i++) {
             youngInsert(Y, n, n, A.at(i));
         }
@@ -722,12 +722,12 @@ public final class Chapter6 {
      * <p><span style="font-variant:small-caps;">Young-Search</span> from solution to problem 6-3(f).</p>
      *
      * @param Y the Young tableau
-     * @param m the number of rows in {@code Y}
-     * @param n the number of columns in {@code Y}
+     * @param m the number of nRows in {@code Y}
+     * @param n the number of nColumns in {@code Y}
      * @param v the key to find
      * @return {@code true} if {@code Y} contains {@code v}, or {@code false} otherwise
      */
-    public static boolean youngSearch(Young Y, int m, int n, int v) {
+    public static boolean youngSearch(YoungTableau Y, int m, int n, int v) {
         int i = 1;
         int j = n;
         while (i <= m && j >= 1) {

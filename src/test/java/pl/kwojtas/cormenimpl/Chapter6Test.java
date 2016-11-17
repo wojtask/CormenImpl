@@ -8,7 +8,7 @@ import pl.kwojtas.cormenimpl.datastructure.Heap;
 import pl.kwojtas.cormenimpl.datastructure.PriorityQueueWithRanks;
 import pl.kwojtas.cormenimpl.datastructure.PriorityQueueWithRanks.KeyWithRank;
 import pl.kwojtas.cormenimpl.datastructure.SinglyLinkedList;
-import pl.kwojtas.cormenimpl.datastructure.Young;
+import pl.kwojtas.cormenimpl.datastructure.YoungTableau;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -513,30 +513,34 @@ public class Chapter6Test {
 
     @Test
     public void shouldFindKeyUsingYoungSearch() {
-        Young Y = new Young(
+        YoungTableau Y = YoungTableau.ofDimensionsAndRows(
+                4,
+                4,
                 Array.of(2, 3, 14, 16),
-                Array.of(4, 8, Integer.MAX_VALUE, Integer.MAX_VALUE),
-                Array.of(5, 12, Integer.MAX_VALUE, Integer.MAX_VALUE),
-                Array.of(9, Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE)
+                Array.of(4, 8),
+                Array.of(5, 12),
+                Array.of(9)
         );
         int key = 12;
 
-        boolean keyFound = Chapter6.youngSearch(Y, Y.rows, Y.columns, key);
+        boolean keyFound = Chapter6.youngSearch(Y, Y.nRows, Y.nColumns, key);
 
         assertTrue(keyFound);
     }
 
     @Test
     public void shouldNotFindNonexistentKeyUsingYoungSearch() {
-        Young Y = new Young(
+        YoungTableau Y = YoungTableau.ofDimensionsAndRows(
+                4,
+                4,
                 Array.of(2, 3, 14, 16),
-                Array.of(4, 8, Integer.MAX_VALUE, Integer.MAX_VALUE),
-                Array.of(5, 12, Integer.MAX_VALUE, Integer.MAX_VALUE),
-                Array.of(9, Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE)
+                Array.of(4, 8),
+                Array.of(5, 12),
+                Array.of(9)
         );
         int key = 10;
 
-        boolean keyFound = Chapter6.youngSearch(Y, Y.rows, Y.columns, key);
+        boolean keyFound = Chapter6.youngSearch(Y, Y.nRows, Y.nColumns, key);
 
         assertFalse(keyFound);
     }

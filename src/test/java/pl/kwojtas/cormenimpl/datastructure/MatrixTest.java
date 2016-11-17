@@ -17,10 +17,10 @@ public class MatrixTest {
         Array<String> row1 = Array.of("aaa", "bbb", "ccc");
         Array<String> row2 = Array.of("ddd", "eee", "fff");
 
-        Matrix<String> matrix = new Matrix<>(row1, row2);
+        Matrix<String> matrix = Matrix.ofRows(row1, row2);
 
-        assertEquals(2, matrix.rows);
-        assertEquals(row1.length, matrix.columns);
+        assertEquals(2, matrix.nRows);
+        assertEquals(row1.length, matrix.nColumns);
         assertArrayEquals(row1, matrix.row(1));
         assertArrayEquals(row2, matrix.row(2));
     }
@@ -32,36 +32,14 @@ public class MatrixTest {
 
         thrown.expect(IllegalStateException.class);
         thrown.expectMessage("Different sizes of rows");
-        new Matrix<>(row1, row2);
-    }
-
-    @Test
-    public void shouldCreateMatrixFromGivenArrayOfRows() {
-        Array<Array<String>> rows = Array.of(Array.of("aaa", "bbb", "ccc"), Array.of("ddd", "eee", "fff"));
-
-        Matrix<String> matrix = new Matrix<>(rows);
-
-        assertEquals(rows.length, matrix.rows);
-        assertEquals(rows.at(1).length, matrix.columns);
-        for (int i = 1; i <= rows.length; i++) {
-            assertArrayEquals(rows.at(i), matrix.row(i));
-        }
-    }
-
-    @Test
-    public void shouldThrowExceptionWhenCreatingMatrixFromArrayOfRowsOfDifferentSizes() {
-        Array<Array<String>> rows = Array.of(Array.of("aaa", "bbb", "ccc"), Array.of("ddd", "eee"));
-
-        thrown.expect(IllegalStateException.class);
-        thrown.expectMessage("Different sizes of rows");
-        new Matrix<>(rows);
+        Matrix.ofRows(row1, row2);
     }
 
     @Test
     public void shouldReturnRowFromMatrix() {
         Array<String> row1 = Array.of("aaa", "bbb", "ccc");
         Array<String> row2 = Array.of("ddd", "eee", "fff");
-        Matrix<String> matrix = new Matrix<>(row1, row2);
+        Matrix<String> matrix = Matrix.ofRows(row1, row2);
 
         Array<String> actualRow = matrix.row(2);
 
@@ -70,7 +48,7 @@ public class MatrixTest {
 
     @Test
     public void shouldThrowExceptionWhenAccessingInvalidRowFromMatrix() {
-        Matrix<String> matrix = new Matrix<>(Array.of("aaa", "bbb", "ccc"), Array.of("ddd", "eee", "fff"));
+        Matrix<String> matrix = Matrix.ofRows(Array.of("aaa", "bbb", "ccc"), Array.of("ddd", "eee", "fff"));
 
         thrown.expect(IllegalStateException.class);
         thrown.expectMessage("Row index out of bound");
@@ -79,7 +57,7 @@ public class MatrixTest {
 
     @Test
     public void shouldReturnElementFromMatrix() {
-        Matrix<String> matrix = new Matrix<>(Array.of("aaa", "bbb", "ccc"), Array.of("ddd", "eee", "fff"));
+        Matrix<String> matrix = Matrix.ofRows(Array.of("aaa", "bbb", "ccc"), Array.of("ddd", "eee", "fff"));
 
         String actualElement = matrix.at(2, 1);
 
@@ -88,7 +66,7 @@ public class MatrixTest {
 
     @Test
     public void shouldThrowExceptionWhenAccessingInvalidPositionInMatrix() {
-        Matrix<String> matrix = new Matrix<>(Array.of("aaa", "bbb", "ccc"), Array.of("ddd", "eee", "fff"));
+        Matrix<String> matrix = Matrix.ofRows(Array.of("aaa", "bbb", "ccc"), Array.of("ddd", "eee", "fff"));
 
         thrown.expect(IllegalStateException.class);
         thrown.expectMessage("Row index or column index out of bound");
@@ -97,7 +75,7 @@ public class MatrixTest {
 
     @Test
     public void shouldSetElementInMatrix() {
-        Matrix<String> matrix = new Matrix<>(Array.of("aaa", "bbb", "ccc"), Array.of("ddd", "eee", "fff"));
+        Matrix<String> matrix = Matrix.ofRows(Array.of("aaa", "bbb", "ccc"), Array.of("ddd", "eee", "fff"));
         String newElement = "xyz";
 
         matrix.set(1, 3, newElement);
@@ -107,7 +85,7 @@ public class MatrixTest {
 
     @Test
     public void shouldThrowExceptionWhenSettingOnInvalidPositionInMatrix() {
-        Matrix<String> matrix = new Matrix<>(Array.of("aaa", "bbb", "ccc"), Array.of("ddd", "eee", "fff"));
+        Matrix<String> matrix = Matrix.ofRows(Array.of("aaa", "bbb", "ccc"), Array.of("ddd", "eee", "fff"));
 
         thrown.expect(IllegalStateException.class);
         thrown.expectMessage("Row index or column index out of bound");
@@ -116,7 +94,7 @@ public class MatrixTest {
 
     @Test
     public void shouldExchangeTwoElementsInMatrix() {
-        Matrix<String> matrix = new Matrix<>(Array.of("aaa", "bbb", "ccc"), Array.of("ddd", "eee", "fff"));
+        Matrix<String> matrix = Matrix.ofRows(Array.of("aaa", "bbb", "ccc"), Array.of("ddd", "eee", "fff"));
 
         matrix.exch(2, 1, 1, 3);
 
