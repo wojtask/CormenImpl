@@ -42,11 +42,37 @@ public class MultiaryTree<E> {
         public Node(F key) {
             this.key = key;
         }
+
+        /**
+         * Creates a node with a given key and children nodes.
+         *
+         * @param key      the key of the new node
+         * @param children the children of the new node
+         */
+        @SafeVarargs
+        public Node(F key, Node<F>... children) {
+            this.key = key;
+            this.leftChild = children[0];
+            children[0].p = this;
+            for (int i = 1; i < children.length; i++) {
+                children[i].p = this;
+                children[i - 1].rightSibling = children[i];
+            }
+        }
     }
 
     /**
      * The root of the tree.
      */
     public Node<E> root;
+
+    /**
+     * Creates an arbitrary rooted tree from a root node.
+     *
+     * @param root the root of the new tree
+     */
+    public MultiaryTree(Node<E> root) {
+        this.root = root;
+    }
 
 }

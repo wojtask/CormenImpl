@@ -1,6 +1,7 @@
 package pl.kwojtas.cormenimpl.datastructure;
 
 import org.junit.Test;
+import pl.kwojtas.cormenimpl.datastructure.RedBlackTree.Node;
 
 import static org.junit.Assert.assertEquals;
 import static pl.kwojtas.cormenimpl.TestUtil.assertArrayEquals;
@@ -10,19 +11,15 @@ import static pl.kwojtas.cormenimpl.datastructure.RedBlackTree.Color.RED;
 public class RedBlackTreeTest {
 
     private RedBlackTree<String> getExemplaryRedBlackTree() {
-        RedBlackTree<String> tree = new RedBlackTree<>();
-        RedBlackTree.Node<String> x1 = new RedBlackTree.Node<>("4", BLACK, tree);
-        RedBlackTree.Node<String> x2 = new RedBlackTree.Node<>("2", RED, tree);
-        RedBlackTree.Node<String> x3 = new RedBlackTree.Node<>("1", BLACK, tree);
-        RedBlackTree.Node<String> x4 = new RedBlackTree.Node<>("3", BLACK, tree);
-        tree.root = x1;
-        x1.left = x2;
-        x2.p = x1;
-        x2.left = x3;
-        x3.p = x2;
-        x2.right = x4;
-        x4.p = x2;
-        return tree;
+        return new RedBlackTree<>(
+                new Node<>("4", BLACK,
+                        new Node<>("2", RED,
+                                new Node<>("1", BLACK),
+                                new Node<>("3", BLACK)
+                                ),
+                        null
+                )
+        );
     }
 
     @Test
@@ -46,7 +43,7 @@ public class RedBlackTreeTest {
 
     @Test
     public void shouldTransformEmptyTreeToArray() {
-        RedBlackTree<String> tree = new RedBlackTree<>();
+        RedBlackTree<String> tree = RedBlackTree.emptyTree();
 
         Array<String> actualArray = tree.toArray();
 

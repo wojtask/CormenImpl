@@ -1280,34 +1280,28 @@ public class Chapter10Test {
     @Test
     public void shouldPrintOutEmptyTreeInPreorder() {
 
-        Chapter10.iterativePreorderTreeWalk(new BinaryTree<>());
+        Chapter10.iterativePreorderTreeWalk(BinaryTree.emptyTree());
 
         assertEquals(0, outContent.size());
     }
 
     @Test
     public void shouldPrintOutNonEmptyTreeInPreorder() {
-        BinaryTree<Integer> tree = new BinaryTree<>();
-        BinaryTree.Node<Integer> x1 = new BinaryTree.Node<>(10);
-        BinaryTree.Node<Integer> x2 = new BinaryTree.Node<>(4);
-        BinaryTree.Node<Integer> x3 = new BinaryTree.Node<>(14);
-        BinaryTree.Node<Integer> x4 = new BinaryTree.Node<>(1);
-        BinaryTree.Node<Integer> x5 = new BinaryTree.Node<>(11);
-        BinaryTree.Node<Integer> x6 = new BinaryTree.Node<>(19);
-        BinaryTree.Node<Integer> x7 = new BinaryTree.Node<>(20);
-        tree.root = x1;
-        x1.left = x2;
-        x2.p = x1;
-        x1.right = x3;
-        x3.p = x1;
-        x2.left = x4;
-        x4.p = x2;
-        x3.left = x5;
-        x5.p = x3;
-        x3.right = x6;
-        x6.p = x3;
-        x6.right = x7;
-        x7.p = x6;
+        BinaryTree<Integer> tree = new BinaryTree<>(
+                new BinaryTree.Node<>(10,
+                        new BinaryTree.Node<>(4,
+                                new BinaryTree.Node<>(1),
+                                null
+                        ),
+                        new BinaryTree.Node<>(14,
+                                new BinaryTree.Node<>(11),
+                                new BinaryTree.Node<>(19,
+                                        null,
+                                        new BinaryTree.Node<>(20)
+                                )
+                        )
+                )
+        );
 
         Chapter10.iterativePreorderTreeWalk(tree);
 
@@ -1326,36 +1320,22 @@ public class Chapter10Test {
 
     @Test
     public void shouldPrintOutNonEmptyMultiaryTree() {
-        MultiaryTree<Integer> tree = new MultiaryTree<>();
-        MultiaryTree.Node<Integer> x1 = new MultiaryTree.Node<>(1);
-        MultiaryTree.Node<Integer> x2 = new MultiaryTree.Node<>(2);
-        MultiaryTree.Node<Integer> x3 = new MultiaryTree.Node<>(3);
-        MultiaryTree.Node<Integer> x4 = new MultiaryTree.Node<>(4);
-        MultiaryTree.Node<Integer> x5 = new MultiaryTree.Node<>(5);
-        MultiaryTree.Node<Integer> x6 = new MultiaryTree.Node<>(6);
-        MultiaryTree.Node<Integer> x7 = new MultiaryTree.Node<>(7);
-        MultiaryTree.Node<Integer> x8 = new MultiaryTree.Node<>(8);
-        MultiaryTree.Node<Integer> x9 = new MultiaryTree.Node<>(9);
-        MultiaryTree.Node<Integer> x10 = new MultiaryTree.Node<>(10);
-        tree.root = x1;
-        x1.leftChild = x2;
-        x2.p = x1;
-        x2.leftChild = x5;
-        x5.p = x2;
-        x2.rightSibling = x3;
-        x3.p = x1;
-        x3.rightSibling = x4;
-        x4.p = x1;
-        x4.leftChild = x8;
-        x8.p = x4;
-        x5.rightSibling = x6;
-        x6.p = x2;
-        x6.leftChild = x10;
-        x10.p = x6;
-        x6.rightSibling = x7;
-        x7.p = x2;
-        x8.rightSibling = x9;
-        x9.p = x4;
+        MultiaryTree<Integer> tree = new MultiaryTree<>(
+                new MultiaryTree.Node<>(1,
+                        new MultiaryTree.Node<>(2,
+                                new MultiaryTree.Node<>(5),
+                                new MultiaryTree.Node<>(6,
+                                        new MultiaryTree.Node<>(10)
+                                ),
+                                new MultiaryTree.Node<>(7)
+                        ),
+                        new MultiaryTree.Node<>(3),
+                        new MultiaryTree.Node<>(4,
+                                new MultiaryTree.Node<>(8),
+                                new MultiaryTree.Node<>(9)
+                        )
+                )
+        );
 
         Chapter10.treeWalk(tree.root);
 
@@ -1367,34 +1347,28 @@ public class Chapter10Test {
     @Test
     public void shouldPrintOutEmptyTreeInInorder() {
 
-        Chapter10.stacklessInorderTreeWalk(new BinaryTree<>());
+        Chapter10.stacklessInorderTreeWalk(BinaryTree.emptyTree());
 
         assertEquals(0, outContent.size());
     }
 
     @Test
     public void shouldPrintOutNonEmptyTreeInInorder() {
-        BinaryTree<Integer> tree = new BinaryTree<>();
-        BinaryTree.Node<Integer> x1 = new BinaryTree.Node<>(10);
-        BinaryTree.Node<Integer> x2 = new BinaryTree.Node<>(4);
-        BinaryTree.Node<Integer> x3 = new BinaryTree.Node<>(14);
-        BinaryTree.Node<Integer> x4 = new BinaryTree.Node<>(1);
-        BinaryTree.Node<Integer> x5 = new BinaryTree.Node<>(11);
-        BinaryTree.Node<Integer> x6 = new BinaryTree.Node<>(19);
-        BinaryTree.Node<Integer> x7 = new BinaryTree.Node<>(20);
-        tree.root = x1;
-        x1.left = x2;
-        x2.p = x1;
-        x1.right = x3;
-        x3.p = x1;
-        x2.left = x4;
-        x4.p = x2;
-        x3.left = x5;
-        x5.p = x3;
-        x3.right = x6;
-        x6.p = x3;
-        x6.right = x7;
-        x7.p = x6;
+        BinaryTree<Integer> tree = new BinaryTree<>(
+                new BinaryTree.Node<>(10,
+                        new BinaryTree.Node<>(4,
+                                new BinaryTree.Node<>(1),
+                                null
+                        ),
+                        new BinaryTree.Node<>(14,
+                                new BinaryTree.Node<>(11),
+                                new BinaryTree.Node<>(19,
+                                        null,
+                                        new BinaryTree.Node<>(20)
+                                )
+                        )
+                )
+        );
 
         Chapter10.stacklessInorderTreeWalk(tree);
 

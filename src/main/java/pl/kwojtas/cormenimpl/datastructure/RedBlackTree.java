@@ -10,7 +10,7 @@ import pl.kwojtas.cormenimpl.Chapter13;
 public class RedBlackTree<E> {
 
     /**
-     * Defines colors of red-black tree's nodes
+     * Defines colors of red-black tree's nodes.
      */
     public enum Color {
         RED, BLACK
@@ -53,18 +53,33 @@ public class RedBlackTree<E> {
          *
          * @param key   the key of the new node
          * @param color the color of the new node
-         * @param tree  the tree where the new node belongs to
          */
-        public Node(F key, Color color, RedBlackTree<F> tree) {
+        public Node(F key, Color color) {
             this.key = key;
             this.color = color;
-            this.left = this.right = this.p = tree.nil;
         }
 
-        private Node() {
-            this.color = Color.BLACK;
-            this.left = this.right = this.p = this;
+        /**
+         * Creates a node with a given key, color and children nodes.
+         *
+         * @param key   the key of the new node
+         * @param color the color of the new node
+         * @param left  the left child of the new node
+         * @param right the right child of the new node
+         */
+        public Node(F key, Color color, Node<F> left, Node<F> right) {
+            this.key = key;
+            this.color = color;
+            if (left != null) {
+                this.left = left;
+                left.p = this;
+            }
+            if (right != null) {
+                this.right = right;
+                right.p = this;
+            }
         }
+
     }
 
     /**
@@ -77,11 +92,39 @@ public class RedBlackTree<E> {
      */
     public Node<E> nil;
 
+    private RedBlackTree() {
+        this.root = this.nil = new Node<>(null, Color.BLACK);
+    }
+
     /**
      * Creates an empty red-black tree.
      */
-    public RedBlackTree() {
-        root = nil = new Node<>();
+    public static <E> RedBlackTree<E> emptyTree() {
+        return new RedBlackTree<>();
+    }
+
+    /**
+     * Creates a red-black tree from a root node.
+     *
+     * @param root the root of the new tree
+     */
+    public RedBlackTree(Node<E> root) {
+        this.root = root;
+        this.nil = root.p = new Node<>(null, Color.BLACK);
+        assignSentinelToEmptyChildren(root);
+    }
+
+    private void assignSentinelToEmptyChildren(Node<E> node) {
+        if (node.left == null) {
+            node.left = nil;
+        } else {
+            assignSentinelToEmptyChildren(node.left);
+        }
+        if (node.right == null) {
+            node.right = nil;
+        } else {
+            assignSentinelToEmptyChildren(node.right);
+        }
     }
 
     /**
@@ -121,7 +164,7 @@ public class RedBlackTree<E> {
         }
         int n = getSize(x);
         Array<E> array = Array.withLength(n);
-        RedBlackTree.Node<E> y = Chapter13.rbTreeMinimum(this, x);
+        Node<E> y = Chapter13.rbTreeMinimum(this, x);
         array.set(1, y.key);
         for (int i = 2; i <= n; i++) {
             y = Chapter13.rbTreeSuccessor(this, y);

@@ -4,6 +4,7 @@ import org.junit.Test;
 import pl.kwojtas.cormenimpl.datastructure.Array;
 import pl.kwojtas.cormenimpl.datastructure.BinaryTree;
 import pl.kwojtas.cormenimpl.datastructure.RedBlackTree;
+import pl.kwojtas.cormenimpl.datastructure.RedBlackTree.Node;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -20,59 +21,39 @@ import static pl.kwojtas.cormenimpl.datastructure.RedBlackTree.Color.RED;
 public class Chapter13Test {
 
     private RedBlackTree<Integer> getExemplaryRedBlackTree() {
-        RedBlackTree<Integer> tree = new RedBlackTree<>();
-        RedBlackTree.Node<Integer> x1 = new RedBlackTree.Node<>(11, BLACK, tree);
-        RedBlackTree.Node<Integer> x2 = new RedBlackTree.Node<>(2, RED, tree);
-        RedBlackTree.Node<Integer> x3 = new RedBlackTree.Node<>(14, BLACK, tree);
-        RedBlackTree.Node<Integer> x4 = new RedBlackTree.Node<>(1, BLACK, tree);
-        RedBlackTree.Node<Integer> x5 = new RedBlackTree.Node<>(7, BLACK, tree);
-        RedBlackTree.Node<Integer> x6 = new RedBlackTree.Node<>(15, RED, tree);
-        RedBlackTree.Node<Integer> x7 = new RedBlackTree.Node<>(5, RED, tree);
-        RedBlackTree.Node<Integer> x8 = new RedBlackTree.Node<>(9, RED, tree);
-        tree.root = x1;
-        x1.left = x2;  //         11 B
-        x2.p = x1;     //        /   \
-        x1.right = x3; //       /     \
-        x3.p = x1;     //      2 R    14 B
-        x2.left = x4;  //     / \       \
-        x4.p = x2;     //    /   \       \
-        x2.right = x5; //   1 B   7 B   15 R
-        x5.p = x2;     //        / \
-        x3.right = x6; //       /   \
-        x6.p = x3;     //      5 R   9 R
-        x5.left = x7;
-        x7.p = x5;
-        x5.right = x8;
-        x8.p = x5;
-        return tree;
+        return new RedBlackTree<>(
+                new Node<>(11, BLACK,
+                        new Node<>(2, RED,
+                                new Node<>(1, BLACK),
+                                new Node<>(7, BLACK,
+                                        new Node<>(5, RED),
+                                        new Node<>(9, RED)
+                                )
+                        ),
+                        new Node<>(14, BLACK,
+                                null,
+                                new Node<>(15, RED)
+                        )
+                )
+        );
     }
 
     private RedBlackTree<Integer> getExemplaryRedBlackTree2() {
-        RedBlackTree<Integer> tree = new RedBlackTree<>();
-        RedBlackTree.Node<Integer> x1 = new RedBlackTree.Node<>(7, BLACK, tree);
-        RedBlackTree.Node<Integer> x2 = new RedBlackTree.Node<>(3, BLACK, tree);
-        RedBlackTree.Node<Integer> x3 = new RedBlackTree.Node<>(16, RED, tree);
-        RedBlackTree.Node<Integer> x4 = new RedBlackTree.Node<>(1, RED, tree);
-        RedBlackTree.Node<Integer> x5 = new RedBlackTree.Node<>(13, BLACK, tree);
-        RedBlackTree.Node<Integer> x6 = new RedBlackTree.Node<>(18, BLACK, tree);
-        RedBlackTree.Node<Integer> x7 = new RedBlackTree.Node<>(9, RED, tree);
-        RedBlackTree.Node<Integer> x8 = new RedBlackTree.Node<>(14, RED, tree);
-        tree.root = x1;
-        x1.left = x2;  //         7 B
-        x2.p = x1;     //        /   \
-        x1.right = x3; //       /     \
-        x3.p = x1;     //      3 B    16 R
-        x2.left = x4;  //     /       / \
-        x4.p = x2;     //    /       /   \
-        x3.left = x5;  //   1 R    13 B  18 B
-        x5.p = x3;     //          / \
-        x3.right = x6; //         /   \
-        x6.p = x3;     //        9 R   14 R
-        x5.left = x7;
-        x7.p = x5;
-        x5.right = x8;
-        x8.p = x5;
-        return tree;
+        return new RedBlackTree<>(
+                new Node<>(7, BLACK,
+                        new Node<>(3, BLACK,
+                                new Node<>(1, RED),
+                                null
+                        ),
+                        new Node<>(16, RED,
+                                new Node<>(13, BLACK,
+                                        new Node<>(9, RED),
+                                        new Node<>(14, RED)
+                                ),
+                                new Node<>(18, BLACK)
+                        )
+                )
+        );
     }
 
     @Test
@@ -85,8 +66,8 @@ public class Chapter13Test {
 
     @Test
     public void shouldInsertNodeToEmptyRedBlackTree() {
-        RedBlackTree<Integer> tree = new RedBlackTree<>();
-        RedBlackTree.Node<Integer> newNode = new RedBlackTree.Node<>(15, BLACK, tree);
+        RedBlackTree<Integer> tree = RedBlackTree.emptyTree();
+        Node<Integer> newNode = new Node<>(15, BLACK);
 
         Chapter13.rbInsert(tree, newNode);
 
@@ -99,7 +80,7 @@ public class Chapter13Test {
     @Test
     public void shouldInsertNodeToRedBlackTreeLeft() {
         RedBlackTree<Integer> tree = getExemplaryRedBlackTree();
-        RedBlackTree.Node<Integer> newNode = new RedBlackTree.Node<>(4, BLACK, tree);
+        Node<Integer> newNode = new Node<>(4, BLACK);
 
         Chapter13.rbInsert(tree, newNode);
 
@@ -112,7 +93,7 @@ public class Chapter13Test {
     @Test
     public void shouldInsertNodeToRedBlackTree2() {
         RedBlackTree<Integer> tree = getExemplaryRedBlackTree2();
-        RedBlackTree.Node<Integer> newNode = new RedBlackTree.Node<>(15, BLACK, tree);
+        Node<Integer> newNode = new Node<>(15, BLACK);
 
         Chapter13.rbInsert(tree, newNode);
 
@@ -134,7 +115,7 @@ public class Chapter13Test {
         assertBinarySearchTree(T, T.root);
     }
 
-    private <E extends Comparable<? super E>> void assertBinarySearchTree(RedBlackTree<E> T, RedBlackTree.Node<E> x) {
+    private <E extends Comparable<? super E>> void assertBinarySearchTree(RedBlackTree<E> T, Node<E> x) {
         if (x.left != T.nil) {
             Array<E> leftElements = T.toArray(x.left);
             for (int i = 1; i <= leftElements.length; i++) {
@@ -155,7 +136,7 @@ public class Chapter13Test {
         assertRedBlackProperty4(tree.root, tree.nil);
     }
 
-    private <E> void assertRedBlackProperty4(RedBlackTree.Node<E> x, RedBlackTree.Node<E> nil) {
+    private <E> void assertRedBlackProperty4(Node<E> x, Node<E> nil) {
         if (x.color == RED) {
             assertEquals(BLACK, x.left.color);
             assertEquals(BLACK, x.right.color);
@@ -173,7 +154,7 @@ public class Chapter13Test {
         assertRedBlackProperty5(tree.root, tree.nil, new BinaryTree.Node<>(0));
     }
 
-    private <E> void assertRedBlackProperty5(RedBlackTree.Node<E> x, RedBlackTree.Node<E> nil, BinaryTree.Node<Integer> y) {
+    private <E> void assertRedBlackProperty5(Node<E> x, Node<E> nil, BinaryTree.Node<Integer> y) {
         if (x.left != nil) {
             y.left = new BinaryTree.Node<>(0);
             assertRedBlackProperty5(x.left, nil, y.left);
@@ -189,10 +170,10 @@ public class Chapter13Test {
     }
 
     @Test
-    public void shouldDeleteLeafFromTree() {
+    public void shouldDeleteLeafFromRedBlackTree() {
         RedBlackTree<Integer> tree = getExemplaryRedBlackTree();
 
-        RedBlackTree.Node<Integer> actualDeletedNode = Chapter13.rbDelete(tree, tree.root.left.right.left); // a leaf
+        Node<Integer> actualDeletedNode = Chapter13.rbDelete(tree, tree.root.left.right.left); // a leaf
 
         assertRedBlackTree(tree);
         Array<Integer> expectedElements = Array.of(1, 2, 7, 9, 11, 14, 15);
@@ -202,10 +183,10 @@ public class Chapter13Test {
     }
 
     @Test
-    public void shouldDeleteNodeWithOneChildFromTree() {
+    public void shouldDeleteNodeWithOneChildFromRedBlackTree() {
         RedBlackTree<Integer> tree = getExemplaryRedBlackTree();
 
-        RedBlackTree.Node<Integer> actualDeletedNode = Chapter13.rbDelete(tree, tree.root.right); // a node with one child
+        Node<Integer> actualDeletedNode = Chapter13.rbDelete(tree, tree.root.right); // a node with one child
 
         assertRedBlackTree(tree);
         Array<Integer> expectedElements = Array.of(1, 2, 5, 7, 9, 11, 15);
@@ -215,10 +196,10 @@ public class Chapter13Test {
     }
 
     @Test
-    public void shouldDeleteNodeWithTwoChildrenFromTree() {
+    public void shouldDeleteNodeWithTwoChildrenFromRedBlackTree() {
         RedBlackTree<Integer> tree = getExemplaryRedBlackTree();
 
-        RedBlackTree.Node<Integer> actualDeletedNode = Chapter13.rbDelete(tree, tree.root.left); // a node with two children (successor's key = 5)
+        Node<Integer> actualDeletedNode = Chapter13.rbDelete(tree, tree.root.left); // a node with two children (successor's key = 5)
 
         assertRedBlackTree(tree);
         Array<Integer> expectedElements = Array.of(1, 5, 7, 9, 11, 14, 15);
@@ -228,10 +209,10 @@ public class Chapter13Test {
     }
 
     @Test
-    public void shouldDeleteNodeWithTwoChildrenFromTree2() {
+    public void shouldDeleteNodeWithTwoChildrenFromRedBlackTree2() {
         RedBlackTree<Integer> tree = getExemplaryRedBlackTree();
 
-        RedBlackTree.Node<Integer> actualDeletedNode = Chapter13.rbDelete(tree, tree.root.left.right); // a node with two children (successor's key = 9)
+        Node<Integer> actualDeletedNode = Chapter13.rbDelete(tree, tree.root.left.right); // a node with two children (successor's key = 9)
 
         assertRedBlackTree(tree);
         Array<Integer> expectedElements = Array.of(1, 2, 5, 9, 11, 14, 15);
@@ -241,11 +222,10 @@ public class Chapter13Test {
     }
 
     @Test
-    public void shouldDeleteRootFromTree() {
-        RedBlackTree<Integer> tree = new RedBlackTree<>();
-        tree.root = new RedBlackTree.Node<>(10, BLACK, tree);
+    public void shouldDeleteRootFromRedBlackTree() {
+        RedBlackTree<Integer> tree = new RedBlackTree<>(new Node<>(10, BLACK));
 
-        RedBlackTree.Node<Integer> actualDeletedNode = Chapter13.rbDelete(tree, tree.root);
+        Node<Integer> actualDeletedNode = Chapter13.rbDelete(tree, tree.root);
 
         assertEquals(Integer.valueOf(10), actualDeletedNode.key);
         assertEquals(tree.nil, tree.root);

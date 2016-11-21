@@ -1,8 +1,11 @@
 package pl.kwojtas.cormenimpl;
 
 import pl.kwojtas.cormenimpl.datastructure.RedBlackTree;
+import pl.kwojtas.cormenimpl.datastructure.RedBlackTree.Node;
 
 import static pl.kwojtas.cormenimpl.Fundamental.less;
+import static pl.kwojtas.cormenimpl.datastructure.RedBlackTree.Color.BLACK;
+import static pl.kwojtas.cormenimpl.datastructure.RedBlackTree.Color.RED;
 
 /**
  * Implements algorithms from Chapter 13.
@@ -20,8 +23,8 @@ public final class Chapter13 {
      * @param x   the root of the subtree in {@code T} to rotate
      * @param <E> the type of keys in {@code T}
      */
-    static <E> void leftRotate(RedBlackTree<E> T, RedBlackTree.Node<E> x) {
-        RedBlackTree.Node<E> y = x.right;
+    static <E> void leftRotate(RedBlackTree<E> T, Node<E> x) {
+        Node<E> y = x.right;
         x.right = y.left;
         y.left.p = x;
         y.p = x.p;
@@ -44,8 +47,8 @@ public final class Chapter13 {
      * @param x   the root of the subtree in {@code T} to rotate
      * @param <E> the type of keys in {@code T}
      */
-    static <E> void rightRotate(RedBlackTree<E> T, RedBlackTree.Node<E> x) {
-        RedBlackTree.Node<E> y = x.left;
+    static <E> void rightRotate(RedBlackTree<E> T, Node<E> x) {
+        Node<E> y = x.left;
         x.left = y.right;
         y.right.p = x;
         y.p = x.p;
@@ -68,9 +71,9 @@ public final class Chapter13 {
      * @param z   the node to insert
      * @param <E> the type of keys in {@code T}
      */
-    public static <E extends Comparable<? super E>> void rbInsert(RedBlackTree<E> T, RedBlackTree.Node<E> z) {
-        RedBlackTree.Node<E> y = T.nil;
-        RedBlackTree.Node<E> x = T.root;
+    public static <E extends Comparable<? super E>> void rbInsert(RedBlackTree<E> T, Node<E> z) {
+        Node<E> y = T.nil;
+        Node<E> x = T.root;
         while (x != T.nil) {
             y = x;
             if (less(z.key, x.key)) {
@@ -91,7 +94,7 @@ public final class Chapter13 {
         }
         z.left = T.nil;
         z.right = T.nil;
-        z.color = RedBlackTree.Color.RED;
+        z.color = RED;
         rbInsertFixup(T, z);
     }
 
@@ -104,43 +107,43 @@ public final class Chapter13 {
      * @param z   the inserted node
      * @param <E> the type of keys in {@code T}
      */
-    static <E extends Comparable<? super E>> void rbInsertFixup(RedBlackTree<E> T, RedBlackTree.Node<E> z) {
-        while (z.p.color == RedBlackTree.Color.RED) {
+    static <E extends Comparable<? super E>> void rbInsertFixup(RedBlackTree<E> T, Node<E> z) {
+        while (z.p.color == RED) {
             if (z.p == z.p.p.left) {
-                RedBlackTree.Node<E> y = z.p.p.right;
-                if (y.color == RedBlackTree.Color.RED) {
-                    z.p.color = RedBlackTree.Color.BLACK;
-                    y.color = RedBlackTree.Color.BLACK;
-                    z.p.p.color = RedBlackTree.Color.RED;
+                Node<E> y = z.p.p.right;
+                if (y.color == RED) {
+                    z.p.color = BLACK;
+                    y.color = BLACK;
+                    z.p.p.color = RED;
                     z = z.p.p;
                 } else {
                     if (z == z.p.right) {
                         z = z.p;
                         leftRotate(T, z);
                     }
-                    z.p.color = RedBlackTree.Color.BLACK;
-                    z.p.p.color = RedBlackTree.Color.RED;
+                    z.p.color = BLACK;
+                    z.p.p.color = RED;
                     rightRotate(T, z.p.p);
                 }
             } else {
-                RedBlackTree.Node<E> y = z.p.p.left;
-                if (y.color == RedBlackTree.Color.RED) {
-                    z.p.color = RedBlackTree.Color.BLACK;
-                    y.color = RedBlackTree.Color.BLACK;
-                    z.p.p.color = RedBlackTree.Color.RED;
+                Node<E> y = z.p.p.left;
+                if (y.color == RED) {
+                    z.p.color = BLACK;
+                    y.color = BLACK;
+                    z.p.p.color = RED;
                     z = z.p.p;
                 } else {
                     if (z == z.p.left) {
                         z = z.p;
                         rightRotate(T, z);
                     }
-                    z.p.color = RedBlackTree.Color.BLACK;
-                    z.p.p.color = RedBlackTree.Color.RED;
+                    z.p.color = BLACK;
+                    z.p.p.color = RED;
                     leftRotate(T, z.p.p);
                 }
             }
         }
-        T.root.color = RedBlackTree.Color.BLACK;
+        T.root.color = BLACK;
     }
 
     /**
@@ -152,14 +155,14 @@ public final class Chapter13 {
      * @param <E> the type of keys in {@code T}
      * @return the node deleted from {@code T}
      */
-    public static <E> RedBlackTree.Node<E> rbDelete(RedBlackTree<E> T, RedBlackTree.Node<E> z) {
-        RedBlackTree.Node<E> y;
+    public static <E> Node<E> rbDelete(RedBlackTree<E> T, Node<E> z) {
+        Node<E> y;
         if (z.left == T.nil || z.right == T.nil) {
             y = z;
         } else {
             y = rbTreeSuccessor(T, z);
         }
-        RedBlackTree.Node<E> x;
+        Node<E> x;
         if (y.left != T.nil) {
             x = y.left;
         } else {
@@ -178,7 +181,7 @@ public final class Chapter13 {
         if (y != z) {
             z.key = y.key;
         }
-        if (y.color == RedBlackTree.Color.BLACK) {
+        if (y.color == BLACK) {
             rbDeleteFixup(T, x);
         }
         return y;
@@ -193,60 +196,60 @@ public final class Chapter13 {
      * @param x   the node that may violate the red-black properties
      * @param <E> the type of keys in {@code T}
      */
-    static <E> void rbDeleteFixup(RedBlackTree<E> T, RedBlackTree.Node<E> x) {
-        while (x != T.root && x.color == RedBlackTree.Color.BLACK) {
-            RedBlackTree.Node<E> w;
+    static <E> void rbDeleteFixup(RedBlackTree<E> T, Node<E> x) {
+        while (x != T.root && x.color == BLACK) {
+            Node<E> w;
             if (x == x.p.left) {
                 w = x.p.right;
-                if (w.color == RedBlackTree.Color.RED) {
-                    w.color = RedBlackTree.Color.BLACK;
-                    x.p.color = RedBlackTree.Color.RED;
+                if (w.color == RED) {
+                    w.color = BLACK;
+                    x.p.color = RED;
                     leftRotate(T, x.p);
                     w = x.p.right;
                 }
-                if (w.left.color == RedBlackTree.Color.BLACK && w.right.color == RedBlackTree.Color.BLACK) {
-                    w.color = RedBlackTree.Color.RED;
+                if (w.left.color == BLACK && w.right.color == BLACK) {
+                    w.color = RED;
                     x = x.p;
                 } else {
-                    if (w.right.color == RedBlackTree.Color.BLACK) {
-                        w.left.color = RedBlackTree.Color.BLACK;
-                        w.color = RedBlackTree.Color.RED;
+                    if (w.right.color == BLACK) {
+                        w.left.color = BLACK;
+                        w.color = RED;
                         rightRotate(T, w);
                         w = x.p.right;
                     }
                     w.color = x.p.color;
-                    x.p.color = RedBlackTree.Color.BLACK;
-                    w.right.color = RedBlackTree.Color.BLACK;
+                    x.p.color = BLACK;
+                    w.right.color = BLACK;
                     leftRotate(T, x.p);
                     x = T.root;
                 }
             } else {
                 w = x.p.left;
-                if (w.color == RedBlackTree.Color.RED) {
-                    w.color = RedBlackTree.Color.BLACK;
-                    x.p.color = RedBlackTree.Color.RED;
+                if (w.color == RED) {
+                    w.color = BLACK;
+                    x.p.color = RED;
                     rightRotate(T, x.p);
                     w = x.p.left;
                 }
-                if (w.left.color == RedBlackTree.Color.BLACK && w.right.color == RedBlackTree.Color.BLACK) {
-                    w.color = RedBlackTree.Color.RED;
+                if (w.left.color == BLACK && w.right.color == BLACK) {
+                    w.color = RED;
                     x = x.p;
                 } else {
-                    if (w.left.color == RedBlackTree.Color.BLACK) {
-                        w.right.color = RedBlackTree.Color.BLACK;
-                        w.color = RedBlackTree.Color.RED;
+                    if (w.left.color == BLACK) {
+                        w.right.color = BLACK;
+                        w.color = RED;
                         leftRotate(T, w);
                         w = x.p.left;
                     }
                     w.color = x.p.color;
-                    x.p.color = RedBlackTree.Color.BLACK;
-                    w.left.color = RedBlackTree.Color.BLACK;
+                    x.p.color = BLACK;
+                    w.left.color = BLACK;
                     rightRotate(T, x.p);
                     x = T.root;
                 }
             }
         }
-        x.color = RedBlackTree.Color.BLACK;
+        x.color = BLACK;
     }
 
     /**
@@ -258,7 +261,7 @@ public final class Chapter13 {
      * @param <E> the type of keys in {@code T}
      * @return the node with the smallest key in {@code T}
      */
-    public static <E> RedBlackTree.Node<E> rbTreeMinimum(RedBlackTree<E> T, RedBlackTree.Node<E> x) {
+    public static <E> Node<E> rbTreeMinimum(RedBlackTree<E> T, Node<E> x) {
         while (x.left != T.nil) {
             x = x.left;
         }
@@ -274,11 +277,11 @@ public final class Chapter13 {
      * @param <E> the type of keys in {@code T}
      * @return the successor of {@code x} in {@code T}, or {@code null} if {@code x} has the largest key in {@code T}
      */
-    public static <E> RedBlackTree.Node<E> rbTreeSuccessor(RedBlackTree<E> T, RedBlackTree.Node<E> x) {
+    public static <E> Node<E> rbTreeSuccessor(RedBlackTree<E> T, Node<E> x) {
         if (x.right != T.nil) {
             return rbTreeMinimum(T, x.right);
         }
-        RedBlackTree.Node<E> y = x.p;
+        Node<E> y = x.p;
         while (y != T.nil && x == y.right) {
             x = y;
             y = y.p;

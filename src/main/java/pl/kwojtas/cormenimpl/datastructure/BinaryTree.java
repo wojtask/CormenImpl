@@ -44,12 +44,47 @@ public class BinaryTree<E> {
         public Node(F key) {
             this.key = key;
         }
+
+        /**
+         * Creates a node with a given key and children nodes.
+         *
+         * @param key   the key of the new node
+         * @param left  the left child of the new node
+         * @param right the right child of the new node
+         */
+        public Node(F key, Node<F> left, Node<F> right) {
+            this.key = key;
+            if (left != null) {
+                this.left = left;
+                left.p = this;
+            }
+            if (right != null) {
+                this.right = right;
+                right.p = this;
+            }
+        }
     }
 
     /**
      * The root of the tree.
      */
     public Node<E> root;
+
+    /**
+     * Creates a binary tree from a root node.
+     *
+     * @param root the root of the new tree
+     */
+    public BinaryTree(Node<E> root) {
+        this.root = root;
+    }
+
+    /**
+     * Creates an empty binary tree.
+     */
+    public static <E> BinaryTree<E> emptyTree() {
+        return new BinaryTree<>(null);
+    }
 
     /**
      * Returns the number of elements in the tree.
