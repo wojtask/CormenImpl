@@ -124,7 +124,7 @@ public class List<E> {
      * @return the array containing all the elements in the list
      */
     public Array<E> toArray() {
-        Array<E> array = Array.withLength(getLength());
+        Array<E> array = Array.ofLength(getLength());
         Node<E> x = head;
         int i = 1;
         while (x != null) {

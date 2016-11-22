@@ -82,7 +82,7 @@ public final class Chapter2 {
      */
     public static Array<Integer> binaryAdd(Array<Integer> A, Array<Integer> B) {
         int n = A.length;
-        Array<Integer> C = Array.withLength(n + 1);
+        Array<Integer> C = Array.ofLength(n + 1);
         for (int i = 1; i <= n + 1; i++) {
             C.set(i, 0);
         }
@@ -126,8 +126,8 @@ public final class Chapter2 {
     static void merge(Array<Integer> A, int p, int q, int r) {
         int n1 = q - p + 1;
         int n2 = r - q;
-        Array<Integer> L = Array.withLength(n1 + 1);
-        Array<Integer> R = Array.withLength(n2 + 1);
+        Array<Integer> L = Array.ofLength(n1 + 1);
+        Array<Integer> R = Array.ofLength(n2 + 1);
         for (int i = 1; i <= n1; i++) {
             L.set(i, A.at(p + i - 1));
         }
@@ -180,8 +180,8 @@ public final class Chapter2 {
     public static <E extends Comparable<? super E>> void merge_(Array<E> A, int p, int q, int r) {
         int n1 = q - p + 1;
         int n2 = r - q;
-        Array<E> L = Array.withLength(n1);
-        Array<E> R = Array.withLength(n2);
+        Array<E> L = Array.ofLength(n1);
+        Array<E> R = Array.ofLength(n2);
         for (int i = 1; i <= n1; i++) {
             L.set(i, A.at(p + i - 1));
         }
@@ -360,8 +360,8 @@ public final class Chapter2 {
     static int mergeInversions(Array<Integer> A, int p, int q, int r) {
         int n1 = q - p + 1;
         int n2 = r - q;
-        Array<Integer> L = Array.withLength(n1 + 1);
-        Array<Integer> R = Array.withLength(n2 + 1);
+        Array<Integer> L = Array.ofLength(n1 + 1);
+        Array<Integer> R = Array.ofLength(n2 + 1);
         for (int i = 1; i <= n1; i++) {
             L.set(i, A.at(p + i - 1));
         }

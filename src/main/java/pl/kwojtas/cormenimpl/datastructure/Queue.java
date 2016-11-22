@@ -29,8 +29,8 @@ public class Queue<E> extends Array<E> {
      * @param length the length of the underlying array
      * @return the empty queue with an underlying array of length {@code length}
      */
-    public static <E> Queue<E> withLength(int length) {
-        return new Queue<>(Array.withLength(length));
+    public static <E> Queue<E> ofLength(int length) {
+        return new Queue<>(Array.ofLength(length));
     }
 
 }

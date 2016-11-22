@@ -27,7 +27,7 @@ public class ArrayTest {
     @Test
     public void shouldCreateArrayOfGivenLength() {
 
-        Array<String> array = Array.withLength(3);
+        Array<String> array = Array.ofLength(3);
 
         assertEquals(3, array.length);
     }
@@ -81,7 +81,7 @@ public class ArrayTest {
     @Test
     public void shouldSetArrayContentsByCopyingOtherArray() {
         Array<String> otherArray = Array.of("aaa", "bbb", "ccc");
-        Array<String> array = Array.withLength(otherArray.length);
+        Array<String> array = Array.ofLength(otherArray.length);
 
         array.set(otherArray);
 

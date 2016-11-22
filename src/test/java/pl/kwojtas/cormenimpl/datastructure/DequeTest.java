@@ -10,7 +10,7 @@ public class DequeTest {
     public void shouldCreateDequeOfGivenLength() {
         int length = 6;
 
-        Deque<String> deque = Deque.withLength(length);
+        Deque<String> deque = Deque.ofLength(length);
 
         assertEquals(length, deque.length);
         assertEquals(1, deque.head);

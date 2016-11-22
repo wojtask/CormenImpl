@@ -29,8 +29,8 @@ public class DoubleStack<E> extends Array<E> {
      * @param length the length of the underlying array
      * @return two empty stacks in an array of length {@code length}
      */
-    public static <E> DoubleStack<E> withLength(int length) {
-        return new DoubleStack<>(Array.withLength(length));
+    public static <E> DoubleStack<E> ofLength(int length) {
+        return new DoubleStack<>(Array.ofLength(length));
     }
 
 }

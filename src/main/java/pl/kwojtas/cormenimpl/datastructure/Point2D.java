@@ -16,7 +16,7 @@ public class Point2D {
     public double y;
 
     /**
-     * Creates a point from given coordinates.
+     * Creates a point of given coordinates.
      *
      * @param x the first coordinate
      * @param y the second coordinate

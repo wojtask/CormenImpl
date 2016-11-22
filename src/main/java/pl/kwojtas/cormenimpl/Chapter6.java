@@ -452,7 +452,7 @@ public final class Chapter6 {
     @SuppressWarnings("all")
     public static SinglyLinkedList<Integer> mergeSortedLists(Array<SinglyLinkedList<Integer>> sortedLists) {
         SinglyLinkedList<Integer> mergedList = SinglyLinkedList.emptyList();
-        Heap<Pair<Integer, SinglyLinkedList<Integer>>> minPriorityQueue = Heap.withLength(sortedLists.length);
+        Heap<Pair<Integer, SinglyLinkedList<Integer>>> minPriorityQueue = Heap.ofLength(sortedLists.length);
         for (int i = 1; i <= sortedLists.length; i++) {
             if (sortedLists.at(i).head != null) {
                 minHeapInsertForMergingLists(minPriorityQueue, new Pair<>(sortedLists.at(i).head.key, sortedLists.at(i)));

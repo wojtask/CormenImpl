@@ -46,7 +46,7 @@ public class BinaryTree<E> {
         }
 
         /**
-         * Creates a node with a given key and children nodes.
+         * Creates a node with given key and children nodes.
          *
          * @param key   the key of the new node
          * @param left  the left child of the new node
@@ -112,7 +112,7 @@ public class BinaryTree<E> {
     }
 
     /**
-     * Transforms the subtree to an array.
+     * Transforms a subtree to an array.
      *
      * @param x the root of the subtree
      * @return the sorted array containing all the elements in the subtree rooted in {@code x}
@@ -122,7 +122,7 @@ public class BinaryTree<E> {
             return Array.emptyArray();
         }
         int n = getSize(x);
-        Array<E> array = Array.withLength(n);
+        Array<E> array = Array.ofLength(n);
         BinaryTree.Node<E> y = Chapter12.treeMinimum(x);
         array.set(1, y.key);
         for (int i = 2; i <= n; i++) {

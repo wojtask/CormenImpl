@@ -44,7 +44,7 @@ public class MultiaryTree<E> {
         }
 
         /**
-         * Creates a node with a given key and children nodes.
+         * Creates a node with given key and children nodes.
          *
          * @param key      the key of the new node
          * @param children the children of the new node

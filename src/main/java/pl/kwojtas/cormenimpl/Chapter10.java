@@ -939,7 +939,7 @@ public final class Chapter10 {
         if (T.root == null) {
             return;
         }
-        Stack<BinaryTree.Node<E>> S = Stack.withLength(T.getSize());
+        Stack<BinaryTree.Node<E>> S = Stack.ofLength(T.getSize());
         push(S, T.root);
         while (!stackEmpty(S)) {
             BinaryTree.Node<E> x = pop(S);

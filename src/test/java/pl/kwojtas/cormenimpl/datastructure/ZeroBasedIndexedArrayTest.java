@@ -26,7 +26,7 @@ public class ZeroBasedIndexedArrayTest {
     @Test
     public void shouldCreateZeroBasedIndexedArrayOfGivenLength() {
 
-        ZeroBasedIndexedArray<String> zeroBasedIndexedArray = ZeroBasedIndexedArray.withLength(3);
+        ZeroBasedIndexedArray<String> zeroBasedIndexedArray = ZeroBasedIndexedArray.ofLength(3);
 
         assertEquals(3, zeroBasedIndexedArray.length);
     }
@@ -83,7 +83,7 @@ public class ZeroBasedIndexedArrayTest {
     @Test
     public void shouldSetZeroBasedIndexedArrayContentsByCopyingOtherZeroBasedIndexedArray() {
         ZeroBasedIndexedArray<String> otherZeroBasedIndexedArray = ZeroBasedIndexedArray.of("aaa", "bbb", "ccc");
-        ZeroBasedIndexedArray<String> zeroBasedIndexedArray = ZeroBasedIndexedArray.withLength(otherZeroBasedIndexedArray.length);
+        ZeroBasedIndexedArray<String> zeroBasedIndexedArray = ZeroBasedIndexedArray.ofLength(otherZeroBasedIndexedArray.length);
 
         zeroBasedIndexedArray.set(otherZeroBasedIndexedArray);
 

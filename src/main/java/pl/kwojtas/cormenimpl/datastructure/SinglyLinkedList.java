@@ -52,7 +52,7 @@ public class SinglyLinkedList<E> {
     }
 
     /**
-     * Creates a list from given elements.
+     * Creates a list of given elements.
      *
      * @param elements the initial contents of the list
      * @return the singly linked list containing elements from {@code elements}
@@ -117,7 +117,7 @@ public class SinglyLinkedList<E> {
      * @return the array containing all the elements in the list
      */
     public Array<E> toArray() {
-        Array<E> array = Array.withLength(getLength());
+        Array<E> array = Array.ofLength(getLength());
         Node<E> x = head;
         int i = 1;
         while (x != null) {

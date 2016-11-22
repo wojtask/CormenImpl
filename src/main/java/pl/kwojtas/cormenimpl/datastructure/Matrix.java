@@ -20,16 +20,16 @@ public class Matrix<E> {
     public int nColumns;
 
     protected Matrix(int nRows, int nColumns) {
-        data = Array.withLength(nRows);
+        data = Array.ofLength(nRows);
         for (int i = 1; i <= nRows; i++) {
-            data.set(i, Array.withLength(nColumns));
+            data.set(i, Array.ofLength(nColumns));
         }
         this.nRows = nRows;
         this.nColumns = nColumns;
     }
 
     /**
-     * Creates a matrix from given rows of elements.
+     * Creates a matrix of given rows of elements.
      *
      * @param rows the initial rows of the matrix
      * @return the matrix containing elements from {@code rows}

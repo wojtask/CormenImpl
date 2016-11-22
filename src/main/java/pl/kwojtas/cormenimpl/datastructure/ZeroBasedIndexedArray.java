@@ -28,7 +28,7 @@ public class ZeroBasedIndexedArray<E> {
     }
 
     /**
-     * Creates an array from given elements.
+     * Creates an array of given elements.
      *
      * @param elements the initial contents of the array
      * @return the array containing elements from {@code elements}
@@ -45,7 +45,7 @@ public class ZeroBasedIndexedArray<E> {
      * @param length the length of the new array
      * @return the array of length {@code length} filled with {@code null}s
      */
-    public static <E> ZeroBasedIndexedArray<E> withLength(int length) {
+    public static <E> ZeroBasedIndexedArray<E> ofLength(int length) {
         java.util.List<E> initialData = new ArrayList<>(Collections.nCopies(length, null));
         return new ZeroBasedIndexedArray<>(initialData);
     }

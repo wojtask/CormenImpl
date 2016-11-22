@@ -10,7 +10,7 @@ public class StackTest {
     public void shouldCreateStackOfGivenLength() {
         int length = 6;
 
-        Stack<String> stack = Stack.withLength(length);
+        Stack<String> stack = Stack.ofLength(length);
 
         assertEquals(length, stack.length);
         assertEquals(0, stack.top);

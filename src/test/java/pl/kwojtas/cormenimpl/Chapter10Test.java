@@ -75,7 +75,7 @@ public class Chapter10Test {
 
     @Test
     public void shouldDetectEmptyStack() {
-        Stack<String> stack = Stack.withLength(6);
+        Stack<String> stack = Stack.ofLength(6);
 
         boolean actualEmpty = Chapter10.stackEmpty(stack);
 
@@ -84,7 +84,7 @@ public class Chapter10Test {
 
     @Test
     public void shouldDetectNonemptyStack() {
-        Stack<String> stack = Stack.withLength(6);
+        Stack<String> stack = Stack.ofLength(6);
         stack.top = 4;
 
         boolean actualEmpty = Chapter10.stackEmpty(stack);
@@ -94,7 +94,7 @@ public class Chapter10Test {
 
     @Test
     public void shouldInsertToStack() {
-        Stack<String> stack = Stack.withLength(6);
+        Stack<String> stack = Stack.ofLength(6);
         stack.top = 4;
         String element = "xyz";
         int topBeforeInserting = stack.top;
@@ -107,7 +107,7 @@ public class Chapter10Test {
 
     @Test
     public void shouldDeleteFromStack() {
-        Stack<String> stack = Stack.withLength(6);
+        Stack<String> stack = Stack.ofLength(6);
         stack.set(4, "xyz");
         stack.top = 4;
         int topBeforeDeleting = stack.top;
@@ -121,7 +121,7 @@ public class Chapter10Test {
 
     @Test
     public void shouldThrowExceptionWhenDeletingFromEmptyStack() {
-        Stack<String> stack = Stack.withLength(6);
+        Stack<String> stack = Stack.ofLength(6);
 
         thrown.expect(IllegalStateException.class);
         thrown.expectMessage("underflow");
@@ -130,7 +130,7 @@ public class Chapter10Test {
 
     @Test
     public void shouldInsertToQueue() {
-        Queue<String> queue = Queue.withLength(6);
+        Queue<String> queue = Queue.ofLength(6);
         queue.head = 4;
         queue.tail = 2;
         String element = "xyz";
@@ -144,7 +144,7 @@ public class Chapter10Test {
 
     @Test
     public void shouldInsertToQueueWithTailEqualsLength() {
-        Queue<String> queue = Queue.withLength(6);
+        Queue<String> queue = Queue.ofLength(6);
         queue.head = 4;
         queue.tail = 6;
         String element = "xyz";
@@ -157,7 +157,7 @@ public class Chapter10Test {
 
     @Test
     public void shouldThrowExceptionWhenInsertingToFullQueue() {
-        Queue<String> queue = Queue.withLength(6);
+        Queue<String> queue = Queue.ofLength(6);
         queue.head = 3;
         queue.tail = 2;
         String element = "xyz";
@@ -169,7 +169,7 @@ public class Chapter10Test {
 
     @Test
     public void shouldThrowExceptionWhenInsertingToFullQueueWithTailEqualsLength() {
-        Queue<String> queue = Queue.withLength(6);
+        Queue<String> queue = Queue.ofLength(6);
         queue.head = 1;
         queue.tail = 6;
         String element = "xyz";
@@ -181,7 +181,7 @@ public class Chapter10Test {
 
     @Test
     public void shouldDeleteFromQueue() {
-        Queue<String> queue = Queue.withLength(6);
+        Queue<String> queue = Queue.ofLength(6);
         queue.set(4, "xyz");
         queue.head = 4;
         queue.tail = 6;
@@ -196,7 +196,7 @@ public class Chapter10Test {
 
     @Test
     public void shouldThrowExceptionWhenDeletingFromEmptyQueue() {
-        Queue<String> queue = Queue.withLength(6);
+        Queue<String> queue = Queue.ofLength(6);
 
         thrown.expect(IllegalStateException.class);
         thrown.expectMessage("underflow");
@@ -205,7 +205,7 @@ public class Chapter10Test {
 
     @Test
     public void shouldDetectEmptyQueue() {
-        Queue<String> queue = Queue.withLength(6);
+        Queue<String> queue = Queue.ofLength(6);
 
         boolean actualEmpty = Chapter10.queueEmpty(queue);
 
@@ -214,7 +214,7 @@ public class Chapter10Test {
 
     @Test
     public void shouldDetectNonemptyQueue() {
-        Queue<String> queue = Queue.withLength(6);
+        Queue<String> queue = Queue.ofLength(6);
         queue.head = 2;
         queue.tail = 5;
 
@@ -225,7 +225,7 @@ public class Chapter10Test {
 
     @Test
     public void shouldInsertToFirstStackOfDoubleStack() {
-        DoubleStack<String> doubleStack = DoubleStack.withLength(6);
+        DoubleStack<String> doubleStack = DoubleStack.ofLength(6);
         doubleStack.leftTop = 2;
         doubleStack.rightTop = 4;
         String element = "xyz";
@@ -239,7 +239,7 @@ public class Chapter10Test {
 
     @Test
     public void shouldDeleteFromFirstStackOfDoubleStack() {
-        DoubleStack<String> doubleStack = DoubleStack.withLength(6);
+        DoubleStack<String> doubleStack = DoubleStack.ofLength(6);
         doubleStack.set(2, "xyz");
         doubleStack.leftTop = 2;
         doubleStack.rightTop = 4;
@@ -254,7 +254,7 @@ public class Chapter10Test {
 
     @Test
     public void shouldThrowExceptionWhenDeletingFromEmptyFirstStackOfDoubleStack() {
-        DoubleStack<String> doubleStack = DoubleStack.withLength(6);
+        DoubleStack<String> doubleStack = DoubleStack.ofLength(6);
         doubleStack.rightTop = 3;
 
         thrown.expect(IllegalStateException.class);
@@ -264,7 +264,7 @@ public class Chapter10Test {
 
     @Test
     public void shouldDetectEmptyFirstStackOfDoubleStack() {
-        DoubleStack<String> doubleStack = DoubleStack.withLength(6);
+        DoubleStack<String> doubleStack = DoubleStack.ofLength(6);
 
         boolean actualEmpty = Chapter10.firstStackEmpty(doubleStack);
 
@@ -273,7 +273,7 @@ public class Chapter10Test {
 
     @Test
     public void shouldDetectNonemptyFirstStackOfDoubleStack() {
-        DoubleStack<String> doubleStack = DoubleStack.withLength(6);
+        DoubleStack<String> doubleStack = DoubleStack.ofLength(6);
         doubleStack.leftTop = 2;
 
         boolean actualEmpty = Chapter10.firstStackEmpty(doubleStack);
@@ -283,7 +283,7 @@ public class Chapter10Test {
 
     @Test
     public void shouldInsertToSecondStackOfDoubleStack() {
-        DoubleStack<String> doubleStack = DoubleStack.withLength(6);
+        DoubleStack<String> doubleStack = DoubleStack.ofLength(6);
         doubleStack.leftTop = 2;
         doubleStack.rightTop = 4;
         String element = "xyz";
@@ -297,7 +297,7 @@ public class Chapter10Test {
 
     @Test
     public void shouldDeleteFromSecondStackOfDoubleStack() {
-        DoubleStack<String> doubleStack = DoubleStack.withLength(6);
+        DoubleStack<String> doubleStack = DoubleStack.ofLength(6);
         doubleStack.set(4, "xyz");
         doubleStack.leftTop = 2;
         doubleStack.rightTop = 4;
@@ -312,7 +312,7 @@ public class Chapter10Test {
 
     @Test
     public void shouldThrowExceptionWhenDeletingFromEmptySecondStackOfDoubleStack() {
-        DoubleStack<String> doubleStack = DoubleStack.withLength(6);
+        DoubleStack<String> doubleStack = DoubleStack.ofLength(6);
         doubleStack.leftTop = 4;
 
         thrown.expect(IllegalStateException.class);
@@ -322,7 +322,7 @@ public class Chapter10Test {
 
     @Test
     public void shouldDetectEmptySecondStackOfDoubleStack() {
-        DoubleStack<String> doubleStack = DoubleStack.withLength(6);
+        DoubleStack<String> doubleStack = DoubleStack.ofLength(6);
 
         boolean actualEmpty = Chapter10.secondStackEmpty(doubleStack);
 
@@ -331,7 +331,7 @@ public class Chapter10Test {
 
     @Test
     public void shouldDetectNonemptySecondStackOfDoubleStack() {
-        DoubleStack<String> doubleStack = DoubleStack.withLength(6);
+        DoubleStack<String> doubleStack = DoubleStack.ofLength(6);
         doubleStack.rightTop = 3;
 
         boolean actualEmpty = Chapter10.secondStackEmpty(doubleStack);
@@ -341,7 +341,7 @@ public class Chapter10Test {
 
     @Test
     public void shouldInsertToBeginningOfDeque() {
-        Deque<String> deque = Deque.withLength(6);
+        Deque<String> deque = Deque.ofLength(6);
         deque.head = 2;
         deque.tail = 4;
         int headBeforeInserting = deque.head;
@@ -355,7 +355,7 @@ public class Chapter10Test {
 
     @Test
     public void shouldInsertToBeginningOfDequeWithHeadEquals1() {
-        Deque<String> deque = Deque.withLength(6);
+        Deque<String> deque = Deque.ofLength(6);
         deque.head = 1;
         deque.tail = 4;
         String element = "xyz";
@@ -368,7 +368,7 @@ public class Chapter10Test {
 
     @Test
     public void shouldDeleteFromBeginningOfDeque() {
-        Deque<String> deque = Deque.withLength(6);
+        Deque<String> deque = Deque.ofLength(6);
         deque.set(2, "xyz");
         deque.head = 2;
         deque.tail = 4;
@@ -383,7 +383,7 @@ public class Chapter10Test {
 
     @Test
     public void shouldDeleteFromBeginningOfDequeWithHeadEqualsLength() {
-        Deque<String> deque = Deque.withLength(6);
+        Deque<String> deque = Deque.ofLength(6);
         deque.set(6, "xyz");
         deque.head = 6;
         deque.tail = 4;
@@ -397,7 +397,7 @@ public class Chapter10Test {
 
     @Test
     public void shouldInsertToEndOfDeque() {
-        Deque<String> deque = Deque.withLength(6);
+        Deque<String> deque = Deque.ofLength(6);
         deque.head = 2;
         deque.tail = 4;
         int tailBeforeInserting = deque.tail;
@@ -411,7 +411,7 @@ public class Chapter10Test {
 
     @Test
     public void shouldInsertToEndOfDequeWithTailEqualsLength() {
-        Deque<String> deque = Deque.withLength(6);
+        Deque<String> deque = Deque.ofLength(6);
         deque.head = 2;
         deque.tail = 6;
         String element = "xyz";
@@ -424,7 +424,7 @@ public class Chapter10Test {
 
     @Test
     public void shouldDeleteFromEndOfDeque() {
-        Deque<String> deque = Deque.withLength(6);
+        Deque<String> deque = Deque.ofLength(6);
         deque.set(3, "xyz");
         deque.head = 2;
         deque.tail = 4;
@@ -439,7 +439,7 @@ public class Chapter10Test {
 
     @Test
     public void shouldDeleteFromEndOfDequeWithTailEquals1() {
-        Deque<String> deque = Deque.withLength(6);
+        Deque<String> deque = Deque.ofLength(6);
         deque.set(6, "xyz");
         deque.head = 2;
         deque.tail = 1;
@@ -453,8 +453,8 @@ public class Chapter10Test {
 
     @Test
     public void shouldInsertToQueueOnStacks() {
-        Stack<String> stack1 = Stack.withLength(4);
-        Stack<String> stack2 = Stack.withLength(4);
+        Stack<String> stack1 = Stack.ofLength(4);
+        Stack<String> stack2 = Stack.ofLength(4);
         stack1.top = 2;
         int topBeforeInserting = stack1.top;
         String element = "xyz";
@@ -467,8 +467,8 @@ public class Chapter10Test {
 
     @Test
     public void shouldDeleteFromQueueOnStacks() {
-        Stack<String> stack1 = Stack.withLength(4);
-        Stack<String> stack2 = Stack.withLength(4);
+        Stack<String> stack1 = Stack.ofLength(4);
+        Stack<String> stack2 = Stack.ofLength(4);
         stack1.set(1, "xyz");
         stack1.top = 2;
         int topBeforeInserting = stack1.top;
@@ -482,8 +482,8 @@ public class Chapter10Test {
 
     @Test
     public void shouldThrowExceptionWhenDeletingFromEmptyQueueOnStacks() {
-        Stack<String> stack1 = Stack.withLength(4);
-        Stack<String> stack2 = Stack.withLength(4);
+        Stack<String> stack1 = Stack.ofLength(4);
+        Stack<String> stack2 = Stack.ofLength(4);
 
         thrown.expect(IllegalStateException.class);
         thrown.expectMessage("underflow");
@@ -492,8 +492,8 @@ public class Chapter10Test {
 
     @Test
     public void shouldInsertToStackOnQueues() {
-        Queue<String> queue1 = Queue.withLength(4);
-        Queue<String> queue2 = Queue.withLength(4);
+        Queue<String> queue1 = Queue.ofLength(4);
+        Queue<String> queue2 = Queue.ofLength(4);
         queue1.head = 4;
         queue1.tail = 2;
         int tailBeforeInserting = queue1.tail;
@@ -507,8 +507,8 @@ public class Chapter10Test {
 
     @Test
     public void shouldDeleteFromStackOnQueues() {
-        Queue<String> queue1 = Queue.withLength(4);
-        Queue<String> queue2 = Queue.withLength(4);
+        Queue<String> queue1 = Queue.ofLength(4);
+        Queue<String> queue2 = Queue.ofLength(4);
         queue1.set(1, "xyz");
         queue1.head = 4;
         queue1.tail = 2;
@@ -525,8 +525,8 @@ public class Chapter10Test {
 
     @Test
     public void shouldThrowExceptionWhenDeletingFromEmptyStackOnQueues() {
-        Queue<String> queue1 = Queue.withLength(4);
-        Queue<String> queue2 = Queue.withLength(4);
+        Queue<String> queue1 = Queue.ofLength(4);
+        Queue<String> queue2 = Queue.ofLength(4);
 
         thrown.expect(IllegalStateException.class);
         thrown.expectMessage("underflow");
@@ -908,7 +908,7 @@ public class Chapter10Test {
         CircularList<Integer> actualMergedLists = Chapter10.circularListsUnion(list1, list2);
 
         Array<Integer> actualMergedArray = actualMergedLists.toArray();
-        Array<Integer> expectedMergedArray = Array.withLength(originalArray1.length + originalArray2.length);
+        Array<Integer> expectedMergedArray = Array.ofLength(originalArray1.length + originalArray2.length);
         for (int i = 1; i <= originalArray1.length; i++) {
             expectedMergedArray.set(i, originalArray1.at(i));
         }
@@ -956,10 +956,10 @@ public class Chapter10Test {
 
     private XorLinkedList<String> getExemplaryXorLinkedList() {
         XorLinkedList<String> xorLinkedList = XorLinkedList.emptyList();
-        XorLinkedList.Node<String> x1 = xorLinkedList.registerNode("aaa");
-        XorLinkedList.Node<String> x2 = xorLinkedList.registerNode("bbb");
-        XorLinkedList.Node<String> x3 = xorLinkedList.registerNode("ccc");
-        XorLinkedList.Node<String> x4 = xorLinkedList.registerNode("ddd");
+        XorLinkedList.Node<String> x1 = xorLinkedList.addNode("aaa");
+        XorLinkedList.Node<String> x2 = xorLinkedList.addNode("bbb");
+        XorLinkedList.Node<String> x3 = xorLinkedList.addNode("ccc");
+        XorLinkedList.Node<String> x4 = xorLinkedList.addNode("ddd");
         x1.np = x2.address;
         x2.np = x1.address ^ x3.address;
         x3.np = x2.address ^ x4.address;
@@ -982,7 +982,7 @@ public class Chapter10Test {
     @Test
     public void shouldInsertElementToEmptyXorLinkedList() {
         XorLinkedList<String> xorLinkedList = XorLinkedList.emptyList();
-        XorLinkedList.Node<String> nodeToInsert = xorLinkedList.registerNode("xyz");
+        XorLinkedList.Node<String> nodeToInsert = xorLinkedList.addNode("xyz");
 
         Chapter10.xorLinkedListInsert(xorLinkedList, nodeToInsert);
 
@@ -996,7 +996,7 @@ public class Chapter10Test {
         XorLinkedList<String> xorLinkedList = getExemplaryXorLinkedList();
         XorLinkedList<String> original = XorLinkedList.copyOf(xorLinkedList);
         String keyToInsert = "xyz";
-        XorLinkedList.Node<String> nodeToInsert = xorLinkedList.registerNode(keyToInsert);
+        XorLinkedList.Node<String> nodeToInsert = xorLinkedList.addNode(keyToInsert);
 
         Chapter10.xorLinkedListInsert(xorLinkedList, nodeToInsert);
 
@@ -1247,7 +1247,7 @@ public class Chapter10Test {
     public void shouldCompactifyNonemptyList() {
         MultipleArrayList<String> multipleArrayList = new MultipleArrayList<>(
                 Array.of(9, 8, null, 1, 2, null, 5, 10, 6, 3),
-                Array.withLength(10),
+                Array.ofLength(10),
                 Array.of(4, 5, 10, null, 7, 9, null, 2, 1, 8),
                 7,
                 4
@@ -1265,7 +1265,7 @@ public class Chapter10Test {
     public void shouldCompactifyEmptyList() {
         MultipleArrayList<String> multipleArrayList = new MultipleArrayList<>(
                 Array.of(3, 1, 5, 2, null),
-                Array.withLength(5),
+                Array.ofLength(5),
                 Array.of(null, null, null, null, null),
                 null,
                 4

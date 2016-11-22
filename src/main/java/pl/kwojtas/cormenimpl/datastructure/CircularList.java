@@ -95,7 +95,7 @@ public class CircularList<E> extends SinglyLinkedList<E> {
         if (head == null) {
             return Array.emptyArray();
         }
-        Array<E> array = Array.withLength(getLength());
+        Array<E> array = Array.ofLength(getLength());
         array.set(1, head.key);
         Node<E> x = head.next;
         int i = 2;

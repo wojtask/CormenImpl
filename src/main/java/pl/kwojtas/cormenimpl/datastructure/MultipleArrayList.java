@@ -99,7 +99,7 @@ public class MultipleArrayList<E> {
      * @return the array containing all the elements in the list
      */
     public Array<E> toArray() {
-        Array<E> array = Array.withLength(getLength());
+        Array<E> array = Array.ofLength(getLength());
         Integer x = L;
         int i = 1;
         while (x != null) {

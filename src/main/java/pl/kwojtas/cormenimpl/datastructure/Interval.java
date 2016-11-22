@@ -16,7 +16,7 @@ public class Interval {
     public double b;
 
     /**
-     * Creates an interval from a given lower bound and upper bound.
+     * Creates an interval from given lower and upper bound.
      *
      * @param a the lower bound of the new interval
      * @param b the upper bound of the new interval

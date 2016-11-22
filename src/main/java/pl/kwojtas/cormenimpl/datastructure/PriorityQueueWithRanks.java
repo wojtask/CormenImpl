@@ -26,7 +26,7 @@ public class PriorityQueueWithRanks<E> extends Heap<PriorityQueueWithRanks.KeyWi
         public int rank;
 
         /**
-         * Creates a ranked element with a given key and rank.
+         * Creates a ranked element with given key and rank.
          *
          * @param key  the key of the new element
          * @param rank the rank of the new element

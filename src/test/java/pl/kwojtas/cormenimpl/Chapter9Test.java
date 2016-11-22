@@ -363,7 +363,7 @@ public class Chapter9Test {
     }
 
     private void assertMedianOfTwoArrays(Array<Integer> original1, Array<Integer> original2, int actualMedian) {
-        Array<Integer> combinedArrays = Array.withLength(original1.length + original2.length);
+        Array<Integer> combinedArrays = Array.ofLength(original1.length + original2.length);
         for (int i = 1; i <= original1.length; i++) {
             combinedArrays.set(i, original1.at(i));
         }

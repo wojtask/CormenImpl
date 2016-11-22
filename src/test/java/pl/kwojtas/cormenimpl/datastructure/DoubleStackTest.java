@@ -10,7 +10,7 @@ public class DoubleStackTest {
     public void shouldCreateDoubleStackOfGivenLength() {
         int length = 6;
 
-        DoubleStack<String> doubleStack = DoubleStack.withLength(length);
+        DoubleStack<String> doubleStack = DoubleStack.ofLength(length);
 
         assertEquals(length, doubleStack.length);
         assertEquals(0, doubleStack.leftTop);

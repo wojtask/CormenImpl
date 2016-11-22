@@ -20,7 +20,7 @@ public class Heap<E> extends Array<E> {
      * @throws IllegalStateException if the {@code array} is longer than {@code initialLength}
      */
     public Heap(Array<E> array, int initialLength) {
-        super(Array.withLength(initialLength));
+        super(Array.ofLength(initialLength));
         if (array.length > initialLength) {
             throw new IllegalStateException("Array is larger than initial length");
         }
@@ -45,7 +45,7 @@ public class Heap<E> extends Array<E> {
      * @param length the length of the underlying array
      * @return the empty heap with an underlying array of length {@code length}
      */
-    public static <E> Heap<E> withLength(int length) {
+    public static <E> Heap<E> ofLength(int length) {
         return new Heap<>(Array.emptyArray(), length);
     }
 

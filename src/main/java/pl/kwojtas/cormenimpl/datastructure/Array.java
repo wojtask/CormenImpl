@@ -37,7 +37,7 @@ public class Array<E> {
     }
 
     /**
-     * Creates an array from given elements.
+     * Creates an array of given elements.
      *
      * @param elements the initial contents of the array
      * @return the array containing elements from {@code elements}
@@ -54,7 +54,7 @@ public class Array<E> {
      * @param length the length of the new array
      * @return the array of length {@code length} filled with {@code null}s
      */
-    public static <E> Array<E> withLength(int length) {
+    public static <E> Array<E> ofLength(int length) {
         java.util.List<E> initialData = new ArrayList<>(Collections.nCopies(length, null));
         return new Array<>(initialData);
     }

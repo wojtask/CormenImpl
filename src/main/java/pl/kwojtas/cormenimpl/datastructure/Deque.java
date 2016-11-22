@@ -29,8 +29,8 @@ public class Deque<E> extends Array<E> {
      * @param length the length of the underlying array
      * @return the empty deque with an underlying array of length {@code length}
      */
-    public static <E> Deque<E> withLength(int length) {
-        return new Deque<>(Array.withLength(length));
+    public static <E> Deque<E> ofLength(int length) {
+        return new Deque<>(Array.ofLength(length));
     }
 
 }

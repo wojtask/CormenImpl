@@ -59,7 +59,7 @@ public class ListWithSentinel<E> {
     }
 
     /**
-     * Creates a list from given elements.
+     * Creates a list of given elements.
      *
      * @param elements the initial contents of the list
      * @return the doubly linked list with a sentinel containing elements from {@code elements}
@@ -128,7 +128,7 @@ public class ListWithSentinel<E> {
      * @return the array containing all the elements in the list
      */
     public Array<E> toArray() {
-        Array<E> array = Array.withLength(getLength());
+        Array<E> array = Array.ofLength(getLength());
         Node<E> x = nil.next;
         int i = 1;
         while (x != nil) {

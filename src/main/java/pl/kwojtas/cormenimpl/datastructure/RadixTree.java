@@ -12,7 +12,7 @@ public class RadixTree {
 
         /**
          * The flag indicating that the node belongs to the tree ({@code true}),
-         * or it exists only to establish a path to other nodes ({@code false}).
+         * or that it exists only to establish a path to other nodes ({@code false}).
          */
         public boolean inTree;
 

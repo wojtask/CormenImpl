@@ -10,7 +10,7 @@ public class QueueTest {
     public void shouldCreateQueueOfGivenLength() {
         int length = 6;
 
-        Queue<String> queue = Queue.withLength(length);
+        Queue<String> queue = Queue.ofLength(length);
 
         assertEquals(length, queue.length);
         assertEquals(1, queue.head);

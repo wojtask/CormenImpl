@@ -157,15 +157,15 @@ public final class Chapter9 {
         if (n == 1) {
             return A.at(p);
         }
-        ZeroBasedIndexedArray<Array<E>> groups = ZeroBasedIndexedArray.withLength(ceil(n, 5));
+        ZeroBasedIndexedArray<Array<E>> groups = ZeroBasedIndexedArray.ofLength(ceil(n, 5));
         for (int j = 0; j < groups.length - 1; j++) {
-            groups.set(j, Array.withLength(5));
+            groups.set(j, Array.ofLength(5));
         }
-        groups.set(groups.length - 1, Array.withLength(n % 5 > 0 ? n % 5 : 5));
+        groups.set(groups.length - 1, Array.ofLength(n % 5 > 0 ? n % 5 : 5));
         for (int j = p; j <= r; j++) {
             groups.at((j - p) / 5).set((j - p) % 5 + 1, A.at(j));
         }
-        Array<E> medians = Array.withLength(groups.length);
+        Array<E> medians = Array.ofLength(groups.length);
         for (int j = 0; j < groups.length; j++) {
             insertionSort(groups.at(j));
             medians.set(j + 1, groups.at(j).at((groups.at(j).length + 1) / 2));
@@ -286,7 +286,7 @@ public final class Chapter9 {
     public static Set<Integer> medianProximity(Array<Integer> A, int k) {
         int n = A.length;
         int x = select(A, 1, n, (n + 1) / 2);
-        Array<Integer> dist = Array.withLength(n);
+        Array<Integer> dist = Array.ofLength(n);
         for (int i = 1; i <= n; i++) {
             dist.set(i, abs(A.at(i) - x));
         }
@@ -433,8 +433,8 @@ public final class Chapter9 {
      */
     public static Point2D postOfficeLocation2D(Array<Point2D> A, Array<Double> w) {
         int n = A.length;
-        Array<Double> X = Array.withLength(n);
-        Array<Double> Y = Array.withLength(n);
+        Array<Double> X = Array.ofLength(n);
+        Array<Double> Y = Array.ofLength(n);
         for (int i = 1; i <= n; i++) {
             X.set(i, A.at(i).x);
             Y.set(i, A.at(i).y);
@@ -465,7 +465,7 @@ public final class Chapter9 {
         if (i >= m) {
             return permutationProducingSelect(A, p, r, i);
         }
-        ZeroBasedIndexedArray<Integer> permutation = ZeroBasedIndexedArray.withLength(n);
+        ZeroBasedIndexedArray<Integer> permutation = ZeroBasedIndexedArray.ofLength(n);
         for (int j = 0; j <= n - 1; j++) {
             permutation.set(j, j);
         }
@@ -490,22 +490,22 @@ public final class Chapter9 {
     private static <E extends Comparable<? super E>> ZeroBasedIndexedArray<Integer> permutationProducingSelect(
             Array<E> A, int p, int r, int i) {
         int n = r - p + 1;
-        ZeroBasedIndexedArray<Integer> permutation = ZeroBasedIndexedArray.withLength(n);
+        ZeroBasedIndexedArray<Integer> permutation = ZeroBasedIndexedArray.ofLength(n);
         for (int j = 0; j <= n - 1; j++) {
             permutation.set(j, j);
         }
         if (n == 1) {
             return permutation;
         }
-        ZeroBasedIndexedArray<Array<E>> groups = ZeroBasedIndexedArray.withLength(ceil(n, 5));
+        ZeroBasedIndexedArray<Array<E>> groups = ZeroBasedIndexedArray.ofLength(ceil(n, 5));
         for (int j = 0; j < groups.length - 1; j++) {
-            groups.set(j, Array.withLength(5));
+            groups.set(j, Array.ofLength(5));
         }
-        groups.set(groups.length - 1, Array.withLength(n % 5 > 0 ? n % 5 : 5));
+        groups.set(groups.length - 1, Array.ofLength(n % 5 > 0 ? n % 5 : 5));
         for (int j = p; j <= r; j++) {
             groups.at((j - p) / 5).set((j - p) % 5 + 1, A.at(j));
         }
-        Array<E> medians = Array.withLength(groups.length);
+        Array<E> medians = Array.ofLength(groups.length);
         for (int j = 0; j < groups.length; j++) {
             insertionSort(groups.at(j));
             medians.set(j + 1, groups.at(j).at((groups.at(j).length + 1) / 2));
@@ -524,7 +524,7 @@ public final class Chapter9 {
 
     private static void applyPermutationChanges(
             ZeroBasedIndexedArray<Integer> permutation, ZeroBasedIndexedArray<Integer> permutationChanges, int offset) {
-        ZeroBasedIndexedArray<Integer> appliedChanges = ZeroBasedIndexedArray.withLength(permutationChanges.length);
+        ZeroBasedIndexedArray<Integer> appliedChanges = ZeroBasedIndexedArray.ofLength(permutationChanges.length);
         for (int j = 0; j <= permutationChanges.length - 1; j++) {
             appliedChanges.set(j, permutation.at(offset + permutationChanges.at(j)));
         }
@@ -540,8 +540,8 @@ public final class Chapter9 {
             int p,
             int r) {
         int changesLength = r - p + 1;
-        ZeroBasedIndexedArray<Integer> appliedChanges = ZeroBasedIndexedArray.withLength(changesLength);
-        Array<E> permutedArrayFragment = Array.withLength(changesLength);
+        ZeroBasedIndexedArray<Integer> appliedChanges = ZeroBasedIndexedArray.ofLength(changesLength);
+        Array<E> permutedArrayFragment = Array.ofLength(changesLength);
         for (int j = 0; j <= changesLength - 1; j++) {
             if (permutationChanges.at(j) < changesLength - 1) {
                 appliedChanges.set(j, permutation.at(permutationChanges.at(j)));

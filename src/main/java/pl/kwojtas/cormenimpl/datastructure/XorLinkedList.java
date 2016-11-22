@@ -49,7 +49,7 @@ public class XorLinkedList<E> {
      * @param key the key of the new node
      * @return the new node
      */
-    public Node<E> registerNode(E key) {
+    public Node<E> addNode(E key) {
         int address;
         do {
             address = random(1, Integer.MAX_VALUE);
@@ -93,13 +93,13 @@ public class XorLinkedList<E> {
         if (otherList.head == null) {
             return list;
         }
-        list.head = list.registerNode(otherList.head.key);
+        list.head = list.addNode(otherList.head.key);
         Node<E> x = list.head;
         Node<E> y = null;
         Node<E> x_ = otherList.byAddress(otherList.head.np);
         Node<E> y_ = otherList.head;
         while (x_ != null) {
-            Node<E> z = list.registerNode(x_.key);
+            Node<E> z = list.addNode(x_.key);
             z.np = x.address;
             x.np = z.address ^ (y != null ? y.address : 0);
             y = x;
@@ -146,7 +146,7 @@ public class XorLinkedList<E> {
      * @return the array containing all the elements in the list
      */
     public Array<E> toArray() {
-        Array<E> array = Array.withLength(getLength());
+        Array<E> array = Array.ofLength(getLength());
         Node<E> x = head;
         Node<E> y = null;
         int i = 1;

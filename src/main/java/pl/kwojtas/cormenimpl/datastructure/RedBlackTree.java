@@ -49,7 +49,7 @@ public class RedBlackTree<E> {
         public Color color;
 
         /**
-         * Creates a node with a given key and a given color in a given tree.
+         * Creates a node with given key and color.
          *
          * @param key   the key of the new node
          * @param color the color of the new node
@@ -60,7 +60,7 @@ public class RedBlackTree<E> {
         }
 
         /**
-         * Creates a node with a given key, color and children nodes.
+         * Creates a node with given key, color and children nodes.
          *
          * @param key   the key of the new node
          * @param color the color of the new node
@@ -163,7 +163,7 @@ public class RedBlackTree<E> {
             return Array.emptyArray();
         }
         int n = getSize(x);
-        Array<E> array = Array.withLength(n);
+        Array<E> array = Array.ofLength(n);
         Node<E> y = Chapter13.rbTreeMinimum(this, x);
         array.set(1, y.key);
         for (int i = 2; i <= n; i++) {

@@ -11,7 +11,7 @@ public class HashTableWithFreeListTest {
         int length = 6;
         HashFunction h = key -> key % length;
 
-        HashTableWithFreeList<String> hashTableWithFreeList = HashTableWithFreeList.withLengthAndHashFunction(length, h);
+        HashTableWithFreeList<String> hashTableWithFreeList = HashTableWithFreeList.ofLengthAndHashFunction(length, h);
 
         assertEquals(length, hashTableWithFreeList.length);
         assertEquals(h, hashTableWithFreeList.h);

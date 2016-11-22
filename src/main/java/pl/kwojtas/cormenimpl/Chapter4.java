@@ -19,15 +19,15 @@ public final class Chapter4 {
      */
     public static Integer findMissingInteger(Array<Integer> A) {
         int n = A.length;
-        Array<Integer> positionsOfNumbers = Array.withLength(n);
+        Array<Integer> positionsOfNumbers = Array.ofLength(n);
         for (int i = 1; i <= n; i++) {
             positionsOfNumbers.set(i, i);
         }
         Integer missingInteger = 0;
         int j = 0;
         while (n > 0) {
-            Array<Integer> positionsOfNumbersWithBit0 = Array.withLength(n / 2);
-            Array<Integer> positionsOfNumbersWithBit1 = Array.withLength((n - 1) / 2);
+            Array<Integer> positionsOfNumbersWithBit0 = Array.ofLength(n / 2);
+            Array<Integer> positionsOfNumbersWithBit1 = Array.ofLength((n - 1) / 2);
             int zerosFound = 0;
             int onesFound = 0;
             for (int i = 1; i <= n; i++) {
@@ -69,7 +69,7 @@ public final class Chapter4 {
     public static Array<Integer> mongeLeftmostMinimaIndices(Array<Array<Double>> A) {
         int m = A.length;
         int n = A.at(1).length;
-        Array<Integer> leftmostMinimaIndices = Array.withLength(m);
+        Array<Integer> leftmostMinimaIndices = Array.ofLength(m);
         if (m >= 2) {
             Array<Integer> leftmostMinimaIndicesOfEvenRows = mongeLeftmostMinimaIndicesOfEvenRows(A);
             for (int i = 2; i <= m; i += 2) {
@@ -86,10 +86,10 @@ public final class Chapter4 {
 
     private static Array<Integer> mongeLeftmostMinimaIndicesOfEvenRows(Array<Array<Double>> A) {
         int m = A.length;
-        Array<Array<Double>> oddRows = Array.withLength(m / 2);
+        Array<Array<Double>> oddRows = Array.ofLength(m / 2);
         for (int i = 2; i <= m; i += 2) {
             int n = A.at(i).length;
-            oddRows.set(i / 2, Array.withLength(n));
+            oddRows.set(i / 2, Array.ofLength(n));
             for (int j = 1; j <= n; j++) {
                 oddRows.at(i / 2).set(j, A.at(i).at(j));
             }

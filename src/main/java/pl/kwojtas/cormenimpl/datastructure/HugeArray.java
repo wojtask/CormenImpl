@@ -25,7 +25,7 @@ public class HugeArray<E> {
         public F data;
 
         /**
-         * Creates an element from a given key and satellite data.
+         * Creates an element from given key and satellite data.
          *
          * @param key  the key of the new element
          * @param data the satellite data of the new element
@@ -47,17 +47,17 @@ public class HugeArray<E> {
     public Stack<HugeArray.Element<E>> S;
 
     /**
-     * Creates a huge array with a given size and stack capacity.
+     * Creates a huge array with given size and stack capacity.
      *
      * @param size     the size of the new huge array
      * @param capacity the capacity of the auxiliary stack of the new huge array
      */
     public HugeArray(int size, int capacity) {
-        T = ZeroBasedIndexedArray.withLength(size);
+        T = ZeroBasedIndexedArray.ofLength(size);
         for (int i = 0; i <= size - 1; i++) {
             T.set(i, 0); // initializing T as it contains nulls; the initializer can be anything nonnull
         }
-        S = Stack.withLength(capacity);
+        S = Stack.ofLength(capacity);
     }
 
 }

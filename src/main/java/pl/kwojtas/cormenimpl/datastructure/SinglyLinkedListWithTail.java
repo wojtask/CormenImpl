@@ -22,7 +22,7 @@ public class SinglyLinkedListWithTail<E> extends SinglyLinkedList<E> {
     }
 
     /**
-     * Creates a list from given elements.
+     * Creates a list of given elements.
      *
      * @param elements the initial contents of the list
      * @return the singly linked list with tail containing elements from {@code elements}

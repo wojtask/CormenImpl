@@ -127,7 +127,7 @@ public class Chapter6Test {
     public void shouldThrowExceptionWhenExtractingMaximumFromEmptyHeap() {
         thrown.expect(IllegalStateException.class);
         thrown.expectMessage("heap underflow");
-        Chapter6.heapExtractMax(Heap.withLength(3));
+        Chapter6.heapExtractMax(Heap.ofLength(3));
     }
 
     @Test
@@ -212,7 +212,7 @@ public class Chapter6Test {
     public void shouldThrowExceptionWhenExtractingMinimumFromEmptyHeap() {
         thrown.expect(IllegalStateException.class);
         thrown.expectMessage("heap underflow");
-        Chapter6.heapExtractMin(Heap.withLength(3));
+        Chapter6.heapExtractMin(Heap.ofLength(3));
     }
 
     @Test
@@ -377,7 +377,7 @@ public class Chapter6Test {
                 SinglyLinkedList.of(45),
                 SinglyLinkedList.of(2, 34)
         );
-        Array<SinglyLinkedList<Integer>> original = Array.withLength(sortedLists.length);
+        Array<SinglyLinkedList<Integer>> original = Array.ofLength(sortedLists.length);
         for (int i = 1; i <= sortedLists.length; i++) {
             original.set(i, SinglyLinkedList.copyOf(sortedLists.at(i)));
         }
@@ -458,7 +458,7 @@ public class Chapter6Test {
 
         thrown.expect(IllegalStateException.class);
         thrown.expectMessage("heap underflow");
-        Chapter6.multiaryHeapExtractMax(Heap.withLength(6), degree);
+        Chapter6.multiaryHeapExtractMax(Heap.ofLength(6), degree);
     }
 
     @Test

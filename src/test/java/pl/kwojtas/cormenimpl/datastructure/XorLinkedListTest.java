@@ -36,9 +36,9 @@ public class XorLinkedListTest {
 
     private XorLinkedList<String> getExemplaryXorLinkedList() {
         XorLinkedList<String> xorLinkedList = XorLinkedList.emptyList();
-        XorLinkedList.Node<String> x1 = xorLinkedList.registerNode("aaa");
-        XorLinkedList.Node<String> x2 = xorLinkedList.registerNode("bbb");
-        XorLinkedList.Node<String> x3 = xorLinkedList.registerNode("ccc");
+        XorLinkedList.Node<String> x1 = xorLinkedList.addNode("aaa");
+        XorLinkedList.Node<String> x2 = xorLinkedList.addNode("bbb");
+        XorLinkedList.Node<String> x3 = xorLinkedList.addNode("ccc");
         x1.np = x2.address;
         x2.np = x1.address ^ x3.address;
         x3.np = x2.address;

@@ -50,7 +50,7 @@ public class HeapTest {
     public void shouldCreateEmptyHeapOfGivenLength() {
         int length = 5;
 
-        Heap<String> heap = Heap.withLength(length);
+        Heap<String> heap = Heap.ofLength(length);
 
         assertEquals(length, heap.length);
         assertEquals(0, heap.heapSize);

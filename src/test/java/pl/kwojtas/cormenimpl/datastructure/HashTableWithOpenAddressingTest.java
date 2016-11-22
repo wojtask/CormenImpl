@@ -12,7 +12,7 @@ public class HashTableWithOpenAddressingTest {
         HashProbingFunction h = (key, i) -> (key + i) % length;
 
         HashTableWithOpenAddressing hashTableWithOpenAddressing
-                = HashTableWithOpenAddressing.withLengthAndHashFunction(length, h);
+                = HashTableWithOpenAddressing.ofLengthAndHashFunction(length, h);
 
         assertEquals(length, hashTableWithOpenAddressing.length);
         assertEquals(h, hashTableWithOpenAddressing.h);

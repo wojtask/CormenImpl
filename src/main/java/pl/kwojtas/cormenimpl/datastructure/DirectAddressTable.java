@@ -35,7 +35,7 @@ public class DirectAddressTable<E> extends ZeroBasedIndexedArray<DirectAddressTa
         public Element<F> next;
 
         /**
-         * Creates an element from a given key and satellite data with no previous nor next element.
+         * Creates an element with given key and satellite data and with no previous nor next element.
          *
          * @param key  the key of the new element
          * @param data the satellite data of the new element
@@ -47,12 +47,12 @@ public class DirectAddressTable<E> extends ZeroBasedIndexedArray<DirectAddressTa
     }
 
     /**
-     * Creates an direct-address table of a given length.
+     * Creates a direct-address table of a given length.
      *
      * @param length the length of the new direct-address table
      */
     public DirectAddressTable(int length) {
-        super(ZeroBasedIndexedArray.withLength(length));
+        super(ZeroBasedIndexedArray.ofLength(length));
     }
 
 }

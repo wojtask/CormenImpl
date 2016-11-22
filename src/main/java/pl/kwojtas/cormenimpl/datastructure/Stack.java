@@ -23,8 +23,8 @@ public class Stack<E> extends Array<E> {
      * @param length the length of the underlying array
      * @return the empty stack with an underlying array of length {@code length}
      */
-    public static <E> Stack<E> withLength(int length) {
-        return new Stack<>(Array.withLength(length));
+    public static <E> Stack<E> ofLength(int length) {
+        return new Stack<>(Array.ofLength(length));
     }
 
 }

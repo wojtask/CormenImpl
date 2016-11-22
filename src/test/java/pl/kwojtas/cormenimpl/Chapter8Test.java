@@ -27,7 +27,7 @@ public class Chapter8Test {
     public void shouldSortArrayUsingCountingSort() {
         Array<Integer> array = Array.of(6, 0, 2, 0, 1, 3, 4, 6, 1, 3, 2);
         Array<Integer> original = Array.copyOf(array);
-        Array<Integer> actualSorted = Array.withLength(array.length);
+        Array<Integer> actualSorted = Array.ofLength(array.length);
         int boundary = 6;
 
         Chapter8.countingSort(array, actualSorted, boundary);
@@ -40,7 +40,7 @@ public class Chapter8Test {
     public void shouldSortArrayUsingNonStableCountingSort() {
         Array<Integer> array = Array.of(6, 0, 2, 0, 1, 3, 4, 6, 1, 3, 2);
         Array<Integer> original = Array.copyOf(array);
-        Array<Integer> actualSorted = Array.withLength(array.length);
+        Array<Integer> actualSorted = Array.ofLength(array.length);
         int boundary = 6;
 
         Chapter8.nonStableCountingSort(array, actualSorted, boundary);
