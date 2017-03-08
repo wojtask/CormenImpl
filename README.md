@@ -16,3 +16,5 @@ The main **CormenImpl** objectives are:
 The implementations of algorithms tend to be as close as possible to the pseudocodes from the textbook or the solutions,
 and thus appear as single (sometimes lengthy) procedures. For the same reason data structures are implemented using procedural
 approach. The implementations not relying on pseudocodes are often more divided into several procedures to increase readability.
+
+[![Build Status](https://travis-ci.org/wojtask/CormenImpl.svg?branch=master)](https://travis-ci.org/wojtask/CormenImpl)
