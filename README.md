@@ -18,3 +18,4 @@ and thus appear as single (sometimes lengthy) procedures. For the same reason da
 approach. The implementations not relying on pseudocodes are often more divided into several procedures to increase readability.
 
 [![Build Status](https://travis-ci.org/wojtask/CormenImpl.svg?branch=master)](https://travis-ci.org/wojtask/CormenImpl)
+[![codecov](https://codecov.io/gh/wojtask/CormenImpl/branch/master/graph/badge.svg)](https://codecov.io/gh/wojtask/CormenImpl)
