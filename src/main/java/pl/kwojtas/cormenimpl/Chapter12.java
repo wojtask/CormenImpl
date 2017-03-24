@@ -315,7 +315,7 @@ public final class Chapter12 {
      *
      * @param x   the root of the subtree to insert to
      * @param z   the node to insert
-     * @param <E> the type of keys in {@code T}
+     * @param <E> the type of keys in the tree
      */
     static <E extends Comparable<? super E>> void recursiveTreeInsert(Node<E> x, Node<E> z) {
         if (less(z.key, x.key)) {
