@@ -1,7 +1,5 @@
 package pl.kwojtas.cormenimpl.datastructure;
 
-import pl.kwojtas.cormenimpl.Chapter13;
-
 /**
  * Implements a red-black tree.
  *
@@ -156,19 +154,21 @@ public class RedBlackTree<E> {
      * Transforms the subtree to an array.
      *
      * @param x the root of the subtree
-     * @return the sorted array containing all the elements in the subtree rooted in {@code x}
+     * @return the sorted array containing all the elements in the subtree rooted at {@code x}
      */
     public Array<E> toArray(Node<E> x) {
         if (x == nil) {
             return Array.emptyArray();
         }
-        int n = getSize(x);
-        Array<E> array = Array.ofLength(n);
-        Node<E> y = Chapter13.rbTreeMinimum(this, x);
-        array.set(1, y.key);
-        for (int i = 2; i <= n; i++) {
-            y = Chapter13.rbTreeSuccessor(this, y);
-            array.set(i, y.key);
+        Array<E> leftArray = toArray(x.left);
+        Array<E> rightArray = toArray(x.right);
+        Array<E> array = Array.ofLength(leftArray.length + 1 + rightArray.length);
+        for (int i = 1; i <= leftArray.length; i++) {
+            array.set(i, leftArray.at(i));
+        }
+        array.set(leftArray.length + 1, x.key);
+        for (int i = 1; i <= rightArray.length; i++) {
+            array.set(leftArray.length + 1 + i, rightArray.at(i));
         }
         return array;
     }
