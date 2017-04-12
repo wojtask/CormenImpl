@@ -26,7 +26,9 @@ public final class Chapter13 {
     static <E> void leftRotate(RedBlackTree<E> T, Node<E> x) {
         Node<E> y = x.right;
         x.right = y.left;
-        y.left.p = x;
+        if (y.left.p != T.nil) {
+            y.left.p = x;
+        }
         y.p = x.p;
         if (x.p == T.nil) {
             T.root = y;
@@ -50,7 +52,9 @@ public final class Chapter13 {
     static <E> void rightRotate(RedBlackTree<E> T, Node<E> x) {
         Node<E> y = x.left;
         x.left = y.right;
-        y.right.p = x;
+        if (y.right.p != T.nil) {
+            y.right.p = x;
+        }
         y.p = x.p;
         if (x.p == T.nil) {
             T.root = y;
