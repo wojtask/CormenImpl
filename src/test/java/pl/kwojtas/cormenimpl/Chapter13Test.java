@@ -2,7 +2,6 @@ package pl.kwojtas.cormenimpl;
 
 import org.junit.Test;
 import pl.kwojtas.cormenimpl.datastructure.Array;
-import pl.kwojtas.cormenimpl.datastructure.BinaryTree;
 import pl.kwojtas.cormenimpl.datastructure.RedBlackTree;
 import pl.kwojtas.cormenimpl.datastructure.RedBlackTree.Node;
 
@@ -133,40 +132,37 @@ public class Chapter13Test {
     }
 
     private <E> void assertRedBlackProperty4(RedBlackTree<E> tree) {
-        assertRedBlackProperty4(tree.root, tree.nil);
+        assertRedBlackProperty4(tree.root);
     }
 
-    private <E> void assertRedBlackProperty4(Node<E> x, Node<E> nil) {
+    private <E> void assertRedBlackProperty4(Node<E> x) {
         if (x.color == RED) {
             assertEquals(BLACK, x.left.color);
             assertEquals(BLACK, x.right.color);
         }
-        if (x.left != nil) {
-            assertRedBlackProperty4(x.left, nil);
+        if (x.left != x) {
+            assertRedBlackProperty4(x.left);
         }
-        if (x.right != nil) {
-            assertRedBlackProperty4(x.right, nil);
+        if (x.right != x) {
+            assertRedBlackProperty4(x.right);
         }
     }
 
     private <E> void assertRedBlackProperty5(RedBlackTree<E> tree) {
-        // we build a binary tree of the same structure as the red-black tree that will store black heights
-        assertRedBlackProperty5(tree.root, tree.nil, new BinaryTree.Node<>(0));
+        assertRedBlackProperty5(tree.root);
     }
 
-    private <E> void assertRedBlackProperty5(Node<E> x, Node<E> nil, BinaryTree.Node<Integer> y) {
-        if (x.left != nil) {
-            y.left = new BinaryTree.Node<>(0);
-            assertRedBlackProperty5(x.left, nil, y.left);
+    private <E> int assertRedBlackProperty5(Node<E> x) {
+        int leftBlackHeight = 0;
+        if (x.left != x) {
+            leftBlackHeight = assertRedBlackProperty5(x.left) + (x.left.color == BLACK ? 1 : 0);
         }
-        if (x.right != nil) {
-            y.right = new BinaryTree.Node<>(0);
-            assertRedBlackProperty5(x.right, nil, y.right);
+        int rightBlackHeight = 0;
+        if (x.right != x) {
+            rightBlackHeight = assertRedBlackProperty5(x.right) + (x.right.color == BLACK ? 1 : 0);
         }
-        int leftBlackHeight = (x.left != nil ? y.left.key : 0) + (x.left.color == BLACK ? 1 : 0);
-        int rightBlackHeight = (x.right != nil ? y.right.key : 0) + (x.right.color == BLACK ? 1 : 0);
         assertEquals(leftBlackHeight, rightBlackHeight);
-        y.key = leftBlackHeight;
+        return leftBlackHeight;
     }
 
     @Test

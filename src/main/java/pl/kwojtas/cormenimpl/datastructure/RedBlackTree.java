@@ -92,6 +92,7 @@ public class RedBlackTree<E> {
 
     private RedBlackTree() {
         this.root = this.nil = new Node<>(null, Color.BLACK);
+        this.nil.left = this.nil.right = this.nil.p = this.nil;
     }
 
     /**
@@ -109,6 +110,7 @@ public class RedBlackTree<E> {
     public RedBlackTree(Node<E> root) {
         this.root = root;
         this.nil = root.p = new Node<>(null, Color.BLACK);
+        this.nil.left = this.nil.right = this.nil.p = this.nil;
         assignSentinelToEmptyChildren(root);
     }
 
