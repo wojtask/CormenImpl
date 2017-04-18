@@ -19,7 +19,7 @@ import static pl.kwojtas.cormenimpl.datastructure.RedBlackTree.Color.RED;
 
 public class Chapter13Test {
 
-    private RedBlackTree<Integer> getExemplaryRedBlackTree() {
+    private RedBlackTree<Integer> getExemplaryRedBlackTreeForAllLeftCasesInInsertFixup() {
         return new RedBlackTree<>(
                 new Node<>(11, BLACK,
                         new Node<>(2, RED,
@@ -37,7 +37,7 @@ public class Chapter13Test {
         );
     }
 
-    private RedBlackTree<Integer> getExemplaryRedBlackTree2() {
+    private RedBlackTree<Integer> getExemplaryRedBlackTreeForAllRightCasesInInsertFixup() {
         return new RedBlackTree<>(
                 new Node<>(7, BLACK,
                         new Node<>(3, BLACK,
@@ -50,6 +50,114 @@ public class Chapter13Test {
                                         new Node<>(14, RED)
                                 ),
                                 new Node<>(18, BLACK)
+                        )
+                )
+        );
+    }
+
+    private RedBlackTree<Integer> getExemplaryRedBlackTreeForDeleting() {
+        return new RedBlackTree<>(
+                new Node<>(5, BLACK,
+                        new Node<>(2, RED,
+                                new Node<>(1, BLACK),
+                                new Node<>(4, BLACK,
+                                        new Node<>(3, RED),
+                                        null
+                                )
+                        ),
+                        new Node<>(7, BLACK,
+                                new Node<>(6, RED),
+                                null
+                        )
+                )
+        );
+    }
+
+    private RedBlackTree<Integer> getExemplaryRedBlackTreeForAllLeftCasesInDeleteFixup() {
+        return new RedBlackTree<>(
+                new Node<>(8, BLACK,
+                        new Node<>(4, BLACK,
+                                new Node<>(2, BLACK,
+                                        new Node<>(1, BLACK),
+                                        new Node<>(3, BLACK)
+                                ),
+                                new Node<>(6, BLACK,
+                                        new Node<>(5, BLACK),
+                                        new Node<>(7, BLACK)
+                                )
+                        ),
+                        new Node<>(20, RED,
+                                new Node<>(16, BLACK,
+                                        new Node<>(12, RED,
+                                                new Node<>(10, BLACK,
+                                                        new Node<>(9, BLACK),
+                                                        new Node<>(11, BLACK)
+                                                ),
+                                                new Node<>(14, BLACK,
+                                                        new Node<>(13, BLACK),
+                                                        new Node<>(15, BLACK)
+                                                )
+                                        ),
+                                        new Node<>(18, BLACK,
+                                                new Node<>(17, BLACK),
+                                                new Node<>(19, BLACK)
+                                        )
+                                ),
+                                new Node<>(24, BLACK,
+                                        new Node<>(22, BLACK,
+                                                new Node<>(21, BLACK),
+                                                new Node<>(23, BLACK)
+                                        ),
+                                        new Node<>(26, BLACK,
+                                                new Node<>(25, BLACK),
+                                                new Node<>(27, BLACK)
+                                        )
+                                )
+                        )
+                )
+        );
+    }
+
+    private RedBlackTree<Integer> getExemplaryRedBlackTreeForAllRightCasesInDeleteFixup() {
+        return new RedBlackTree<>(
+                new Node<>(20, BLACK,
+                        new Node<>(8, RED,
+                                new Node<>(4, BLACK,
+                                        new Node<>(2, BLACK,
+                                                new Node<>(1, BLACK),
+                                                new Node<>(3, BLACK)
+                                        ),
+                                        new Node<>(6, BLACK,
+                                                new Node<>(5, BLACK),
+                                                new Node<>(7, BLACK)
+                                        )
+                                ),
+                                new Node<>(12, BLACK,
+                                        new Node<>(10, BLACK,
+                                                new Node<>(9, BLACK),
+                                                new Node<>(11, BLACK)
+                                        ),
+                                        new Node<>(16, RED,
+                                                new Node<>(14, BLACK,
+                                                        new Node<>(13, BLACK),
+                                                        new Node<>(15, BLACK)
+                                                ),
+                                                new Node<>(18, BLACK,
+                                                        new Node<>(17, BLACK),
+                                                        new Node<>(19, BLACK)
+                                                )
+                                        )
+                                )
+                        ),
+                        new Node<>(24, BLACK,
+                                new Node<>(22, BLACK,
+                                        new Node<>(21, BLACK),
+                                        new Node<>(23, BLACK)
+                                ),
+                                new Node<>(26, BLACK,
+                                        new Node<>(25, BLACK),
+                                        new Node<>(27, BLACK)
+                                )
                         )
                 )
         );
@@ -77,8 +185,8 @@ public class Chapter13Test {
     }
 
     @Test
-    public void shouldInsertNodeToRedBlackTreeLeft() {
-        RedBlackTree<Integer> tree = getExemplaryRedBlackTree();
+    public void shouldInsertNodeToRedBlackTreeAllLeftCasesInInsertFixup() {
+        RedBlackTree<Integer> tree = getExemplaryRedBlackTreeForAllLeftCasesInInsertFixup();
         Node<Integer> newNode = new Node<>(4, BLACK);
 
         Chapter13.rbInsert(tree, newNode);
@@ -90,8 +198,8 @@ public class Chapter13Test {
     }
 
     @Test
-    public void shouldInsertNodeToRedBlackTree2() {
-        RedBlackTree<Integer> tree = getExemplaryRedBlackTree2();
+    public void shouldInsertNodeToRedBlackTreeAllRightCasesInInsertFixup() {
+        RedBlackTree<Integer> tree = getExemplaryRedBlackTreeForAllRightCasesInInsertFixup();
         Node<Integer> newNode = new Node<>(15, BLACK);
 
         Chapter13.rbInsert(tree, newNode);
@@ -167,54 +275,41 @@ public class Chapter13Test {
 
     @Test
     public void shouldDeleteLeafFromRedBlackTree() {
-        RedBlackTree<Integer> tree = getExemplaryRedBlackTree();
+        RedBlackTree<Integer> tree = getExemplaryRedBlackTreeForDeleting();
 
         Node<Integer> actualDeletedNode = Chapter13.rbDelete(tree, tree.root.left.right.left); // a leaf
 
         assertRedBlackTree(tree);
-        Array<Integer> expectedElements = Array.of(1, 2, 7, 9, 11, 14, 15);
+        Array<Integer> expectedElements = Array.of(1, 2, 4, 5, 6, 7);
         Array<Integer> actualElements = tree.toArray();
         assertArrayEquals(expectedElements, actualElements);
-        assertEquals(Integer.valueOf(5), actualDeletedNode.key);
+        assertEquals(Integer.valueOf(3), actualDeletedNode.key);
     }
 
     @Test
     public void shouldDeleteNodeWithOneChildFromRedBlackTree() {
-        RedBlackTree<Integer> tree = getExemplaryRedBlackTree();
+        RedBlackTree<Integer> tree = getExemplaryRedBlackTreeForDeleting();
 
         Node<Integer> actualDeletedNode = Chapter13.rbDelete(tree, tree.root.right); // a node with one child
 
         assertRedBlackTree(tree);
-        Array<Integer> expectedElements = Array.of(1, 2, 5, 7, 9, 11, 15);
+        Array<Integer> expectedElements = Array.of(1, 2, 3, 4, 5, 6);
         Array<Integer> actualElements = tree.toArray();
         assertArrayEquals(expectedElements, actualElements);
-        assertEquals(Integer.valueOf(14), actualDeletedNode.key);
+        assertEquals(Integer.valueOf(7), actualDeletedNode.key);
     }
 
     @Test
     public void shouldDeleteNodeWithTwoChildrenFromRedBlackTree() {
-        RedBlackTree<Integer> tree = getExemplaryRedBlackTree();
+        RedBlackTree<Integer> tree = getExemplaryRedBlackTreeForDeleting();
 
-        Node<Integer> actualDeletedNode = Chapter13.rbDelete(tree, tree.root.left); // a node with two children (successor's key = 5)
-
-        assertRedBlackTree(tree);
-        Array<Integer> expectedElements = Array.of(1, 5, 7, 9, 11, 14, 15);
-        Array<Integer> actualElements = tree.toArray();
-        assertArrayEquals(expectedElements, actualElements);
-        assertEquals(Integer.valueOf(5), actualDeletedNode.key);
-    }
-
-    @Test
-    public void shouldDeleteNodeWithTwoChildrenFromRedBlackTree2() {
-        RedBlackTree<Integer> tree = getExemplaryRedBlackTree();
-
-        Node<Integer> actualDeletedNode = Chapter13.rbDelete(tree, tree.root.left.right); // a node with two children (successor's key = 9)
+        Node<Integer> actualDeletedNode = Chapter13.rbDelete(tree, tree.root.left); // a node with two children
 
         assertRedBlackTree(tree);
-        Array<Integer> expectedElements = Array.of(1, 2, 5, 9, 11, 14, 15);
+        Array<Integer> expectedElements = Array.of(1, 3, 4, 5, 6, 7);
         Array<Integer> actualElements = tree.toArray();
         assertArrayEquals(expectedElements, actualElements);
-        assertEquals(Integer.valueOf(9), actualDeletedNode.key);
+        assertEquals(Integer.valueOf(3), actualDeletedNode.key);
     }
 
     @Test
@@ -225,6 +320,36 @@ public class Chapter13Test {
 
         assertEquals(Integer.valueOf(10), actualDeletedNode.key);
         assertEquals(tree.nil, tree.root);
+    }
+
+    @Test
+    public void shouldDeleteFromRedBlackTreeAllLeftCasesInDeleteFixup() {
+        RedBlackTree<Integer> tree = getExemplaryRedBlackTreeForAllLeftCasesInDeleteFixup();
+
+        // deletion will cause all left cases in rbDeleteFixup -- case 2 twice, case 1, case 3, and case 4 in this order
+        Node<Integer> actualDeletedNode = Chapter13.rbDelete(tree, tree.root.left.left.left);
+
+        assertRedBlackTree(tree);
+        Array<Integer> expectedElements = Array.of(2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17,
+                18, 19, 20, 21, 22, 23, 24, 25, 26, 27);
+        Array<Integer> actualElements = tree.toArray();
+        assertArrayEquals(expectedElements, actualElements);
+        assertEquals(Integer.valueOf(1), actualDeletedNode.key);
+    }
+
+    @Test
+    public void shouldDeleteFromRedBlackTreeAllRightCasesInDeleteFixup() {
+        RedBlackTree<Integer> tree = getExemplaryRedBlackTreeForAllRightCasesInDeleteFixup();
+
+        // deletion will cause all right cases in rbDeleteFixup -- case 2 twice, case 1, case 3, and case 4 in this order
+        Node<Integer> actualDeletedNode = Chapter13.rbDelete(tree, tree.root.right.right.right);
+
+        assertRedBlackTree(tree);
+        Array<Integer> expectedElements = Array.of(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16,
+                17, 18, 19, 20, 21, 22, 23, 24, 25, 26);
+        Array<Integer> actualElements = tree.toArray();
+        assertArrayEquals(expectedElements, actualElements);
+        assertEquals(Integer.valueOf(27), actualDeletedNode.key);
     }
 
 }
