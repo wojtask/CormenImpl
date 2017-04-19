@@ -302,11 +302,7 @@ public final class Chapter12 {
      * @param <E> the type of keys in {@code T}
      */
     public static <E extends Comparable<? super E>> void treeInsert_(BinaryTree<E> T, Node<E> z) {
-        if (T.root == null) {
-            T.root = z;
-        } else {
-            recursiveTreeInsert(T.root, z);
-        }
+        T.root = recursiveTreeInsert(T.root, z);
     }
 
     /**
@@ -316,23 +312,20 @@ public final class Chapter12 {
      * @param x   the root of the subtree to insert to
      * @param z   the node to insert
      * @param <E> the type of keys in the tree
+     * @return {@code x} or {@code z} if {@code x = null}
      */
-    static <E extends Comparable<? super E>> void recursiveTreeInsert(Node<E> x, Node<E> z) {
-        if (less(z.key, x.key)) {
-            if (x.left != null) {
-                recursiveTreeInsert(x.left, z);
-            } else {
-                x.left = z;
-                z.p = x;
-            }
-        } else {
-            if (x.right != null) {
-                recursiveTreeInsert(x.right, z);
-            } else {
-                x.right = z;
-                z.p = x;
-            }
+    static <E extends Comparable<? super E>> Node<E> recursiveTreeInsert(Node<E> x, Node<E> z) {
+        if (x == null) {
+            return z;
         }
+        if (less(z.key, x.key)) {
+            x.left = recursiveTreeInsert(x.left, z);
+            x.left.p = x;
+        } else {
+            x.right = recursiveTreeInsert(x.right, z);
+            x.right.p = x;
+        }
+        return x;
     }
 
     /**
