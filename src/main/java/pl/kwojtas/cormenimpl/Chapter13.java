@@ -17,13 +17,15 @@ public final class Chapter13 {
 
     /**
      * Performs a left rotation on a red-black tree.
-     * <p><span style="font-variant:small-caps;">Left-Rotate</span> from subchapter 13.2.</p>
+     * <p><span style="font-variant:small-caps;">RB-Left-Rotate</span> from subchapter 13.2
+     * (we use <span style="font-variant:small-caps;">Left-Rotate</span> as a name of the left rotation operation
+     * on a binary search tree.)</p>
      *
      * @param T   the red-black tree
      * @param x   the root of the subtree in {@code T} to rotate
      * @param <E> the type of keys in {@code T}
      */
-    static <E> void leftRotate(RedBlackTree<E> T, Node<E> x) {
+    static <E> void rbLeftRotate(RedBlackTree<E> T, Node<E> x) {
         Node<E> y = x.right;
         x.right = y.left;
         if (y.left.p != T.nil) {
@@ -43,13 +45,13 @@ public final class Chapter13 {
 
     /**
      * Performs a right rotation on a red-black tree.
-     * <p><span style="font-variant:small-caps;">Right-Rotate</span> from solution to exercise 13.2-1.</p>
+     * <p><span style="font-variant:small-caps;">RB-Right-Rotate</span> from solution to exercise 13.2-1.</p>
      *
      * @param T   the red-black tree
      * @param x   the root of the subtree in {@code T} to rotate
      * @param <E> the type of keys in {@code T}
      */
-    static <E> void rightRotate(RedBlackTree<E> T, Node<E> x) {
+    static <E> void rbRightRotate(RedBlackTree<E> T, Node<E> x) {
         Node<E> y = x.left;
         x.left = y.right;
         if (y.right.p != T.nil) {
@@ -123,11 +125,11 @@ public final class Chapter13 {
                 } else {
                     if (z == z.p.right) {
                         z = z.p;
-                        leftRotate(T, z);
+                        rbLeftRotate(T, z);
                     }
                     z.p.color = BLACK;
                     z.p.p.color = RED;
-                    rightRotate(T, z.p.p);
+                    rbRightRotate(T, z.p.p);
                 }
             } else {
                 Node<E> y = z.p.p.left;
@@ -139,11 +141,11 @@ public final class Chapter13 {
                 } else {
                     if (z == z.p.left) {
                         z = z.p;
-                        rightRotate(T, z);
+                        rbRightRotate(T, z);
                     }
                     z.p.color = BLACK;
                     z.p.p.color = RED;
-                    leftRotate(T, z.p.p);
+                    rbLeftRotate(T, z.p.p);
                 }
             }
         }
@@ -208,7 +210,7 @@ public final class Chapter13 {
                 if (w.color == RED) {
                     w.color = BLACK;
                     x.p.color = RED;
-                    leftRotate(T, x.p);
+                    rbLeftRotate(T, x.p);
                     w = x.p.right;
                 }
                 if (w.left.color == BLACK && w.right.color == BLACK) {
@@ -218,13 +220,13 @@ public final class Chapter13 {
                     if (w.right.color == BLACK) {
                         w.left.color = BLACK;
                         w.color = RED;
-                        rightRotate(T, w);
+                        rbRightRotate(T, w);
                         w = x.p.right;
                     }
                     w.color = x.p.color;
                     x.p.color = BLACK;
                     w.right.color = BLACK;
-                    leftRotate(T, x.p);
+                    rbLeftRotate(T, x.p);
                     x = T.root;
                 }
             } else {
@@ -232,7 +234,7 @@ public final class Chapter13 {
                 if (w.color == RED) {
                     w.color = BLACK;
                     x.p.color = RED;
-                    rightRotate(T, x.p);
+                    rbRightRotate(T, x.p);
                     w = x.p.left;
                 }
                 if (w.left.color == BLACK && w.right.color == BLACK) {
@@ -242,13 +244,13 @@ public final class Chapter13 {
                     if (w.left.color == BLACK) {
                         w.right.color = BLACK;
                         w.color = RED;
-                        leftRotate(T, w);
+                        rbLeftRotate(T, w);
                         w = x.p.left;
                     }
                     w.color = x.p.color;
                     x.p.color = BLACK;
                     w.left.color = BLACK;
-                    rightRotate(T, x.p);
+                    rbRightRotate(T, x.p);
                     x = T.root;
                 }
             }

@@ -10,6 +10,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Modifier;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static pl.kwojtas.cormenimpl.Fundamental.geq;
 import static pl.kwojtas.cormenimpl.Fundamental.leq;
@@ -271,6 +272,27 @@ public class Chapter13Test {
         }
         assertEquals(leftBlackHeight, rightBlackHeight);
         return leftBlackHeight;
+    }
+
+    @Test
+    public void shouldFindSuccessorInRedBlackTree() {
+        RedBlackTree<Integer> tree = getExemplaryRedBlackTreeForDeleting();
+        RedBlackTree.Node<Integer> node = tree.root.left.right;
+
+        RedBlackTree.Node<Integer> actualSuccessor = Chapter13.rbTreeSuccessor(tree, node);
+
+        assertNotNull(actualSuccessor);
+        assertEquals(Integer.valueOf(5), actualSuccessor.key);
+    }
+
+    @Test
+    public void shouldNotFindNonexistingSuccessorInRedBlackTree() {
+        RedBlackTree<Integer> tree = getExemplaryRedBlackTreeForDeleting();
+        RedBlackTree.Node<Integer> node = tree.root.right; // a node with maximum value in the tree
+
+        RedBlackTree.Node<Integer> actualSuccessor = Chapter13.rbTreeSuccessor(tree, node);
+
+        assertEquals(tree.nil, actualSuccessor);
     }
 
     @Test
