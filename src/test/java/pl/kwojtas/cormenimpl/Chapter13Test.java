@@ -1,6 +1,7 @@
 package pl.kwojtas.cormenimpl;
 
 import org.junit.Test;
+import pl.kwojtas.cormenimpl.datastructure.AVLTree;
 import pl.kwojtas.cormenimpl.datastructure.Array;
 import pl.kwojtas.cormenimpl.datastructure.RedBlackTree;
 import pl.kwojtas.cormenimpl.datastructure.RedBlackTree.Node;
@@ -164,6 +165,23 @@ public class Chapter13Test {
         );
     }
 
+    private AVLTree<Integer> getExemplaryAVLTree() {
+        return new AVLTree<>(
+                new AVLTree.Node<>(9,
+                        new AVLTree.Node<>(6,
+                                new AVLTree.Node<>(2,
+                                        null,
+                                        new AVLTree.Node<>(4)),
+                                new AVLTree.Node<>(7)
+                        ),
+                        new AVLTree.Node<>(13,
+                                new AVLTree.Node<>(11),
+                                null
+                        )
+                )
+        );
+    }
+
     @Test
     public void shouldHavePrivateConstructor() throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
         Constructor<Chapter13> constructor = Chapter13.class.getDeclaredConstructor();
@@ -211,12 +229,12 @@ public class Chapter13Test {
         assertArrayEquals(expectedElements, actualElements);
     }
 
-    private <E extends Comparable<? super E>> void assertRedBlackTree(RedBlackTree<E> tree) {
-        assertBinarySearchTree(tree);
-        assertEquals(BLACK, tree.root.color);
-        assertEquals(BLACK, tree.nil.color);
-        assertRedBlackProperty4(tree);
-        assertRedBlackProperty5(tree);
+    private <E extends Comparable<? super E>> void assertRedBlackTree(RedBlackTree<E> T) {
+        assertBinarySearchTree(T);
+        assertEquals(BLACK, T.root.color);
+        assertEquals(BLACK, T.nil.color);
+        assertRedBlackProperty4(T);
+        assertRedBlackProperty5(T);
     }
 
     private <E extends Comparable<? super E>> void assertBinarySearchTree(RedBlackTree<E> T) {
@@ -372,6 +390,128 @@ public class Chapter13Test {
         Array<Integer> actualElements = tree.toArray();
         assertArrayEquals(expectedElements, actualElements);
         assertEquals(Integer.valueOf(27), actualDeletedNode.key);
+    }
+
+    @Test
+    public void shouldInsertNodeToEmptyAVLTree() {
+        AVLTree<Integer> tree = AVLTree.emptyTree();
+        AVLTree.Node<Integer> newNode = new AVLTree.Node<>(7);
+
+        Chapter13.avlInsert_(tree, newNode);
+
+        assertAVLTree(tree);
+        Array<Integer> expectedElements = Array.of(7);
+        Array<Integer> actualElements = tree.toArray();
+        assertArrayEquals(expectedElements, actualElements);
+    }
+
+    private void assertAVLTree(AVLTree<Integer> T) {
+        assertBinarySearchTree(T);
+        assertCorrectHeights(T);
+        assertHeightBalanced(T);
+    }
+
+    private <E extends Comparable<? super E>> void assertBinarySearchTree(AVLTree<E> T) {
+        if (T.root != null) {
+            assertBinarySearchTree(T, T.root);
+        }
+    }
+
+    private <E extends Comparable<? super E>> void assertBinarySearchTree(AVLTree<E> T, AVLTree.Node<E> x) {
+        if (x.left != null) {
+            Array<E> leftElements = T.toArray(x.left);
+            for (int i = 1; i <= leftElements.length; i++) {
+                assertTrue(leq(leftElements.at(i), x.key));
+            }
+            assertBinarySearchTree(T, x.left);
+        }
+        if (x.right != null) {
+            Array<E> rightElements = T.toArray(x.right);
+            for (int i = 1; i <= rightElements.length; i++) {
+                assertTrue(geq(rightElements.at(i), x.key));
+            }
+            assertBinarySearchTree(T, x.right);
+        }
+    }
+
+    private <E> void assertCorrectHeights(AVLTree<E> T) {
+        assertCorrectHeights(T.root);
+    }
+
+    private <E> int assertCorrectHeights(AVLTree.Node<E> x) {
+        if (x == null) {
+            return -1;
+        }
+        int hl = assertCorrectHeights(x.left);
+        int hr = assertCorrectHeights(x.right);
+        assertEquals(x.h, Math.max(hl, hr) + 1);
+        return x.h;
+    }
+
+    private <E> void assertHeightBalanced(AVLTree<E> T) {
+        assertHeightBalanced(T.root);
+    }
+
+    private <E> int assertHeightBalanced(AVLTree.Node<E> x) {
+        if (x == null) {
+            return -1;
+        }
+        int hl = assertHeightBalanced(x.left);
+        int hr = assertHeightBalanced(x.right);
+        assertTrue(Math.abs(hr - hl) <= 1);
+        return x.h;
+    }
+
+    @Test
+    public void shouldInsertNodeToAVLTreeLeftLeftCase() {
+        AVLTree<Integer> tree = getExemplaryAVLTree();
+        AVLTree.Node<Integer> newNode = new AVLTree.Node<>(10);
+
+        Chapter13.avlInsert_(tree, newNode);
+
+        assertAVLTree(tree);
+        Array<Integer> expectedElements = Array.of(2, 4, 6, 7, 9, 10, 11, 13);
+        Array<Integer> actualElements = tree.toArray();
+        assertArrayEquals(expectedElements, actualElements);
+    }
+
+    @Test
+    public void shouldInsertNodeToAVLTreeLeftRightCase() {
+        AVLTree<Integer> tree = getExemplaryAVLTree();
+        AVLTree.Node<Integer> newNode = new AVLTree.Node<>(12);
+
+        Chapter13.avlInsert_(tree, newNode);
+
+        assertAVLTree(tree);
+        Array<Integer> expectedElements = Array.of(2, 4, 6, 7, 9, 11, 12, 13);
+        Array<Integer> actualElements = tree.toArray();
+        assertArrayEquals(expectedElements, actualElements);
+    }
+
+    @Test
+    public void shouldInsertNodeToAVLTreeRightRightCase() {
+        AVLTree<Integer> tree = getExemplaryAVLTree();
+        AVLTree.Node<Integer> newNode = new AVLTree.Node<>(5);
+
+        Chapter13.avlInsert_(tree, newNode);
+
+        assertAVLTree(tree);
+        Array<Integer> expectedElements = Array.of(2, 4, 5, 6, 7, 9, 11, 13);
+        Array<Integer> actualElements = tree.toArray();
+        assertArrayEquals(expectedElements, actualElements);
+    }
+
+    @Test
+    public void shouldInsertNodeToAVLTreeRightLeftCase() {
+        AVLTree<Integer> tree = getExemplaryAVLTree();
+        AVLTree.Node<Integer> newNode = new AVLTree.Node<>(3);
+
+        Chapter13.avlInsert_(tree, newNode);
+
+        assertAVLTree(tree);
+        Array<Integer> expectedElements = Array.of(2, 3, 4, 6, 7, 9, 11, 13);
+        Array<Integer> actualElements = tree.toArray();
+        assertArrayEquals(expectedElements, actualElements);
     }
 
 }

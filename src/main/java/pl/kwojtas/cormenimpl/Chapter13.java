@@ -1,9 +1,11 @@
 package pl.kwojtas.cormenimpl;
 
+import pl.kwojtas.cormenimpl.datastructure.AVLTree;
 import pl.kwojtas.cormenimpl.datastructure.RedBlackTree;
 import pl.kwojtas.cormenimpl.datastructure.RedBlackTree.Node;
 
 import static pl.kwojtas.cormenimpl.Fundamental.less;
+import static pl.kwojtas.cormenimpl.Fundamental.max;
 import static pl.kwojtas.cormenimpl.datastructure.RedBlackTree.Color.BLACK;
 import static pl.kwojtas.cormenimpl.datastructure.RedBlackTree.Color.RED;
 
@@ -16,7 +18,7 @@ public final class Chapter13 {
     }
 
     /**
-     * Performs a left rotation on a red-black tree.
+     * Performs a left rotation in a red-black tree.
      * <p><span style="font-variant:small-caps;">RB-Left-Rotate</span> from subchapter 13.2
      * (we use <span style="font-variant:small-caps;">Left-Rotate</span> as a name of the left rotation operation
      * on a binary search tree.)</p>
@@ -28,7 +30,7 @@ public final class Chapter13 {
     static <E> void rbLeftRotate(RedBlackTree<E> T, Node<E> x) {
         Node<E> y = x.right;
         x.right = y.left;
-        if (y.left.p != T.nil) {
+        if (y.left != T.nil) {
             y.left.p = x;
         }
         y.p = x.p;
@@ -44,7 +46,7 @@ public final class Chapter13 {
     }
 
     /**
-     * Performs a right rotation on a red-black tree.
+     * Performs a right rotation in a red-black tree.
      * <p><span style="font-variant:small-caps;">RB-Right-Rotate</span> from solution to exercise 13.2-1.</p>
      *
      * @param T   the red-black tree
@@ -54,7 +56,7 @@ public final class Chapter13 {
     static <E> void rbRightRotate(RedBlackTree<E> T, Node<E> x) {
         Node<E> y = x.left;
         x.left = y.right;
-        if (y.right.p != T.nil) {
+        if (y.right != T.nil) {
             y.right.p = x;
         }
         y.p = x.p;
@@ -293,6 +295,164 @@ public final class Chapter13 {
             y = y.p;
         }
         return y;
+    }
+
+    /**
+     * Returns the node's balance factor in an AVL tree.
+     * <p><span style="font-variant:small-caps;">Balance-Factor</span> from solution to problem 13-3(b).</p>
+     *
+     * @param x   the node of the tree
+     * @param <E> the type of keys in the tree
+     * @return the balance factor of {@code x}, defined as {@code x.left.h - x.right.h},
+     * where balance factor of {@code null} is -1
+     */
+    static <E> int balanceFactor(AVLTree.Node<E> x) {
+        int hl = -1;
+        int hr = -1;
+        if (x.left != null) {
+            hl = x.left.h;
+        }
+        if (x.right != null) {
+            hr = x.right.h;
+        }
+        return -hl + hr;
+    }
+
+    /**
+     * Returns the node's actual height in an AVL tree.
+     * <p><span style="font-variant:small-caps;">Height</span> from solution to problem 13-3(b).</p>
+     *
+     * @param x   the node of the tree
+     * @param <E> the type of keys in the tree
+     * @return the actual height of {@code x}, based on heights of its children
+     */
+    static <E> int height(AVLTree.Node<E> x) {
+        int hl = -1;
+        int hr = -1;
+        if (x.left != null) {
+            hl = x.left.h;
+        }
+        if (x.right != null) {
+            hr = x.right.h;
+        }
+        return max(hl, hr) + 1;
+    }
+
+    /**
+     * Performs a left rotation in an AVL tree.
+     * <p><span style="font-variant:small-caps;">AVL-Left-Rotate</span> from solution to problem 13-3(b).</p>
+     *
+     * @param x   the root of the subtree in the tree to rotate
+     * @param <E> the type of keys in the tree
+     */
+    static <E> void avlLeftRotate(AVLTree.Node<E> x) {
+        AVLTree.Node<E> y = x.right;
+        x.right = y.left;
+        if (y.left != null) {
+            y.left.p = x;
+        }
+        y.p = x.p;
+        if (x.p != null) {
+            if (x == x.p.left) {
+                x.p.left = y;
+            } else {
+                x.p.right = y;
+            }
+        }
+        y.left = x;
+        x.p = y;
+        x.h = height(x);
+        y.h = height(y);
+    }
+
+    /**
+     * Performs a right rotation in an AVL tree.
+     * <p><span style="font-variant:small-caps;">AVL-Right-Rotate</span> from solution to problem 13-3(b).</p>
+     *
+     * @param x   the root of the subtree in the tree to rotate
+     * @param <E> the type of keys in the tree
+     */
+    static <E> void avlRightRotate(AVLTree.Node<E> x) {
+        AVLTree.Node<E> y = x.left;
+        x.left = y.right;
+        if (y.right != null) {
+            y.right.p = x;
+        }
+        y.p = x.p;
+        if (x.p != null) {
+            if (x == x.p.left) {
+                x.p.left = y;
+            } else {
+                x.p.right = y;
+            }
+        }
+        y.right = x;
+        x.p = y;
+        x.h = height(x);
+        y.h = height(y);
+    }
+
+    /**
+     * Restores the height balance for an unbalanced node in an AVL tree.
+     * Assumes that the balance factor of the unbalanced node is either -2 or 2, and the balance factor of all of its
+     * descendants is either -1, 0 or 1.
+     * <p><span style="font-variant:small-caps;">Balance</span> from solution to problem 13-3(b).</p>
+     *
+     * @param x   the unbalanced node in the tree
+     * @param <E> the type of keys in the tree
+     * @return the ancestor of {@code x} of the same depth in the tree as initially {@code x}
+     */
+    static <E> AVLTree.Node<E> balance(AVLTree.Node<E> x) {
+        if (balanceFactor(x) == -2) {
+            if (balanceFactor(x.left) == 1) {
+                avlLeftRotate(x.left);
+            }
+            avlRightRotate(x);
+            return x.p;
+        } else if (balanceFactor(x) == 2) {
+            if (balanceFactor(x.right) == -1) {
+                avlRightRotate(x.right);
+            }
+            avlLeftRotate(x);
+            return x.p;
+        }
+        return x;
+    }
+
+    /**
+     * Inserts a node into an AVL tree.
+     * <p><span style="font-variant:small-caps;">AVL-Insert</span> from solution to problem 13-3(c).</p>
+     *
+     * @param x   the root of the subtree to insert to
+     * @param z   the node to insert
+     * @param <E> the type of keys in the tree
+     * @return {@code x} or {@code z} if {@code x = null}
+     */
+    static <E extends Comparable<? super E>> AVLTree.Node<E> avlInsert(AVLTree.Node<E> x, AVLTree.Node<E> z) {
+        if (x == null) {
+            return z;
+        }
+        if (less(z.key, x.key)) {
+            x.left = avlInsert(x.left, z);
+            x.left.p = x;
+        } else {
+            x.right = avlInsert(x.right, z);
+            x.right.p = x;
+        }
+        x.h = height(x);
+        return balance(x);
+    }
+
+    /**
+     * Inserts a node into an AVL tree using <span style="font-variant:small-caps;">AVL-Insert</span>.
+     * <p><span style="font-variant:small-caps;">AVL-Insert'</span> from solution to problem 13-3(c).</p>
+     *
+     * @param T   the AVL tree
+     * @param z   the node to insert
+     * @param <E> the type of keys in {@code T}
+     */
+    public static <E extends Comparable<? super E>> void avlInsert_(AVLTree<E> T, AVLTree.Node<E> z) {
+        T.root = avlInsert(T.root, z);
     }
 
 }

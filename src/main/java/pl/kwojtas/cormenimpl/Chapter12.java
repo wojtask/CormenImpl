@@ -294,7 +294,8 @@ public final class Chapter12 {
     }
 
     /**
-     * Inserts a node into a binary search tree using a recursive version of Tree-Insert.
+     * Inserts a node into a binary search tree using a recursive version of
+     * <span style="font-variant:small-caps;">Tree-Insert</span>.
      * <p><span style="font-variant:small-caps;">Tree-Insert'</span> from solution to exercise 12.3-1.</p>
      *
      * @param T   the binary search tree
