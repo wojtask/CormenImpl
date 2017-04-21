@@ -18,16 +18,14 @@ public final class Chapter13 {
     }
 
     /**
-     * Performs a left rotation in a red-black tree.
-     * <p><span style="font-variant:small-caps;">RB-Left-Rotate</span> from subchapter 13.2
-     * (we use <span style="font-variant:small-caps;">Left-Rotate</span> as a name of the left rotation operation
-     * on a binary search tree.)</p>
+     * Performs a left rotation in a binary search tree with nil sentinel.
+     * <p><span style="font-variant:small-caps;">Left-Rotate</span> from subchapter 13.2.</p>
      *
-     * @param T   the red-black tree
+     * @param T   the binary search tree
      * @param x   the root of the subtree in {@code T} to rotate
      * @param <E> the type of keys in {@code T}
      */
-    static <E> void rbLeftRotate(RedBlackTree<E> T, Node<E> x) {
+    static <E> void leftRotate(RedBlackTree<E> T, Node<E> x) {
         Node<E> y = x.right;
         x.right = y.left;
         if (y.left != T.nil) {
@@ -36,24 +34,26 @@ public final class Chapter13 {
         y.p = x.p;
         if (x.p == T.nil) {
             T.root = y;
-        } else if (x == x.p.left) {
-            x.p.left = y;
         } else {
-            x.p.right = y;
+            if (x == x.p.left) {
+                x.p.left = y;
+            } else {
+                x.p.right = y;
+            }
         }
         y.left = x;
         x.p = y;
     }
 
     /**
-     * Performs a right rotation in a red-black tree.
-     * <p><span style="font-variant:small-caps;">RB-Right-Rotate</span> from solution to exercise 13.2-1.</p>
+     * Performs a right rotation in a a binary search tree with nil sentinel.
+     * <p><span style="font-variant:small-caps;">Right-Rotate</span> from solution to exercise 13.2-1.</p>
      *
-     * @param T   the red-black tree
+     * @param T   the binary search tree
      * @param x   the root of the subtree in {@code T} to rotate
      * @param <E> the type of keys in {@code T}
      */
-    static <E> void rbRightRotate(RedBlackTree<E> T, Node<E> x) {
+    static <E> void rightRotate(RedBlackTree<E> T, Node<E> x) {
         Node<E> y = x.left;
         x.left = y.right;
         if (y.right != T.nil) {
@@ -62,10 +62,12 @@ public final class Chapter13 {
         y.p = x.p;
         if (x.p == T.nil) {
             T.root = y;
-        } else if (x == x.p.left) {
-            x.p.left = y;
         } else {
-            x.p.right = y;
+            if (x == x.p.right) {
+                x.p.right = y;
+            } else {
+                x.p.left = y;
+            }
         }
         y.right = x;
         x.p = y;
@@ -111,7 +113,7 @@ public final class Chapter13 {
      * <span style="font-variant:small-caps;">RB-Insert</span>.
      * <p><span style="font-variant:small-caps;">RB-Insert-Fixup</span> from subchapter 13.3.</p>
      *
-     * @param T   the red-black tree
+     * @param T   the binary search tree with red-black properties violated
      * @param z   the inserted node
      * @param <E> the type of keys in {@code T}
      */
@@ -127,11 +129,11 @@ public final class Chapter13 {
                 } else {
                     if (z == z.p.right) {
                         z = z.p;
-                        rbLeftRotate(T, z);
+                        leftRotate(T, z);
                     }
                     z.p.color = BLACK;
                     z.p.p.color = RED;
-                    rbRightRotate(T, z.p.p);
+                    rightRotate(T, z.p.p);
                 }
             } else {
                 Node<E> y = z.p.p.left;
@@ -143,11 +145,11 @@ public final class Chapter13 {
                 } else {
                     if (z == z.p.left) {
                         z = z.p;
-                        rbRightRotate(T, z);
+                        rightRotate(T, z);
                     }
                     z.p.color = BLACK;
                     z.p.p.color = RED;
-                    rbLeftRotate(T, z.p.p);
+                    leftRotate(T, z.p.p);
                 }
             }
         }
@@ -200,8 +202,8 @@ public final class Chapter13 {
      * <span style="font-variant:small-caps;">RB-Delete</span>.
      * <p><span style="font-variant:small-caps;">RB-Delete-Fixup</span> from subchapter 13.4.</p>
      *
-     * @param T   the red-black tree
-     * @param x   the node that may violate the red-black properties
+     * @param T   the binary search tree with red-black properties violated
+     * @param x   the child of the deleted node that may violate the red-black properties
      * @param <E> the type of keys in {@code T}
      */
     static <E> void rbDeleteFixup(RedBlackTree<E> T, Node<E> x) {
@@ -212,7 +214,7 @@ public final class Chapter13 {
                 if (w.color == RED) {
                     w.color = BLACK;
                     x.p.color = RED;
-                    rbLeftRotate(T, x.p);
+                    leftRotate(T, x.p);
                     w = x.p.right;
                 }
                 if (w.left.color == BLACK && w.right.color == BLACK) {
@@ -222,13 +224,13 @@ public final class Chapter13 {
                     if (w.right.color == BLACK) {
                         w.left.color = BLACK;
                         w.color = RED;
-                        rbRightRotate(T, w);
+                        rightRotate(T, w);
                         w = x.p.right;
                     }
                     w.color = x.p.color;
                     x.p.color = BLACK;
                     w.right.color = BLACK;
-                    rbLeftRotate(T, x.p);
+                    leftRotate(T, x.p);
                     x = T.root;
                 }
             } else {
@@ -236,7 +238,7 @@ public final class Chapter13 {
                 if (w.color == RED) {
                     w.color = BLACK;
                     x.p.color = RED;
-                    rbRightRotate(T, x.p);
+                    rightRotate(T, x.p);
                     w = x.p.left;
                 }
                 if (w.left.color == BLACK && w.right.color == BLACK) {
@@ -246,13 +248,13 @@ public final class Chapter13 {
                     if (w.left.color == BLACK) {
                         w.right.color = BLACK;
                         w.color = RED;
-                        rbLeftRotate(T, w);
+                        leftRotate(T, w);
                         w = x.p.left;
                     }
                     w.color = x.p.color;
                     x.p.color = BLACK;
                     w.left.color = BLACK;
-                    rbRightRotate(T, x.p);
+                    rightRotate(T, x.p);
                     x = T.root;
                 }
             }
@@ -298,7 +300,7 @@ public final class Chapter13 {
     }
 
     /**
-     * Returns the node's balance factor in an AVL tree.
+     * Returns the node's balance factor in a binary search tree with fields storing heights.
      * <p><span style="font-variant:small-caps;">Balance-Factor</span> from solution to problem 13-3(b).</p>
      *
      * @param x   the node of the tree
@@ -319,7 +321,7 @@ public final class Chapter13 {
     }
 
     /**
-     * Returns the node's actual height in an AVL tree.
+     * Returns the node's actual height in an binary search tree with fields storing heights.
      * <p><span style="font-variant:small-caps;">Height</span> from solution to problem 13-3(b).</p>
      *
      * @param x   the node of the tree
@@ -339,7 +341,7 @@ public final class Chapter13 {
     }
 
     /**
-     * Performs a left rotation in an AVL tree.
+     * Performs a left rotation in a binary search tree with fields storing heights.
      * <p><span style="font-variant:small-caps;">AVL-Left-Rotate</span> from solution to problem 13-3(b).</p>
      *
      * @param x   the root of the subtree in the tree to rotate
@@ -366,7 +368,7 @@ public final class Chapter13 {
     }
 
     /**
-     * Performs a right rotation in an AVL tree.
+     * Performs a right rotation in a binary search tree with fields storing heights.
      * <p><span style="font-variant:small-caps;">AVL-Right-Rotate</span> from solution to problem 13-3(b).</p>
      *
      * @param x   the root of the subtree in the tree to rotate
@@ -380,10 +382,10 @@ public final class Chapter13 {
         }
         y.p = x.p;
         if (x.p != null) {
-            if (x == x.p.left) {
-                x.p.left = y;
-            } else {
+            if (x == x.p.right) {
                 x.p.right = y;
+            } else {
+                x.p.left = y;
             }
         }
         y.right = x;
@@ -393,7 +395,7 @@ public final class Chapter13 {
     }
 
     /**
-     * Restores the height balance for an unbalanced node in an AVL tree.
+     * Restores the height balance for an unbalanced node in a binary search tree with fields storing heights.
      * Assumes that the balance factor of the unbalanced node is either -2 or 2, and the balance factor of all of its
      * descendants is either -1, 0 or 1.
      * <p><span style="font-variant:small-caps;">Balance</span> from solution to problem 13-3(b).</p>
