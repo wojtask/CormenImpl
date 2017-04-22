@@ -3,6 +3,7 @@ package pl.kwojtas.cormenimpl;
 import org.junit.Test;
 import pl.kwojtas.cormenimpl.datastructure.AVLTree;
 import pl.kwojtas.cormenimpl.datastructure.Array;
+import pl.kwojtas.cormenimpl.datastructure.ParentlessRedBlackTree;
 import pl.kwojtas.cormenimpl.datastructure.RedBlackTree;
 import pl.kwojtas.cormenimpl.datastructure.RedBlackTree.Node;
 
@@ -182,6 +183,42 @@ public class Chapter13Test {
         );
     }
 
+    private ParentlessRedBlackTree<Integer> getExemplaryParentlessRedBlackTreeForAllLeftCasesInInsertFixup() {
+        return new ParentlessRedBlackTree<>(
+                new ParentlessRedBlackTree.Node<>(11, BLACK,
+                        new ParentlessRedBlackTree.Node<>(2, RED,
+                                new ParentlessRedBlackTree.Node<>(1, BLACK),
+                                new ParentlessRedBlackTree.Node<>(7, BLACK,
+                                        new ParentlessRedBlackTree.Node<>(5, RED),
+                                        new ParentlessRedBlackTree.Node<>(9, RED)
+                                )
+                        ),
+                        new ParentlessRedBlackTree.Node<>(14, BLACK,
+                                null,
+                                new ParentlessRedBlackTree.Node<>(15, RED)
+                        )
+                )
+        );
+    }
+
+    private ParentlessRedBlackTree<Integer> getExemplaryParentlessRedBlackTreeForAllRightCasesInInsertFixup() {
+        return new ParentlessRedBlackTree<>(
+                new ParentlessRedBlackTree.Node<>(7, BLACK,
+                        new ParentlessRedBlackTree.Node<>(3, BLACK,
+                                new ParentlessRedBlackTree.Node<>(1, RED),
+                                null
+                        ),
+                        new ParentlessRedBlackTree.Node<>(16, RED,
+                                new ParentlessRedBlackTree.Node<>(13, BLACK,
+                                        new ParentlessRedBlackTree.Node<>(9, RED),
+                                        new ParentlessRedBlackTree.Node<>(14, RED)
+                                ),
+                                new ParentlessRedBlackTree.Node<>(18, BLACK)
+                        )
+                )
+        );
+    }
+
     @Test
     public void shouldHavePrivateConstructor() throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
         Constructor<Chapter13> constructor = Chapter13.class.getDeclaredConstructor();
@@ -236,24 +273,6 @@ public class Chapter13Test {
         assertRedBlackProperty4(T);
         assertRedBlackProperty5(T);
         assertParentPointersConsistent(T);
-    }
-
-    private <E extends Comparable<? super E>> void assertParentPointersConsistent(RedBlackTree<E> T) {
-        if (T.root != T.nil) {
-            assertEquals(T.nil, T.root.p);
-            assertParentPointersConsistent(T, T.root);
-        }
-    }
-
-    private <E extends Comparable<? super E>> void assertParentPointersConsistent(RedBlackTree<E> T, Node<E> x) {
-        if (x.left != T.nil) {
-            assertEquals(x, x.left.p);
-            assertParentPointersConsistent(T, x.left);
-        }
-        if (x.right != T.nil) {
-            assertEquals(x, x.right.p);
-            assertParentPointersConsistent(T, x.right);
-        }
     }
 
     private <E extends Comparable<? super E>> void assertBinarySearchTree(RedBlackTree<E> T) {
@@ -317,6 +336,24 @@ public class Chapter13Test {
         return leftBlackHeight;
     }
 
+    private <E extends Comparable<? super E>> void assertParentPointersConsistent(RedBlackTree<E> T) {
+        if (T.root != T.nil) {
+            assertEquals(T.nil, T.root.p);
+            assertParentPointersConsistent(T, T.root);
+        }
+    }
+
+    private <E extends Comparable<? super E>> void assertParentPointersConsistent(RedBlackTree<E> T, Node<E> x) {
+        if (x.left != T.nil) {
+            assertEquals(x, x.left.p);
+            assertParentPointersConsistent(T, x.left);
+        }
+        if (x.right != T.nil) {
+            assertEquals(x, x.right.p);
+            assertParentPointersConsistent(T, x.right);
+        }
+    }
+
     @Test
     public void shouldFindSuccessorInRedBlackTree() {
         RedBlackTree<Integer> tree = getExemplaryRedBlackTreeForDeleting();
@@ -336,6 +373,115 @@ public class Chapter13Test {
         RedBlackTree.Node<Integer> actualSuccessor = Chapter13.rbTreeSuccessor(tree, node);
 
         assertEquals(tree.nil, actualSuccessor);
+    }
+
+    @Test
+    public void shouldInsertNodeToEmptyParentlessRedBlackTree() {
+        ParentlessRedBlackTree<Integer> tree = ParentlessRedBlackTree.emptyTree();
+        ParentlessRedBlackTree.Node<Integer> newNode = new ParentlessRedBlackTree.Node<>(15, BLACK);
+
+        Chapter13.rbParentlessInsert(tree, newNode);
+
+        assertParentlessRedBlackTree(tree);
+        Array<Integer> expectedElements = Array.of(15);
+        Array<Integer> actualElements = tree.toArray();
+        assertArrayEquals(expectedElements, actualElements);
+    }
+
+    @Test
+    public void shouldInsertNodeToParentlessRedBlackTreeAllLeftCasesInInsertFixup() {
+        ParentlessRedBlackTree<Integer> tree = getExemplaryParentlessRedBlackTreeForAllLeftCasesInInsertFixup();
+        ParentlessRedBlackTree.Node<Integer> newNode = new ParentlessRedBlackTree.Node<>(4, BLACK);
+
+        Chapter13.rbParentlessInsert(tree, newNode);
+
+        assertParentlessRedBlackTree(tree);
+        Array<Integer> expectedElements = Array.of(1, 2, 4, 5, 7, 9, 11, 14, 15);
+        Array<Integer> actualElements = tree.toArray();
+        assertArrayEquals(expectedElements, actualElements);
+    }
+
+    @Test
+    public void shouldInsertNodeToParentlessRedBlackTreeAllRightCasesInInsertFixup() {
+        ParentlessRedBlackTree<Integer> tree = getExemplaryParentlessRedBlackTreeForAllRightCasesInInsertFixup();
+        ParentlessRedBlackTree.Node<Integer> newNode = new ParentlessRedBlackTree.Node<>(15, BLACK);
+
+        Chapter13.rbParentlessInsert(tree, newNode);
+
+        assertParentlessRedBlackTree(tree);
+        Array<Integer> expectedElements = Array.of(1, 3, 7, 9, 13, 14, 15, 16, 18);
+        Array<Integer> actualElements = tree.toArray();
+        assertArrayEquals(expectedElements, actualElements);
+    }
+
+    private <E extends Comparable<? super E>> void assertParentlessRedBlackTree(ParentlessRedBlackTree<E> T) {
+        assertBinarySearchTree(T);
+        assertEquals(BLACK, T.root.color);
+        assertEquals(BLACK, T.nil.color);
+        assertRedBlackProperty4(T);
+        assertRedBlackProperty5(T);
+    }
+
+    private <E extends Comparable<? super E>> void assertBinarySearchTree(ParentlessRedBlackTree<E> T) {
+        if (T.root != T.nil) {
+            assertParentlessBinarySearchTree(T, T.root);
+        }
+    }
+
+    private <E extends Comparable<? super E>> void assertParentlessBinarySearchTree(
+            ParentlessRedBlackTree<E> T, ParentlessRedBlackTree.Node<E> x) {
+        if (x.left != T.nil) {
+            Array<E> leftElements = T.toArray(x.left);
+            for (int i = 1; i <= leftElements.length; i++) {
+                assertTrue(leq(leftElements.at(i), x.key));
+            }
+            assertParentlessBinarySearchTree(T, x.left);
+        }
+        if (x.right != T.nil) {
+            Array<E> rightElements = T.toArray(x.right);
+            for (int i = 1; i <= rightElements.length; i++) {
+                assertTrue(geq(rightElements.at(i), x.key));
+            }
+            assertParentlessBinarySearchTree(T, x.right);
+        }
+    }
+
+    private <E> void assertRedBlackProperty4(ParentlessRedBlackTree<E> T) {
+        if (T.root != T.nil) {
+            assertRedBlackProperty4(T.root);
+        }
+    }
+
+    private <E> void assertRedBlackProperty4(ParentlessRedBlackTree.Node<E> x) {
+        if (x.color == RED) {
+            assertEquals(BLACK, x.left.color);
+            assertEquals(BLACK, x.right.color);
+        }
+        if (x.left != x) {
+            assertRedBlackProperty4(x.left);
+        }
+        if (x.right != x) {
+            assertRedBlackProperty4(x.right);
+        }
+    }
+
+    private <E> void assertRedBlackProperty5(ParentlessRedBlackTree<E> T) {
+        if (T.root != T.nil) {
+            assertRedBlackProperty5(T.root);
+        }
+    }
+
+    private <E> int assertRedBlackProperty5(ParentlessRedBlackTree.Node<E> x) {
+        int leftBlackHeight = 0;
+        if (x.left != x) {
+            leftBlackHeight = assertRedBlackProperty5(x.left) + (x.left.color == BLACK ? 1 : 0);
+        }
+        int rightBlackHeight = 0;
+        if (x.right != x) {
+            rightBlackHeight = assertRedBlackProperty5(x.right) + (x.right.color == BLACK ? 1 : 0);
+        }
+        assertEquals(leftBlackHeight, rightBlackHeight);
+        return leftBlackHeight;
     }
 
     @Test

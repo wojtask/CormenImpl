@@ -1,8 +1,10 @@
 package pl.kwojtas.cormenimpl;
 
 import pl.kwojtas.cormenimpl.datastructure.AVLTree;
+import pl.kwojtas.cormenimpl.datastructure.ParentlessRedBlackTree;
 import pl.kwojtas.cormenimpl.datastructure.RedBlackTree;
 import pl.kwojtas.cormenimpl.datastructure.RedBlackTree.Node;
+import pl.kwojtas.cormenimpl.datastructure.Stack;
 
 import static pl.kwojtas.cormenimpl.Fundamental.less;
 import static pl.kwojtas.cormenimpl.Fundamental.max;
@@ -154,6 +156,164 @@ public final class Chapter13 {
             }
         }
         T.root.color = BLACK;
+    }
+
+    /**
+     * Inserts a node into a red-black tree with no parent pointers in nodes.
+     * <p>Solution to exercise 13.3-6.</p>
+     *
+     * @param T   the red-black tree
+     * @param z   the node to insert
+     * @param <E> the type of keys in {@code T}
+     */
+    public static <E extends Comparable<? super E>> void rbParentlessInsert(
+            ParentlessRedBlackTree<E> T, ParentlessRedBlackTree.Node<E> z) {
+        ParentlessRedBlackTree.Node<E> y = T.nil;
+        ParentlessRedBlackTree.Node<E> x = T.root;
+        int pathLength = getPathLengthFromRootToNewNode(T, z);
+        Stack<ParentlessRedBlackTree.Node<E>> S = Stack.ofLength(pathLength + 1);
+        Chapter10.push(S, T.nil);
+        while (x != T.nil) {
+            y = x;
+            Chapter10.push(S, y);
+            if (less(z.key, x.key)) {
+                x = x.left;
+            } else {
+                x = x.right;
+            }
+        }
+        if (y == T.nil) {
+            T.root = z;
+        } else {
+            if (less(z.key, y.key)) {
+                y.left = z;
+            } else {
+                y.right = z;
+            }
+        }
+        z.left = T.nil;
+        z.right = T.nil;
+        z.color = RED;
+        rbParentlessInsertFixup(T, S, z);
+    }
+
+    private static <E extends Comparable<? super E>> int getPathLengthFromRootToNewNode(
+            ParentlessRedBlackTree<E> T, ParentlessRedBlackTree.Node<E> z) {
+        int pathLength = 0;
+        ParentlessRedBlackTree.Node<E> x = T.root;
+        while (x != T.nil) {
+            pathLength++;
+            if (less(z.key, x.key)) {
+                x = x.left;
+            } else {
+                x = x.right;
+            }
+        }
+        return pathLength;
+    }
+
+    /**
+     * Restores the red-black properties after inserting a node into a red-black tree with no parent pointers in nodes.
+     * <p><span style="font-variant:small-caps;">RB-Parentless-Insert-Fixup</span> from solution to exercise 13.3-6.</p>
+     *
+     * @param T   the binary search tree with red-black properties violated
+     * @param z   the inserted node
+     * @param <E> the type of keys in {@code T}
+     */
+    private static <E extends Comparable<? super E>> void rbParentlessInsertFixup(
+            ParentlessRedBlackTree<E> T, Stack<ParentlessRedBlackTree.Node<E>> S, ParentlessRedBlackTree.Node<E> z) {
+        ParentlessRedBlackTree.Node<E> p = Chapter10.pop(S);
+        while (p.color == RED) {
+            ParentlessRedBlackTree.Node<E> r = Chapter10.pop(S);
+            if (p == r.left) {
+                ParentlessRedBlackTree.Node<E> y = r.right;
+                if (y.color == RED) {
+                    y.color = p.color = BLACK;
+                    r.color = RED;
+                    z = r;
+                    p = Chapter10.pop(S);
+                } else {
+                    if (z == p.right) {
+                        ParentlessRedBlackTree.Node<E> tmp = z;
+                        z = p;
+                        p = tmp;
+                        rbParentlessLeftRotate(T, z, r);
+                    }
+                    p.color = BLACK;
+                    r.color = RED;
+                    rbParentlessRightRotate(T, r, Chapter10.pop(S));
+                }
+            } else {
+                ParentlessRedBlackTree.Node<E> y = r.left;
+                if (y.color == RED) {
+                    y.color = p.color = BLACK;
+                    r.color = RED;
+                    z = r;
+                    p = Chapter10.pop(S);
+                } else {
+                    if (z == p.left) {
+                        ParentlessRedBlackTree.Node<E> tmp = z;
+                        z = p;
+                        p = tmp;
+                        rbParentlessRightRotate(T, z, r);
+                    }
+                    p.color = BLACK;
+                    r.color = RED;
+                    rbParentlessLeftRotate(T, r, Chapter10.pop(S));
+                }
+            }
+        }
+        T.root.color = BLACK;
+    }
+
+    /**
+     * Performs a left rotation in a binary search tree with nil sentinel and with no parent pointers in nodes.
+     * <p><span style="font-variant:small-caps;">RB-Parentless-Left-Rotate</span> from solution to exercise 13.3-6.</p>
+     *
+     * @param T   the binary search tree
+     * @param x   the root of the subtree in {@code T} to rotate
+     * @param p   the parent of {@code x} in {@code T}
+     * @param <E> the type of keys in {@code T}
+     */
+    private static <E extends Comparable<? super E>> void rbParentlessLeftRotate(
+            ParentlessRedBlackTree<E> T, ParentlessRedBlackTree.Node<E> x, ParentlessRedBlackTree.Node<E> p) {
+        ParentlessRedBlackTree.Node<E> y = x.right;
+        x.right = y.left;
+        if (p == T.nil) {
+            T.root = y;
+        } else {
+            if (x == p.left) {
+                p.left = y;
+            } else {
+                p.right = y;
+            }
+        }
+        y.left = x;
+    }
+
+    /**
+     * Performs a right rotation in a binary search tree with nil sentinel and with no parent pointers in nodes.
+     * <p><span style="font-variant:small-caps;">RB-Parentless-Right-Rotate</span> from solution to exercise 13.3-6.</p>
+     *
+     * @param T   the binary search tree
+     * @param x   the root of the subtree in {@code T} to rotate
+     * @param p   the parent of {@code x} in {@code T}
+     * @param <E> the type of keys in {@code T}
+     */
+    private static <E extends Comparable<? super E>> void rbParentlessRightRotate(
+            ParentlessRedBlackTree<E> T, ParentlessRedBlackTree.Node<E> x, ParentlessRedBlackTree.Node<E> p) {
+        ParentlessRedBlackTree.Node<E> y = x.left;
+        x.left = y.right;
+        if (p == T.nil) {
+            T.root = y;
+        } else {
+            if (x == p.right) {
+                p.right = y;
+            } else {
+                p.left = y;
+            }
+        }
+        y.right = x;
     }
 
     /**
