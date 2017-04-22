@@ -485,10 +485,10 @@ public class Chapter13Test {
     }
 
     @Test
-    public void shouldDeleteLeafFromRedBlackTree() {
+    public void shouldDeleteNodeWithTwoNilSonsFromRedBlackTree() {
         RedBlackTree<Integer> tree = getExemplaryRedBlackTreeForDeleting();
 
-        Node<Integer> actualDeletedNode = Chapter13.rbDelete(tree, tree.root.left.right.left); // a leaf
+        Node<Integer> actualDeletedNode = Chapter13.rbDelete(tree, tree.root.left.right.left); // a node with two nil sons
 
         assertRedBlackTree(tree);
         Array<Integer> expectedElements = Array.of(1, 2, 4, 5, 6, 7);
@@ -498,10 +498,10 @@ public class Chapter13Test {
     }
 
     @Test
-    public void shouldDeleteNodeWithOneChildFromRedBlackTree() {
+    public void shouldDeleteNodeWithOneNilSonFromRedBlackTree() {
         RedBlackTree<Integer> tree = getExemplaryRedBlackTreeForDeleting();
 
-        Node<Integer> actualDeletedNode = Chapter13.rbDelete(tree, tree.root.right); // a node with one child
+        Node<Integer> actualDeletedNode = Chapter13.rbDelete(tree, tree.root.right); // a node with one nil son
 
         assertRedBlackTree(tree);
         Array<Integer> expectedElements = Array.of(1, 2, 3, 4, 5, 6);
@@ -511,10 +511,10 @@ public class Chapter13Test {
     }
 
     @Test
-    public void shouldDeleteNodeWithTwoChildrenFromRedBlackTree() {
+    public void shouldDeleteNodeWithTwoNonnilSonsFromRedBlackTree() {
         RedBlackTree<Integer> tree = getExemplaryRedBlackTreeForDeleting();
 
-        Node<Integer> actualDeletedNode = Chapter13.rbDelete(tree, tree.root.left); // a node with two children
+        Node<Integer> actualDeletedNode = Chapter13.rbDelete(tree, tree.root.left); // a node with two non-nil sons
 
         assertRedBlackTree(tree);
         Array<Integer> expectedElements = Array.of(1, 3, 4, 5, 6, 7);

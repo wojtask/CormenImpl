@@ -3,7 +3,6 @@ package pl.kwojtas.cormenimpl.datastructure;
 import org.junit.Test;
 import pl.kwojtas.cormenimpl.datastructure.RedBlackTree.Node;
 
-import static org.junit.Assert.assertEquals;
 import static pl.kwojtas.cormenimpl.TestUtil.assertArrayEquals;
 import static pl.kwojtas.cormenimpl.datastructure.RedBlackTree.Color.BLACK;
 import static pl.kwojtas.cormenimpl.datastructure.RedBlackTree.Color.RED;
@@ -20,15 +19,6 @@ public class RedBlackTreeTest {
                         null
                 )
         );
-    }
-
-    @Test
-    public void shouldReturnTreeSize() {
-        RedBlackTree<String> tree = getExemplaryRedBlackTree();
-
-        int actualSize = tree.getSize();
-
-        assertEquals(4, actualSize);
     }
 
     @Test

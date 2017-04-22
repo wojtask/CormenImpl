@@ -128,22 +128,6 @@ public class RedBlackTree<E> {
     }
 
     /**
-     * Returns the number of elements in the tree.
-     *
-     * @return the number of elements in the tree
-     */
-    public int getSize() {
-        return getSize(root);
-    }
-
-    private int getSize(Node<E> x) {
-        if (x == nil) {
-            return 0;
-        }
-        return 1 + getSize(x.left) + getSize(x.right);
-    }
-
-    /**
      * Transforms the tree to an array.
      *
      * @return the sorted array containing all the elements in the tree
