@@ -7,6 +7,7 @@ import pl.kwojtas.cormenimpl.datastructure.ParentlessRedBlackTree;
 import pl.kwojtas.cormenimpl.datastructure.PersistentBinarySearchTree;
 import pl.kwojtas.cormenimpl.datastructure.RedBlackTree;
 import pl.kwojtas.cormenimpl.datastructure.RedBlackTree.Node;
+import pl.kwojtas.cormenimpl.datastructure.Treap;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -230,6 +231,24 @@ public class Chapter13Test {
                         new PersistentBinarySearchTree.Node<>(8,
                                 new PersistentBinarySearchTree.Node<>(7),
                                 new PersistentBinarySearchTree.Node<>(10)
+                        )
+                )
+        );
+    }
+
+    private Treap<String> getExemplaryTreap() {
+        return new Treap<>(
+                new Treap.Node<>("G", 4,
+                        new Treap.Node<>("B", 7,
+                                new Treap.Node<>("A", 10),
+                                new Treap.Node<>("E", 23)
+                        ),
+                        new Treap.Node<>("H", 5,
+                                null,
+                                new Treap.Node<>("K", 65,
+                                        new Treap.Node<>("I", 73),
+                                        null
+                                )
                         )
                 )
         );
@@ -756,6 +775,61 @@ public class Chapter13Test {
         Array<Integer> expectedElements = Array.of(2, 3, 4, 6, 7, 9, 11, 13);
         Array<Integer> actualElements = tree.toArray();
         assertArrayEquals(expectedElements, actualElements);
+    }
+
+    @Test
+    public void shouldInsertNodeIntoEmptyTreap() {
+        Treap<String> treap = Treap.emptyTreap();
+        Treap.Node<String> newNode = new Treap.Node<>("X", 10);
+
+        Chapter13.treapInsert(treap, newNode);
+
+        assertTreap(treap);
+        Array<String> expectedElements = Array.of("X");
+        Array<String> actualElements = treap.toArray();
+        assertArrayEquals(expectedElements, actualElements);
+    }
+
+    @Test
+    public void shouldInsertIntoEmptyTreap() {
+        Treap<String> treap = getExemplaryTreap();
+        Treap.Node<String> newNode1 = new Treap.Node<>("C", 25);
+        Treap.Node<String> newNode2 = new Treap.Node<>("D", 9);
+        Treap.Node<String> newNode3 = new Treap.Node<>("F", 2);
+
+        Chapter13.treapInsert(treap, newNode1);
+        Chapter13.treapInsert(treap, newNode2);
+        Chapter13.treapInsert(treap, newNode3);
+
+        assertTreap(treap);
+        Array<String> expectedElements = Array.of("A", "B", "C", "D", "E", "F", "G", "H", "I", "K");
+        Array<String> actualElements = treap.toArray();
+        assertArrayEquals(expectedElements, actualElements);
+    }
+
+    private <E extends Comparable<? super E>> void assertTreap(Treap<E> T) {
+        if (T.root != null) {
+            assertTreap(T, T.root);
+        }
+    }
+
+    private <E extends Comparable<? super E>> void assertTreap(Treap<E> T, Treap.Node<E> x) {
+        if (x.left != null) {
+            assertTrue(x.priority < x.left.priority);
+            Array<E> leftElements = T.toArray(x.left);
+            for (int i = 1; i <= leftElements.length; i++) {
+                assertTrue(leq(leftElements.at(i), x.key));
+            }
+            assertTreap(T, x.left);
+        }
+        if (x.right != null) {
+            assertTrue(x.priority < x.right.priority);
+            Array<E> rightElements = T.toArray(x.right);
+            for (int i = 1; i <= rightElements.length; i++) {
+                assertTrue(geq(rightElements.at(i), x.key));
+            }
+            assertTreap(T, x.right);
+        }
     }
 
 }
