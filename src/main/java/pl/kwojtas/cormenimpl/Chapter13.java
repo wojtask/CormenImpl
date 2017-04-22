@@ -2,6 +2,7 @@ package pl.kwojtas.cormenimpl;
 
 import pl.kwojtas.cormenimpl.datastructure.AVLTree;
 import pl.kwojtas.cormenimpl.datastructure.ParentlessRedBlackTree;
+import pl.kwojtas.cormenimpl.datastructure.PersistentBinarySearchTree;
 import pl.kwojtas.cormenimpl.datastructure.RedBlackTree;
 import pl.kwojtas.cormenimpl.datastructure.RedBlackTree.Node;
 import pl.kwojtas.cormenimpl.datastructure.Stack;
@@ -457,6 +458,34 @@ public final class Chapter13 {
             y = y.p;
         }
         return y;
+    }
+
+    public static <E extends Comparable<? super E>> void persistentTreeInsert(PersistentBinarySearchTree<E> T, E k) {
+        PersistentBinarySearchTree.Node<E> r = persistentTreeInsert(T.roots.tail.key, k);
+        Chapter10.singlyLinkedListEnqueue(T.roots, r);
+    }
+
+    static <E extends Comparable<? super E>> PersistentBinarySearchTree.Node<E> persistentTreeInsert(PersistentBinarySearchTree.Node<E> x, E k) {
+        PersistentBinarySearchTree.Node<E> z;
+        if (x == null) {
+            z = newNode(k);
+        } else {
+            z = copyNode(x);
+            if (less(k, x.key)) {
+                z.left = persistentTreeInsert(x.left, k);
+            } else {
+                z.right = persistentTreeInsert(x.right, k);
+            }
+        }
+        return z;
+    }
+
+    static <E extends Comparable<? super E>> PersistentBinarySearchTree.Node<E> newNode(E k) {
+        return new PersistentBinarySearchTree.Node<>(k);
+    }
+
+    static <E extends Comparable<? super E>> PersistentBinarySearchTree.Node<E> copyNode(PersistentBinarySearchTree.Node<E> x) {
+        return new PersistentBinarySearchTree.Node<>(x.key, x.left, x.right);
     }
 
     /**

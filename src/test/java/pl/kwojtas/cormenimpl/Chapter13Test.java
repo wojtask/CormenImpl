@@ -4,6 +4,7 @@ import org.junit.Test;
 import pl.kwojtas.cormenimpl.datastructure.AVLTree;
 import pl.kwojtas.cormenimpl.datastructure.Array;
 import pl.kwojtas.cormenimpl.datastructure.ParentlessRedBlackTree;
+import pl.kwojtas.cormenimpl.datastructure.PersistentBinarySearchTree;
 import pl.kwojtas.cormenimpl.datastructure.RedBlackTree;
 import pl.kwojtas.cormenimpl.datastructure.RedBlackTree.Node;
 
@@ -214,6 +215,21 @@ public class Chapter13Test {
                                         new ParentlessRedBlackTree.Node<>(14, RED)
                                 ),
                                 new ParentlessRedBlackTree.Node<>(18, BLACK)
+                        )
+                )
+        );
+    }
+
+    private PersistentBinarySearchTree<Integer> getExemplaryPersistentBinarySearchTree() {
+        return new PersistentBinarySearchTree<>(
+                new PersistentBinarySearchTree.Node<>(4,
+                        new PersistentBinarySearchTree.Node<>(3,
+                                new PersistentBinarySearchTree.Node<>(2),
+                                null
+                        ),
+                        new PersistentBinarySearchTree.Node<>(8,
+                                new PersistentBinarySearchTree.Node<>(7),
+                                new PersistentBinarySearchTree.Node<>(10)
                         )
                 )
         );
@@ -561,6 +577,63 @@ public class Chapter13Test {
         Array<Integer> actualElements = tree.toArray();
         assertArrayEquals(expectedElements, actualElements);
         assertEquals(Integer.valueOf(27), actualDeletedNode.key);
+    }
+
+    @Test
+    public void shouldInsertNodeToEmptyPersistentBinarySearchTree() {
+        PersistentBinarySearchTree<Integer> T = PersistentBinarySearchTree.emptyTree();
+
+        Chapter13.persistentTreeInsert(T, 15);
+
+        assertEquals(2, T.roots.getLength());
+        Array<Integer> expectedElements = Array.of(15);
+        Array<Integer> actualElements = T.toArray(T.roots.tail.key);
+        assertArrayEquals(expectedElements, actualElements);
+    }
+
+    @Test
+    public void shouldInsertNodesToPersistentBinarySearchTree() {
+        PersistentBinarySearchTree<Integer> T = getExemplaryPersistentBinarySearchTree();
+
+        Chapter13.persistentTreeInsert(T, 5);
+        Chapter13.persistentTreeInsert(T, 12);
+
+        assertEquals(3, T.roots.getLength());
+        assertPersistentBinarySearchTree(T);
+        Array<Integer> expectedElementsBeforeInsertions = Array.of(2, 3, 4, 7, 8, 10);
+        Array<Integer> actualElementsBeforeInsertions = T.toArray(T.roots.head.key);
+        assertArrayEquals(expectedElementsBeforeInsertions, actualElementsBeforeInsertions);
+        Array<Integer> expectedElementsAfterFirstInsertion = Array.of(2, 3, 4, 5, 7, 8, 10);
+        Array<Integer> actualElementsAfterFirstInsertion = T.toArray(T.roots.head.next.key);
+        assertArrayEquals(expectedElementsAfterFirstInsertion, actualElementsAfterFirstInsertion);
+        Array<Integer> expectedElementsAfterSecondInsertion = Array.of(2, 3, 4, 5, 7, 8, 10, 12);
+        Array<Integer> actualElementsAfterSecondInsertion = T.toArray(T.roots.head.next.next.key);
+        assertArrayEquals(expectedElementsAfterSecondInsertion, actualElementsAfterSecondInsertion);
+    }
+
+    private <E extends Comparable<? super E>> void assertPersistentBinarySearchTree(PersistentBinarySearchTree<E> T) {
+        Array<PersistentBinarySearchTree.Node<E>> roots = T.roots.toArray();
+        for (int i = 1; i <= roots.length; i++) {
+            assertBinarySearchTree(T, roots.at(i));
+        }
+    }
+
+    private <E extends Comparable<? super E>> void assertBinarySearchTree(
+            PersistentBinarySearchTree<E> T, PersistentBinarySearchTree.Node<E> x) {
+        if (x.left != null) {
+            Array<E> leftElements = T.toArray(x.left);
+            for (int i = 1; i <= leftElements.length; i++) {
+                assertTrue(leq(leftElements.at(i), x.key));
+            }
+            assertBinarySearchTree(T, x.left);
+        }
+        if (x.right != null) {
+            Array<E> rightElements = T.toArray(x.right);
+            for (int i = 1; i <= rightElements.length; i++) {
+                assertTrue(geq(rightElements.at(i), x.key));
+            }
+            assertBinarySearchTree(T, x.right);
+        }
     }
 
     @Test
