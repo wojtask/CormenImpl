@@ -235,10 +235,31 @@ public class Chapter13Test {
         assertEquals(BLACK, T.nil.color);
         assertRedBlackProperty4(T);
         assertRedBlackProperty5(T);
+        assertParentPointersConsistent(T);
+    }
+
+    private <E extends Comparable<? super E>> void assertParentPointersConsistent(RedBlackTree<E> T) {
+        if (T.root != T.nil) {
+            assertEquals(T.nil, T.root.p);
+            assertParentPointersConsistent(T, T.root);
+        }
+    }
+
+    private <E extends Comparable<? super E>> void assertParentPointersConsistent(RedBlackTree<E> T, Node<E> x) {
+        if (x.left != T.nil) {
+            assertEquals(x, x.left.p);
+            assertParentPointersConsistent(T, x.left);
+        }
+        if (x.right != T.nil) {
+            assertEquals(x, x.right.p);
+            assertParentPointersConsistent(T, x.right);
+        }
     }
 
     private <E extends Comparable<? super E>> void assertBinarySearchTree(RedBlackTree<E> T) {
-        assertBinarySearchTree(T, T.root);
+        if (T.root != T.nil) {
+            assertBinarySearchTree(T, T.root);
+        }
     }
 
     private <E extends Comparable<? super E>> void assertBinarySearchTree(RedBlackTree<E> T, Node<E> x) {
@@ -258,8 +279,10 @@ public class Chapter13Test {
         }
     }
 
-    private <E> void assertRedBlackProperty4(RedBlackTree<E> tree) {
-        assertRedBlackProperty4(tree.root);
+    private <E> void assertRedBlackProperty4(RedBlackTree<E> T) {
+        if (T.root != T.nil) {
+            assertRedBlackProperty4(T.root);
+        }
     }
 
     private <E> void assertRedBlackProperty4(Node<E> x) {
@@ -275,8 +298,10 @@ public class Chapter13Test {
         }
     }
 
-    private <E> void assertRedBlackProperty5(RedBlackTree<E> tree) {
-        assertRedBlackProperty5(tree.root);
+    private <E> void assertRedBlackProperty5(RedBlackTree<E> T) {
+        if (T.root != T.nil) {
+            assertRedBlackProperty5(T.root);
+        }
     }
 
     private <E> int assertRedBlackProperty5(Node<E> x) {
