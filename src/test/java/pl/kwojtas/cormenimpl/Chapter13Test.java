@@ -3,8 +3,8 @@ package pl.kwojtas.cormenimpl;
 import org.junit.Test;
 import pl.kwojtas.cormenimpl.datastructure.AVLTree;
 import pl.kwojtas.cormenimpl.datastructure.Array;
+import pl.kwojtas.cormenimpl.datastructure.ParentlessBinaryTree;
 import pl.kwojtas.cormenimpl.datastructure.ParentlessRedBlackTree;
-import pl.kwojtas.cormenimpl.datastructure.PersistentBinarySearchTree;
 import pl.kwojtas.cormenimpl.datastructure.RedBlackTree;
 import pl.kwojtas.cormenimpl.datastructure.RedBlackTree.Node;
 import pl.kwojtas.cormenimpl.datastructure.Treap;
@@ -15,6 +15,7 @@ import java.lang.reflect.Modifier;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static pl.kwojtas.cormenimpl.Fundamental.geq;
 import static pl.kwojtas.cormenimpl.Fundamental.leq;
@@ -221,16 +222,16 @@ public class Chapter13Test {
         );
     }
 
-    private PersistentBinarySearchTree<Integer> getExemplaryPersistentBinarySearchTree() {
-        return new PersistentBinarySearchTree<>(
-                new PersistentBinarySearchTree.Node<>(4,
-                        new PersistentBinarySearchTree.Node<>(3,
-                                new PersistentBinarySearchTree.Node<>(2),
+    private ParentlessBinaryTree<Integer> getExemplaryPersistentBinarySearchTree() {
+        return new ParentlessBinaryTree<>(
+                new ParentlessBinaryTree.Node<>(4,
+                        new ParentlessBinaryTree.Node<>(3,
+                                new ParentlessBinaryTree.Node<>(2),
                                 null
                         ),
-                        new PersistentBinarySearchTree.Node<>(8,
-                                new PersistentBinarySearchTree.Node<>(7),
-                                new PersistentBinarySearchTree.Node<>(10)
+                        new ParentlessBinaryTree.Node<>(8,
+                                new ParentlessBinaryTree.Node<>(7),
+                                new ParentlessBinaryTree.Node<>(10)
                         )
                 )
         );
@@ -599,59 +600,54 @@ public class Chapter13Test {
     }
 
     @Test
-    public void shouldInsertNodeToEmptyPersistentBinarySearchTree() {
-        PersistentBinarySearchTree<Integer> T = PersistentBinarySearchTree.emptyTree();
+    public void shouldInsertNodeToEmptyPersistentTree() {
+        ParentlessBinaryTree<Integer> T = ParentlessBinaryTree.emptyTree();
 
-        Chapter13.persistentTreeInsert(T, 15);
+        ParentlessBinaryTree<Integer> T_ = Chapter13.persistentTreeInsert(T, 15);
 
-        assertEquals(2, T.roots.getLength());
+        assertNull(T.root);
+        assertParentlessBinarySearchTree(T_);
         Array<Integer> expectedElements = Array.of(15);
-        Array<Integer> actualElements = T.toArray(T.roots.tail.key);
+        Array<Integer> actualElements = T_.toArray();
         assertArrayEquals(expectedElements, actualElements);
     }
 
     @Test
-    public void shouldInsertNodesToPersistentBinarySearchTree() {
-        PersistentBinarySearchTree<Integer> T = getExemplaryPersistentBinarySearchTree();
+    public void shouldInsertNodesToPersistentTree() {
+        ParentlessBinaryTree<Integer> T = getExemplaryPersistentBinarySearchTree();
 
-        Chapter13.persistentTreeInsert(T, 5);
-        Chapter13.persistentTreeInsert(T, 12);
+        ParentlessBinaryTree<Integer> T_ = Chapter13.persistentTreeInsert(T, 5);
 
-        assertEquals(3, T.roots.getLength());
-        assertPersistentBinarySearchTree(T);
-        Array<Integer> expectedElementsBeforeInsertions = Array.of(2, 3, 4, 7, 8, 10);
-        Array<Integer> actualElementsBeforeInsertions = T.toArray(T.roots.head.key);
-        assertArrayEquals(expectedElementsBeforeInsertions, actualElementsBeforeInsertions);
-        Array<Integer> expectedElementsAfterFirstInsertion = Array.of(2, 3, 4, 5, 7, 8, 10);
-        Array<Integer> actualElementsAfterFirstInsertion = T.toArray(T.roots.head.next.key);
-        assertArrayEquals(expectedElementsAfterFirstInsertion, actualElementsAfterFirstInsertion);
-        Array<Integer> expectedElementsAfterSecondInsertion = Array.of(2, 3, 4, 5, 7, 8, 10, 12);
-        Array<Integer> actualElementsAfterSecondInsertion = T.toArray(T.roots.head.next.next.key);
-        assertArrayEquals(expectedElementsAfterSecondInsertion, actualElementsAfterSecondInsertion);
+        assertParentlessBinarySearchTree(T);
+        assertParentlessBinarySearchTree(T_);
+        Array<Integer> expectedElementsBeforeInsertion = Array.of(2, 3, 4, 7, 8, 10);
+        Array<Integer> actualElementsBeforeInsertion = T.toArray();
+        assertArrayEquals(expectedElementsBeforeInsertion, actualElementsBeforeInsertion);
+        Array<Integer> expectedElementsAfterInsertion = Array.of(2, 3, 4, 5, 7, 8, 10);
+        Array<Integer> actualElementsAfterInsertion = T_.toArray();
+        assertArrayEquals(expectedElementsAfterInsertion, actualElementsAfterInsertion);
     }
 
-    private <E extends Comparable<? super E>> void assertPersistentBinarySearchTree(PersistentBinarySearchTree<E> T) {
-        Array<PersistentBinarySearchTree.Node<E>> roots = T.roots.toArray();
-        for (int i = 1; i <= roots.length; i++) {
-            assertBinarySearchTree(T, roots.at(i));
+    private <E extends Comparable<? super E>> void assertParentlessBinarySearchTree(ParentlessBinaryTree<E> T) {
+        if (T.root != null) {
+            assertParentlessBinarySearchTree(T, T.root);
         }
     }
 
-    private <E extends Comparable<? super E>> void assertBinarySearchTree(
-            PersistentBinarySearchTree<E> T, PersistentBinarySearchTree.Node<E> x) {
+    private <E extends Comparable<? super E>> void assertParentlessBinarySearchTree(ParentlessBinaryTree<E> T, ParentlessBinaryTree.Node<E> x) {
         if (x.left != null) {
             Array<E> leftElements = T.toArray(x.left);
             for (int i = 1; i <= leftElements.length; i++) {
                 assertTrue(leq(leftElements.at(i), x.key));
             }
-            assertBinarySearchTree(T, x.left);
+            assertParentlessBinarySearchTree(T, x.left);
         }
         if (x.right != null) {
             Array<E> rightElements = T.toArray(x.right);
             for (int i = 1; i <= rightElements.length; i++) {
                 assertTrue(geq(rightElements.at(i), x.key));
             }
-            assertBinarySearchTree(T, x.right);
+            assertParentlessBinarySearchTree(T, x.right);
         }
     }
 

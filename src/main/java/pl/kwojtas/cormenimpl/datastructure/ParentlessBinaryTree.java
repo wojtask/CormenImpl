@@ -1,16 +1,14 @@
 package pl.kwojtas.cormenimpl.datastructure;
 
-import pl.kwojtas.cormenimpl.Chapter10;
-
 /**
- * Implements a persistent dynamic set as a binary search tree.
+ * Implements a binary search tree with no parent pointers in nodes.
  *
  * @param <E> the type of elements in the tree
  */
-public class PersistentBinarySearchTree<E> {
+public class ParentlessBinaryTree<E> {
 
     /**
-     * Implements a persistent binary search tree's node.
+     * Implements a parentless binary tree's node.
      *
      * @param <F> the type of the node's key
      */
@@ -55,25 +53,33 @@ public class PersistentBinarySearchTree<E> {
     }
 
     /**
-     * The list of roots of the tree from the oldest to the newest.
+     * The root of the tree.
      */
-    public SinglyLinkedListWithTail<Node<E>> roots;
+    public Node<E> root;
 
     /**
-     * Creates a binary tree from a root node.
+     * Creates a parentless binary tree from a root node.
      *
      * @param root the root of the new tree
      */
-    public PersistentBinarySearchTree(Node<E> root) {
-        this.roots = SinglyLinkedListWithTail.emptyList();
-        Chapter10.singlyLinkedListEnqueue(this.roots, root);
+    public ParentlessBinaryTree(Node<E> root) {
+        this.root = root;
     }
 
     /**
      * Creates an empty persistent binary search tree.
      */
-    public static <E> PersistentBinarySearchTree<E> emptyTree() {
-        return new PersistentBinarySearchTree<>(null);
+    public static <E> ParentlessBinaryTree<E> emptyTree() {
+        return new ParentlessBinaryTree<>(null);
+    }
+
+    /**
+     * Transforms the tree to an array.
+     *
+     * @return the sorted array containing all the elements in the tree
+     */
+    public Array<E> toArray() {
+        return toArray(root);
     }
 
     /**

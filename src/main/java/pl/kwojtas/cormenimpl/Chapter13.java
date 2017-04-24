@@ -1,8 +1,8 @@
 package pl.kwojtas.cormenimpl;
 
 import pl.kwojtas.cormenimpl.datastructure.AVLTree;
+import pl.kwojtas.cormenimpl.datastructure.ParentlessBinaryTree;
 import pl.kwojtas.cormenimpl.datastructure.ParentlessRedBlackTree;
-import pl.kwojtas.cormenimpl.datastructure.PersistentBinarySearchTree;
 import pl.kwojtas.cormenimpl.datastructure.RedBlackTree;
 import pl.kwojtas.cormenimpl.datastructure.Stack;
 import pl.kwojtas.cormenimpl.datastructure.Treap;
@@ -461,55 +461,66 @@ public final class Chapter13 {
     }
 
     /**
-     * Inserts a node into a persistent set represented by a binary search tree.
-     * <p><span style="font-variant:small-caps;">Persistent-Tree-Insert</span> from solution to problem 13-1(b).</p>
-     *
-     * @param T   the binary search tree representing a persistent set
-     * @param k   the key to insert
-     * @param <E> the type of keys in {@code T}
-     */
-    public static <E extends Comparable<? super E>> void persistentTreeInsert(PersistentBinarySearchTree<E> T, E k) {
-        PersistentBinarySearchTree.Node<E> r = persistentTreeInsert(T.roots.tail.key, k);
-        Chapter10.singlyLinkedListEnqueue(T.roots, r);
-    }
-
-    static <E extends Comparable<? super E>> PersistentBinarySearchTree.Node<E> persistentTreeInsert(PersistentBinarySearchTree.Node<E> x, E k) {
-        PersistentBinarySearchTree.Node<E> z;
-        if (x == null) {
-            z = newNode(k);
-        } else {
-            z = copyNode(x);
-            if (less(k, x.key)) {
-                z.left = persistentTreeInsert(x.left, k);
-            } else {
-                z.right = persistentTreeInsert(x.right, k);
-            }
-        }
-        return z;
-    }
-
-    /**
-     * Creates a new node for persistent binary search tree whose field {@code key} is {@code k},
+     * Creates a new node for parentless binary search tree whose field {@code key} is {@code k},
      * and fields {@code left} and {@code right} are {@code null}.
      *
      * @param k   the key of the new node
      * @param <E> the type of the key
      * @return the newly created node
      */
-    static <E extends Comparable<? super E>> PersistentBinarySearchTree.Node<E> newNode(E k) {
-        return new PersistentBinarySearchTree.Node<>(k);
+    static <E extends Comparable<? super E>> ParentlessBinaryTree.Node<E> newNode(E k) {
+        return new ParentlessBinaryTree.Node<>(k);
     }
 
     /**
-     * Creates a new node for persistent binary search tree whose fields {@code key}, {@code left} and {@code right}
+     * Creates a new node for parentless binary search tree whose fields {@code key}, {@code left} and {@code right}
      * are set to the values of the same fields of node {@code x}.
      *
      * @param x   the node to copy
      * @param <E> the type of the key in {@code x}
      * @return the newly created node
      */
-    static <E extends Comparable<? super E>> PersistentBinarySearchTree.Node<E> copyNode(PersistentBinarySearchTree.Node<E> x) {
-        return new PersistentBinarySearchTree.Node<>(x.key, x.left, x.right);
+    static <E extends Comparable<? super E>> ParentlessBinaryTree.Node<E> copyNode(ParentlessBinaryTree.Node<E> x) {
+        return new ParentlessBinaryTree.Node<>(x.key, x.left, x.right);
+    }
+
+    /**
+     * Inserts a key into a persistent set represented by a parentless binary search tree.
+     * <p><span style="font-variant:small-caps;">Persistent-Subtree-Insert</span> from solution to problem 13-1(b).</p>
+     *
+     * @param x   the root of the subtree to insert to
+     * @param k   the key to insert
+     * @param <E> the type of keys in {@code T}
+     * @return the root of the new tree with inserted key
+     */
+    static <E extends Comparable<? super E>> ParentlessBinaryTree.Node<E> persistentSubtreeInsert(ParentlessBinaryTree.Node<E> x, E k) {
+        ParentlessBinaryTree.Node<E> z;
+        if (x == null) {
+            z = newNode(k);
+        } else {
+            z = copyNode(x);
+            if (less(k, x.key)) {
+                z.left = persistentSubtreeInsert(x.left, k);
+            } else {
+                z.right = persistentSubtreeInsert(x.right, k);
+            }
+        }
+        return z;
+    }
+
+    /**
+     * Inserts a key into a persistent set represented by a parentless binary search tree.
+     * <p><span style="font-variant:small-caps;">Persistent-Tree-Insert</span> from solution to problem 13-1(b).</p>
+     *
+     * @param T   the parentless binary search tree representing a persistent set
+     * @param k   the key to insert
+     * @param <E> the type of keys in {@code T}
+     * @return the binary search tree with new key inserted
+     */
+    public static <E extends Comparable<? super E>> ParentlessBinaryTree<E> persistentTreeInsert(ParentlessBinaryTree<E> T, E k) {
+        ParentlessBinaryTree<E> T_ = ParentlessBinaryTree.emptyTree();
+        T_.root = persistentSubtreeInsert(T.root, k);
+        return T_;
     }
 
     /**

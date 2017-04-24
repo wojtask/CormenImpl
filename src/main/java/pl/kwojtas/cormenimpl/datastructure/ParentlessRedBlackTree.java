@@ -10,7 +10,7 @@ import static pl.kwojtas.cormenimpl.datastructure.RedBlackTree.Color;
 public class ParentlessRedBlackTree<E> {
 
     /**
-     * Implements a red-black tree's node.
+     * Implements a parentless red-black tree's node.
      *
      * @param <F> the type of the node's key
      */
@@ -80,14 +80,14 @@ public class ParentlessRedBlackTree<E> {
     }
 
     /**
-     * Creates an empty red-black tree.
+     * Creates an empty parentless red-black tree.
      */
     public static <E> ParentlessRedBlackTree<E> emptyTree() {
         return new ParentlessRedBlackTree<>();
     }
 
     /**
-     * Creates a red-black tree from a root node.
+     * Creates a parentless red-black tree from a root node.
      *
      * @param root the root of the new tree
      */
