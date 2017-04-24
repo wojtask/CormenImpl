@@ -660,13 +660,13 @@ public final class Chapter13 {
 
     /**
      * Inserts a node into an AVL tree using <span style="font-variant:small-caps;">AVL-Insert</span>.
-     * <p><span style="font-variant:small-caps;">AVL-Insert'</span> from solution to problem 13-3(c).</p>
+     * <p><span style="font-variant:small-caps;">AVL-Insert-Wrapper</span> from solution to problem 13-3(c).</p>
      *
      * @param T   the AVL tree
      * @param z   the node to insert
      * @param <E> the type of keys in {@code T}
      */
-    public static <E extends Comparable<? super E>> void avlInsert_(AVLTree<E> T, AVLTree.Node<E> z) {
+    public static <E extends Comparable<? super E>> void avlInsertWrapper(AVLTree<E> T, AVLTree.Node<E> z) {
         T.root = avlInsert(T.root, z);
     }
 

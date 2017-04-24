@@ -387,7 +387,7 @@ public class Chapter12Test {
         BinaryTree<Integer> tree = BinaryTree.emptyTree();
         Node<Integer> nodeToInsert = new Node<>(12);
 
-        Chapter12.treeInsert_(tree, nodeToInsert);
+        Chapter12.recursiveTreeInsertWrapper(tree, nodeToInsert);
 
         Array<Integer> actualElements = tree.toArray();
         Array<Integer> expectedElements = Array.of(12);
@@ -399,7 +399,7 @@ public class Chapter12Test {
         BinaryTree<Integer> tree = getExemplaryBinaryTree();
         Node<Integer> nodeToInsert = new Node<>(12);
 
-        Chapter12.treeInsert_(tree, nodeToInsert);
+        Chapter12.recursiveTreeInsertWrapper(tree, nodeToInsert);
 
         Array<Integer> actualElements = tree.toArray();
         Array<Integer> expectedElements = Array.of(1, 4, 10, 11, 12, 14, 19, 20);
@@ -412,7 +412,7 @@ public class Chapter12Test {
         BinaryTree<Integer> tree = getExemplaryBinaryTree();
         Node<Integer> nodeToInsert = new Node<>(18);
 
-        Chapter12.treeInsert_(tree, nodeToInsert);
+        Chapter12.recursiveTreeInsertWrapper(tree, nodeToInsert);
 
         Array<Integer> actualElements = tree.toArray();
         Array<Integer> expectedElements = Array.of(1, 4, 10, 11, 14, 18, 19, 20);

@@ -660,7 +660,7 @@ public class Chapter13Test {
         AVLTree<Integer> tree = AVLTree.emptyTree();
         AVLTree.Node<Integer> newNode = new AVLTree.Node<>(7);
 
-        Chapter13.avlInsert_(tree, newNode);
+        Chapter13.avlInsertWrapper(tree, newNode);
 
         assertAVLTree(tree);
         Array<Integer> expectedElements = Array.of(7);
@@ -730,7 +730,7 @@ public class Chapter13Test {
         AVLTree<Integer> tree = getExemplaryAVLTree();
         AVLTree.Node<Integer> newNode = new AVLTree.Node<>(10);
 
-        Chapter13.avlInsert_(tree, newNode);
+        Chapter13.avlInsertWrapper(tree, newNode);
 
         assertAVLTree(tree);
         Array<Integer> expectedElements = Array.of(2, 4, 6, 7, 9, 10, 11, 13);
@@ -743,7 +743,7 @@ public class Chapter13Test {
         AVLTree<Integer> tree = getExemplaryAVLTree();
         AVLTree.Node<Integer> newNode = new AVLTree.Node<>(12);
 
-        Chapter13.avlInsert_(tree, newNode);
+        Chapter13.avlInsertWrapper(tree, newNode);
 
         assertAVLTree(tree);
         Array<Integer> expectedElements = Array.of(2, 4, 6, 7, 9, 11, 12, 13);
@@ -756,7 +756,7 @@ public class Chapter13Test {
         AVLTree<Integer> tree = getExemplaryAVLTree();
         AVLTree.Node<Integer> newNode = new AVLTree.Node<>(5);
 
-        Chapter13.avlInsert_(tree, newNode);
+        Chapter13.avlInsertWrapper(tree, newNode);
 
         assertAVLTree(tree);
         Array<Integer> expectedElements = Array.of(2, 4, 5, 6, 7, 9, 11, 13);
@@ -769,7 +769,7 @@ public class Chapter13Test {
         AVLTree<Integer> tree = getExemplaryAVLTree();
         AVLTree.Node<Integer> newNode = new AVLTree.Node<>(3);
 
-        Chapter13.avlInsert_(tree, newNode);
+        Chapter13.avlInsertWrapper(tree, newNode);
 
         assertAVLTree(tree);
         Array<Integer> expectedElements = Array.of(2, 3, 4, 6, 7, 9, 11, 13);

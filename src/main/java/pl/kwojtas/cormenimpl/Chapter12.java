@@ -296,13 +296,13 @@ public final class Chapter12 {
     /**
      * Inserts a node into a binary search tree using a recursive version of
      * <span style="font-variant:small-caps;">Tree-Insert</span>.
-     * <p><span style="font-variant:small-caps;">Tree-Insert'</span> from solution to exercise 12.3-1.</p>
+     * <p><span style="font-variant:small-caps;">Recursive-Tree-Insert-Wrapper</span> from solution to exercise 12.3-1.</p>
      *
      * @param T   the binary search tree
      * @param z   the node to insert
      * @param <E> the type of keys in {@code T}
      */
-    public static <E extends Comparable<? super E>> void treeInsert_(BinaryTree<E> T, Node<E> z) {
+    public static <E extends Comparable<? super E>> void recursiveTreeInsertWrapper(BinaryTree<E> T, Node<E> z) {
         T.root = recursiveTreeInsert(T.root, z);
     }
 
