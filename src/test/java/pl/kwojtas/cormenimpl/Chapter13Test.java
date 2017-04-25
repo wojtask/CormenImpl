@@ -600,7 +600,7 @@ public class Chapter13Test {
     }
 
     @Test
-    public void shouldInsertNodeToEmptyPersistentTree() {
+    public void shouldInsertNodeToEmptyPersistentSetRepresentedByBinaryTree() {
         ParentlessBinaryTree<Integer> T = ParentlessBinaryTree.emptyTree();
 
         ParentlessBinaryTree<Integer> T_ = Chapter13.persistentTreeInsert(T, 15);
@@ -613,7 +613,7 @@ public class Chapter13Test {
     }
 
     @Test
-    public void shouldInsertNodesToPersistentTree() {
+    public void shouldInsertNodeToNonemptyPersistentSetRepresentedByBinaryTree() {
         ParentlessBinaryTree<Integer> T = getExemplaryPersistentBinarySearchTree();
 
         ParentlessBinaryTree<Integer> T_ = Chapter13.persistentTreeInsert(T, 5);
@@ -649,6 +649,54 @@ public class Chapter13Test {
             }
             assertParentlessBinarySearchTree(T, x.right);
         }
+    }
+
+    @Test
+    public void shouldInsertNodeToEmptyPersistentSetRepresentedByRedBlackTree() {
+        ParentlessRedBlackTree<Integer> T = ParentlessRedBlackTree.emptyTree();
+        ParentlessRedBlackTree.Node<Integer> newNode = new ParentlessRedBlackTree.Node<>(15, BLACK);
+
+        ParentlessRedBlackTree<Integer> T_ = Chapter13.persistentRbInsert(T, newNode);
+
+        assertEquals(T.nil, T.root);
+        assertParentlessRedBlackTree(T_);
+        Array<Integer> expectedElements = Array.of(15);
+        Array<Integer> actualElements = T_.toArray();
+        assertArrayEquals(expectedElements, actualElements);
+    }
+
+    @Test
+    public void shouldInsertNodeToNonemptyPersistentSetRepresentedByRedBlackTreeAllLeftCasesInInsertFixup() {
+        ParentlessRedBlackTree<Integer> T = getExemplaryParentlessRedBlackTreeForAllLeftCasesInInsertFixup();
+        ParentlessRedBlackTree.Node<Integer> newNode = new ParentlessRedBlackTree.Node<>(4, BLACK);
+
+        ParentlessRedBlackTree<Integer> T_ = Chapter13.persistentRbInsert(T, newNode);
+
+        assertParentlessRedBlackTree(T);
+        assertParentlessRedBlackTree(T_);
+        Array<Integer> expectedElementsBeforeInsertion = Array.of(1, 2, 5, 7, 9, 11, 14, 15);
+        Array<Integer> actualElementsBeforeInsertion = T.toArray();
+        assertArrayEquals(expectedElementsBeforeInsertion, actualElementsBeforeInsertion);
+        Array<Integer> expectedElementsAfterInsertion = Array.of(1, 2, 4, 5, 7, 9, 11, 14, 15);
+        Array<Integer> actualElementsAfterInsertion = T_.toArray();
+        assertArrayEquals(expectedElementsAfterInsertion, actualElementsAfterInsertion);
+    }
+
+    @Test
+    public void shouldInsertNodeToNonemptyPersistentSetRepresentedByRedBlackTreeAllRightCasesInInsertFixup() {
+        ParentlessRedBlackTree<Integer> T = getExemplaryParentlessRedBlackTreeForAllRightCasesInInsertFixup();
+        ParentlessRedBlackTree.Node<Integer> newNode = new ParentlessRedBlackTree.Node<>(15, BLACK);
+
+        ParentlessRedBlackTree<Integer> T_ = Chapter13.persistentRbInsert(T, newNode);
+
+        assertParentlessRedBlackTree(T);
+        assertParentlessRedBlackTree(T_);
+        Array<Integer> expectedElementsBeforeInsertion = Array.of(1, 3, 7, 9, 13, 14, 16, 18);
+        Array<Integer> actualElementsBeforeInsertion = T.toArray();
+        assertArrayEquals(expectedElementsBeforeInsertion, actualElementsBeforeInsertion);
+        Array<Integer> expectedElementsAfterInsertion = Array.of(1, 3, 7, 9, 13, 14, 15, 16, 18);
+        Array<Integer> actualElementsAfterInsertion = T_.toArray();
+        assertArrayEquals(expectedElementsAfterInsertion, actualElementsAfterInsertion);
     }
 
     @Test

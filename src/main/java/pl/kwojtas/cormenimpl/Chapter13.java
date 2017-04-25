@@ -171,7 +171,7 @@ public final class Chapter13 {
             ParentlessRedBlackTree<E> T, ParentlessRedBlackTree.Node<E> z) {
         ParentlessRedBlackTree.Node<E> y = T.nil;
         ParentlessRedBlackTree.Node<E> x = T.root;
-        int pathLength = getPathLengthFromRootToNewNode(T, z);
+        int pathLength = getPathLengthFromRoot(T, z);
         Stack<ParentlessRedBlackTree.Node<E>> S = Stack.ofLength(pathLength + 1);
         Chapter10.push(S, T.nil);
         while (x != T.nil) {
@@ -198,7 +198,7 @@ public final class Chapter13 {
         rbParentlessInsertFixup(T, S, z);
     }
 
-    private static <E extends Comparable<? super E>> int getPathLengthFromRootToNewNode(
+    private static <E extends Comparable<? super E>> int getPathLengthFromRoot(
             ParentlessRedBlackTree<E> T, ParentlessRedBlackTree.Node<E> z) {
         int pathLength = 0;
         ParentlessRedBlackTree.Node<E> x = T.root;
@@ -512,7 +512,7 @@ public final class Chapter13 {
      * Inserts a key into a persistent set represented by a parentless binary search tree.
      * <p><span style="font-variant:small-caps;">Persistent-Tree-Insert</span> from solution to problem 13-1(b).</p>
      *
-     * @param T   the parentless binary search tree representing a persistent set
+     * @param T   the parentless binary search tree representing the persistent set
      * @param k   the key to insert
      * @param <E> the type of keys in {@code T}
      * @return the binary search tree with new key inserted
@@ -521,6 +521,115 @@ public final class Chapter13 {
         ParentlessBinaryTree<E> T_ = ParentlessBinaryTree.emptyTree();
         T_.root = persistentSubtreeInsert(T.root, k);
         return T_;
+    }
+
+    /**
+     * Inserts a node into a persistent set represented by a parentless red-black tree.
+     * <p>Solution to problem 13-1(e).</p>
+     *
+     * @param T   the parentless red-black tree representing the persistent set
+     * @param z   the node to insert
+     * @param <E> the type of keys in {@code T}
+     * @return the red-black tree with new node inserted
+     */
+    public static <E extends Comparable<? super E>> ParentlessRedBlackTree<E> persistentRbInsert(
+            ParentlessRedBlackTree<E> T, ParentlessRedBlackTree.Node<E> z) {
+        ParentlessRedBlackTree.Node<E> y = T.nil;
+        ParentlessRedBlackTree.Node<E> x = T.root;
+        ParentlessRedBlackTree<E> T_ = ParentlessRedBlackTree.emptyTree();
+        T_.nil = T.nil;
+        ParentlessRedBlackTree.Node<E> y_ = T_.nil;
+        ParentlessRedBlackTree.Node<E> x_;
+        int pathLength = getPathLengthFromRoot(T, z);
+        Stack<ParentlessRedBlackTree.Node<E>> S = Stack.ofLength(pathLength + 1);
+        Chapter10.push(S, T.nil);
+        while (x != T.nil) {
+            y = x;
+            x_ = new ParentlessRedBlackTree.Node<>(x.key, x.color, x.left, x.right);
+            if (y_ != T.nil) {
+                if (x == y_.left) {
+                    y_.left = x_;
+                } else {
+                    y_.right = x_;
+                }
+            }
+            y_ = x_;
+            Chapter10.push(S, y_);
+            if (less(z.key, x.key)) {
+                x = x.left;
+            } else {
+                x = x.right;
+            }
+        }
+        if (y == T.nil) {
+            T_.root = z;
+        } else {
+            if (less(z.key, y.key)) {
+                y_.left = z;
+            } else {
+                y_.right = z;
+            }
+        }
+        z.left = z.right = T.nil;
+        z.color = RED;
+        persistentRbInsertFixup(T_, S, z);
+        return T_;
+    }
+
+    /**
+     * Restores the red-black properties after inserting a node into a persistent set represented by a parentless red-black tree.
+     * <p>Solution to problem 13-1(e).</p>
+     *
+     * @param T   the parentless red-black tree with red-black properties violated representing the persistent set
+     * @param z   the inserted node
+     * @param <E> the type of keys in {@code T}
+     */
+    static <E extends Comparable<? super E>> void persistentRbInsertFixup(
+            ParentlessRedBlackTree<E> T, Stack<ParentlessRedBlackTree.Node<E>> S, ParentlessRedBlackTree.Node<E> z) {
+        ParentlessRedBlackTree.Node<E> p = Chapter10.pop(S);
+        while (p.color == RED) {
+            ParentlessRedBlackTree.Node<E> r = Chapter10.pop(S);
+            if (p == r.left) {
+                ParentlessRedBlackTree.Node<E> y = r.right;
+                if (y.color == RED) {
+                    r.right = new ParentlessRedBlackTree.Node<>(y.key, BLACK, y.left, y.right);
+                    p.color = BLACK;
+                    r.color = RED;
+                    z = r;
+                    p = Chapter10.pop(S);
+                } else {
+                    if (z == p.right) {
+                        ParentlessRedBlackTree.Node<E> tmp = z;
+                        z = p;
+                        p = tmp;
+                        rbParentlessLeftRotate(T, z, r);
+                    }
+                    p.color = BLACK;
+                    r.color = RED;
+                    rbParentlessRightRotate(T, r, Chapter10.pop(S));
+                }
+            } else {
+                ParentlessRedBlackTree.Node<E> y = r.left;
+                if (y.color == RED) {
+                    r.left = new ParentlessRedBlackTree.Node<>(y.key, BLACK, y.left, y.right);
+                    p.color = BLACK;
+                    r.color = RED;
+                    z = r;
+                    p = Chapter10.pop(S);
+                } else {
+                    if (z == p.left) {
+                        ParentlessRedBlackTree.Node<E> tmp = z;
+                        z = p;
+                        p = tmp;
+                        rbParentlessRightRotate(T, z, r);
+                    }
+                    p.color = BLACK;
+                    r.color = RED;
+                    rbParentlessLeftRotate(T, r, Chapter10.pop(S));
+                }
+            }
+        }
+        T.root.color = BLACK;
     }
 
     /**
