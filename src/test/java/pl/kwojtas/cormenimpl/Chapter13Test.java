@@ -761,6 +761,54 @@ public class Chapter13Test {
     }
 
     @Test
+    public void shouldDeleteRootFromPersistentSetRepresentedByRedBlackTree() {
+        ParentlessRedBlackTree<Integer> T = getExemplaryParentlessRedBlackTreeForAllRightCasesInInsertFixup();
+
+        ParentlessRedBlackTree<Integer> T_ = Chapter13.persistentRbDelete(T, T.root);
+
+        assertParentlessRedBlackTree(T);
+        assertParentlessRedBlackTree(T_);
+        Array<Integer> expectedElementsBeforeDeletion = Array.of(1, 3, 7, 9, 13, 14, 16, 18);
+        Array<Integer> actualElementsBeforeDeletion = T.toArray();
+        assertArrayEquals(expectedElementsBeforeDeletion, actualElementsBeforeDeletion);
+        Array<Integer> expectedElementsAfterDeletion = Array.of(1, 3, 9, 13, 14, 16, 18);
+        Array<Integer> actualElementsAfterDeletion = T_.toArray();
+        assertArrayEquals(expectedElementsAfterDeletion, actualElementsAfterDeletion);
+    }
+
+    @Test
+    public void shouldDeleteNodeWithOneNonnilSonFromPersistentSetRepresentedByRedBlackTree() {
+        ParentlessRedBlackTree<Integer> T = getExemplaryParentlessRedBlackTreeForAllRightCasesInInsertFixup();
+
+        ParentlessRedBlackTree<Integer> T_ = Chapter13.persistentRbDelete(T, T.root.left);
+
+        assertParentlessRedBlackTree(T);
+        assertParentlessRedBlackTree(T_);
+        Array<Integer> expectedElementsBeforeDeletion = Array.of(1, 3, 7, 9, 13, 14, 16, 18);
+        Array<Integer> actualElementsBeforeDeletion = T.toArray();
+        assertArrayEquals(expectedElementsBeforeDeletion, actualElementsBeforeDeletion);
+        Array<Integer> expectedElementsAfterDeletion = Array.of(1, 7, 9, 13, 14, 16, 18);
+        Array<Integer> actualElementsAfterDeletion = T_.toArray();
+        assertArrayEquals(expectedElementsAfterDeletion, actualElementsAfterDeletion);
+    }
+
+    @Test
+    public void shouldDeleteNodeWithTwoNonnilSonsFromPersistentSetRepresentedByRedBlackTree() {
+        ParentlessRedBlackTree<Integer> T = getExemplaryParentlessRedBlackTreeForAllRightCasesInInsertFixup();
+
+        ParentlessRedBlackTree<Integer> T_ = Chapter13.persistentRbDelete(T, T.root.right.left);
+
+        assertParentlessRedBlackTree(T);
+        assertParentlessRedBlackTree(T_);
+        Array<Integer> expectedElementsBeforeDeletion = Array.of(1, 3, 7, 9, 13, 14, 16, 18);
+        Array<Integer> actualElementsBeforeDeletion = T.toArray();
+        assertArrayEquals(expectedElementsBeforeDeletion, actualElementsBeforeDeletion);
+        Array<Integer> expectedElementsAfterDeletion = Array.of(1, 3, 7, 9, 14, 16, 18);
+        Array<Integer> actualElementsAfterDeletion = T_.toArray();
+        assertArrayEquals(expectedElementsAfterDeletion, actualElementsAfterDeletion);
+    }
+
+    @Test
     public void shouldJoinEmptyRedBlackTrees() {
         JoinableRedBlackTree.Node<Integer> node = new JoinableRedBlackTree.Node<>(4, BLACK);
         JoinableRedBlackTree<Integer> tree1 = JoinableRedBlackTree.emptyTree();

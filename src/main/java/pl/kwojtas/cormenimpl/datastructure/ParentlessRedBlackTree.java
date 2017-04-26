@@ -62,6 +62,18 @@ public class ParentlessRedBlackTree<E> {
             this.right = right;
         }
 
+        /**
+         * Creates a node as a copy of a given node.
+         *
+         * @param x the node to copy
+         */
+        public Node(Node<F> x) {
+            this.key = x.key;
+            this.color = x.color;
+            this.left = x.left;
+            this.right = x.right;
+        }
+
     }
 
     /**

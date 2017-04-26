@@ -172,7 +172,7 @@ public final class Chapter13 {
             ParentlessRedBlackTree<E> T, ParentlessRedBlackTree.Node<E> z) {
         ParentlessRedBlackTree.Node<E> y = T.nil;
         ParentlessRedBlackTree.Node<E> x = T.root;
-        int pathLength = getPathLengthFromRoot(T, z);
+        int pathLength = getPathLengthFromRootToNil(T, z);
         Stack<ParentlessRedBlackTree.Node<E>> S = Stack.ofLength(pathLength + 1);
         Chapter10.push(S, T.nil);
         while (x != T.nil) {
@@ -199,7 +199,7 @@ public final class Chapter13 {
         rbParentlessInsertFixup(T, S, z);
     }
 
-    private static <E extends Comparable<? super E>> int getPathLengthFromRoot(
+    private static <E extends Comparable<? super E>> int getPathLengthFromRootToNil(
             ParentlessRedBlackTree<E> T, ParentlessRedBlackTree.Node<E> z) {
         int pathLength = 0;
         ParentlessRedBlackTree.Node<E> x = T.root;
@@ -316,6 +316,525 @@ public final class Chapter13 {
             }
         }
         y.right = x;
+    }
+
+    /**
+     * Deletes a node from a red-black tree.
+     * <p><span style="font-variant:small-caps;">RB-Delete</span> from subchapter 13.4.</p>
+     *
+     * @param T   the red-black tree
+     * @param z   the node to delete
+     * @param <E> the type of keys in {@code T}
+     * @return the node deleted from {@code T}
+     */
+    public static <E> RedBlackTree.Node<E> rbDelete(RedBlackTree<E> T, RedBlackTree.Node<E> z) {
+        RedBlackTree.Node<E> y;
+        if (z.left == T.nil || z.right == T.nil) {
+            y = z;
+        } else {
+            y = rbTreeSuccessor(T, z);
+        }
+        RedBlackTree.Node<E> x;
+        if (y.left != T.nil) {
+            x = y.left;
+        } else {
+            x = y.right;
+        }
+        x.p = y.p;
+        if (y.p == T.nil) {
+            T.root = x;
+        } else {
+            if (y == y.p.left) {
+                y.p.left = x;
+            } else {
+                y.p.right = x;
+            }
+        }
+        if (y != z) {
+            z.key = y.key;
+        }
+        if (y.color == BLACK) {
+            rbDeleteFixup(T, x);
+        }
+        return y;
+    }
+
+    /**
+     * Restores the red-black properties after deleting a node from a red-black tree by
+     * <span style="font-variant:small-caps;">RB-Delete</span>.
+     * <p><span style="font-variant:small-caps;">RB-Delete-Fixup</span> from subchapter 13.4.</p>
+     *
+     * @param T   the binary search tree with red-black properties violated
+     * @param x   the child of the deleted node that may violate the red-black properties
+     * @param <E> the type of keys in {@code T}
+     */
+    static <E> void rbDeleteFixup(RedBlackTree<E> T, RedBlackTree.Node<E> x) {
+        while (x != T.root && x.color == BLACK) {
+            RedBlackTree.Node<E> w;
+            if (x == x.p.left) {
+                w = x.p.right;
+                if (w.color == RED) {
+                    w.color = BLACK;
+                    x.p.color = RED;
+                    leftRotate(T, x.p);
+                    w = x.p.right;
+                }
+                if (w.left.color == BLACK && w.right.color == BLACK) {
+                    w.color = RED;
+                    x = x.p;
+                } else {
+                    if (w.right.color == BLACK) {
+                        w.left.color = BLACK;
+                        w.color = RED;
+                        rightRotate(T, w);
+                        w = x.p.right;
+                    }
+                    w.color = x.p.color;
+                    x.p.color = BLACK;
+                    w.right.color = BLACK;
+                    leftRotate(T, x.p);
+                    x = T.root;
+                }
+            } else {
+                w = x.p.left;
+                if (w.color == RED) {
+                    w.color = BLACK;
+                    x.p.color = RED;
+                    rightRotate(T, x.p);
+                    w = x.p.left;
+                }
+                if (w.left.color == BLACK && w.right.color == BLACK) {
+                    w.color = RED;
+                    x = x.p;
+                } else {
+                    if (w.left.color == BLACK) {
+                        w.right.color = BLACK;
+                        w.color = RED;
+                        leftRotate(T, w);
+                        w = x.p.left;
+                    }
+                    w.color = x.p.color;
+                    x.p.color = BLACK;
+                    w.left.color = BLACK;
+                    rightRotate(T, x.p);
+                    x = T.root;
+                }
+            }
+        }
+        x.color = BLACK;
+    }
+
+    /**
+     * Returns the node with the smallest key in a non-empty red-black tree.
+     * <p>Chapter 13.</p>
+     *
+     * @param T   the red-black tree
+     * @param x   the root of {@code T}
+     * @param <E> the type of keys in {@code T}
+     * @return the node with the smallest key in {@code T}
+     */
+    public static <E> RedBlackTree.Node<E> rbTreeMinimum(RedBlackTree<E> T, RedBlackTree.Node<E> x) {
+        while (x.left != T.nil) {
+            x = x.left;
+        }
+        return x;
+    }
+
+    /**
+     * Returns the node's successor in a non-empty red-black tree.
+     * <p>Chapter 13.</p>
+     *
+     * @param T   the red-black tree
+     * @param x   the node of the {@code T}
+     * @param <E> the type of keys in {@code T}
+     * @return the successor of {@code x} in {@code T}, or {@code null} if {@code x} has the largest key in {@code T}
+     */
+    public static <E> RedBlackTree.Node<E> rbTreeSuccessor(RedBlackTree<E> T, RedBlackTree.Node<E> x) {
+        if (x.right != T.nil) {
+            return rbTreeMinimum(T, x.right);
+        }
+        RedBlackTree.Node<E> y = x.p;
+        while (y != T.nil && x == y.right) {
+            x = y;
+            y = y.p;
+        }
+        return y;
+    }
+
+    /**
+     * Creates a new node for parentless binary search tree whose field {@code key} is {@code k},
+     * and fields {@code left} and {@code right} are {@code null}.
+     * <p><span style="font-variant:small-caps;">New-Node</span> from solution to problem 13-1(b).</p>
+     *
+     * @param k   the key of the new node
+     * @param <E> the type of the key
+     * @return the newly created node
+     */
+    static <E extends Comparable<? super E>> ParentlessBinaryTree.Node<E> newNode(E k) {
+        return new ParentlessBinaryTree.Node<>(k);
+    }
+
+    /**
+     * Creates a new node for parentless binary search tree whose fields {@code key}, {@code left} and {@code right}
+     * are set to the values of the same fields of node {@code x}.
+     * <p><span style="font-variant:small-caps;">Copy-Node</span> from solution to problem 13-1(b).</p>
+     *
+     * @param x   the node to copy
+     * @param <E> the type of the key in {@code x}
+     * @return the newly created node
+     */
+    static <E extends Comparable<? super E>> ParentlessBinaryTree.Node<E> copyNode(ParentlessBinaryTree.Node<E> x) {
+        return new ParentlessBinaryTree.Node<>(x.key, x.left, x.right);
+    }
+
+    /**
+     * Inserts a key into a persistent set represented by a parentless binary search tree.
+     * <p><span style="font-variant:small-caps;">Persistent-Subtree-Insert</span> from solution to problem 13-1(b).</p>
+     *
+     * @param x   the root of the subtree to insert to
+     * @param k   the key to insert
+     * @param <E> the type of keys in {@code T}
+     * @return the root of the new tree with inserted key
+     */
+    static <E extends Comparable<? super E>> ParentlessBinaryTree.Node<E> persistentSubtreeInsert(ParentlessBinaryTree.Node<E> x, E k) {
+        ParentlessBinaryTree.Node<E> z;
+        if (x == null) {
+            z = newNode(k);
+        } else {
+            z = copyNode(x);
+            if (less(k, x.key)) {
+                z.left = persistentSubtreeInsert(x.left, k);
+            } else {
+                z.right = persistentSubtreeInsert(x.right, k);
+            }
+        }
+        return z;
+    }
+
+    /**
+     * Inserts a key into a persistent set represented by a parentless binary search tree.
+     * <p><span style="font-variant:small-caps;">Persistent-Tree-Insert</span> from solution to problem 13-1(b).</p>
+     *
+     * @param T   the parentless binary search tree representing the persistent set
+     * @param k   the key to insert
+     * @param <E> the type of keys in {@code T}
+     * @return the binary search tree with new key inserted
+     */
+    public static <E extends Comparable<? super E>> ParentlessBinaryTree<E> persistentTreeInsert(ParentlessBinaryTree<E> T, E k) {
+        ParentlessBinaryTree<E> T_ = ParentlessBinaryTree.emptyTree();
+        T_.root = persistentSubtreeInsert(T.root, k);
+        return T_;
+    }
+
+    /**
+     * Inserts a node into a persistent set represented by a parentless red-black tree.
+     * <p>Solution to problem 13-1(e).</p>
+     *
+     * @param T   the parentless red-black tree representing the persistent set
+     * @param z   the node to insert
+     * @param <E> the type of keys in {@code T}
+     * @return the red-black tree with new node inserted
+     */
+    public static <E extends Comparable<? super E>> ParentlessRedBlackTree<E> persistentRbInsert(
+            ParentlessRedBlackTree<E> T, ParentlessRedBlackTree.Node<E> z) {
+        ParentlessRedBlackTree.Node<E> y = T.nil;
+        ParentlessRedBlackTree.Node<E> x = T.root;
+        ParentlessRedBlackTree<E> T_ = ParentlessRedBlackTree.emptyTree();
+        T_.nil = T.nil;
+        ParentlessRedBlackTree.Node<E> y_ = T_.nil;
+        ParentlessRedBlackTree.Node<E> x_;
+        int pathLength = getPathLengthFromRootToNil(T, z);
+        Stack<ParentlessRedBlackTree.Node<E>> S = Stack.ofLength(pathLength + 1);
+        Chapter10.push(S, T.nil);
+        while (x != T.nil) {
+            y = x;
+            x_ = new ParentlessRedBlackTree.Node<>(x);
+            if (y_ != T.nil) {
+                if (x == y_.left) {
+                    y_.left = x_;
+                } else {
+                    y_.right = x_;
+                }
+            }
+            y_ = x_;
+            Chapter10.push(S, y_);
+            if (less(z.key, x.key)) {
+                x = x.left;
+            } else {
+                x = x.right;
+            }
+        }
+        if (y == T.nil) {
+            T_.root = z;
+        } else {
+            if (less(z.key, y.key)) {
+                y_.left = z;
+            } else {
+                y_.right = z;
+            }
+        }
+        z.left = z.right = T.nil;
+        z.color = RED;
+        persistentRbInsertFixup(T_, S, z);
+        return T_;
+    }
+
+    /**
+     * Restores the red-black properties after inserting a node into a persistent set represented by a parentless red-black tree.
+     * <p>Solution to problem 13-1(e).</p>
+     *
+     * @param T   the parentless red-black tree with red-black properties violated representing the persistent set
+     * @param S   the stack containing nodes on the path from root to the inserted node
+     * @param z   the inserted node
+     * @param <E> the type of keys in {@code T}
+     */
+    static <E extends Comparable<? super E>> void persistentRbInsertFixup(
+            ParentlessRedBlackTree<E> T, Stack<ParentlessRedBlackTree.Node<E>> S, ParentlessRedBlackTree.Node<E> z) {
+        ParentlessRedBlackTree.Node<E> p = Chapter10.pop(S);
+        while (p.color == RED) {
+            ParentlessRedBlackTree.Node<E> r = Chapter10.pop(S);
+            if (p == r.left) {
+                ParentlessRedBlackTree.Node<E> y = r.right;
+                if (y.color == RED) {
+                    r.right = new ParentlessRedBlackTree.Node<>(y.key, BLACK, y.left, y.right);
+                    p.color = BLACK;
+                    r.color = RED;
+                    z = r;
+                    p = Chapter10.pop(S);
+                } else {
+                    if (z == p.right) {
+                        ParentlessRedBlackTree.Node<E> tmp = z;
+                        z = p;
+                        p = tmp;
+                        rbParentlessLeftRotate(T, z, r);
+                    }
+                    p.color = BLACK;
+                    r.color = RED;
+                    rbParentlessRightRotate(T, r, Chapter10.pop(S));
+                }
+            } else {
+                ParentlessRedBlackTree.Node<E> y = r.left;
+                if (y.color == RED) {
+                    r.left = new ParentlessRedBlackTree.Node<>(y.key, BLACK, y.left, y.right);
+                    p.color = BLACK;
+                    r.color = RED;
+                    z = r;
+                    p = Chapter10.pop(S);
+                } else {
+                    if (z == p.left) {
+                        ParentlessRedBlackTree.Node<E> tmp = z;
+                        z = p;
+                        p = tmp;
+                        rbParentlessRightRotate(T, z, r);
+                    }
+                    p.color = BLACK;
+                    r.color = RED;
+                    rbParentlessLeftRotate(T, r, Chapter10.pop(S));
+                }
+            }
+        }
+        T.root.color = BLACK;
+    }
+
+    /**
+     * Deletes a node from a persistent set represented by a parentless red-black tree.
+     * <p>Solution to problem 13-1(e).</p>
+     *
+     * @param T   the parentless red-black tree representing the persistent set
+     * @param z   the node to delete
+     * @param <E> the type of keys in {@code T}
+     * @return the red-black tree with new node deleted
+     */
+    public static <E extends Comparable<? super E>> ParentlessRedBlackTree<E> persistentRbDelete(
+            ParentlessRedBlackTree<E> T, ParentlessRedBlackTree.Node<E> z) {
+        ParentlessRedBlackTree<E> T_ = ParentlessRedBlackTree.emptyTree();
+        T_.root = T_.nil = T.nil;
+        ParentlessRedBlackTree.Node<E> y;
+        if (z.left == T.nil || z.right == T.nil) {
+            y = z;
+        } else {
+            y = rbTreeSuccessor(T, z);
+        }
+        int pathLength = getPathLengthFromRootToNode(T, y);
+        Stack<ParentlessRedBlackTree.Node<E>> S = Stack.ofLength(pathLength + 1);
+        Chapter10.push(S, T.nil);
+        ParentlessRedBlackTree.Node<E> p = T.root;
+        ParentlessRedBlackTree.Node<E> r = T.nil;
+        ParentlessRedBlackTree.Node<E> p_ = T_.nil;
+        ParentlessRedBlackTree.Node<E> r_ = T_.nil;
+        ParentlessRedBlackTree.Node<E> z_ = T.nil;
+        while (p != y) {
+            p_ = new ParentlessRedBlackTree.Node<>(p);
+            Chapter10.push(S, p_);
+            if (p == z) {
+                z_ = p_;
+            }
+            if (r_ != T_.nil) {
+                if (p == r_.left) {
+                    r_.left = p_;
+                } else {
+                    r_.right = p_;
+                }
+            } else {
+                T_.root = p_;
+            }
+            r = p;
+            r_ = p_;
+            if (less(y.key, p.key)) {
+                p = p.left;
+            } else {
+                p = p.right;
+            }
+        }
+        ParentlessRedBlackTree.Node<E> x;
+        if (y.left != T.nil) {
+            x = y.left;
+        } else {
+            x = y.right;
+        }
+        if (y.color == BLACK) {
+            ParentlessRedBlackTree.Node<E> x_ = new ParentlessRedBlackTree.Node<>(x);
+            if (y == T.root) {
+                T_.root = x_;
+            } else {
+                if (y == r.left) {
+                    p_.left = x_;
+                } else {
+                    p_.right = x_;
+                }
+            }
+            if (y != z) {
+                z_.key = y.key;
+            }
+            persistentRbDeleteFixup(T, S, x_);
+        } else {
+            if (y == r.left) {
+                p_.left = x;
+            } else {
+                p_.right = x;
+            }
+            if (y != z) {
+                z_.key = y.key;
+            }
+        }
+        return T_;
+    }
+
+    private static <E> ParentlessRedBlackTree.Node<E> rbTreeMinimum(
+            ParentlessRedBlackTree<E> T, ParentlessRedBlackTree.Node<E> x) {
+        while (x.left != T.nil) {
+            x = x.left;
+        }
+        return x;
+    }
+
+    private static <E extends Comparable<? super E>> ParentlessRedBlackTree.Node<E> rbTreeSuccessor(
+            ParentlessRedBlackTree<E> T, ParentlessRedBlackTree.Node<E> x) {
+        if (x.right != T.nil) {
+            return rbTreeMinimum(T, x.right);
+        }
+        ParentlessRedBlackTree.Node<E> y = T.root;
+        ParentlessRedBlackTree.Node<E> z = y;
+        while (y != x) {
+            if (less(x.key, y.key)) {
+                z = y;
+                y = y.left;
+            } else {
+                y = y.right;
+            }
+        }
+        return z;
+    }
+
+    private static <E extends Comparable<? super E>> int getPathLengthFromRootToNode(
+            ParentlessRedBlackTree<E> T, ParentlessRedBlackTree.Node<E> y) {
+        int pathLength = 0;
+        ParentlessRedBlackTree.Node<E> x = T.root;
+        while (x != y) {
+            pathLength++;
+            if (less(y.key, x.key)) {
+                x = x.left;
+            } else {
+                x = x.right;
+            }
+        }
+        return pathLength;
+    }
+
+    /**
+     * Restores the red-black properties after deleting a node from a persistent set represented by a parentless red-black tree.
+     * <p>Solution to problem 13-1(e).</p>
+     *
+     * @param T   the parentless red-black tree with red-black properties violated representing the persistent set
+     * @param S   the stack containing nodes on the path from root to the effectively deleted node
+     * @param x   the child of the deleted node that may violate the red-black properties
+     * @param <E> the type of keys in {@code T}
+     */
+    static <E extends Comparable<? super E>> void persistentRbDeleteFixup(
+            ParentlessRedBlackTree<E> T, Stack<ParentlessRedBlackTree.Node<E>> S, ParentlessRedBlackTree.Node<E> x) {
+        ParentlessRedBlackTree.Node<E> p = Chapter10.pop(S);
+        while (x != T.root && x.color == BLACK) {
+            ParentlessRedBlackTree.Node<E> r = Chapter10.pop(S);
+            if (x == p.left) {
+                ParentlessRedBlackTree.Node<E> w = new ParentlessRedBlackTree.Node<>(p.right);
+                p.right = w;
+                if (w.color == RED) {
+                    w.color = BLACK;
+                    p.color = RED;
+                    rbParentlessLeftRotate(T, p, r);
+                    w = new ParentlessRedBlackTree.Node<>(p.right);
+                    p.right = w;
+                }
+                if (w.left.color == BLACK && w.right.color == BLACK) {
+                    w.color = RED;
+                    x = p;
+                } else {
+                    if (w.right.color == BLACK) {
+                        w.left = new ParentlessRedBlackTree.Node<>(w.left);
+                        w.left.color = BLACK;
+                        w.color = RED;
+                        rbParentlessRightRotate(T, w, p);
+                        w = p.right;
+                    }
+                    w.color = p.color;
+                    p.color = BLACK;
+                    w.right = new ParentlessRedBlackTree.Node<>(w.right);
+                    w.right.color = BLACK;
+                    rbParentlessLeftRotate(T, p, r);
+                    x = T.root;
+                }
+            } else {
+                ParentlessRedBlackTree.Node<E> w = new ParentlessRedBlackTree.Node<>(p.left);
+                p.left = w;
+                if (w.color == RED) {
+                    w.color = BLACK;
+                    p.color = RED;
+                    rbParentlessRightRotate(T, p, r);
+                    w = new ParentlessRedBlackTree.Node<>(p.left);
+                    p.left = w;
+                }
+                if (w.left.color == BLACK && w.right.color == BLACK) {
+                    w.color = RED;
+                    x = p;
+                } else {
+                    if (w.left.color == BLACK) {
+                        w.right = new ParentlessRedBlackTree.Node<>(w.right);
+                        w.right.color = BLACK;
+                        w.color = RED;
+                        rbParentlessLeftRotate(T, w, p);
+                        w = p.left;
+                    }
+                    w.color = p.color;
+                    p.color = BLACK;
+                    w.left = new ParentlessRedBlackTree.Node<>(w.left);
+                    w.left.color = BLACK;
+                    rbParentlessRightRotate(T, p, r);
+                    x = T.root;
+                }
+            }
+            p = r;
+        }
+        x.color = BLACK;
     }
 
     /**
@@ -509,14 +1028,6 @@ public final class Chapter13 {
         T.root.color = BLACK;
     }
 
-    /**
-     * Performs a left rotation in a binary search tree with nil sentinel.
-     * <p><span style="font-variant:small-caps;">Left-Rotate</span> from subchapter 13.2.</p>
-     *
-     * @param T   the binary search tree
-     * @param x   the root of the subtree in {@code T} to rotate
-     * @param <E> the type of keys in {@code T}
-     */
     static <E> void rbJoinableLeftRotate(JoinableRedBlackTree<E> T, JoinableRedBlackTree.Node<E> x) {
         JoinableRedBlackTree.Node<E> y = x.right;
         x.right = y.left;
@@ -537,14 +1048,6 @@ public final class Chapter13 {
         x.p = y;
     }
 
-    /**
-     * Performs a right rotation in a a binary search tree with nil sentinel.
-     * <p><span style="font-variant:small-caps;">Right-Rotate</span> from solution to exercise 13.2-1.</p>
-     *
-     * @param T   the binary search tree
-     * @param x   the root of the subtree in {@code T} to rotate
-     * @param <E> the type of keys in {@code T}
-     */
     static <E> void rbJoinableRightRotate(JoinableRedBlackTree<E> T, JoinableRedBlackTree.Node<E> x) {
         JoinableRedBlackTree.Node<E> y = x.left;
         x.left = y.right;
@@ -563,321 +1066,6 @@ public final class Chapter13 {
         }
         y.right = x;
         x.p = y;
-    }
-
-    /**
-     * Deletes a node from a red-black tree.
-     * <p><span style="font-variant:small-caps;">RB-Delete</span> from subchapter 13.4.</p>
-     *
-     * @param T   the red-black tree
-     * @param z   the node to delete
-     * @param <E> the type of keys in {@code T}
-     * @return the node deleted from {@code T}
-     */
-    public static <E> RedBlackTree.Node<E> rbDelete(RedBlackTree<E> T, RedBlackTree.Node<E> z) {
-        RedBlackTree.Node<E> y;
-        if (z.left == T.nil || z.right == T.nil) {
-            y = z;
-        } else {
-            y = rbTreeSuccessor(T, z);
-        }
-        RedBlackTree.Node<E> x;
-        if (y.left != T.nil) {
-            x = y.left;
-        } else {
-            x = y.right;
-        }
-        x.p = y.p;
-        if (y.p == T.nil) {
-            T.root = x;
-        } else {
-            if (y == y.p.left) {
-                y.p.left = x;
-            } else {
-                y.p.right = x;
-            }
-        }
-        if (y != z) {
-            z.key = y.key;
-        }
-        if (y.color == BLACK) {
-            rbDeleteFixup(T, x);
-        }
-        return y;
-    }
-
-    /**
-     * Restores the red-black properties after deleting a node from a red-black tree by
-     * <span style="font-variant:small-caps;">RB-Delete</span>.
-     * <p><span style="font-variant:small-caps;">RB-Delete-Fixup</span> from subchapter 13.4.</p>
-     *
-     * @param T   the binary search tree with red-black properties violated
-     * @param x   the child of the deleted node that may violate the red-black properties
-     * @param <E> the type of keys in {@code T}
-     */
-    static <E> void rbDeleteFixup(RedBlackTree<E> T, RedBlackTree.Node<E> x) {
-        while (x != T.root && x.color == BLACK) {
-            RedBlackTree.Node<E> w;
-            if (x == x.p.left) {
-                w = x.p.right;
-                if (w.color == RED) {
-                    w.color = BLACK;
-                    x.p.color = RED;
-                    leftRotate(T, x.p);
-                    w = x.p.right;
-                }
-                if (w.left.color == BLACK && w.right.color == BLACK) {
-                    w.color = RED;
-                    x = x.p;
-                } else {
-                    if (w.right.color == BLACK) {
-                        w.left.color = BLACK;
-                        w.color = RED;
-                        rightRotate(T, w);
-                        w = x.p.right;
-                    }
-                    w.color = x.p.color;
-                    x.p.color = BLACK;
-                    w.right.color = BLACK;
-                    leftRotate(T, x.p);
-                    x = T.root;
-                }
-            } else {
-                w = x.p.left;
-                if (w.color == RED) {
-                    w.color = BLACK;
-                    x.p.color = RED;
-                    rightRotate(T, x.p);
-                    w = x.p.left;
-                }
-                if (w.left.color == BLACK && w.right.color == BLACK) {
-                    w.color = RED;
-                    x = x.p;
-                } else {
-                    if (w.left.color == BLACK) {
-                        w.right.color = BLACK;
-                        w.color = RED;
-                        leftRotate(T, w);
-                        w = x.p.left;
-                    }
-                    w.color = x.p.color;
-                    x.p.color = BLACK;
-                    w.left.color = BLACK;
-                    rightRotate(T, x.p);
-                    x = T.root;
-                }
-            }
-        }
-        x.color = BLACK;
-    }
-
-    /**
-     * Returns the node with the smallest key in a non-empty red-black tree.
-     * <p>Chapter 13.</p>
-     *
-     * @param T   the red-black tree
-     * @param x   the root of {@code T}
-     * @param <E> the type of keys in {@code T}
-     * @return the node with the smallest key in {@code T}
-     */
-    public static <E> RedBlackTree.Node<E> rbTreeMinimum(RedBlackTree<E> T, RedBlackTree.Node<E> x) {
-        while (x.left != T.nil) {
-            x = x.left;
-        }
-        return x;
-    }
-
-    /**
-     * Returns the node's successor in a non-empty red-black tree.
-     * <p>Chapter 13.</p>
-     *
-     * @param T   the red-black tree
-     * @param x   the node of the {@code T}
-     * @param <E> the type of keys in {@code T}
-     * @return the successor of {@code x} in {@code T}, or {@code null} if {@code x} has the largest key in {@code T}
-     */
-    public static <E> RedBlackTree.Node<E> rbTreeSuccessor(RedBlackTree<E> T, RedBlackTree.Node<E> x) {
-        if (x.right != T.nil) {
-            return rbTreeMinimum(T, x.right);
-        }
-        RedBlackTree.Node<E> y = x.p;
-        while (y != T.nil && x == y.right) {
-            x = y;
-            y = y.p;
-        }
-        return y;
-    }
-
-    /**
-     * Creates a new node for parentless binary search tree whose field {@code key} is {@code k},
-     * and fields {@code left} and {@code right} are {@code null}.
-     *
-     * @param k   the key of the new node
-     * @param <E> the type of the key
-     * @return the newly created node
-     */
-    static <E extends Comparable<? super E>> ParentlessBinaryTree.Node<E> newNode(E k) {
-        return new ParentlessBinaryTree.Node<>(k);
-    }
-
-    /**
-     * Creates a new node for parentless binary search tree whose fields {@code key}, {@code left} and {@code right}
-     * are set to the values of the same fields of node {@code x}.
-     *
-     * @param x   the node to copy
-     * @param <E> the type of the key in {@code x}
-     * @return the newly created node
-     */
-    static <E extends Comparable<? super E>> ParentlessBinaryTree.Node<E> copyNode(ParentlessBinaryTree.Node<E> x) {
-        return new ParentlessBinaryTree.Node<>(x.key, x.left, x.right);
-    }
-
-    /**
-     * Inserts a key into a persistent set represented by a parentless binary search tree.
-     * <p><span style="font-variant:small-caps;">Persistent-Subtree-Insert</span> from solution to problem 13-1(b).</p>
-     *
-     * @param x   the root of the subtree to insert to
-     * @param k   the key to insert
-     * @param <E> the type of keys in {@code T}
-     * @return the root of the new tree with inserted key
-     */
-    static <E extends Comparable<? super E>> ParentlessBinaryTree.Node<E> persistentSubtreeInsert(ParentlessBinaryTree.Node<E> x, E k) {
-        ParentlessBinaryTree.Node<E> z;
-        if (x == null) {
-            z = newNode(k);
-        } else {
-            z = copyNode(x);
-            if (less(k, x.key)) {
-                z.left = persistentSubtreeInsert(x.left, k);
-            } else {
-                z.right = persistentSubtreeInsert(x.right, k);
-            }
-        }
-        return z;
-    }
-
-    /**
-     * Inserts a key into a persistent set represented by a parentless binary search tree.
-     * <p><span style="font-variant:small-caps;">Persistent-Tree-Insert</span> from solution to problem 13-1(b).</p>
-     *
-     * @param T   the parentless binary search tree representing the persistent set
-     * @param k   the key to insert
-     * @param <E> the type of keys in {@code T}
-     * @return the binary search tree with new key inserted
-     */
-    public static <E extends Comparable<? super E>> ParentlessBinaryTree<E> persistentTreeInsert(ParentlessBinaryTree<E> T, E k) {
-        ParentlessBinaryTree<E> T_ = ParentlessBinaryTree.emptyTree();
-        T_.root = persistentSubtreeInsert(T.root, k);
-        return T_;
-    }
-
-    /**
-     * Inserts a node into a persistent set represented by a parentless red-black tree.
-     * <p>Solution to problem 13-1(e).</p>
-     *
-     * @param T   the parentless red-black tree representing the persistent set
-     * @param z   the node to insert
-     * @param <E> the type of keys in {@code T}
-     * @return the red-black tree with new node inserted
-     */
-    public static <E extends Comparable<? super E>> ParentlessRedBlackTree<E> persistentRbInsert(
-            ParentlessRedBlackTree<E> T, ParentlessRedBlackTree.Node<E> z) {
-        ParentlessRedBlackTree.Node<E> y = T.nil;
-        ParentlessRedBlackTree.Node<E> x = T.root;
-        ParentlessRedBlackTree<E> T_ = ParentlessRedBlackTree.emptyTree();
-        T_.nil = T.nil;
-        ParentlessRedBlackTree.Node<E> y_ = T_.nil;
-        ParentlessRedBlackTree.Node<E> x_;
-        int pathLength = getPathLengthFromRoot(T, z);
-        Stack<ParentlessRedBlackTree.Node<E>> S = Stack.ofLength(pathLength + 1);
-        Chapter10.push(S, T.nil);
-        while (x != T.nil) {
-            y = x;
-            x_ = new ParentlessRedBlackTree.Node<>(x.key, x.color, x.left, x.right);
-            if (y_ != T.nil) {
-                if (x == y_.left) {
-                    y_.left = x_;
-                } else {
-                    y_.right = x_;
-                }
-            }
-            y_ = x_;
-            Chapter10.push(S, y_);
-            if (less(z.key, x.key)) {
-                x = x.left;
-            } else {
-                x = x.right;
-            }
-        }
-        if (y == T.nil) {
-            T_.root = z;
-        } else {
-            if (less(z.key, y.key)) {
-                y_.left = z;
-            } else {
-                y_.right = z;
-            }
-        }
-        z.left = z.right = T.nil;
-        z.color = RED;
-        persistentRbInsertFixup(T_, S, z);
-        return T_;
-    }
-
-    /**
-     * Restores the red-black properties after inserting a node into a persistent set represented by a parentless red-black tree.
-     * <p>Solution to problem 13-1(e).</p>
-     *
-     * @param T   the parentless red-black tree with red-black properties violated representing the persistent set
-     * @param z   the inserted node
-     * @param <E> the type of keys in {@code T}
-     */
-    static <E extends Comparable<? super E>> void persistentRbInsertFixup(
-            ParentlessRedBlackTree<E> T, Stack<ParentlessRedBlackTree.Node<E>> S, ParentlessRedBlackTree.Node<E> z) {
-        ParentlessRedBlackTree.Node<E> p = Chapter10.pop(S);
-        while (p.color == RED) {
-            ParentlessRedBlackTree.Node<E> r = Chapter10.pop(S);
-            if (p == r.left) {
-                ParentlessRedBlackTree.Node<E> y = r.right;
-                if (y.color == RED) {
-                    r.right = new ParentlessRedBlackTree.Node<>(y.key, BLACK, y.left, y.right);
-                    p.color = BLACK;
-                    r.color = RED;
-                    z = r;
-                    p = Chapter10.pop(S);
-                } else {
-                    if (z == p.right) {
-                        ParentlessRedBlackTree.Node<E> tmp = z;
-                        z = p;
-                        p = tmp;
-                        rbParentlessLeftRotate(T, z, r);
-                    }
-                    p.color = BLACK;
-                    r.color = RED;
-                    rbParentlessRightRotate(T, r, Chapter10.pop(S));
-                }
-            } else {
-                ParentlessRedBlackTree.Node<E> y = r.left;
-                if (y.color == RED) {
-                    r.left = new ParentlessRedBlackTree.Node<>(y.key, BLACK, y.left, y.right);
-                    p.color = BLACK;
-                    r.color = RED;
-                    z = r;
-                    p = Chapter10.pop(S);
-                } else {
-                    if (z == p.left) {
-                        ParentlessRedBlackTree.Node<E> tmp = z;
-                        z = p;
-                        p = tmp;
-                        rbParentlessRightRotate(T, z, r);
-                    }
-                    p.color = BLACK;
-                    r.color = RED;
-                    rbParentlessLeftRotate(T, r, Chapter10.pop(S));
-                }
-            }
-        }
-        T.root.color = BLACK;
     }
 
     /**
