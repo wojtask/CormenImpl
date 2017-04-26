@@ -3,6 +3,7 @@ package pl.kwojtas.cormenimpl;
 import org.junit.Test;
 import pl.kwojtas.cormenimpl.datastructure.AVLTree;
 import pl.kwojtas.cormenimpl.datastructure.Array;
+import pl.kwojtas.cormenimpl.datastructure.JoinableRedBlackTree;
 import pl.kwojtas.cormenimpl.datastructure.ParentlessBinaryTree;
 import pl.kwojtas.cormenimpl.datastructure.ParentlessRedBlackTree;
 import pl.kwojtas.cormenimpl.datastructure.RedBlackTree;
@@ -181,6 +182,66 @@ public class Chapter13Test {
                         new AVLTree.Node<>(13,
                                 new AVLTree.Node<>(11),
                                 null
+                        )
+                )
+        );
+    }
+
+    private JoinableRedBlackTree<Integer> getExemplaryLeftJoinableRedTreeWithLargeBlackHeight() {
+        return new JoinableRedBlackTree<>(
+                new JoinableRedBlackTree.Node<>(7, BLACK,
+                        new JoinableRedBlackTree.Node<>(2, RED,
+                                new JoinableRedBlackTree.Node<>(1, BLACK),
+                                new JoinableRedBlackTree.Node<>(5, BLACK,
+                                        new JoinableRedBlackTree.Node<>(4, RED),
+                                        null
+                                )
+                        ),
+                        new JoinableRedBlackTree.Node<>(11, RED,
+                                new JoinableRedBlackTree.Node<>(8, BLACK),
+                                new JoinableRedBlackTree.Node<>(14, BLACK,
+                                        null,
+                                        new JoinableRedBlackTree.Node<>(15, RED)
+                                )
+                        )
+                )
+        );
+    }
+
+    private JoinableRedBlackTree<Integer> getExemplaryRightJoinableRedTreeWithSmallBlackHeight() {
+        return new JoinableRedBlackTree<>(
+                new JoinableRedBlackTree.Node<>(25, BLACK,
+                        new JoinableRedBlackTree.Node<>(20, RED),
+                        new JoinableRedBlackTree.Node<>(30, RED)
+                )
+        );
+    }
+
+    private JoinableRedBlackTree<Integer> getExemplaryLeftJoinableRedTreeWithSmallBlackHeight() {
+        return new JoinableRedBlackTree<>(
+                new JoinableRedBlackTree.Node<>(5, BLACK,
+                        new JoinableRedBlackTree.Node<>(2, RED),
+                        new JoinableRedBlackTree.Node<>(7, RED)
+                )
+        );
+    }
+
+    private JoinableRedBlackTree<Integer> getExemplaryRightJoinableRedTreeWithLargeBlackHeight() {
+        return new JoinableRedBlackTree<>(
+                new JoinableRedBlackTree.Node<>(17, BLACK,
+                        new JoinableRedBlackTree.Node<>(12, RED,
+                                new JoinableRedBlackTree.Node<>(11, BLACK),
+                                new JoinableRedBlackTree.Node<>(15, BLACK,
+                                        new JoinableRedBlackTree.Node<>(14, RED),
+                                        null
+                                )
+                        ),
+                        new JoinableRedBlackTree.Node<>(21, RED,
+                                new JoinableRedBlackTree.Node<>(18, BLACK),
+                                new JoinableRedBlackTree.Node<>(24, BLACK,
+                                        null,
+                                        new JoinableRedBlackTree.Node<>(25, RED)
+                                )
                         )
                 )
         );
@@ -697,6 +758,172 @@ public class Chapter13Test {
         Array<Integer> expectedElementsAfterInsertion = Array.of(1, 3, 7, 9, 13, 14, 15, 16, 18);
         Array<Integer> actualElementsAfterInsertion = T_.toArray();
         assertArrayEquals(expectedElementsAfterInsertion, actualElementsAfterInsertion);
+    }
+
+    @Test
+    public void shouldJoinEmptyRedBlackTrees() {
+        JoinableRedBlackTree.Node<Integer> node = new JoinableRedBlackTree.Node<>(4, BLACK);
+        JoinableRedBlackTree<Integer> tree1 = JoinableRedBlackTree.emptyTree();
+        JoinableRedBlackTree<Integer> tree2 = JoinableRedBlackTree.emptyTree();
+
+        JoinableRedBlackTree<Integer> actualJoinedTree = Chapter13.rbJoin(tree1, node, tree2);
+
+        assertJoinableRedBlackTree(actualJoinedTree);
+        Array<Integer> expectedElements = Array.of(4);
+        Array<Integer> actualElements = actualJoinedTree.toArray();
+        assertArrayEquals(expectedElements, actualElements);
+        assertEquals(1, actualJoinedTree.bh);
+    }
+
+    private <E extends Comparable<? super E>> void assertJoinableRedBlackTree(JoinableRedBlackTree<E> T) {
+        assertBinarySearchTree(T);
+        assertEquals(BLACK, T.root.color);
+        assertRedBlackProperty4(T);
+        assertRedBlackProperty5(T);
+        assertParentPointersConsistent(T);
+    }
+
+    private <E extends Comparable<? super E>> void assertBinarySearchTree(JoinableRedBlackTree<E> T) {
+        if (T.root != null) {
+            assertBinarySearchTree(T, T.root);
+        }
+    }
+
+    private <E extends Comparable<? super E>> void assertBinarySearchTree(JoinableRedBlackTree<E> T, JoinableRedBlackTree.Node<E> x) {
+        if (x.left != null) {
+            Array<E> leftElements = T.toArray(x.left);
+            for (int i = 1; i <= leftElements.length; i++) {
+                assertTrue(leq(leftElements.at(i), x.key));
+            }
+            assertBinarySearchTree(T, x.left);
+        }
+        if (x.right != null) {
+            Array<E> rightElements = T.toArray(x.right);
+            for (int i = 1; i <= rightElements.length; i++) {
+                assertTrue(geq(rightElements.at(i), x.key));
+            }
+            assertBinarySearchTree(T, x.right);
+        }
+    }
+
+    private <E> void assertRedBlackProperty4(JoinableRedBlackTree<E> T) {
+        if (T.root != null) {
+            assertRedBlackProperty4(T.root);
+        }
+    }
+
+    private <E> void assertRedBlackProperty4(JoinableRedBlackTree.Node<E> x) {
+        if (x.color == RED) {
+            if (x.left != null) {
+                assertEquals(BLACK, x.left.color);
+            }
+            if (x.right != null) {
+                assertEquals(BLACK, x.right.color);
+            }
+        }
+        if (x.left != null) {
+            assertRedBlackProperty4(x.left);
+        }
+        if (x.right != null) {
+            assertRedBlackProperty4(x.right);
+        }
+    }
+
+    private <E> void assertRedBlackProperty5(JoinableRedBlackTree<E> T) {
+        if (T.root != null) {
+            assertRedBlackProperty5(T.root);
+        }
+    }
+
+    private <E> int assertRedBlackProperty5(JoinableRedBlackTree.Node<E> x) {
+        int leftBlackHeight = 0;
+        if (x.left != null) {
+            leftBlackHeight = assertRedBlackProperty5(x.left) + (x.left.color == BLACK ? 1 : 0);
+        }
+        int rightBlackHeight = 0;
+        if (x.right != null) {
+            rightBlackHeight = assertRedBlackProperty5(x.right) + (x.right.color == BLACK ? 1 : 0);
+        }
+        assertEquals(leftBlackHeight, rightBlackHeight);
+        return leftBlackHeight;
+    }
+
+    private <E extends Comparable<? super E>> void assertParentPointersConsistent(JoinableRedBlackTree<E> T) {
+        if (T.root != null) {
+            assertNull(T.root.p);
+            assertParentPointersConsistent(T, T.root);
+        }
+    }
+
+    private <E extends Comparable<? super E>> void assertParentPointersConsistent(JoinableRedBlackTree<E> T, JoinableRedBlackTree.Node<E> x) {
+        if (x.left != null) {
+            assertEquals(x, x.left.p);
+            assertParentPointersConsistent(T, x.left);
+        }
+        if (x.right != null) {
+            assertEquals(x, x.right.p);
+            assertParentPointersConsistent(T, x.right);
+        }
+    }
+
+    @Test
+    public void shouldJoinRedBlackTreesWhereRightTreeIsEmpty() {
+        JoinableRedBlackTree<Integer> leftTree = getExemplaryLeftJoinableRedTreeWithLargeBlackHeight();
+        JoinableRedBlackTree<Integer> rightTree = JoinableRedBlackTree.emptyTree();
+        JoinableRedBlackTree.Node<Integer> node = new JoinableRedBlackTree.Node<>(18, BLACK);
+
+        JoinableRedBlackTree<Integer> actualJoinedTree = Chapter13.rbJoin(leftTree, node, rightTree);
+
+        assertJoinableRedBlackTree(actualJoinedTree);
+        Array<Integer> expectedElements = Array.of(1, 2, 4, 5, 7, 8, 11, 14, 15, 18);
+        Array<Integer> actualElements = actualJoinedTree.toArray();
+        assertArrayEquals(expectedElements, actualElements);
+        assertEquals(2, actualJoinedTree.bh);
+    }
+
+    @Test
+    public void shouldJoinRedBlackTreesWhereLeftTreeIsEmpty() {
+        JoinableRedBlackTree<Integer> leftTree = JoinableRedBlackTree.emptyTree();
+        JoinableRedBlackTree<Integer> rightTree = getExemplaryRightJoinableRedTreeWithLargeBlackHeight();
+        JoinableRedBlackTree.Node<Integer> node = new JoinableRedBlackTree.Node<>(16, BLACK);
+
+        JoinableRedBlackTree<Integer> actualJoinedTree = Chapter13.rbJoin(leftTree, node, rightTree);
+
+        assertJoinableRedBlackTree(actualJoinedTree);
+        Array<Integer> expectedElements = Array.of(11, 12, 14, 15, 16, 17, 18, 21, 24, 25);
+        Array<Integer> actualElements = actualJoinedTree.toArray();
+        assertArrayEquals(expectedElements, actualElements);
+        assertEquals(2, actualJoinedTree.bh);
+    }
+
+    @Test
+    public void shouldJoinRedBlackTreesWhereLeftTreeHasLargerBlackHeight() {
+        JoinableRedBlackTree<Integer> leftTree = getExemplaryLeftJoinableRedTreeWithLargeBlackHeight();
+        JoinableRedBlackTree<Integer> rightTree = getExemplaryRightJoinableRedTreeWithSmallBlackHeight();
+        JoinableRedBlackTree.Node<Integer> node = new JoinableRedBlackTree.Node<>(18, BLACK);
+
+        JoinableRedBlackTree<Integer> actualJoinedTree = Chapter13.rbJoin(leftTree, node, rightTree);
+
+        assertJoinableRedBlackTree(actualJoinedTree);
+        Array<Integer> expectedElements = Array.of(1, 2, 4, 5, 7, 8, 11, 14, 15, 18, 20, 25, 30);
+        Array<Integer> actualElements = actualJoinedTree.toArray();
+        assertArrayEquals(expectedElements, actualElements);
+        assertEquals(3, actualJoinedTree.bh);
+    }
+
+    @Test
+    public void shouldJoinRedBlackTreesWhereLeftTreeHasSmallerBlackHeight() {
+        JoinableRedBlackTree<Integer> leftTree = getExemplaryLeftJoinableRedTreeWithSmallBlackHeight();
+        JoinableRedBlackTree<Integer> rightTree = getExemplaryRightJoinableRedTreeWithLargeBlackHeight();
+        JoinableRedBlackTree.Node<Integer> node = new JoinableRedBlackTree.Node<>(10, BLACK);
+
+        JoinableRedBlackTree<Integer> actualJoinedTree = Chapter13.rbJoin(leftTree, node, rightTree);
+
+        assertJoinableRedBlackTree(actualJoinedTree);
+        Array<Integer> expectedElements = Array.of(2, 5, 7, 10, 11, 12, 14, 15, 17, 18, 21, 24, 25);
+        Array<Integer> actualElements = actualJoinedTree.toArray();
+        assertArrayEquals(expectedElements, actualElements);
+        assertEquals(3, actualJoinedTree.bh);
     }
 
     @Test

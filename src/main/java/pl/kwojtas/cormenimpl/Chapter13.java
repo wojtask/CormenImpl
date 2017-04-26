@@ -1,6 +1,7 @@
 package pl.kwojtas.cormenimpl;
 
 import pl.kwojtas.cormenimpl.datastructure.AVLTree;
+import pl.kwojtas.cormenimpl.datastructure.JoinableRedBlackTree;
 import pl.kwojtas.cormenimpl.datastructure.ParentlessBinaryTree;
 import pl.kwojtas.cormenimpl.datastructure.ParentlessRedBlackTree;
 import pl.kwojtas.cormenimpl.datastructure.RedBlackTree;
@@ -315,6 +316,253 @@ public final class Chapter13 {
             }
         }
         y.right = x;
+    }
+
+    /**
+     * Returns the black node in the left red-black tree of the largest key from among those nodes whose black height
+     * is equal to black height of the right red-black tree.
+     * Assumes that every key in the left tree is no larger than every key in the right tree,
+     * and that the black height of the left tree is no smaller that the black height of the right tree.
+     * <p><span style="font-variant:small-caps;">RB-Join-Point</span> from solution to problem 13-2(b).</p>
+     *
+     * @param T1  the left red-black tree
+     * @param T2  the right red-black tree
+     * @param <E> the type of keys in {@code T1} and {@code T2}
+     * @return the black node {@code y} in {@code T1} of the largest key from among those nodes whose black height is {bh[T2]}
+     */
+    static <E> JoinableRedBlackTree.Node<E> rbJoinPoint(JoinableRedBlackTree<E> T1, JoinableRedBlackTree<E> T2) {
+        JoinableRedBlackTree.Node<E> y = T1.root;
+        int b = T1.bh;
+        while (b > T2.bh) {
+            JoinableRedBlackTree.Node<E> z;
+            if (y.right != null) {
+                z = y.right;
+            } else {
+                z = y.left;
+            }
+            if (z == null || z.color == BLACK) {
+                b--;
+            }
+            y = z;
+        }
+        return y;
+    }
+
+    /**
+     * Returns the black node in the right red-black tree of the smallest key from among those nodes whose black height
+     * is equal to black height of the left red-black tree.
+     * Assumes that every key in the left tree is no larger than every key in the right tree,
+     * and that the black height of the left tree is no larger that the black height of the right tree.
+     * <p>Solution to problem 13-2(e).</p>
+     *
+     * @param T1  the left red-black tree
+     * @param T2  the right red-black tree
+     * @param <E> the type of keys in {@code T1} and {@code T2}
+     * @return the black node {@code y} in {@code T2} of the smallest key from among those nodes whose black height is {bh[T1]}
+     */
+    static <E> JoinableRedBlackTree.Node<E> rbSymmetricJoinPoint(JoinableRedBlackTree<E> T1, JoinableRedBlackTree<E> T2) {
+        JoinableRedBlackTree.Node<E> y = T2.root;
+        int b = T2.bh;
+        while (b > T1.bh) {
+            JoinableRedBlackTree.Node<E> z;
+            if (y.left != null) {
+                z = y.left;
+            } else {
+                z = y.right;
+            }
+            if (z == null || z.color == BLACK) {
+                b--;
+            }
+            y = z;
+        }
+        return y;
+    }
+
+    /**
+     * Joins two red-black trees and an element into a single red-black tree.
+     * Assumes that every key in the left tree is no larger than the key of the element
+     * and that the key of the element is no larger than every key in the right tree.
+     * Both left and right trees will be destroyed once the procedure is called.
+     * <p><span style="font-variant:small-caps;">RB-Join</span> from solution to problem 13-2(f).</p>
+     *
+     * @param T1  the left red-black tree
+     * @param x   the element
+     * @param T2  the right red-black tree
+     * @param <E> the type of keys in {@code T1}, {@code x} and {@code T2}
+     * @return the red black tree containing every element from {@code T1}, {@code x}, and every element from {@code T2}
+     */
+    public static <E extends Comparable<? super E>> JoinableRedBlackTree<E> rbJoin(
+            JoinableRedBlackTree<E> T1, JoinableRedBlackTree.Node<E> x, JoinableRedBlackTree<E> T2) {
+        JoinableRedBlackTree<E> T = JoinableRedBlackTree.emptyTree();
+        if (T1.bh >= T2.bh) {
+            if (T2.root == null) {
+                rbJoinableInsert(T1, x);
+                return T1;
+            }
+            T.root = x;
+            T.bh = T1.bh;
+            JoinableRedBlackTree.Node<E> y = rbJoinPoint(T1, T2);
+            x.left = y;
+            x.right = T2.root;
+            if (y != T1.root) {
+                if (y == y.p.left) {
+                    y.p.left = x;
+                } else {
+                    y.p.right = x;
+                }
+                T.root = T1.root;
+                x.p = y.p;
+            }
+            T2.root.p = y.p = x;
+        } else {
+            if (T1.root == null) {
+                rbJoinableInsert(T2, x);
+                return T2;
+            }
+            T.root = x;
+            T.bh = T2.bh;
+            JoinableRedBlackTree.Node<E> y = rbSymmetricJoinPoint(T1, T2);
+            x.right = y;
+            x.left = T1.root;
+            if (y != T2.root) {
+                if (y == y.p.right) {
+                    y.p.right = x;
+                } else {
+                    y.p.left = x;
+                }
+                T.root = T2.root;
+                x.p = y.p;
+            }
+            T1.root.p = y.p = x;
+        }
+        x.color = RED;
+        rbJoinableInsertFixup(T, x);
+        return T;
+    }
+
+    static <E extends Comparable<? super E>> void rbJoinableInsert(JoinableRedBlackTree<E> T, JoinableRedBlackTree.Node<E> z) {
+        JoinableRedBlackTree.Node<E> y = null;
+        JoinableRedBlackTree.Node<E> x = T.root;
+        while (x != null) {
+            y = x;
+            if (less(z.key, x.key)) {
+                x = x.left;
+            } else {
+                x = x.right;
+            }
+        }
+        z.p = y;
+        if (y == null) {
+            T.root = z;
+        } else {
+            if (less(z.key, y.key)) {
+                y.left = z;
+            } else {
+                y.right = z;
+            }
+        }
+        z.left = null;
+        z.right = null;
+        z.color = RED;
+        rbJoinableInsertFixup(T, z);
+    }
+
+    static <E extends Comparable<? super E>> void rbJoinableInsertFixup(JoinableRedBlackTree<E> T, JoinableRedBlackTree.Node<E> z) {
+        while (z.p != null && z.p.color == RED) {
+            if (z.p == z.p.p.left) {
+                JoinableRedBlackTree.Node<E> y = z.p.p.right;
+                if (y != null && y.color == RED) {
+                    z.p.color = BLACK;
+                    y.color = BLACK;
+                    z.p.p.color = RED;
+                    z = z.p.p;
+                } else {
+                    if (z == z.p.right) {
+                        z = z.p;
+                        rbJoinableLeftRotate(T, z);
+                    }
+                    z.p.color = BLACK;
+                    z.p.p.color = RED;
+                    rbJoinableRightRotate(T, z.p.p);
+                }
+            } else {
+                JoinableRedBlackTree.Node<E> y = z.p.p.left;
+                if (y != null && y.color == RED) {
+                    z.p.color = BLACK;
+                    y.color = BLACK;
+                    z.p.p.color = RED;
+                    z = z.p.p;
+                } else {
+                    if (z == z.p.left) {
+                        z = z.p;
+                        rbJoinableRightRotate(T, z);
+                    }
+                    z.p.color = BLACK;
+                    z.p.p.color = RED;
+                    rbJoinableLeftRotate(T, z.p.p);
+                }
+            }
+        }
+        if (T.root.color == RED) {
+            T.bh++;
+        }
+        T.root.color = BLACK;
+    }
+
+    /**
+     * Performs a left rotation in a binary search tree with nil sentinel.
+     * <p><span style="font-variant:small-caps;">Left-Rotate</span> from subchapter 13.2.</p>
+     *
+     * @param T   the binary search tree
+     * @param x   the root of the subtree in {@code T} to rotate
+     * @param <E> the type of keys in {@code T}
+     */
+    static <E> void rbJoinableLeftRotate(JoinableRedBlackTree<E> T, JoinableRedBlackTree.Node<E> x) {
+        JoinableRedBlackTree.Node<E> y = x.right;
+        x.right = y.left;
+        if (y.left != null) {
+            y.left.p = x;
+        }
+        y.p = x.p;
+        if (x.p == null) {
+            T.root = y;
+        } else {
+            if (x == x.p.left) {
+                x.p.left = y;
+            } else {
+                x.p.right = y;
+            }
+        }
+        y.left = x;
+        x.p = y;
+    }
+
+    /**
+     * Performs a right rotation in a a binary search tree with nil sentinel.
+     * <p><span style="font-variant:small-caps;">Right-Rotate</span> from solution to exercise 13.2-1.</p>
+     *
+     * @param T   the binary search tree
+     * @param x   the root of the subtree in {@code T} to rotate
+     * @param <E> the type of keys in {@code T}
+     */
+    static <E> void rbJoinableRightRotate(JoinableRedBlackTree<E> T, JoinableRedBlackTree.Node<E> x) {
+        JoinableRedBlackTree.Node<E> y = x.left;
+        x.left = y.right;
+        if (y.right != null) {
+            y.right.p = x;
+        }
+        y.p = x.p;
+        if (x.p == null) {
+            T.root = y;
+        } else {
+            if (x == x.p.right) {
+                x.p.right = y;
+            } else {
+                x.p.left = y;
+            }
+        }
+        y.right = x;
+        x.p = y;
     }
 
     /**
